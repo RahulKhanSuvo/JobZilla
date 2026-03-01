@@ -10,15 +10,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Search } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 
 export default function DashboardSearch() {
   return (
-    <div className="flex items-center rounded-4xl bg-[#F8FAFC] dark:bg-accent">
+    <div className="flex items-center border px-2 border-[#E2E8F0] rounded-4xl bg-[#F8FAFC] dark:bg-accent">
       {/* Location Select */}
-      <div className="flex-shrink-0">
+      <div className="shrink-0 flex gap-1 items-center">
+        <MapPin />
         <Select>
-          <SelectTrigger className="w-full border-none shadow-none focus:ring-0">
+          <SelectTrigger className="w-full p-0 border-none shadow-none focus:ring-0">
             <SelectValue placeholder="Location" />
           </SelectTrigger>
           <SelectContent className="border-none shadow-none">
@@ -38,7 +39,7 @@ export default function DashboardSearch() {
       <div className="relative flex-1">
         <Input
           placeholder="Job title, Keyword, Company"
-          className="border-none shadow-none focus:ring-0 pl-10 bg-transparent"
+          className="border-none shadow-none focus:ring-0 pr-10 bg-transparent "
         />
         <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
       </div>
