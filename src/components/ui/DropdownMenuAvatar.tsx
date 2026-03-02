@@ -11,12 +11,28 @@ import {
 import type { User } from "@/redux/features/auth/auth.type";
 import type { MenuItem } from "../layouts/NavBar/Navbar";
 import { Link } from "react-router";
+import { useUserLogoutMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
+import { errorToast } from "@/utils/errorToast";
+import { useDispatch } from "react-redux";
+import { logOut } from "@/redux/features/auth/authSlice";
 interface AvatarDropdownProps {
   user?: User;
   menu: MenuItem[];
 }
 
 export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
+  const [logout, { isLoading }] = useUserLogoutMutation();
+  const dispatch = useDispatch();
+  const handelLogout = async () => {
+    try {
+      await logout().unwrap();
+      toast.success("Logout successful");
+      dispatch(logOut());
+    } catch (error) {
+      errorToast(error);
+    }
+  };
   return (
     <DropdownMenu>
       <div className="flex items-center gap-2">
@@ -41,7 +57,11 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem variant="destructive">Log out</DropdownMenuItem>
+          <DropdownMenuItem variant="destructive">
+            <button onClick={handelLogout}>
+              {isLoading ? "logout..." : "Log out"}
+            </button>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
