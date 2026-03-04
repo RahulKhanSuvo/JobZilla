@@ -14,6 +14,10 @@ import SaveJob from "@/pages/Candidate/SaveJob";
 import FollowCompany from "@/pages/Candidate/FollowCompany";
 import JobVisitHistory from "@/pages/Candidate/JobVisitHistory";
 import CandidateSettings from "@/pages/Candidate/CandidateSettings";
+import RecruiterLayout from "@/layouts/RecruiterLayout";
+import RecruiterDashboard from "@/pages/Recruiter/RecruiterDashboard";
+import RecruiterProfilePage from "@/pages/Recruiter/Profile/RecruiterProfilePage";
+import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -101,6 +105,45 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <Error />,
+  },
+  // recruiter
+  {
+    path: "/recruiter",
+    element: (
+      // <ProtectedRoute allowRole={["USER"]}>
+      <RecruiterLayout />
+      // </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to={"dashboard"} />,
+      },
+      {
+        path: "dashboard",
+        element: <RecruiterDashboard />,
+      },
+      {
+        path: "post-job",
+        element: <div className="p-6">Post New Job Page</div>,
+      },
+      {
+        path: "manage-jobs",
+        element: <div className="p-6">Manage Jobs Page</div>,
+      },
+      {
+        path: "applicants",
+        element: <div className="p-6">All Applicants Page</div>,
+      },
+      {
+        path: "profile",
+        element: <RecruiterProfilePage />,
+      },
+      {
+        path: "setting",
+        element: <RecruiterSettings />,
+      },
+    ],
   },
 ]);
 export default router;
