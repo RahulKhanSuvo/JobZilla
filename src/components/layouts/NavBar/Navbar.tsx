@@ -25,11 +25,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "../ModeToggle";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { AvatarDropdown } from "@/components/ui/DropdownMenuAvatar";
-
+import logoDark from "@/assets/logo/logo-dark.png";
 export interface MenuItem {
   title: string;
   url: string;
@@ -44,7 +44,6 @@ interface Navbar1Props {
     url: string;
     src: string;
     alt: string;
-    title: string;
     className?: string;
   };
   menu?: MenuItem[];
@@ -63,21 +62,24 @@ interface Navbar1Props {
 
 const Navbar = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    url: "/",
+    src: logoDark,
     alt: "logo",
-    title: "Shadcnblocks",
   },
   menu = [
     { title: "Home", url: "/" },
 
     {
-      title: "Candidate",
-      url: "/candidate",
+      title: "Find Jobs",
+      url: "/jobs",
     },
     {
-      title: "Blog",
-      url: "#",
+      title: "About Us",
+      url: "/about",
+    },
+    {
+      title: "Contact Us",
+      url: "/contact",
     },
   ],
   dropdownMenu = [
@@ -96,40 +98,51 @@ const Navbar = ({
   console.log(user);
 
   return (
-    <section className={cn("py-4 bg-[#f2f2f2] dark:bg-background ", className)}>
-      <div className="container mx-auto ">
+    <section
+      className={cn(
+        "py-4 bg-white shadow-[0_3px_9px_0_rgba(0,0,0,0.05)] dark:bg-background ",
+        className,
+      )}
+    >
+      <div className="max-w-[1905px] mx-auto  px-10">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
-          <div className="flex items-center gap-6">
+          <div className="flex-1 ">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
+            <Link to={logo.url} className="flex items-center gap-2 ">
               <img
                 src={logo.src}
                 className="max-h-8 dark:invert"
                 alt={logo.alt}
               />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </a>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+            </Link>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center justify-center flex-1 ">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {menu.map((item) => renderMenuItem(item))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+          <div className="flex justify-end flex-1 items-center gap-1.5">
             <div>
               <ModeToggle />
             </div>
             {!user ? (
               <>
-                <Button asChild variant="outline" size="sm">
+                <Button
+                  className="rounded w-[185px] h-[48px]"
+                  asChild
+                  variant="outline"
+                  size="sm"
+                >
                   <Link to={auth.login.url}>{auth.login.title}</Link>
                 </Button>
-                <Button className="rounded-2xl" asChild size="sm">
+                <Button
+                  className="rounded w-[185px] h-[48px]"
+                  asChild
+                  size="sm"
+                >
                   <Link to={auth.signup.url}>{auth.signup.title}</Link>
                 </Button>
               </>
@@ -204,9 +217,7 @@ const renderMenuItem = (item: MenuItem) => {
         <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
         <NavigationMenuContent className="bg-popover text-popover-foreground">
           {item.items.map((subItem) => (
-            <NavigationMenuLink asChild key={subItem.title} className="w-80">
-              <SubMenuLink item={subItem} />
-            </NavigationMenuLink>
+            <SubMenuLink item={subItem} />
           ))}
         </NavigationMenuContent>
       </NavigationMenuItem>
@@ -228,7 +239,7 @@ const renderMenuItem = (item: MenuItem) => {
 const renderMobileMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
-      <AccordionItem key={item.title} value={item.title} className="border-b-0">
+      <AccordionItem key={item.title} value={item.title} className="-b-0">
         <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
           {item.title}
         </AccordionTrigger>
@@ -250,9 +261,13 @@ const renderMobileMenuItem = (item: MenuItem) => {
 
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
   return (
-    <a
-      className="flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-muted hover:text-accent-foreground"
-      href={item.url}
+    <NavLink
+      to={item.url}
+      className={({ isActive }) =>
+        `flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none
+        hover:bg-muted hover:text-accent-foreground
+        ${isActive ? "bg-muted text-primary" : ""}`
+      }
     >
       <div className="text-foreground">{item.icon}</div>
       <div>
@@ -263,7 +278,7 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
           </p>
         )}
       </div>
-    </a>
+    </NavLink>
   );
 };
 

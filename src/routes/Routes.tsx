@@ -18,6 +18,7 @@ import RecruiterLayout from "@/layouts/RecruiterLayout";
 import RecruiterDashboard from "@/pages/Recruiter/RecruiterDashboard";
 import RecruiterProfilePage from "@/pages/Recruiter/Profile/RecruiterProfilePage";
 import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
+import MyJobs from "@/pages/Recruiter/MyJobs";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -124,8 +125,8 @@ const router = createBrowserRouter([
         element: <RecruiterDashboard />,
       },
       {
-        path: "post-job",
-        element: <div className="p-6">Post New Job Page</div>,
+        path: "my-jobs",
+        element: <MyJobs />,
       },
       {
         path: "manage-jobs",

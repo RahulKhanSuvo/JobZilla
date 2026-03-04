@@ -1,29 +1,33 @@
-import heroImage1 from "@assets/images/hero-image-1-053a950af2f348330533d1ffb007f0b7.png";
-import heroImage2 from "@assets/images/hero-image-2-97093caf3dc44622d56f8354eaacdb24.png";
-
+import heroImage from "@assets/background/slider1.569c5d1f.jpg";
 import Container from "@/components/common/Container";
 import HeroSearch from "./HeroSearch";
 export default function HeroSection() {
   return (
-    <Container className="flex justify-between h-[75vh] my-2 gap-2.5">
-      {/* left */}
-      <div className="w-1/2  flex flex-col justify-center gap-8">
-        <div className="flex flex-col items-center gap-7 justify-center w-[80%]">
-          <h1 className="text-6xl font-bold">
-            Get hired by the popular teams.
-          </h1>
-          <p className="text-xl text-paragraph">
-            Explore high-paying jobs, connect with top recruiters, and build the
-            career you deserve. Simple, fast, and effective.
-          </p>
+    <div className="relative">
+      <img
+        src={heroImage}
+        alt=""
+        className="w-full h-[75vh] object-cover z-0 absolute"
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-[rgba(10,10,30,0.7)] to-[rgba(10,10,30,0.3)] z-10"></div>
+      <Container
+        size="none"
+        className="flex justify-between h-[75vh] gap-2.5 z-20 relative"
+      >
+        {/* left */}
+        <div className="w-2/3 flex flex-col justify-center gap-8 ">
+          <div className="flex flex-col    gap-7 justify-center w-[80%]">
+            <h1 className="text-6xl font-bold text-white">
+              Get hired by <br /> the popular teams.
+            </h1>
+            <p className="text-xl text-white">
+              Explore high-paying jobs, connect with top recruiters, and build
+              the career you deserve. Simple, fast, and effective.
+            </p>
+          </div>
+          <HeroSearch />
         </div>
-        <HeroSearch />
-      </div>
-      {/* right image */}
-      <div className="flex gap-6 w-1/2">
-        <img className="max-w-[642.5px]" src={heroImage1} alt="" />
-        <img src={heroImage2} alt="" />
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 }

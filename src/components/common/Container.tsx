@@ -10,7 +10,7 @@ const containerVariants = cva("mx-auto w-full px-4 sm:px-6 lg:px-0", {
       full: "max-w-full",
     },
     size: {
-      none: "py-0",
+      none: "",
       sm: "py-4 md:py-6",
       md: "py-8 md:py-12",
       lg: "py-12 md:py-24",
