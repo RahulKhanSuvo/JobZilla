@@ -1,6 +1,6 @@
 import { Footer } from "@/components/layouts/Footer";
 import { Navbar } from "@/components/layouts/NavBar/Navbar";
-import { Outlet } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router";
 
 export default function MainLayout() {
   return (
@@ -9,6 +9,7 @@ export default function MainLayout() {
         <Navbar />
       </header>
       <main>
+        <ScrollRestoration getKey={(location) => location.pathname} />
         <Outlet />
       </main>
       <Footer />
