@@ -2,22 +2,20 @@
 
 import * as React from "react";
 import {
-  AudioWaveform,
   Bookmark,
+  Briefcase,
   Building,
   ChartBar,
-  Command,
-  Eye,
   FileCheck,
-  GalleryVerticalEnd,
   History,
+  LogOut,
   Settings,
   User,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
-import { TeamSwitcher } from "@/components/team-switcher";
+// import { NavUser } from "@/components/nav-user";
+import { CandidateProfileCard } from "./CandidateProfileCard";
 import {
   Sidebar,
   SidebarContent,
@@ -31,62 +29,40 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navMain: [
     {
       title: "Dashboard",
-      url: "dashboard",
+      url: "/candidate/dashboard",
       icon: ChartBar,
     },
     {
       title: "Profile",
-      url: "profile",
+      url: "/candidate/profile",
       icon: User,
     },
     {
-      title: "Applied Job",
-      url: "applied-job",
+      title: "Applied Jobs",
+      url: "/candidate/applied-job",
       icon: FileCheck,
     },
     {
-      title: "Save Job",
-      url: "save-job",
+      title: "Saved Jobs",
+      url: "/candidate/save-job",
       icon: Bookmark,
     },
     {
-      title: "Profile Views",
-      url: "profile-views",
-      icon: Eye,
-    },
-    {
-      title: "Follow Company",
-      url: "followed-companies",
+      title: "Followed Companies",
+      url: "/candidate/followed-companies",
       icon: Building,
     },
     {
-      title: "Job View History",
-      url: "recent-jobs",
+      title: "Recent Jobs",
+      url: "/candidate/recent-jobs",
       icon: History,
     },
     {
-      title: "Setting",
-      url: "setting",
+      title: "Settings",
+      url: "/candidate/setting",
       icon: Settings,
     },
   ],
@@ -96,13 +72,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div className="flex items-center gap-2 px-4 py-6">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-[#004a8c] text-white shadow-lg shadow-blue-900/10">
+            <Briefcase className="size-6" />
+          </div>
+          <div className="flex items-baseline gap-1">
+            <span className="font-black text-2xl tracking-tighter text-[#004a8c]">
+              atB
+            </span>
+            <span className="font-bold text-2xl tracking-tight text-slate-500">
+              Jobs
+            </span>
+          </div>
+        </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="scrollbar-hide px-2">
+        <CandidateProfileCard />
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* <NavUser user={data.user} /> */}
+        <div className="p-2 border-t border-sidebar-border mt-auto">
+          <button className="flex w-full items-center gap-2 px-3 py-2 text-sm font-medium text-red-500 hover:bg-red-50 rounded-md transition-colors group">
+            <LogOut className="size-4 group-hover:translate-x-0.5 transition-transform" />
+            <span>Log out</span>
+          </button>
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

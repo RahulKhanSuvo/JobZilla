@@ -23,23 +23,31 @@ export function SidebarLink({ url, icon: Icon, title }: SidebarLinkProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div
-                className={`flex items-center gap-2  py-2 rounded-md transition-colors
-                  ${isActive ? "bg-sidebar-accent text-white" : "text-muted-foreground hover:bg-muted"}`}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group
+                  ${
+                    isActive
+                      ? "bg-[#004a8c] text-white shadow-lg shadow-blue-900/20 scale-[1.02]"
+                      : "text-slate-500 hover:bg-slate-50 hover:text-[#004a8c]"
+                  }`}
               >
                 {/* Icon container */}
                 {Icon && (
-                  <div className="flex items-center justify-center w-10">
+                  <div className="flex items-center justify-center">
                     <Icon
-                      className={`transition-all duration-200 ease-in-out ${
-                        state === "collapsed" ? "w-6 h-6" : "w-5 h-5"
-                      }`}
+                      className={`transition-all duration-300 ${
+                        state === "collapsed" ? "size-6" : "size-5"
+                      } ${isActive ? "text-white" : "group-hover:scale-110"}`}
                     />
                   </div>
                 )}
 
                 {/* Show text only when sidebar is expanded */}
                 {state !== "collapsed" && (
-                  <span className="text-[16px]">{title}</span>
+                  <span
+                    className={`text-[15px] font-semibold tracking-tight ${isActive ? "font-bold" : ""}`}
+                  >
+                    {title}
+                  </span>
                 )}
               </div>
             </TooltipTrigger>

@@ -10,7 +10,7 @@ import CandidateDashboard from "@/pages/Candidate/CandidateDashboard";
 import CandidateProfilePage from "@/pages/Candidate/Profile/CandidateProfilePage";
 import AppliedJob from "@/pages/Candidate/AppliedJob";
 import SaveJob from "@/pages/Candidate/SaveJob";
-import ProfileView from "@/pages/Candidate/ProfileView";
+// import ProfileView from "@/pages/Candidate/ProfileView";
 import FollowCompany from "@/pages/Candidate/FollowCompany";
 import JobVisitHistory from "@/pages/Candidate/JobVisitHistory";
 import CandidateSettings from "@/pages/Candidate/CandidateSettings";
@@ -80,10 +80,10 @@ const router = createBrowserRouter([
         path: "save-job",
         element: <SaveJob />,
       },
-      {
-        path: "profile-views",
-        element: <ProfileView />,
-      },
+      // {
+      //   path: "profile-views",
+      //   element: <ProfileView />,
+      // },
       {
         path: "followed-companies",
         element: <FollowCompany />,

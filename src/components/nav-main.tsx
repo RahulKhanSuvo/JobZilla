@@ -1,11 +1,16 @@
 import { type LucideIcon } from "lucide-react";
 
 import {} from "@/components/ui/collapsible";
-import { SidebarGroup, SidebarMenu } from "@/components/ui/sidebar";
+import {
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+} from "@/components/ui/sidebar";
 import { SidebarLink } from "./SidebarLink";
 
 export function NavMain({
   items,
+  label,
 }: {
   items: {
     title: string;
@@ -17,9 +22,11 @@ export function NavMain({
       url: string;
     }[];
   }[];
+  label?: string;
 }) {
   return (
     <SidebarGroup>
+      {label && <SidebarGroupLabel>{label}</SidebarGroupLabel>}
       <SidebarMenu>
         {items.map((item) => (
           <SidebarLink
