@@ -22,6 +22,7 @@ import MyJobs from "@/pages/Recruiter/MyJobs";
 import ProfileEdit from "@/pages/Candidate/Profile/ProfileEdit";
 import MyCV from "@/pages/Candidate/MyCv/MyCV";
 import RecruiterProfileEdit from "@/pages/Recruiter/Profile/RecruiterProfileEdit";
+import PostJob from "@/pages/Recruiter/Profile/PostJob";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -138,6 +139,10 @@ const router = createBrowserRouter([
       {
         path: "my-jobs",
         element: <MyJobs />,
+      },
+      {
+        path: "my-jobs/post-job",
+        element: <PostJob />,
       },
       {
         path: "manage-jobs",
