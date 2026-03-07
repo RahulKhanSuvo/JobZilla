@@ -21,6 +21,7 @@ import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
 import MyJobs from "@/pages/Recruiter/MyJobs";
 import ProfileEdit from "@/pages/Candidate/Profile/ProfileEdit";
 import MyCV from "@/pages/Candidate/MyCv/MyCV";
+import RecruiterProfileEdit from "@/pages/Recruiter/Profile/RecruiterProfileEdit";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -149,6 +150,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <RecruiterProfilePage />,
+      },
+      {
+        path: "profile/edit",
+        element: <RecruiterProfileEdit />,
       },
       {
         path: "setting",
