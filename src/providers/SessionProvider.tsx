@@ -7,6 +7,8 @@ import {
   setLoading,
 } from "@/redux/features/auth/authSlice";
 
+import JobzillaLoading from "@/components/common/JobzillaLoading";
+
 interface SessionProviderProps {
   children: ReactNode;
 }
@@ -27,11 +29,7 @@ export default function SessionProvider({ children }: SessionProviderProps) {
   }, [user, isLoading, dispatch]);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p>Loading session...</p>
-      </div>
-    );
+    return <JobzillaLoading />;
   }
 
   return <>{children}</>;
