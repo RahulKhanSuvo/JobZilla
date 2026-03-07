@@ -13,7 +13,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -71,7 +70,7 @@ const Navbar = ({
 
     {
       title: "Find Jobs",
-      url: "/jobs",
+      url: "/find-job",
     },
     {
       title: "About Us",
@@ -226,12 +225,17 @@ const renderMenuItem = (item: MenuItem) => {
 
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
-        asChild
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md uppercase px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
+      <NavLink
+        to={item.url}
+        className={({ isActive }) =>
+          cn(
+            "group inline-flex h-10 w-max items-center justify-center rounded-md uppercase px-4 py-2 text-sm font-bold transition-colors hover:text-primary",
+            isActive ? "text-primary" : "text-slate-600",
+          )
+        }
       >
-        <Link to={item.url}>{item.title}</Link>
-      </NavigationMenuLink>
+        {item.title}
+      </NavLink>
     </NavigationMenuItem>
   );
 };
@@ -253,9 +257,18 @@ const renderMobileMenuItem = (item: MenuItem) => {
   }
 
   return (
-    <a key={item.title} href={item.url} className="text-md font-semibold">
+    <NavLink
+      key={item.title}
+      to={item.url}
+      className={({ isActive }) =>
+        cn(
+          "text-md font-bold transition-colors hover:text-primary",
+          isActive ? "text-primary" : "text-slate-900",
+        )
+      }
+    >
       {item.title}
-    </a>
+    </NavLink>
   );
 };
 
@@ -264,9 +277,10 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
     <NavLink
       to={item.url}
       className={({ isActive }) =>
-        `flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none
-        hover:bg-muted hover:text-accent-foreground
-        ${isActive ? "bg-muted text-primary" : ""}`
+        cn(
+          "flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:text-primary text-slate-600",
+          isActive && "text-primary",
+        )
       }
     >
       <div className="text-foreground">{item.icon}</div>

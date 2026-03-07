@@ -24,6 +24,7 @@ import MyCV from "@/pages/Candidate/MyCv/MyCV";
 import RecruiterProfileEdit from "@/pages/Recruiter/Profile/RecruiterProfileEdit";
 import PostJob from "@/pages/Recruiter/Profile/PostJob";
 import AllApplicants from "@/pages/Recruiter/Applicants/AllApplicants";
+import FindJob from "@/pages/FindJob/FindJob";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/find-job",
+        element: <FindJob />,
       },
     ],
   },
