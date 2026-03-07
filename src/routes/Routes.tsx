@@ -19,6 +19,7 @@ import RecruiterDashboard from "@/pages/Recruiter/RecruiterDashboard";
 import RecruiterProfilePage from "@/pages/Recruiter/Profile/RecruiterProfilePage";
 import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
 import MyJobs from "@/pages/Recruiter/MyJobs";
+import ProfileEdit from "@/pages/Candidate/Profile/ProfileEdit";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <CandidateProfilePage />,
+      },
+      {
+        path: "profile/edit",
+        element: <ProfileEdit />,
       },
       {
         path: "applied-job",
