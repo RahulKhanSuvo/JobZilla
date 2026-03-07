@@ -1,8 +1,19 @@
 import CommonWrapper from "@/components/common/CommonWrapper";
 import DashboardTitle from "@/components/common/DashboardTitle";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaPinterestP,
+  FaYoutube,
+} from "react-icons/fa";
 import SectionTitle from "@/components/common/SectionTitle";
+import SkillTagsInput from "@/components/common/SkillTagsInput";
+import RichTextEditor from "@/components/common/RichTextEditor";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -14,6 +25,8 @@ import {
 } from "@/components/ui/select";
 
 export default function ProfileEdit() {
+  const [aboutMe, setAboutMe] = useState("");
+
   return (
     <div className="space-y-6">
       <DashboardTitle>Profile Edit</DashboardTitle>
@@ -155,8 +168,50 @@ export default function ProfileEdit() {
                   </SelectContent>
                 </SelectGroup>
               </Select>
+              <Field className="col-span-2">
+                <FieldLabel className="font-bold">Skills</FieldLabel>
+                <SkillTagsInput variant="withBg" />
+              </Field>
             </FieldGroup>
           </form>
+          {/* about me */}
+          <div className="space-y-4 pt-4 border-t">
+            <SectionTitle size={"sm"}>About Me</SectionTitle>
+            <RichTextEditor
+              value={aboutMe}
+              onChange={(content) => setAboutMe(content)}
+              placeholder="Write about yourself..."
+            />
+          </div>
+        </div>
+        {/* social network */}
+        <div className="space-y-6 pt-6 border-t mt-6">
+          <SectionTitle size={"sm"}>Social Network</SectionTitle>
+          <div className="grid grid-cols-2 gap-6">
+            {[
+              {
+                icon: FaFacebookF,
+                label: "Facebook",
+                placeholder: "http://www.facebook.com/avitex",
+              },
+              { icon: FaLinkedinIn, label: "LinkedIn", placeholder: "URL" },
+              { icon: FaTwitter, label: "Twitter", placeholder: "URL" },
+              { icon: FaPinterestP, label: "Pinterest", placeholder: "URL" },
+              { icon: FaInstagram, label: "Instagram", placeholder: "URL" },
+              { icon: FaYoutube, label: "YouTube", placeholder: "URL" },
+            ].map((item, index) => (
+              <div key={index} className="flex items-center gap-4">
+                <div className="flex items-center justify-center size-10 rounded-full bg-[#F5F5F5] dark:bg-[#222222] shrink-0">
+                  <item.icon className="text-[14px]" />
+                </div>
+                <Input
+                  placeholder={item.placeholder}
+                  className="h-11 border-none shadow-none"
+                  variant="withBg"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </CommonWrapper>
     </div>

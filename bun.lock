@@ -11,6 +11,8 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "husky": "^9.1.7",
+        "jodit": "^4.10.3",
+        "jodit-react": "^5.3.21",
         "lint-staged": "^16.2.7",
         "lucide-react": "^0.575.0",
         "next-themes": "^0.4.6",
@@ -862,6 +864,10 @@
     "isexe": ["isexe@2.0.0", "", {}, "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="],
 
     "jiti": ["jiti@2.6.1", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ=="],
+
+    "jodit": ["jodit@4.10.3", "", {}, "sha512-+zKTTDGsvtiq5P6OIP+ybXk55KSDwJicr5dI42psPWew1aH5n2NlmIHOTT5flZxQEMKmzHWcTcNGCyKDlCD+zA=="],
+
+    "jodit-react": ["jodit-react@5.3.21", "", { "dependencies": { "jodit": "^4.9.4" }, "peerDependencies": { "react": "~0.14 || ^15 || ^16 || ^17 || ^18 || ^19", "react-dom": "~0.14 || ^15 || ^16 || ^17 || ^18 || ^19" } }, "sha512-dSFVKkrDVbhVwKDjuFMJ3HhPdqeEz/Yz5MhJf9v9B3Gg29CnelKCZ00h6MxXzlhglF3qvtvUTc2HSKrSB15khw=="],
 
     "jose": ["jose@6.1.3", "", {}, "sha512-0TpaTfihd4QMNwrz/ob2Bp7X04yuxJkjRGi4aKmOqwhov54i6u79oCv7T+C7lo70MKH6BesI3vscD1yb/yzKXQ=="],
 
