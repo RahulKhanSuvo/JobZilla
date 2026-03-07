@@ -28,7 +28,7 @@ import { Link, NavLink } from "react-router";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { AvatarDropdown } from "@/components/ui/DropdownMenuAvatar";
-import logoDark from "@/assets/logo/logo-dark.png";
+import JobzillaLogo from "@/components/common/JobzillaLogo";
 export interface MenuItem {
   title: string;
   url: string;
@@ -41,8 +41,8 @@ interface Navbar1Props {
   className?: string;
   logo?: {
     url: string;
-    src: string;
-    alt: string;
+    src?: string;
+    alt?: string;
     className?: string;
   };
   menu?: MenuItem[];
@@ -62,8 +62,6 @@ interface Navbar1Props {
 const Navbar = ({
   logo = {
     url: "/",
-    src: logoDark,
-    alt: "logo",
   },
   menu = [
     { title: "Home", url: "/" },
@@ -108,12 +106,8 @@ const Navbar = ({
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex-1 ">
             {/* Logo */}
-            <Link to={logo.url} className="flex items-center gap-2 ">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
+            <Link to={logo.url}>
+              <JobzillaLogo />
             </Link>
           </div>
           <div className="flex items-center justify-center flex-1 ">
@@ -157,13 +151,9 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-            </a>
+            <Link to={logo.url}>
+              <JobzillaLogo />
+            </Link>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -173,13 +163,9 @@ const Navbar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a>
+                    <Link to={logo.url}>
+                      <JobzillaLogo />
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
