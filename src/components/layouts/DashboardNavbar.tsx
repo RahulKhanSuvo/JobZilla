@@ -4,11 +4,16 @@ import { SidebarInset, SidebarTrigger } from "../ui/sidebar";
 import DashboardSearch from "./DashboardSearch";
 import { Notifications } from "./Notifications";
 
+import { useLocation } from "react-router";
+
 export default function DashboardNavbar() {
+  const { pathname } = useLocation();
+  const isRecruiter = pathname.startsWith("/recruiter");
+
   const dropdownMenu = [
     {
       title: "Dashboard",
-      url: "/candidate",
+      url: isRecruiter ? "/recruiter" : "/candidate",
     },
   ];
   return (

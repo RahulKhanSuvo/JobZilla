@@ -1,11 +1,11 @@
 import { NavLink } from "react-router";
-import { candidateSidebarData } from "./sidebarData";
+import { recruiterSidebarData } from "./sidebarData";
 
-export default function CandidateSideBar() {
+export default function RecruiterSideBar() {
   return (
     <aside className="py-6 px-5 w-[280px] h-[calc(100vh-65px)] bg-white sticky top-0 z-50 overflow-y-auto border-r border-border/50">
       <ul className="space-y-1">
-        {candidateSidebarData.map((item, index) => (
+        {recruiterSidebarData.map((item, index) => (
           <li key={index}>
             <NavLink
               to={item.href}
