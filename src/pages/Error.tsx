@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 export default function Error() {
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white relative overflow-hidden px-4 font-sans leading-none">
-      {/* Dynamic Background Elements - Softer for light theme */}
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white dark:bg-slate-950 relative overflow-hidden px-4 font-sans leading-none transition-colors duration-500">
+      {/* Dynamic Background Elements - Adaptive for both themes */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px]"
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 dark:bg-emerald-500/10 rounded-full blur-[120px]"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.4, 0.2],
@@ -15,7 +15,7 @@ export default function Error() {
         transition={{ duration: 6, repeat: Infinity }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px]"
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-[120px]"
         animate={{
           scale: [1.2, 1, 1.2],
           opacity: [0.2, 0.4, 0.2],
@@ -32,8 +32,8 @@ export default function Error() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            {/* 404 Background Text - Subtle on white */}
-            <h1 className="text-[12rem] md:text-[20rem] font-black leading-none tracking-tighter text-slate-100 select-none">
+            {/* 404 Background Text - Adaptive contrast */}
+            <h1 className="text-[12rem] md:text-[20rem] font-black leading-none tracking-tighter text-slate-100 dark:text-slate-900/40 select-none transition-colors">
               404
             </h1>
 
@@ -52,7 +52,7 @@ export default function Error() {
             >
               <svg
                 viewBox="0 0 100 100"
-                className="w-48 h-48 md:w-64 md:h-64 fill-emerald-500 drop-shadow-[0_20px_40px_rgba(16,185,129,0.2)]"
+                className="w-48 h-48 md:w-64 md:h-64 fill-emerald-500 drop-shadow-[0_20px_40px_rgba(16,185,129,0.2)] dark:drop-shadow-[0_0_30px_rgba(16,185,129,0.4)]"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 {/* Mascot Body */}
@@ -133,10 +133,10 @@ export default function Error() {
           className="space-y-8"
         >
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter italic">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter italic transition-colors">
               ZILLA IS <span className="text-emerald-500">LOST!</span>
             </h2>
-            <p className="text-slate-500 text-lg md:text-xl max-w-lg mx-auto leading-relaxed font-semibold">
+            <p className="text-slate-500 dark:text-slate-400 text-lg md:text-xl max-w-lg mx-auto leading-relaxed font-semibold transition-colors">
               Even monsters lose their way sometimes. This page decided to stomp
               away into the shadows.
             </p>
@@ -154,7 +154,7 @@ export default function Error() {
             <Button
               variant="outline"
               size="lg"
-              className="px-10 py-7 text-lg font-bold border-slate-200 text-slate-400 hover:bg-slate-50 hover:text-slate-600 rounded-2xl transition-all"
+              className="px-10 py-7 text-lg font-bold border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-600 dark:hover:text-slate-300 rounded-2xl transition-all"
               onClick={() => window.history.back()}
             >
               Go Back
@@ -167,7 +167,7 @@ export default function Error() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.3 }}
           transition={{ delay: 1.5 }}
-          className="text-slate-400 text-sm font-bold uppercase tracking-[0.3em] pt-12"
+          className="text-slate-400 dark:text-slate-600 text-sm font-bold uppercase tracking-[0.3em] pt-12"
         >
           Error 404 - Page Smashed
         </motion.p>
