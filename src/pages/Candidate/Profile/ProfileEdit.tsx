@@ -64,6 +64,15 @@ export default function ProfileEdit() {
                 />
               </Field>
               <Field>
+                <FieldLabel className="font-bold">Location</FieldLabel>
+                <Input
+                  placeholder="Enter your location"
+                  className="h-11"
+                  variant="withBg"
+                  type="text"
+                />
+              </Field>
+              <Field>
                 <FieldLabel className="font-bold">Date of Birth</FieldLabel>
                 <Input
                   placeholder="Enter your date of birth"
@@ -76,15 +85,12 @@ export default function ProfileEdit() {
                 <SelectGroup className="w-full flex flex-col gap-3">
                   <SelectLabel className="font-bold">Gender</SelectLabel>
                   <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                    <SelectValue
-                      className=""
-                      placeholder="Select your gender"
-                    />
+                    <SelectValue className="" placeholder="Select gender" />
                   </SelectTrigger>
                   <SelectContent className="rounded-none" position="popper">
-                    <SelectItem value="option1">Option 1</SelectItem>
-                    <SelectItem value="option2">Option 2</SelectItem>
-                    <SelectItem value="option3">Option 3</SelectItem>
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </SelectGroup>
               </Select>
@@ -108,17 +114,44 @@ export default function ProfileEdit() {
               </Field>
               <Select>
                 <SelectGroup className="w-full flex flex-col gap-3">
-                  <SelectLabel className="font-bold">Nationality</SelectLabel>
+                  <SelectLabel className="font-bold">Age</SelectLabel>
+                  <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                    <SelectValue className="" placeholder="Select your age" />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-none" position="popper">
+                    <SelectItem value="option1">18-20</SelectItem>
+                    <SelectItem value="option2">20-22</SelectItem>
+                    <SelectItem value="option3">22-24</SelectItem>
+                    <SelectItem value="option4">24-26</SelectItem>
+                    <SelectItem value="option5">26-28</SelectItem>
+                    <SelectItem value="option6">28-30</SelectItem>
+                    <SelectItem value="option7">30-32</SelectItem>
+                    <SelectItem value="option8">32-34</SelectItem>
+                    <SelectItem value="option9">34-36</SelectItem>
+                    <SelectItem value="option10">36-38</SelectItem>
+                  </SelectContent>
+                </SelectGroup>
+              </Select>
+              <Select>
+                <SelectGroup className="w-full flex flex-col gap-3">
+                  <SelectLabel className="font-bold">Experience</SelectLabel>
                   <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                     <SelectValue
                       className=""
-                      placeholder="Select your nationality"
+                      placeholder="Select your experience"
                     />
                   </SelectTrigger>
                   <SelectContent className="rounded-none" position="popper">
-                    <SelectItem value="option1">Option 1</SelectItem>
-                    <SelectItem value="option2">Option 2</SelectItem>
-                    <SelectItem value="option3">Option 3</SelectItem>
+                    <SelectItem value="option1">1 Year</SelectItem>
+                    <SelectItem value="option2">2 Year</SelectItem>
+                    <SelectItem value="option3">3 Year</SelectItem>
+                    <SelectItem value="option4">4 Year</SelectItem>
+                    <SelectItem value="option5">5 Year</SelectItem>
+                    <SelectItem value="option6">6 Year</SelectItem>
+                    <SelectItem value="option7">7 Year</SelectItem>
+                    <SelectItem value="option8">8 Year</SelectItem>
+                    <SelectItem value="option9">9 Year</SelectItem>
+                    <SelectItem value="option10">10 Year</SelectItem>
                   </SelectContent>
                 </SelectGroup>
               </Select>
