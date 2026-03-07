@@ -61,7 +61,7 @@ export default function JobzillaLogo({
       </svg>
 
       {!iconOnly && (
-        <span className="text-2xl font-black tracking-tighter text-slate-900">
+        <span className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white transition-colors">
           Job<span className="text-emerald-600">Zilla</span>
         </span>
       )}

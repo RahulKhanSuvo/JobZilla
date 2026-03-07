@@ -6,7 +6,7 @@ import Pagination from "./components/Pagination";
 
 export default function FindJob() {
   return (
-    <div className="bg-[#FBFCFD] min-h-screen py-10">
+    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen py-10 transition-colors duration-300">
       <Container>
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
@@ -15,7 +15,7 @@ export default function FindJob() {
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 space-y-2">
+          <main className="flex-1 space-y-4">
             <JobHeader />
             <JobList />
             <Pagination />

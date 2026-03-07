@@ -1,4 +1,5 @@
 import JobCard, { type Job } from "./JobCard";
+import { motion, type Variants } from "framer-motion";
 
 const mockJobs: Job[] = [
   {
@@ -76,11 +77,37 @@ const mockJobs: Job[] = [
 ];
 
 export default function JobList() {
+  const container: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const item: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.4 },
+    },
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+    >
       {mockJobs.map((job) => (
-        <JobCard key={job.id} job={job} />
+        <motion.div key={job.id} variants={item}>
+          <JobCard job={job} />
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
