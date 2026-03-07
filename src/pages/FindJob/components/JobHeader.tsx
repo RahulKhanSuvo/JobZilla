@@ -38,7 +38,7 @@ export default function JobHeader() {
           <SelectTrigger className="h-10 bg-white border-slate-200 rounded-lg text-xs w-[120px] shadow-sm">
             <SelectValue placeholder="12 Per Page" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper">
             <SelectItem value="12">12 Per Page</SelectItem>
             <SelectItem value="24">24 Per Page</SelectItem>
             <SelectItem value="50">50 Per Page</SelectItem>
@@ -49,7 +49,7 @@ export default function JobHeader() {
           <SelectTrigger className="h-10 bg-white border-slate-200 rounded-lg text-xs w-[140px] shadow-sm">
             <SelectValue placeholder="Sort by (Default)" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper">
             <SelectItem value="default">Sort by (Default)</SelectItem>
             <SelectItem value="newest">Newest</SelectItem>
             <SelectItem value="salary">Salary</SelectItem>

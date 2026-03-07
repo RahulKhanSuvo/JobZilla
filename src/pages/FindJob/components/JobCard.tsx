@@ -20,7 +20,7 @@ interface JobCardProps {
 
 export default function JobCard({ job }: JobCardProps) {
   return (
-    <CommonWrapper className="p-6 group hover:shadow-xl transition-all duration-300 border-transparent hover:border-emerald-100 relative">
+    <CommonWrapper className="p-6 group transition-all duration-300 border hover:border-primary relative ">
       <button className="absolute top-6 right-6 p-2 rounded-full bg-slate-50 text-slate-400 hover:text-red-500 transition-colors">
         <Heart className="size-5" />
       </button>

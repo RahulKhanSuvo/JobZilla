@@ -10,7 +10,7 @@ export default function FindJob() {
       <Container>
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <aside className="lg:block">
+          <aside className="lg:block max-w-[400px] w-full">
             <JobFilters />
           </aside>
 

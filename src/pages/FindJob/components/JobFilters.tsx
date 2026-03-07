@@ -11,7 +11,7 @@ import { Search, MapPin } from "lucide-react";
 
 export default function JobFilters() {
   return (
-    <div className="space-y-6 w-full max-w-[300px] shrink-0">
+    <div className="space-y-6 w-full  shrink-0 p-6 bg-[#F5F5F5]">
       {/* Search */}
       <div className="space-y-2">
         <div className="relative">
