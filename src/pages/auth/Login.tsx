@@ -24,8 +24,8 @@ export default function Login() {
             <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-900/30 to-slate-900/10" />
           </div>
 
-          <div className="relative z-10 flex items-center gap-2 mix-blend-plus-lighter">
-            <JobzillaLogo className="text-white drop-shadow-md brightness-0 invert" />
+          <div className="relative z-10 flex items-center">
+            <JobzillaLogo />
           </div>
 
           <div className="relative z-10 text-white space-y-4">
@@ -42,7 +42,7 @@ export default function Login() {
 
         {/* Right column: Login Form */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12 overflow-y-auto bg-white dark:bg-slate-900">
-          <LoginForm className="w-full max-w-[480px]" />
+          <LoginForm className="w-full" />
         </div>
       </div>
     </div>
