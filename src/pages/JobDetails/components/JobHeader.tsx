@@ -13,7 +13,7 @@ import demoImage from "@assets/logos/profile-1.jpg";
 
 export default function JobHeader() {
   return (
-    <div className="bg-white dark:bg-slate-900 py-12 border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div className="bg-white sticky top-10 z-20 dark:bg-slate-900 py-12 border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
         {/* Left: Company Logo & Job Title */}
         <div className="flex flex-col md:flex-row items-start gap-6">

@@ -6,13 +6,13 @@ import JobMedia from "./components/JobMedia";
 import ReviewsSection from "./components/ReviewsSection";
 import RelatedJobs from "./components/RelatedJobs";
 import JobSidebar from "./components/JobSidebar";
-import StickyJobBar from "./components/StickyJobBar";
+// import StickyJobBar from "./components/StickyJobBar";
 
 export default function JobDetails() {
   return (
-    <div className="bg-white dark:bg-slate-950 min-h-screen py-10 pb-32 transition-colors duration-300">
+    <div className="bg-white dark:bg-slate-950 min-h-screen py-10 transition-colors duration-300">
       <Container>
-        <div className="space-y-8">
+        <div className="space-y-6">
           {/* Top Section: Header */}
           <JobHeader />
 
@@ -36,7 +36,7 @@ export default function JobDetails() {
       </Container>
 
       {/* Floating Action Bar */}
-      <StickyJobBar />
+      {/* <StickyJobBar /> */}
     </div>
   );
 }
