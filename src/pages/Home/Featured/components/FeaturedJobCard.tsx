@@ -1,5 +1,6 @@
-import { Heart, MapPin, Clock, Star, ShieldCheck } from "lucide-react";
+import { MapPin, Clock, Star, ShieldCheck } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
+import { IoHeart } from "react-icons/io5";
 
 export interface Job {
   id: number;
@@ -21,9 +22,9 @@ interface FeaturedJobCardProps {
 
 export default function FeaturedJobCard({ job }: FeaturedJobCardProps) {
   return (
-    <CommonWrapper className="p-6 group transition-all duration-300 border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 relative hover:shadow-[0_20px_40px_rgba(16,185,129,0.05)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:-translate-y-1">
-      <button className="absolute top-6 right-6 p-2 rounded-full border bg-slate-50 dark:bg-slate-950 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors z-10">
-        <Heart className="size-5" />
+    <CommonWrapper className="p-6 group transition-all duration-300 border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 relative">
+      <button className="absolute top-6 right-6 p-2 rounded-full border dark:bg-slate-950 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors z-10">
+        <IoHeart className="size-5" />
       </button>
 
       <div className="space-y-5">
