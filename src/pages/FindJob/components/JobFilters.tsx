@@ -195,11 +195,11 @@ export default function JobFilters() {
       <div className="pt-4 space-y-4">
         <Button
           variant="outline"
-          className="w-full h-12 border-emerald-500 text-emerald-600 dark:text-emerald-500 font-bold hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all rounded-xl border-2 shadow-sm"
+          className="w-full h-12 border-emerald-500 text-emerald-600 dark:text-emerald-500 font-bold hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all rounded-none border-2 shadow-sm"
         >
           Clear Filter
         </Button>
-        <Button className="w-full h-12 bg-emerald-500 text-white font-bold hover:bg-emerald-600 rounded-xl transition-all border-none shadow-md shadow-emerald-500/20 active:scale-95">
+        <Button className="w-full h-12 bg-emerald-500 text-white font-bold hover:bg-emerald-600 rounded-none transition-all border-none shadow-md shadow-emerald-500/20 active:scale-95">
           Find Jobs
         </Button>
       </div>
