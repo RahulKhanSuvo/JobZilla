@@ -24,7 +24,7 @@ export default function JobFilters() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
           <Input
             placeholder="Job title, key words or company"
-            className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus-visible:ring-emerald-500/20 focus-visible:border-emerald-500 transition-all dark:text-slate-200 border-2"
+            className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm focus-visible:ring-emerald-500/20 focus-visible:border-emerald-500 transition-all dark:text-slate-200 border-2"
           />
         </div>
       </Field>
@@ -37,7 +37,7 @@ export default function JobFilters() {
         <div className="relative">
           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 z-10 transition-colors" />
           <Select defaultValue="all">
-            <SelectTrigger className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm w-full dark:text-slate-200 border-2">
+            <SelectTrigger className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
               <SelectValue placeholder="All Location" />
             </SelectTrigger>
             <SelectContent
@@ -59,7 +59,7 @@ export default function JobFilters() {
           Job Category
         </label>
         <Select defaultValue="all">
-          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm w-full dark:text-slate-200 border-2">
+          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
             <SelectValue placeholder="All Categories" />
           </SelectTrigger>
           <SelectContent
@@ -79,7 +79,7 @@ export default function JobFilters() {
           On-Site/Remote
         </label>
         <Select defaultValue="all">
-          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm w-full dark:text-slate-200 border-2">
+          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
             <SelectValue placeholder="All Types" />
           </SelectTrigger>
           <SelectContent
@@ -100,7 +100,7 @@ export default function JobFilters() {
           Techology
         </label>
         <Select defaultValue="any">
-          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm w-full dark:text-slate-200 border-2">
+          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
             <SelectValue placeholder="Any Technology" />
           </SelectTrigger>
           <SelectContent
@@ -156,7 +156,7 @@ export default function JobFilters() {
           Posted Anytime
         </label>
         <Select defaultValue="anytime">
-          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm w-full dark:text-slate-200 border-2">
+          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
             <SelectValue placeholder="Posted Anytime" />
           </SelectTrigger>
           <SelectContent
@@ -177,7 +177,7 @@ export default function JobFilters() {
           Seniority Levels
         </label>
         <Select defaultValue="all">
-          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-lg text-sm w-full dark:text-slate-200 border-2">
+          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
             <SelectValue placeholder="All Levels" />
           </SelectTrigger>
           <SelectContent
