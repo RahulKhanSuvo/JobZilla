@@ -54,31 +54,26 @@ export default function JobSidebar() {
   return (
     <div className="space-y-8">
       {/* Info List */}
-      <div className="bg-slate-50 dark:bg-slate-900/50 rounded p-6 border border-slate-200 dark:border-slate-800 space-y-6">
+      <div className="bg-[#F5F5F5] dark:bg-slate-900/50 rounded p-6 space-y-6">
         <div className="space-y-4">
           {infoItems.map((item, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-between group cursor-default"
+              className="flex items-center justify-between group cursor-default border-b pb-3 border-slate-200 dark:border-slate-800"
             >
               <div className="flex items-center gap-3">
-                <div
-                  className={`p-2 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 group-hover:scale-110 transition-transform ${item.color}`}
-                >
-                  <item.icon className="size-4" />
-                </div>
-                <span className="text-sm font-bold text-slate-500 dark:text-slate-400">
+                <span className="text-sm text-slate-500 dark:text-slate-400">
                   {item.label}
                 </span>
               </div>
-              <span className="text-sm font-black text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
+              <span className="text-sm text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
                 {item.value}
               </span>
             </div>
           ))}
         </div>
 
-        <div className="pt-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="pt-6">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
             Official Socials
           </p>

@@ -67,7 +67,7 @@ export default function JobHeader() {
             >
               <Heart className="size-5" />
             </Button>
-            <Button className="h-10 px-16 rounded-none bg-[#10b981] hover:bg-[#059669] text-white  gap-3 transition-all active:scale-95">
+            <Button className="h-12 px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white  gap-3 transition-all active:scale-95">
               <Send className="size-5 rotate-[-20deg]" />
               Apply Now
             </Button>

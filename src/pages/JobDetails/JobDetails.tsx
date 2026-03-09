@@ -2,8 +2,6 @@ import Container from "@/components/common/Container";
 import JobHeader from "./components/JobHeader";
 import JobTabs from "./components/JobTabs";
 import JobDescription from "./components/JobDescription";
-import JobMedia from "./components/JobMedia";
-import ReviewsSection from "./components/ReviewsSection";
 import RelatedJobs from "./components/RelatedJobs";
 import JobSidebar from "./components/JobSidebar";
 // import StickyJobBar from "./components/StickyJobBar";
@@ -17,13 +15,13 @@ export default function JobDetails() {
           <JobHeader />
 
           {/* Main Layout: Body + Sidebar */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 pb-20 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left Content Column */}
             <div className="lg:col-span-8 space-y-12">
               <JobTabs />
               <JobDescription />
-              <JobMedia />
-              <ReviewsSection />
+              {/* <JobMedia />
+              <ReviewsSection /> */}
               <RelatedJobs />
             </div>
 
