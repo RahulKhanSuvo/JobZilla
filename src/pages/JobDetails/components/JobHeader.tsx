@@ -25,10 +25,10 @@ export default function JobHeader() {
             />
           </div>
           <div className="space-y-3">
-            <p className="text-[#059669] font-bold text-base tracking-wide uppercase">
+            <p className="text-[#059669]  text-base tracking-wide uppercase">
               Rockstar Games New York
             </p>
-            <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight flex flex-wrap items-center gap-3">
+            <h1 className="text-3xl md:text-2xl font-bold text-slate-900 dark:text-white leading-tight flex flex-wrap items-center gap-3">
               Senior UI/UX Designer
               <CircleCheck className="size-7 text-[#4F46E5] fill-[#4F46E5]/10 shrink-0" />
             </h1>
