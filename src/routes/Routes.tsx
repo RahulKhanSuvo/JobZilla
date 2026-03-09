@@ -25,6 +25,10 @@ import RecruiterProfileEdit from "@/pages/Recruiter/Profile/RecruiterProfileEdit
 import PostJob from "@/pages/Recruiter/Profile/PostJob";
 import AllApplicants from "@/pages/Recruiter/Applicants/AllApplicants";
 import FindJob from "@/pages/FindJob/FindJob";
+import About from "@/pages/About/About";
+import Contact from "@/pages/Contact/Contact";
+import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
+import JobDetails from "@/pages/JobDetails/JobDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +41,22 @@ const router = createBrowserRouter([
       {
         path: "/find-job",
         element: <FindJob />,
+      },
+      {
+        path: ":slug",
+        element: <JobDetails />,
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
