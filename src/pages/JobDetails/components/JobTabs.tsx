@@ -13,7 +13,7 @@ interface JobTabsProps {
 
 export default function JobTabs({ activeTab, setActiveTab }: JobTabsProps) {
   return (
-    <div className="flex border-b border-slate-200 dark:border-slate-800 mb-10 overflow-x-auto no-scrollbar">
+    <div className="flex border-b border-slate-200 dark:border-slate-800 mb-4 overflow-x-auto no-scrollbar">
       {tabs.map((tab) => (
         <button
           key={tab.id}
