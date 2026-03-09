@@ -1,6 +1,6 @@
-# 💼 JobsMake - Modern Job Recruitment Platform
+# 💼 JobZilla - Modern Job Recruitment Platform
 
-JobsMake is a premium, high-performance job portal designed to bridge the gap between talented candidates and top-tier recruiters. Built with a cutting-edge tech stack, it offers a seamless, interactive, and visually stunning experience for all users.
+JobZilla is a premium, high-performance job portal designed to bridge the gap between talented candidates and top-tier recruiters. Built with a cutting-edge tech stack, it offers a seamless, interactive, and visually stunning experience for all users.
 
 ---
 
@@ -39,7 +39,7 @@ Ensure you have [Bun](https://bun.sh/) installed for the best experience.
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd JobsMake/Client
+   cd JobZilla/Client
    ```
 
 2. **Install dependencies**
@@ -82,11 +82,11 @@ src/
 
 ## 🎨 UI & UX Philosophy
 
-JobsMake prioritizes **Visual Excellence** and **Interactive Design**:
+JobZilla prioritizes **Visual Excellence** and **Interactive Design**:
 - **Glassmorphism & Gradients**: Modern, high-end aesthetics.
 - **Micro-animations**: Subtle interactions using Framer Motion to enhance user engagement.
 - **Responsive Layouts**: Optimized for seamless viewing across all device types.
 
 ---
 
-Made with ❤️ by the JobsMake Team.
+Made with ❤️ by the JobZilla Team.
