@@ -109,7 +109,7 @@ export default function SignUp() {
             <h1 className="text-3xl font-bold text-foreground">
               Create Account
             </h1>
-            <p className="mt-1 text-[color:var(--paragraph)] text-sm">
+            <p className="mt-1 text-paragraph text-sm">
               Join thousands of professionals on JobNest.
             </p>
 
@@ -121,7 +121,7 @@ export default function SignUp() {
                 className={`flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2 rounded-full transition-all duration-200 ${
                   selectedRole === "candidate"
                     ? "bg-white text-primary shadow-sm"
-                    : "text-[color:var(--paragraph)] hover:text-foreground"
+                    : "text-paragraph hover:text-foreground"
                 }`}
               >
                 <User className="size-4" />
@@ -133,7 +133,7 @@ export default function SignUp() {
                 className={`flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2 rounded-full transition-all duration-200 ${
                   selectedRole === "employer"
                     ? "bg-white text-primary shadow-sm"
-                    : "text-[color:var(--paragraph)] hover:text-foreground"
+                    : "text-paragraph hover:text-foreground"
                 }`}
               >
                 <Briefcase className="size-4" />
@@ -154,7 +154,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="fullName"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Full Name
                       </FieldLabel>
@@ -195,7 +195,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="email"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Email Address
                       </FieldLabel>
@@ -219,7 +219,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="phone"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Phone Number
                       </FieldLabel>
@@ -260,7 +260,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="password"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Password
                       </FieldLabel>
@@ -299,7 +299,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="companyName"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Company Name
                       </FieldLabel>
@@ -340,7 +340,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="employer-email"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Email Address
                       </FieldLabel>
@@ -364,7 +364,7 @@ export default function SignUp() {
                     <Field>
                       <FieldLabel
                         htmlFor="employer-password"
-                        className="text-xs font-semibold text-[color:var(--paragraph)] tracking-wide uppercase"
+                        className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Password
                       </FieldLabel>
@@ -461,7 +461,7 @@ export default function SignUp() {
             </div>
 
             {/* Login link */}
-            <p className="text-center text-sm text-[color:var(--paragraph)] mt-6">
+            <p className="text-center text-sm text-paragraph mt-6">
               Already have an account?{" "}
               <Link
                 to="/auth/login"
