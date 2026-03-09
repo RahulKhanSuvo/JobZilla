@@ -54,18 +54,18 @@ export default function WhyJobZilla() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
             {features.map((feature, idx) => (
               <div key={idx} className="group space-y-4">
-                <div className="size-16 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 group-hover:bg-emerald-50 dark:group-hover:bg-emerald-500/10 transition-all duration-300 group-hover:-translate-y-1">
+                <div className="flex items-center justify-centergroup-hover:bg-emerald-50 dark:group-hover:bg-emerald-500/10 transition-all duration-300 group-hover:-translate-y-1">
                   <img
                     src={feature.icon}
                     alt={feature.title}
-                    className="size-8 object-contain transition-all duration-300 group-hover:scale-110"
+                    className="size-12 object-contain transition-all duration-300 group-hover:scale-110"
                   />
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-lg font-black text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 font-bold leading-relaxed">
+                  <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
                     {feature.description}
                   </p>
                 </div>
