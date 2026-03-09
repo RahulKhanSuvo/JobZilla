@@ -9,6 +9,7 @@ import {
   Twitter,
   Linkedin,
   Github,
+  Plus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 const infoItems = [
@@ -54,26 +55,36 @@ export default function JobSidebar() {
   return (
     <div className="space-y-8">
       {/* Info List */}
-      <div className="bg-[#F5F5F5] dark:bg-slate-900/50 rounded p-6 space-y-6">
-        <div className="space-y-4">
-          {infoItems.map((item, idx) => (
-            <div
-              key={idx}
-              className="flex items-center justify-between group cursor-default border-b pb-3 border-slate-200 dark:border-slate-800"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-slate-500 dark:text-slate-400">
-                  {item.label}
+      <div className="bg-[#F5F5F5] dark:bg-slate-900/50 rounded-xl p-6 space-y-6">
+        <div>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">
+            About Company
+          </h3>
+          <div className="space-y-4">
+            {infoItems.map((item, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between group cursor-default border-b pb-3 border-slate-200 dark:border-slate-800"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-slate-500 dark:text-slate-400">
+                    {item.label}
+                  </span>
+                </div>
+                <span className="text-sm text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
+                  {item.value}
                 </span>
               </div>
-              <span className="text-sm text-slate-900 dark:text-white group-hover:text-emerald-600 transition-colors">
-                {item.value}
-              </span>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="pt-6">
+        <Button className="w-full h-12 bg-white hover:bg-slate-50 text-emerald-600 border border-emerald-100 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded-lg shadow-sm transition-all active:scale-[0.98]">
+          <Plus className="size-4 mr-2" />
+          Follow Company
+        </Button>
+
+        <div className="pt-2">
           <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
             Official Socials
           </p>
