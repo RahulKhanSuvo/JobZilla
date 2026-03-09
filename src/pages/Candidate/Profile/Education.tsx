@@ -2,7 +2,7 @@ import { Timeline, TimelineItem } from "../../../components/common/Timeline";
 
 export default function Education() {
   return (
-    <div className=" bg-white border-gray-100 mt-4">
+    <div className=" bg-white dark:bg-slate-900 border-gray-100 mt-4">
       <h3 className="font-semibold text-xl mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-100">
         Education
       </h3>

@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export default function InfoHeader() {
   return (
-    <div className="flex bg-white p-6 rounded items-center justify-between">
+    <div className="flex bg-white dark:bg-slate-900 p-6 rounded items-center justify-between">
       <div className="flex items-center gap-4">
         <img
           className="size-32 rounded-2xl border"
@@ -22,7 +22,7 @@ export default function InfoHeader() {
             {["React", "Node", "Express", "MongoDB"].map((item, i) => (
               <span
                 key={i}
-                className="text-sm bg-[#F1F1F1] px-3 py-1 rounded-full"
+                className="text-sm bg-[#F1F1F1] dark:bg-slate-800 dark:text-gray-200 px-3 py-1 rounded-full"
               >
                 {item}
               </span>
