@@ -31,9 +31,9 @@ export default function RelatedJobs() {
   return (
     <div className="space-y-6">
       <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-        Related jobs
+        Join our team
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {relatedJobs.map((job) => (
           <JobCard key={job.id} job={job} />
         ))}

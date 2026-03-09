@@ -1,15 +1,17 @@
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
 const tabs = [
   { id: "about", label: "About" },
-  { id: "jobs", label: "Jobs (2)" },
+  { id: "jobs", label: "Openings (2)" },
 ];
 
-export default function JobTabs() {
-  const [activeTab, setActiveTab] = useState("about");
+interface JobTabsProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
 
+export default function JobTabs({ activeTab, setActiveTab }: JobTabsProps) {
   return (
     <div className="flex border-b border-slate-200 dark:border-slate-800 mb-10 overflow-x-auto no-scrollbar">
       {tabs.map((tab) => (
