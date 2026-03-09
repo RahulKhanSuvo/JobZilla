@@ -35,7 +35,7 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
 
         <div className="space-y-5">
           <div className="flex items-start gap-4">
-            <div className="size-[60px] shrink-0 bg-slate-50 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 group-hover:rotate-6 transition-transform duration-500 rounded-xl">
+            <div className="size-[60px] shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
               {job.illustrationType ? (
                 <JobIllustration type={job.illustrationType} />
               ) : (
