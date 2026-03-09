@@ -10,7 +10,7 @@ import JobSidebar from "./components/JobSidebar";
 
 export default function JobDetails() {
   return (
-    <div className="bg-white dark:bg-slate-950 min-h-screen py-10 transition-colors duration-300">
+    <div className="bg-white dark:bg-slate-950 min-h-screen transition-colors duration-300">
       <Container>
         <div className="space-y-6">
           {/* Top Section: Header */}
@@ -28,7 +28,7 @@ export default function JobDetails() {
             </div>
 
             {/* Right Sidebar Column */}
-            <aside className="lg:col-span-4 sticky top-10 space-y-8">
+            <aside className="lg:col-span-4 sticky top-64 space-y-8">
               <JobSidebar />
             </aside>
           </div>
