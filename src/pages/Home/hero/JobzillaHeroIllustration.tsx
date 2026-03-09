@@ -1,6 +1,28 @@
 import { motion } from "framer-motion";
+import { useTheme } from "@/providers/ThemeProvider";
 
 export default function JobzillaHeroIllustration() {
+  const { theme } = useTheme();
+
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+  // ---- Theme colour tokens ----
+  const skyTop = isDark ? "#0f172a" : "#7dd3fc"; // Much softer light blue
+  const skyBot = isDark ? "#1e293b" : "#f1f5f9"; // Soft grayish-white bottom
+  const farBldg = isDark ? "#334155" : "#64748b"; // Slightly lighter for distance
+  const midBldg = isDark ? "#1e293b" : "#94a3b8";
+  const mainBldg = isDark ? "#0f172a" : "#e2e8f0";
+  const mainStroke = isDark ? "#1e293b" : "#cbd5e1";
+  const winColor = isDark ? "#fbbf24" : "#bae6fd"; // Softer window reflection
+  const mainWin = isDark ? "#10b981" : "#7dd3fc";
+  const particle = isDark ? "#10b981" : "#38bdf8";
+  const glowFill = isDark ? "#10b981" : "#38bdf8";
+  const cloudBase = isDark ? 0.05 : 0.85; // Fluffier white clouds on light sky
+
   return (
     <motion.svg
       viewBox="0 0 800 600"
@@ -10,94 +32,185 @@ export default function JobzillaHeroIllustration() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      {/* Background Gradients */}
       <defs>
-        <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style={{ stopColor: "#0f172a", stopOpacity: 1 }} />
-          <stop
-            offset="100%"
-            style={{ stopColor: "#1e293b", stopOpacity: 1 }}
-          />
+        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={skyTop} stopOpacity={1} />
+          <stop offset="100%" stopColor={skyBot} stopOpacity={1} />
         </linearGradient>
-        <linearGradient id="emeraldGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop
-            offset="0%"
-            style={{ stopColor: "#10b981", stopOpacity: 0.2 }}
-          />
-          <stop
-            offset="100%"
-            style={{ stopColor: "#10b981", stopOpacity: 0 }}
-          />
+
+        {/* Sun radial glow (day only) */}
+        <radialGradient id="sunAura" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#fef9c3" stopOpacity="0.9" />
+          <stop offset="60%" stopColor="#fde047" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#fde047" stopOpacity="0" />
+        </radialGradient>
+
+        <linearGradient id="glowGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={glowFill} stopOpacity="0.25" />
+          <stop offset="100%" stopColor={glowFill} stopOpacity="0" />
         </linearGradient>
       </defs>
 
-      {/* Sky */}
-      <rect width="800" height="600" fill="url(#skyGradient)" />
+      {/* ── Sky ── */}
+      <rect width="800" height="600" fill="url(#skyGrad)" />
 
-      {/* Animated Clouds */}
+      {/* ── SUN / MOON ── */}
+      {!isDark ? (
+        <motion.g>
+          {/* big diffuse halo */}
+          <motion.circle
+            cx="690"
+            cy="100"
+            r="130"
+            fill="url(#sunAura)"
+            animate={{ r: [130, 150, 130], opacity: [0.7, 0.9, 0.7] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* sun disc */}
+          <motion.circle
+            cx="690"
+            cy="100"
+            r="46"
+            fill="#fde047"
+            animate={{ r: [46, 50, 46] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* rays */}
+          {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(
+            (deg, i) => {
+              const r = (deg * Math.PI) / 180;
+              return (
+                <motion.line
+                  key={i}
+                  x1={690 + Math.cos(r) * 57}
+                  y1={100 + Math.sin(r) * 57}
+                  x2={690 + Math.cos(r) * 80}
+                  y2={100 + Math.sin(r) * 80}
+                  stroke="#fef08a"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  animate={{ opacity: [0.3, 0.9, 0.3] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.15,
+                  }}
+                />
+              );
+            },
+          )}
+        </motion.g>
+      ) : (
+        <motion.g>
+          {/* moon halo */}
+          <motion.circle
+            cx="690"
+            cy="100"
+            r="100"
+            fill="white"
+            opacity="0.1"
+            animate={{ opacity: [0.05, 0.15, 0.05], scale: [1, 1.1, 1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* moon disc */}
+          <circle cx="690" cy="100" r="35" fill="#f1f5f9" />
+          {/* moon crater details */}
+          <circle cx="680" cy="90" r="6" fill="#cbd5e1" opacity="0.4" />
+          <circle cx="705" cy="110" r="4" fill="#cbd5e1" opacity="0.4" />
+          <circle cx="695" cy="85" r="3" fill="#cbd5e1" opacity="0.4" />
+        </motion.g>
+      )}
+
+      {/* ── BIRDS (light mode) ── */}
+      {!isDark && (
+        <motion.g
+          fill="none"
+          stroke="#0f172a"
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.5"
+        >
+          <motion.path
+            d="M0 0 Q6 -6 12 0 Q18 -6 24 0"
+            animate={{ x: [-60, 860], y: [130, 105, 140, 115] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.path
+            d="M0 0 Q5 -5 10 0 Q15 -5 20 0"
+            animate={{ x: [-100, 860], y: [165, 145, 170, 150] }}
+            transition={{
+              duration: 28,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 6,
+            }}
+          />
+          <motion.path
+            d="M0 0 Q4 -4 8 0 Q12 -4 16 0"
+            animate={{ x: [-30, 860], y: [210, 195, 215] }}
+            transition={{
+              duration: 17,
+              repeat: Infinity,
+              ease: "linear",
+              delay: 13,
+            }}
+          />
+        </motion.g>
+      )}
+
+      {/* ── CLOUDS ── */}
       <motion.g
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2 }}
       >
-        {/* Large Cloud 1 */}
         <motion.path
-          d="M100 120 Q120 100 150 110 T200 120 T250 110 T300 130 T250 150 T200 140 T150 150 T100 130 Z"
+          d="M90 115 Q120 92 155 105 T220 118 T280 105 T335 128 T275 152 T210 140 T148 152 T90 132 Z"
           fill="white"
-          opacity="0.05"
           animate={{
-            x: [-20, 40, -20],
-            opacity: [0.03, 0.08, 0.03],
+            x: [-20, 45, -20],
+            opacity: [cloudBase, cloudBase * 1.5, cloudBase],
           }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
         />
-        {/* Small Cloud 2 */}
         <motion.path
-          d="M500 80 Q520 70 540 80 T580 85 T620 75 T580 100 T540 95 T500 100 Z"
+          d="M490 75 Q514 62 540 74 T582 82 T624 70 T585 100 T538 94 T490 100 Z"
           fill="white"
-          opacity="0.07"
           animate={{
-            x: [0, -30, 0],
-            opacity: [0.05, 0.1, 0.05],
+            x: [0, -35, 0],
+            opacity: [cloudBase * 0.9, cloudBase * 1.4, cloudBase * 0.9],
           }}
           transition={{
-            duration: 12,
+            duration: 13,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 2,
           }}
         />
-        {/* Medium Cloud 3 */}
         <motion.path
-          d="M650 200 Q670 185 700 190 T750 200 T700 220 T650 215 Z"
+          d="M395 195 Q428 174 462 186 T525 200 T462 226 T395 216 Z"
           fill="white"
-          opacity="0.04"
           animate={{
-            x: [-10, 20, -10],
-            opacity: [0.02, 0.06, 0.02],
+            x: [-12, 22, -12],
+            opacity: [cloudBase * 0.7, cloudBase * 1.2, cloudBase * 0.7],
           }}
           transition={{
-            duration: 18,
+            duration: 19,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 5,
           }}
         />
-        {/* Cloud 4 */}
         <motion.path
-          d="M50 250 Q80 230 110 240 T160 250 T110 270 T50 260 Z"
+          d="M45 248 Q78 228 112 240 T165 252 T110 272 T45 262 Z"
           fill="white"
-          opacity="0.06"
           animate={{
-            x: [20, -20, 20],
-            opacity: [0.03, 0.09, 0.03],
+            x: [22, -22, 22],
+            opacity: [cloudBase * 0.8, cloudBase * 1.3, cloudBase * 0.8],
           }}
           transition={{
-            duration: 20,
+            duration: 21,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 1,
@@ -105,87 +218,104 @@ export default function JobzillaHeroIllustration() {
         />
       </motion.g>
 
-      {/* Distant Buildings (Silhouettes) */}
+      {/* ── DISTANT BUILDINGS ── */}
       <motion.g
         initial={{ y: 20 }}
         animate={{ y: 0 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
       >
-        <path
-          d="M50 600 L50 450 L100 450 L100 600 Z"
-          fill="#334155"
-          opacity="0.3"
-        />
-        <path
-          d="M120 600 L120 400 L180 400 L180 600 Z"
-          fill="#334155"
-          opacity="0.3"
-        />
-        <path
-          d="M200 600 L200 480 L250 480 L250 600 Z"
-          fill="#334155"
-          opacity="0.3"
-        />
-        <path
-          d="M550 600 L550 420 L620 420 L620 600 Z"
-          fill="#334155"
-          opacity="0.3"
-        />
-        <path
-          d="M650 600 L650 460 L720 460 L720 600 Z"
-          fill="#334155"
-          opacity="0.3"
-        />
+        {[
+          "M20 600 L20 480 L70 480 L70 600 Z",
+          "M50 600 L50 450 L100 450 L100 600 Z",
+          "M80 600 L80 370 L130 370 L130 600 Z",
+          "M120 600 L120 400 L180 400 L180 600 Z",
+          "M155 600 L155 460 L185 460 L185 600 Z",
+          "M200 600 L200 480 L250 480 L250 600 Z",
+          "M240 600 L240 395 L280 395 L280 600 Z",
+          "M260 600 L260 420 L310 420 L310 600 Z",
+          "M310 600 L310 470 L340 470 L340 600 Z",
+          "M470 600 L470 455 L505 455 L505 600 Z",
+          "M520 600 L520 440 L570 440 L570 600 Z",
+          "M550 600 L550 420 L620 420 L620 600 Z",
+          "M625 600 L625 380 L660 380 L660 600 Z",
+          "M650 600 L650 460 L720 460 L720 600 Z",
+          "M720 600 L720 390 L750 390 L750 600 Z",
+          "M740 600 L740 430 L780 430 L780 600 Z",
+          "M775 600 L775 470 L800 470 L800 600 Z",
+        ].map((d, i) => (
+          <path
+            key={i}
+            d={d}
+            fill={farBldg}
+            opacity={i % 3 === 0 ? 0.2 : 0.35}
+          />
+        ))}
       </motion.g>
 
-      {/* Mid Buildings with glowing windows */}
+      {/* ── MID BUILDINGS with windows ── */}
       <motion.g
         initial={{ y: 30 }}
         animate={{ y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
       >
-        <path d="M0 600 L0 520 L80 520 L80 600 Z" fill="#1e293b" />
+        <path d="M0 600 L0 520 L80 520 L80 600 Z" fill={midBldg} />
+        {[
+          { x: 20, y: 540, d: 0.2 },
+          { x: 50, y: 540, d: 1.5 },
+        ].map(({ x, y, d }, i) => (
+          <motion.rect
+            key={i}
+            x={x}
+            y={y}
+            width="10"
+            height="10"
+            fill={winColor}
+            animate={{ fillOpacity: [0.35, 0.85, 0.35] }}
+            transition={{ duration: 3, repeat: Infinity, delay: d }}
+          />
+        ))}
+
+        <path d="M100 600 L100 540 L160 540 L160 600 Z" fill={midBldg} />
         <motion.rect
-          x="20"
-          y="540"
-          width="10"
-          height="10"
-          fill="#fbbf24"
-          animate={{ fillOpacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 0.2 }}
-        />
-        <motion.rect
-          x="50"
-          y="540"
-          width="10"
-          height="10"
-          fill="#fbbf24"
-          animate={{ fillOpacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+          x="120"
+          y="560"
+          width="8"
+          height="8"
+          fill={winColor}
+          animate={{ fillOpacity: [0.25, 0.7, 0.25] }}
+          transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
         />
 
-        <path d="M700 600 L700 500 L800 500 L800 600 Z" fill="#1e293b" />
+        <path d="M600 600 L600 530 L670 530 L670 600 Z" fill={midBldg} />
         <motion.rect
-          x="730"
-          y="520"
-          width="10"
-          height="10"
-          fill="#fbbf24"
-          animate={{ fillOpacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 0.8 }}
+          x="620"
+          y="550"
+          width="12"
+          height="12"
+          fill={winColor}
+          animate={{ fillOpacity: [0.3, 0.75, 0.3] }}
+          transition={{ duration: 3.5, repeat: Infinity, delay: 1.2 }}
         />
-        <motion.rect
-          x="760"
-          y="520"
-          width="10"
-          height="10"
-          fill="#fbbf24"
-          animate={{ fillOpacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 2.1 }}
-        />
+
+        <path d="M700 600 L700 500 L800 500 L800 600 Z" fill={midBldg} />
+        {[
+          { x: 730, d: 0.8 },
+          { x: 760, d: 2.1 },
+        ].map(({ x, d }, i) => (
+          <motion.rect
+            key={i}
+            x={x}
+            y="520"
+            width="10"
+            height="10"
+            fill={winColor}
+            animate={{ fillOpacity: [0.3, 0.8, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, delay: d }}
+          />
+        ))}
       </motion.g>
 
-      {/* Main Skyscraper Mascot is standing on */}
+      {/* ── MAIN SKYSCRAPER ── */}
       <motion.g
         initial={{ y: 50 }}
         animate={{ y: 0 }}
@@ -193,8 +323,8 @@ export default function JobzillaHeroIllustration() {
       >
         <path
           d="M300 600 L300 350 L500 350 L500 600 Z"
-          fill="#0f172a"
-          stroke="#1e293b"
+          fill={mainBldg}
+          stroke={mainStroke}
           strokeWidth="2"
         />
         {[330, 360, 390, 420, 455].map((x, i) => (
@@ -204,27 +334,42 @@ export default function JobzillaHeroIllustration() {
             y={380}
             width={15}
             height={15}
-            fill="#10b981"
-            animate={{ fillOpacity: [0.1, 0.4, 0.1] }}
+            fill={mainWin}
+            animate={{ fillOpacity: [0.15, 0.5, 0.15] }}
             transition={{ duration: 4, repeat: Infinity, delay: i * 0.4 }}
           />
         ))}
       </motion.g>
 
-      {/* Mascot: The Jobzilla (Hero Pose) */}
+      {/* ── MASCOT ── */}
       <motion.g
-        transform="translate(340, 180) scale(1.5)"
-        animate={{ y: [0, -15, 0] }}
+        transform="translate(340, 240) scale(1.5)"
+        animate={{ y: [0, -10, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         whileHover={{ scale: 1.6 }}
       >
-        {/* Shadow glow under mascot */}
+        {/* Backdrop — keeps mascot readable against bright sky */}
+        {!isDark && (
+          <>
+            {/* Outer soft halo */}
+            <motion.circle
+              cx="50"
+              cy="45"
+              r="75"
+              fill="white"
+              animate={{ opacity: [0.18, 0.28, 0.18] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Inner solid fog */}
+            <circle cx="50" cy="45" r="55" fill="white" opacity="0.55" />
+          </>
+        )}
         <motion.ellipse
           cx="50"
           cy="90"
           rx="40"
           ry="10"
-          fill="url(#emeraldGlow)"
+          fill="url(#glowGrad)"
           animate={{
             rx: [40, 55, 40],
             ry: [10, 15, 10],
@@ -232,23 +377,15 @@ export default function JobzillaHeroIllustration() {
           }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
-
-        {/* Mascot Body */}
         <path
           fill="#10b981"
           d="M75 35 C85 35 90 45 90 55 C90 75 70 85 50 85 C30 85 10 75 10 55 C10 40 25 30 40 30 C45 30 50 25 55 20 C60 15 70 15 75 20 L75 35 Z"
         />
-
-        {/* Back Spikes */}
         <path fill="#10b981" d="M35 30 L25 15 L45 25 Z" />
         <path fill="#10b981" d="M50 22 L45 5 L60 18 Z" />
         <path fill="#10b981" d="M65 20 L65 2 L75 15 Z" />
-
-        {/* Eye */}
         <circle cx="70" cy="45" r="4" fill="white" />
         <circle cx="71" cy="45" r="2" fill="black" />
-
-        {/* Smile */}
         <path
           d="M65 65 Q75 65 85 55"
           fill="none"
@@ -256,8 +393,6 @@ export default function JobzillaHeroIllustration() {
           strokeWidth="2"
           strokeLinecap="round"
         />
-
-        {/* Briefcase */}
         <rect
           x="25"
           y="55"
@@ -276,12 +411,12 @@ export default function JobzillaHeroIllustration() {
         />
       </motion.g>
 
-      {/* Floating UI Elements (Abstract) */}
+      {/* ── PARTICLES ── */}
       <motion.circle
         cx="100"
         cy="100"
         r="5"
-        fill="#10b981"
+        fill={particle}
         animate={{ x: [0, 20, 0], y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -289,7 +424,7 @@ export default function JobzillaHeroIllustration() {
         cx="700"
         cy="150"
         r="8"
-        fill="#10b981"
+        fill={particle}
         animate={{ x: [0, -30, 0], y: [0, 30, 0], opacity: [0.1, 0.3, 0.1] }}
         transition={{
           duration: 10,
@@ -303,7 +438,7 @@ export default function JobzillaHeroIllustration() {
         y="80"
         width="40"
         height="2"
-        fill="#10b981"
+        fill={particle}
         rx="1"
         animate={{ x: [0, 40, 0], opacity: [0.2, 0.4, 0.2] }}
         transition={{
@@ -318,7 +453,7 @@ export default function JobzillaHeroIllustration() {
         y="200"
         width="30"
         height="2"
-        fill="#10b981"
+        fill={particle}
         rx="1"
         animate={{ x: [0, -50, 0], y: [0, 20, 0], opacity: [0.1, 0.3, 0.1] }}
         transition={{
