@@ -1,4 +1,4 @@
-import JobCard, { type Job } from "../../FindJob/components/JobCard";
+import JobCard, { type Job } from "@/pages/Home/Featured/components/JobCard";
 
 const relatedJobs: Job[] = [
   {
@@ -35,7 +35,7 @@ export default function RelatedJobs() {
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {relatedJobs.map((job) => (
-          <JobCard key={job.id} job={job} layout="grid" />
+          <JobCard key={job.id} job={job} />
         ))}
       </div>
     </div>
