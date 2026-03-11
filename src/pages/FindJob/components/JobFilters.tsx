@@ -94,27 +94,6 @@ export default function JobFilters() {
         </Select>
       </Field>
 
-      {/* Technology */}
-      <Field className="space-y-2">
-        <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
-          Techology
-        </label>
-        <Select defaultValue="any">
-          <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
-            <SelectValue placeholder="Any Technology" />
-          </SelectTrigger>
-          <SelectContent
-            position="popper"
-            className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
-          >
-            <SelectItem value="any">Any Technology</SelectItem>
-            <SelectItem value="react">React</SelectItem>
-            <SelectItem value="vue">Vue</SelectItem>
-            <SelectItem value="node">Node.js</SelectItem>
-          </SelectContent>
-        </Select>
-      </Field>
-
       {/* Salary Range */}
       <Field className="space-y-3">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
