@@ -26,12 +26,13 @@ export default function SignUp() {
 
   const form = useForm<signUpFormData>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: { role: "candidate" },
+    defaultValues: { role: "CANDIDATE" },
   });
 
   const selectedRole = form.watch("role");
 
   const onSubmit: SubmitHandler<signUpFormData> = async (data) => {
+    console.log("userSignUp", data);
     try {
       await userSignUp(data).unwrap();
       toast.success("Account created successfully! Please log in.");
@@ -42,7 +43,7 @@ export default function SignUp() {
     }
   };
 
-  const switchRole = (role: "candidate" | "employer") => {
+  const switchRole = (role: "CANDIDATE" | "EMPLOYER") => {
     form.reset({ role } as Partial<signUpFormData>);
   };
 
@@ -109,9 +110,9 @@ export default function SignUp() {
             <div className="mt-6 flex rounded-full border border-border bg-muted p-1 w-full">
               <button
                 type="button"
-                onClick={() => switchRole("candidate")}
+                onClick={() => switchRole("CANDIDATE")}
                 className={`flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2 rounded-full transition-all duration-200 ${
-                  selectedRole === "candidate"
+                  selectedRole === "CANDIDATE"
                     ? "bg-white text-primary shadow-sm"
                     : "text-paragraph hover:text-foreground"
                 }`}
@@ -121,9 +122,9 @@ export default function SignUp() {
               </button>
               <button
                 type="button"
-                onClick={() => switchRole("employer")}
+                onClick={() => switchRole("EMPLOYER")}
                 className={`flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2 rounded-full transition-all duration-200 ${
-                  selectedRole === "employer"
+                  selectedRole === "EMPLOYER"
                     ? "bg-white text-primary shadow-sm"
                     : "text-paragraph hover:text-foreground"
                 }`}
@@ -140,12 +141,12 @@ export default function SignUp() {
               className="mt-6"
             >
               <FieldGroup className="gap-4">
-                {selectedRole === "candidate" ? (
+                {selectedRole === "CANDIDATE" ? (
                   <>
                     {/* Full Name */}
                     <Field>
                       <FieldLabel
-                        htmlFor="fullName"
+                        htmlFor="name"
                         className="text-xs font-semibold text-paragraph tracking-wide uppercase"
                       >
                         Full Name
@@ -260,10 +261,10 @@ export default function SignUp() {
                           placeholder="Acme Inc."
                           aria-invalid={
                             !!(form.formState.errors as Record<string, unknown>)
-                              .companyName
+                              .name
                           }
                           className="pr-10"
-                          {...form.register("companyName" as never)}
+                          {...form.register("name" as never)}
                         />
                         <Building2 className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
                       </div>
@@ -272,7 +273,7 @@ export default function SignUp() {
                           string,
                           { message?: string }
                         >
-                      ).companyName && (
+                      ).name && (
                         <FieldError
                           errors={[
                             (
@@ -280,7 +281,7 @@ export default function SignUp() {
                                 string,
                                 { message?: string }
                               >
-                            ).companyName,
+                            ).name,
                           ]}
                         />
                       )}
