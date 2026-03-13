@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const profileSchema = z.object({
+  // Basic info (from User + Candidate model)
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 characters"),
@@ -9,31 +10,42 @@ export const profileSchema = z.object({
   gender: z.enum(["male", "female", "other"]).optional(),
   maritalStatus: z.string().optional(),
   language: z.string().optional(),
-  age: z.string().optional(),
-  experience: z.string().optional(),
+  aboutMe: z.string().optional(),
+
+  // Skills — array of skill strings
+  skills: z.array(z.string()).optional(),
+
+  // Education — mirrors Prisma `eduction` model
   educationList: z
     .array(
       z.object({
-        academy: z.string().min(1, "Academy is required"),
-        title: z.string().min(1, "Title is required"),
-        startYear: z.string().min(1, "Start year is required"),
-        endYear: z.string().min(1, "End year is required"),
-        description: z.string().optional(),
+        institution: z.string().min(1, "Institution is required"),
+        major: z.string().min(1, "Major is required"),
+        field: z.string().min(1, "Field of study is required"),
+        gap: z.number().min(0, "Gap must be 0 or more").optional(),
+        startData: z.string().min(1, "Start date is required"),
+        endData: z.string().optional(),
+        isStudying: z.boolean().optional(),
       }),
     )
     .optional(),
+
+  // Work Experience — mirrors Prisma `workExperience` model
   experienceList: z
     .array(
       z.object({
-        company: z.string().min(1, "Company is required"),
-        startYear: z.string().min(1, "Start year is required"),
-        endYear: z.string().min(1, "End year is required"),
-        description: z.string().optional(),
+        jobTitle: z.string().min(1, "Job title is required"),
+        companyName: z.string().min(1, "Company name is required"),
+        industry: z.string().min(1, "Industry is required"),
+        startData: z.string().min(1, "Start date is required"),
+        endData: z.string().optional(),
+        isWorking: z.boolean().optional(),
+        Description: z.string().optional(),
       }),
     )
     .optional(),
-  skills: z.array(z.string()).optional(),
-  aboutMe: z.string().optional(),
+
+  // Social links
   facebook: z.string().url("Invalid URL").or(z.literal("")).optional(),
   linkedin: z.string().url("Invalid URL").or(z.literal("")).optional(),
   twitter: z.string().url("Invalid URL").or(z.literal("")).optional(),
