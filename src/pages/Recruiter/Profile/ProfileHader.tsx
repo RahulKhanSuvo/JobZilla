@@ -6,7 +6,7 @@ export default function ProfileHader() {
   return (
     <CommonWrapper className="flex flex-col md:flex-row items-center justify-between gap-6 p-6">
       <div className="flex items-center gap-5">
-        <div className="size-20 rounded-xl overflow-hidden border-2 border-border shadow-sm shrink-0">
+        <div className="size-20 overflow-hidden shrink-0">
           <img
             src={demoImage}
             alt="ABC Tech"

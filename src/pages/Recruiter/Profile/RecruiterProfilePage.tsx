@@ -8,11 +8,11 @@ export default function RecruiterProfilePage() {
     <div className="space-y-6">
       <DashboardTitle>Recruiter Profile</DashboardTitle>
       <ProfileHader />
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
-        <div className="xl:col-span-1">
+      <div className="flex flex-col gap-6">
+        <div className="">
           <CompanyInfo />
         </div>
-        <div className="xl:col-span-2">
+        <div className="">
           <AboutCompany />
         </div>
       </div>
