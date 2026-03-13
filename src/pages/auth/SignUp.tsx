@@ -47,7 +47,7 @@ export default function SignUp() {
     if (role === "CANDIDATE") {
       form.reset({
         role: "CANDIDATE",
-        fullName: "",
+        name: "",
         email: "",
         password: "",
       });
@@ -167,15 +167,15 @@ export default function SignUp() {
                       </FieldLabel>
                       <div className="relative">
                         <Input
-                          id="fullName"
+                          id="name"
                           type="text"
                           placeholder="Alex Thompson"
                           aria-invalid={
                             !!(form.formState.errors as Record<string, unknown>)
-                              .fullName
+                              .name
                           }
                           className="pr-10"
-                          {...form.register("fullName" as never)}
+                          {...form.register("name" as never)}
                         />
                         <User className="absolute right-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
                       </div>
@@ -184,7 +184,7 @@ export default function SignUp() {
                           string,
                           { message?: string }
                         >
-                      ).fullName && (
+                      ).name && (
                         <FieldError
                           errors={[
                             (
@@ -192,7 +192,7 @@ export default function SignUp() {
                                 string,
                                 { message?: string }
                               >
-                            ).fullName,
+                            ).name,
                           ]}
                         />
                       )}

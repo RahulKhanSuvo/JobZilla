@@ -13,7 +13,7 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 // ── Sign Up ─────────────────────────────────────────────
 const candidateSchema = z.object({
   role: z.literal("CANDIDATE"),
-  fullName: z.string().min(1, { message: "Full name is required" }),
+  name: z.string().min(1, { message: "Full name is required" }),
   email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
