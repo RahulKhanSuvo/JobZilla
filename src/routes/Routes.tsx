@@ -30,6 +30,7 @@ import Contact from "@/pages/Contact/Contact";
 import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
 import JobDetails from "@/pages/JobDetails/JobDetails";
 import Pricing from "@/pages/Pricing/Pricing";
+import ProtectedRoute from "./ProtectedRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -88,9 +89,9 @@ const router = createBrowserRouter([
   {
     path: "/candidate",
     element: (
-      // <ProtectedRoute allowRole={["USER"]}>
-      <CandidateLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute allowRole={["CANDIDATE"]}>
+        <CandidateLayout />
+      </ProtectedRoute>
     ),
     children: [
       {
@@ -147,9 +148,9 @@ const router = createBrowserRouter([
   {
     path: "/recruiter",
     element: (
-      // <ProtectedRoute allowRole={["USER"]}>
-      <RecruiterLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute allowRole={["EMPLOYER"]}>
+        <RecruiterLayout />
+      </ProtectedRoute>
     ),
     children: [
       {

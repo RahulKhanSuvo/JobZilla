@@ -13,10 +13,10 @@ export default function ProtectedRoute({
   const user = useSelector(selectCurrentUser);
   console.log("route", user);
   if (!user) {
-    return <Navigate to={"/login"} replace />;
+    return <Navigate to={"/auth/login"} replace />;
   }
   if (!allowRole.includes(user.role)) {
-    return <Navigate to={"/login"} replace />;
+    return <Navigate to={"/auth/login"} replace />;
   }
   return children;
 }
