@@ -2,7 +2,7 @@ import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 export default function BasicInfo() {
   return (
-    <div className=" p-6 bg-white dark:bg-slate-900 dark:text-gray-300 w-1/3 space-y-4">
+    <div className=" p-6 bg-white dark:bg-slate-900 dark:text-gray-300 w-1/3 space-y-4 h-fit">
       <div className="flex items-center justify-between border-b border-[#E5E5E5] dark:border-slate-800 pb-3.5 gap-2">
         <div className="">Career Finding</div>
         <h3 className="font-semibold dark:text-white">UI UX Designer</h3>

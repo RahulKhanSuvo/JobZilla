@@ -1,4 +1,5 @@
 import Education from "./Education";
+import WorkExperience from "./WorkExperience";
 
 export default function AboutUseMe() {
   return (
@@ -21,6 +22,7 @@ export default function AboutUseMe() {
         and who has demonstrated proven expertise.
       </p>
       <Education />
+      <WorkExperience />
     </div>
   );
 }
