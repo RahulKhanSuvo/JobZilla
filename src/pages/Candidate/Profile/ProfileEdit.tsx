@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonWrapper from "@/components/common/CommonWrapper";
 import DashboardTitle from "@/components/common/DashboardTitle";
 import emptyImage from "@/assets/logos/image-up.jpg";
@@ -13,7 +14,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -28,10 +29,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { profileSchema, type ProfileFormData } from "./profileSchema";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
+import { useUpdataCandidateMutation } from "@/redux/features/candidate/candidate.api";
+import { errorToast } from "@/utils/errorToast";
 
 export default function ProfileEdit() {
+  const { data: userData } = useCurrentUserQuery();
+  const [updateCandidate] = useUpdataCandidateMutation();
+
   const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const candidate = (userData?.data as any)?.candidate || {};
+  const avatarUrl = previewUrl || candidate.avatar || emptyImage;
+
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -48,9 +58,6 @@ export default function ProfileEdit() {
       facebook: "",
       linkedin: "",
       twitter: "",
-      pinterest: "",
-      instagram: "",
-      youtube: "",
       educationList: [
         {
           institution: "",
@@ -75,6 +82,56 @@ export default function ProfileEdit() {
       ],
     },
   });
+
+  useEffect(() => {
+    if (userData?.data) {
+      const data = userData.data as any;
+      const email = data.email || "";
+      const candidate = data.candidate || {};
+
+      form.reset({
+        fullName: data.name || "",
+        email: email,
+        phone: candidate.phone || "",
+        location: candidate.location || "",
+        dob: candidate.dob || "",
+        gender: candidate.gender || null,
+        maritalStatus: candidate.maritalStatus || "",
+        language: candidate.language || null,
+        skills: candidate.skills || [],
+        aboutMe: candidate.aboutMe || "",
+        facebook: candidate.facebook || "",
+        linkedin: candidate.linkedin || "",
+        twitter: candidate.twitter || "",
+        educationList: candidate.educationList?.length
+          ? candidate.educationList
+          : [
+              {
+                institution: "",
+                major: "",
+                field: "",
+                gap: 0,
+                startData: "",
+                endData: "",
+                isStudying: false,
+              },
+            ],
+        experienceList: candidate.experienceList?.length
+          ? candidate.experienceList
+          : [
+              {
+                jobTitle: "",
+                companyName: "",
+                industry: "",
+                startData: "",
+                endData: "",
+                isWorking: false,
+                Description: "",
+              },
+            ],
+      });
+    }
+  }, [userData, form]);
 
   const {
     fields: educationFields,
@@ -102,9 +159,17 @@ export default function ProfileEdit() {
     }
   };
 
-  const onSubmit = (data: ProfileFormData) => {
+  const onSubmit = async (data: ProfileFormData) => {
     console.log("Form Data:", data);
-    toast.success("Profile updated successfully!");
+    try {
+      const res = await updateCandidate(data).unwrap();
+      console.log(res);
+      toast.success("Profile updated successfully!");
+      setPreviewUrl(null);
+    } catch (error) {
+      errorToast(error);
+      console.log(error);
+    }
   };
 
   return (
@@ -126,7 +191,7 @@ export default function ProfileEdit() {
           <div className="flex gap-4 pb-7 border-b ">
             <div className="size-28 ">
               <img
-                src={previewUrl || emptyImage}
+                src={avatarUrl}
                 alt="empty"
                 className="size-28 object-cover"
               />
@@ -134,7 +199,7 @@ export default function ProfileEdit() {
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1">
                 <h4 className="font-semibold text-[14px]">
-                  Upload a new avator
+                  Upload a new avatar
                 </h4>
                 <p className="text-[12px]">JPG, PNG or GIF (max. 800x400px)</p>
               </div>

@@ -8,6 +8,7 @@ export interface User {
   resumeUrl: string | null;
   createdAt: string;
   updatedAt: string;
+  candidate?: unknown;
 }
 
 export interface LoginSuccessResponse {
