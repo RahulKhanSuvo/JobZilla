@@ -12,13 +12,9 @@ export type LoginFormData = z.infer<typeof loginSchema>;
 
 // ── Sign Up ─────────────────────────────────────────────
 const candidateSchema = z.object({
-  role: z.literal("candidate"),
-  fullName: z.string().min(1, { message: "Full name is required" }),
+  role: z.literal("CANDIDATE"),
+  name: z.string().min(1, { message: "Full name is required" }),
   email: z.string().email({ message: "Invalid email address" }),
-  phone: z
-    .string()
-    .min(1, { message: "Phone number is required" })
-    .regex(/^\+?[0-9]{10,15}$/, { message: "Invalid phone number" }),
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters" })
@@ -26,8 +22,8 @@ const candidateSchema = z.object({
 });
 
 const employerSchema = z.object({
-  role: z.literal("employer"),
-  companyName: z.string().min(1, { message: "Company name is required" }),
+  role: z.literal("EMPLOYER"),
+  name: z.string().min(1, { message: "Company name is required" }),
   email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()

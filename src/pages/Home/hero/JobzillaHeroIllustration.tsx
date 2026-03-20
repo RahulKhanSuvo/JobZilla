@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useTheme } from "@/providers/ThemeProvider";
+import { useMemo } from "react";
 
 export default function JobzillaHeroIllustration() {
   const { theme } = useTheme();
@@ -9,6 +10,17 @@ export default function JobzillaHeroIllustration() {
     (theme === "system" &&
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+  // Memoize star data with hardcoded delays to satisfy purity rules and keep values stable
+  const starsData = useMemo(
+    () => [
+      { x: 100, y: 50, d: 2, s: 1.2, rd: 8.5 },
+      { x: 400, y: 80, d: 5, s: 0.8, rd: 12.2 },
+      { x: 250, y: 30, d: 8, s: 1.5, rd: 6.7 },
+      { x: 600, y: 40, d: 11, s: 1.0, rd: 9.4 },
+    ],
+    [],
+  );
 
   // ---- Theme colour tokens ----
   const skyTop = isDark ? "#0f172a" : "#7dd3fc"; // Much softer light blue
@@ -119,6 +131,43 @@ export default function JobzillaHeroIllustration() {
           <circle cx="680" cy="90" r="6" fill="#cbd5e1" opacity="0.4" />
           <circle cx="705" cy="110" r="4" fill="#cbd5e1" opacity="0.4" />
           <circle cx="695" cy="85" r="3" fill="#cbd5e1" opacity="0.4" />
+        </motion.g>
+      )}
+
+      {/* ── SHOOTING STARS (dark mode) ── */}
+      {isDark && (
+        <motion.g>
+          {starsData.map((star, i) => (
+            <motion.g
+              key={i}
+              initial={{ x: star.x, y: star.y, opacity: 0, scale: 0 }}
+              animate={{
+                x: [star.x, star.x + 300],
+                y: [star.y, star.y + 150],
+                opacity: [0, 1, 1, 0],
+                scale: [0, 1, 1, 0],
+              }}
+              transition={{
+                duration: star.s,
+                repeat: Infinity,
+                repeatDelay: star.rd,
+                delay: star.d,
+                ease: "easeIn",
+              }}
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="-50"
+                y2="-25"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                opacity="0.8"
+              />
+              <circle cx="0" cy="0" r="2" fill="white" />
+            </motion.g>
+          ))}
         </motion.g>
       )}
 
@@ -341,12 +390,19 @@ export default function JobzillaHeroIllustration() {
         ))}
       </motion.g>
 
-      {/* ── MASCOT ── */}
+      {/* ── JOBZILLA MASCOT ── */}
       <motion.g
         transform="translate(340, 240) scale(1.5)"
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        whileHover={{ scale: 1.6 }}
+        animate={{
+          y: [0, -15, 0],
+          rotate: [-1, 1, -1],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        whileHover={{ scale: 1.7, rotate: 5 }}
       >
         {/* Backdrop — keeps mascot readable against bright sky */}
         {!isDark && (
@@ -355,60 +411,84 @@ export default function JobzillaHeroIllustration() {
             <motion.circle
               cx="50"
               cy="45"
-              r="75"
+              r="80"
               fill="white"
-              animate={{ opacity: [0.18, 0.28, 0.18] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.05, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
             {/* Inner solid fog */}
-            <circle cx="50" cy="45" r="55" fill="white" opacity="0.55" />
+            <circle cx="50" cy="45" r="60" fill="white" opacity="0.5" />
           </>
         )}
+
+        {/* Ground Glow */}
         <motion.ellipse
           cx="50"
-          cy="90"
-          rx="40"
-          ry="10"
+          cy="95"
+          rx="45"
+          ry="12"
           fill="url(#glowGrad)"
           animate={{
-            rx: [40, 55, 40],
-            ry: [10, 15, 10],
-            opacity: [0.2, 0.4, 0.2],
+            rx: [45, 60, 45],
+            ry: [12, 18, 12],
+            opacity: [0.2, 0.5, 0.2],
           }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
+
+        {/* Body (Jobzilla Official Shape) */}
         <path
           fill="#10b981"
           d="M75 35 C85 35 90 45 90 55 C90 75 70 85 50 85 C30 85 10 75 10 55 C10 40 25 30 40 30 C45 30 50 25 55 20 C60 15 70 15 75 20 L75 35 Z"
         />
-        <path fill="#10b981" d="M35 30 L25 15 L45 25 Z" />
-        <path fill="#10b981" d="M50 22 L45 5 L60 18 Z" />
-        <path fill="#10b981" d="M65 20 L65 2 L75 15 Z" />
+
+        {/* Official Back Spikes */}
+        <path fill="#059669" d="M35 30 L25 15 L45 25 Z" />
+        <path fill="#059669" d="M50 22 L45 5 L60 18 Z" />
+        <path fill="#059669" d="M65 20 L65 2 L75 15 Z" />
+
+        {/* Official Eye */}
         <circle cx="70" cy="45" r="4" fill="white" />
-        <circle cx="71" cy="45" r="2" fill="black" />
+        <motion.circle
+          cx="71"
+          cy="45"
+          r="2"
+          fill="black"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
+        />
+
+        {/* Official Smile/Mouth */}
         <path
           d="M65 65 Q75 65 85 55"
           fill="none"
           stroke="white"
-          strokeWidth="2"
+          strokeWidth="3"
           strokeLinecap="round"
         />
-        <rect
-          x="25"
-          y="55"
-          width="25"
-          height="18"
-          rx="2"
-          fill="#059669"
-          stroke="white"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M32 55 L32 51 Q32 47 37 47 L38 47 Q43 47 43 51 L43 55"
-          fill="none"
-          stroke="white"
-          strokeWidth="1.5"
-        />
+
+        {/* Briefcase (Official Style) */}
+        <motion.g
+          animate={{ rotate: [-2, 2, -2] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <rect
+            x="25"
+            y="55"
+            width="30"
+            height="20"
+            rx="2"
+            fill="#059669"
+            stroke="white"
+            strokeWidth="2"
+          />
+          <path
+            d="M35 55 L35 50 Q35 45 40 45 T45 50 L45 55"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+          />
+        </motion.g>
       </motion.g>
 
       {/* ── PARTICLES ── */}

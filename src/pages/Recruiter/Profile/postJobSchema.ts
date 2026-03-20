@@ -12,6 +12,8 @@ export const postJobSchema = z.object({
   externalUrl: z.string().url("Invalid URL").optional().or(z.literal("")),
   applyEmail: z.string().email("Invalid email").optional().or(z.literal("")),
   salaryType: z.string().min(1, "Salary type is required"),
+  minSalary: z.string().min(1, "Minimum salary is required"),
+  maxSalary: z.string().min(1, "Maximum salary is required"),
   experience: z.string().min(1, "Experience is required"),
   careerLevel: z.string().min(1, "Career level is required"),
   qualification: z.string().min(1, "Qualification is required"),

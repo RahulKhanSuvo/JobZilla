@@ -2,6 +2,9 @@ import { MapPin, Clock, Star } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { IoHeart } from "react-icons/io5";
 import { Link } from "react-router";
+import JobIllustration, {
+  type IllustrationType,
+} from "@/components/common/JobIllustration";
 
 export interface Job {
   id: number;
@@ -15,6 +18,7 @@ export interface Job {
   tags: string[];
   rating: number;
   isVerified?: boolean;
+  illustrationType?: IllustrationType;
 }
 
 interface FeaturedJobCardProps {
@@ -31,12 +35,16 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
 
         <div className="space-y-5">
           <div className="flex items-start gap-4">
-            <div className="size-[60px] shrink-0  bg-slate-50 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 group-hover:rotate-6 transition-transform duration-500">
-              <img
-                src={job.logo}
-                alt={job.company}
-                className="size-full object-contain"
-              />
+            <div className="size-[60px] shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
+              {job.illustrationType ? (
+                <JobIllustration type={job.illustrationType} />
+              ) : (
+                <img
+                  src={job.logo}
+                  alt={job.company}
+                  className="size-full object-contain"
+                />
+              )}
             </div>
             <div className="overflow-hidden">
               <p className="font-medium text-primary dark:text-primary  cursor-pointer transition-all">

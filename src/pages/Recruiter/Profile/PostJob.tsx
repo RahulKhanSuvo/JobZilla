@@ -19,14 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
-import { Image as ImageIcon, Video, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import SkillTagsInput from "@/components/common/SkillTagsInput";
 
 export default function PostJob() {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-
   const form = useForm<PostJobFormData>({
     resolver: zodResolver(postJobSchema),
     defaultValues: {
@@ -40,6 +37,8 @@ export default function PostJob() {
       externalUrl: "",
       applyEmail: "",
       salaryType: "",
+      minSalary: "",
+      maxSalary: "",
       experience: "",
       careerLevel: "",
       qualification: "",
@@ -47,13 +46,6 @@ export default function PostJob() {
       deadline: "",
     },
   });
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
 
   const onSubmit = (data: PostJobFormData) => {
     console.log("Post Job Data:", data);
@@ -66,44 +58,6 @@ export default function PostJob() {
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <CommonWrapper className="p-8 space-y-8">
-          {/* Featured Image */}
-          <div className="space-y-4">
-            <FieldLabel className="text-sm font-semibold">
-              Featured Image <span className="text-red-500">*</span>
-            </FieldLabel>
-            <div className="flex items-center gap-6">
-              <div className="size-32 rounded-xl border-2 border-dashed border-border flex items-center justify-center overflow-hidden bg-slate-50">
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="size-full object-cover"
-                  />
-                ) : (
-                  <ImageIcon className="size-10 text-muted-foreground" />
-                )}
-              </div>
-              <div className="flex flex-col gap-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => document.getElementById("job-image")?.click()}
-                  className="h-10 px-6 font-semibold"
-                >
-                  Browse
-                </Button>
-                <input
-                  id="job-image"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-                <p className="text-sm text-muted-foreground">Upload image</p>
-              </div>
-            </div>
-          </div>
-
           <FieldGroup className="space-y-6">
             <Field>
               <FieldLabel className="font-semibold">
@@ -117,26 +71,6 @@ export default function PostJob() {
               <FieldError>{form.formState.errors.title?.message}</FieldError>
             </Field>
 
-            <Field>
-              <FieldLabel className="font-semibold">
-                Job Description <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Controller
-                name="description"
-                control={form.control}
-                render={({ field }) => (
-                  <RichTextEditor
-                    value={field.value}
-                    onChange={field.onChange}
-                    placeholder="Start typings..."
-                  />
-                )}
-              />
-              <FieldError>
-                {form.formState.errors.description?.message}
-              </FieldError>
-            </Field>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Field>
                 <FieldLabel className="font-semibold">Category</FieldLabel>
@@ -145,7 +79,7 @@ export default function PostJob() {
                   control={form.control}
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
+                      <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border h-12 shadow-none w-full">
                         <SelectValue placeholder="Accountng/ Finance" />
                       </SelectTrigger>
                       <SelectContent>
@@ -207,7 +141,7 @@ export default function PostJob() {
                   control={form.control}
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
+                      <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full rounded-none">
                         <SelectValue placeholder="10 - 50" />
                       </SelectTrigger>
                       <SelectContent>
@@ -296,6 +230,36 @@ export default function PostJob() {
               </Field>
 
               <Field>
+                <FieldLabel className="font-semibold">
+                  Minimum Salary
+                </FieldLabel>
+                <Input
+                  type="number"
+                  {...form.register("minSalary")}
+                  placeholder="e.g. 1000"
+                  variant="withBg"
+                />
+                <FieldError>
+                  {form.formState.errors.minSalary?.message}
+                </FieldError>
+              </Field>
+
+              <Field>
+                <FieldLabel className="font-semibold">
+                  Maximum Salary
+                </FieldLabel>
+                <Input
+                  type="number"
+                  {...form.register("maxSalary")}
+                  placeholder="e.g. 5000"
+                  variant="withBg"
+                />
+                <FieldError>
+                  {form.formState.errors.maxSalary?.message}
+                </FieldError>
+              </Field>
+
+              <Field>
                 <FieldLabel className="font-semibold">Experience</FieldLabel>
                 <Controller
                   name="experience"
@@ -372,21 +336,6 @@ export default function PostJob() {
 
               <Field>
                 <FieldLabel className="font-semibold flex items-center gap-2">
-                  <Video className="size-4 text-primary" />
-                  Introduction Video URL
-                </FieldLabel>
-                <Input
-                  {...form.register("videoUrl")}
-                  placeholder="https://"
-                  variant="withBg"
-                />
-                <FieldError>
-                  {form.formState.errors.videoUrl?.message}
-                </FieldError>
-              </Field>
-
-              <Field>
-                <FieldLabel className="font-semibold flex items-center gap-2">
                   <Calendar className="size-4 text-primary" />
                   Applicant Deadline Date
                 </FieldLabel>
@@ -401,6 +350,25 @@ export default function PostJob() {
                 </FieldError>
               </Field>
             </div>
+            <Field>
+              <FieldLabel className="font-semibold">
+                Job Description <span className="text-red-500">*</span>
+              </FieldLabel>
+              <Controller
+                name="description"
+                control={form.control}
+                render={({ field }) => (
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Start typings..."
+                  />
+                )}
+              />
+              <FieldError>
+                {form.formState.errors.description?.message}
+              </FieldError>
+            </Field>
           </FieldGroup>
 
           <div className="pt-6 flex justify-end">

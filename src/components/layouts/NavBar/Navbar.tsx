@@ -97,14 +97,14 @@ const Navbar = ({
   return (
     <section
       className={cn(
-        "py-4 bg-white shadow-[0_3px_9px_0_rgba(0,0,0,0.05)] dark:bg-background ",
+        "py-4 bg-white dark:bg-slate-950 shadow-[0_3px_9px_0_rgba(0,0,0,0.05)] ",
         className,
       )}
     >
       <div className="max-w-[1905px] mx-auto  px-10">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
-          <div className="flex-1 ">
+          <div className="flex-1 flex items-center">
             {/* Logo */}
             <Link to={logo.url}>
               <JobzillaLogo />

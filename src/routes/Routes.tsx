@@ -29,6 +29,8 @@ import About from "@/pages/About/About";
 import Contact from "@/pages/Contact/Contact";
 import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
 import JobDetails from "@/pages/JobDetails/JobDetails";
+import Pricing from "@/pages/Pricing/Pricing";
+import ProtectedRoute from "./ProtectedRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,6 +60,10 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/pricing",
+        element: <Pricing />,
+      },
     ],
   },
   // auth layout
@@ -75,13 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "sign-up",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <SignUp />,
-          },
-        ],
+        element: <SignUp />,
       },
     ],
   },
@@ -89,7 +89,7 @@ const router = createBrowserRouter([
   {
     path: "/candidate",
     element: (
-      // <ProtectedRoute allowRole={["USER"]}>
+      // <ProtectedRoute allowRole={["CANDIDATE"]}>
       <CandidateLayout />
       // </ProtectedRoute>
     ),
@@ -148,9 +148,9 @@ const router = createBrowserRouter([
   {
     path: "/recruiter",
     element: (
-      // <ProtectedRoute allowRole={["USER"]}>
-      <RecruiterLayout />
-      // </ProtectedRoute>
+      <ProtectedRoute allowRole={["EMPLOYER"]}>
+        <RecruiterLayout />
+      </ProtectedRoute>
     ),
     children: [
       {

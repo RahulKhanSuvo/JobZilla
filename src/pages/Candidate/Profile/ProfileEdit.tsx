@@ -1,14 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CommonWrapper from "@/components/common/CommonWrapper";
 import DashboardTitle from "@/components/common/DashboardTitle";
 import emptyImage from "@/assets/logos/image-up.jpg";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-  FaPinterestP,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import SectionTitle from "@/components/common/SectionTitle";
 import SkillTagsInput from "@/components/common/SkillTagsInput";
 import RichTextEditor from "@/components/common/RichTextEditor";
@@ -20,7 +14,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -35,10 +29,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { profileSchema, type ProfileFormData } from "./profileSchema";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
+import { useUpdataCandidateMutation } from "@/redux/features/candidate/candidate.api";
+import { errorToast } from "@/utils/errorToast";
 
 export default function ProfileEdit() {
+  const { data: userData } = useCurrentUserQuery();
+  const [updateCandidate] = useUpdataCandidateMutation();
+
   const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const candidate = (userData?.data as any)?.candidate || {};
+  const avatarUrl = previewUrl || candidate.avatar || emptyImage;
+
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -50,24 +53,85 @@ export default function ProfileEdit() {
       gender: undefined,
       maritalStatus: "",
       language: undefined,
-      age: undefined,
-      experience: undefined,
       skills: [],
       aboutMe: "",
       facebook: "",
       linkedin: "",
       twitter: "",
-      pinterest: "",
-      instagram: "",
-      youtube: "",
       educationList: [
-        { academy: "", title: "", startYear: "", endYear: "", description: "" },
+        {
+          institution: "",
+          major: "",
+          field: "",
+          gap: 0,
+          startData: "",
+          endData: "",
+          isStudying: false,
+        },
       ],
       experienceList: [
-        { company: "", startYear: "", endYear: "", description: "" },
+        {
+          jobTitle: "",
+          companyName: "",
+          industry: "",
+          startData: "",
+          endData: "",
+          isWorking: false,
+          Description: "",
+        },
       ],
     },
   });
+
+  useEffect(() => {
+    if (userData?.data) {
+      const data = userData.data as any;
+      const email = data.email || "";
+      const candidate = data.candidate || {};
+
+      form.reset({
+        fullName: data.name || "",
+        email: email,
+        phone: candidate.phone || "",
+        location: candidate.location || "",
+        dob: candidate.dob || "",
+        gender: candidate.gender || null,
+        maritalStatus: candidate.maritalStatus || "",
+        language: candidate.language || null,
+        skills: candidate.skills || [],
+        aboutMe: candidate.aboutMe || "",
+        facebook: candidate.facebook || "",
+        linkedin: candidate.linkedin || "",
+        twitter: candidate.twitter || "",
+        educationList: candidate.educationList?.length
+          ? candidate.educationList
+          : [
+              {
+                institution: "",
+                major: "",
+                field: "",
+                gap: 0,
+                startData: "",
+                endData: "",
+                isStudying: false,
+              },
+            ],
+        experienceList: candidate.experienceList?.length
+          ? candidate.experienceList
+          : [
+              {
+                jobTitle: "",
+                companyName: "",
+                industry: "",
+                startData: "",
+                endData: "",
+                isWorking: false,
+                Description: "",
+              },
+            ],
+      });
+    }
+  }, [userData, form]);
 
   const {
     fields: educationFields,
@@ -95,9 +159,17 @@ export default function ProfileEdit() {
     }
   };
 
-  const onSubmit = (data: ProfileFormData) => {
+  const onSubmit = async (data: ProfileFormData) => {
     console.log("Form Data:", data);
-    toast.success("Profile updated successfully!");
+    try {
+      const res = await updateCandidate(data).unwrap();
+      console.log(res);
+      toast.success("Profile updated successfully!");
+      setPreviewUrl(null);
+    } catch (error) {
+      errorToast(error);
+      console.log(error);
+    }
   };
 
   return (
@@ -119,15 +191,15 @@ export default function ProfileEdit() {
           <div className="flex gap-4 pb-7 border-b ">
             <div className="size-28 ">
               <img
-                src={previewUrl || emptyImage}
+                src={avatarUrl}
                 alt="empty"
-                className="size-28 object-cover rounded-md"
+                className="size-28 object-cover"
               />
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1">
                 <h4 className="font-semibold text-[14px]">
-                  Upload a new avator
+                  Upload a new avatar
                 </h4>
                 <p className="text-[12px]">JPG, PNG or GIF (max. 800x400px)</p>
               </div>
@@ -269,70 +341,7 @@ export default function ProfileEdit() {
                   )}
                 />
               </Field>
-              <Field>
-                <FieldLabel className="font-bold">Age</FieldLabel>
-                <Controller
-                  name="age"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                        <SelectValue
-                          className=""
-                          placeholder="Select your age"
-                        />
-                      </SelectTrigger>
-                      <SelectContent className="rounded-none" position="popper">
-                        <SelectItem value="option1">18-20</SelectItem>
-                        <SelectItem value="option2">20-22</SelectItem>
-                        <SelectItem value="option3">22-24</SelectItem>
-                        <SelectItem value="option4">24-26</SelectItem>
-                        <SelectItem value="option5">26-28</SelectItem>
-                        <SelectItem value="option6">28-30</SelectItem>
-                        <SelectItem value="option7">30-32</SelectItem>
-                        <SelectItem value="option8">32-34</SelectItem>
-                        <SelectItem value="option9">34-36</SelectItem>
-                        <SelectItem value="option10">36-38</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </Field>
-              <Field>
-                <FieldLabel className="font-bold">Experience</FieldLabel>
-                <Controller
-                  name="experience"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                        <SelectValue
-                          className=""
-                          placeholder="Select your experience"
-                        />
-                      </SelectTrigger>
-                      <SelectContent className="rounded-none" position="popper">
-                        <SelectItem value="option1">1 Year</SelectItem>
-                        <SelectItem value="option2">2 Year</SelectItem>
-                        <SelectItem value="option3">3 Year</SelectItem>
-                        <SelectItem value="option4">4 Year</SelectItem>
-                        <SelectItem value="option5">5 Year</SelectItem>
-                        <SelectItem value="option6">6 Year</SelectItem>
-                        <SelectItem value="option7">7 Year</SelectItem>
-                        <SelectItem value="option8">8 Year</SelectItem>
-                        <SelectItem value="option9">9 Year</SelectItem>
-                        <SelectItem value="option10">10 Year</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </Field>
+
               <Field className="col-span-2">
                 <FieldLabel className="font-bold">Skills</FieldLabel>
                 <Controller
@@ -374,55 +383,91 @@ export default function ProfileEdit() {
                     </div>
                   </div>
                   <FieldGroup className="grid grid-cols-1 gap-6">
-                    <Field>
-                      <FieldLabel className="font-bold">Academy</FieldLabel>
-                      <Input
-                        placeholder="Fine Arts University"
-                        className="h-11 border-none shadow-none"
-                        variant="withBg"
-                        {...form.register(`educationList.${index}.academy`)}
-                      />
-                    </Field>
-                    <Field>
-                      <FieldLabel className="font-bold">Title</FieldLabel>
-                      <Input
-                        placeholder="Design"
-                        className="h-11 border-none shadow-none"
-                        variant="withBg"
-                        {...form.register(`educationList.${index}.title`)}
-                      />
-                    </Field>
                     <div className="grid grid-cols-2 gap-6">
                       <Field>
                         <FieldLabel className="font-bold">
-                          Dates Attended
+                          Institution
                         </FieldLabel>
                         <Input
-                          placeholder="2012"
+                          placeholder="Fine Arts University"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.startYear`)}
+                          {...form.register(
+                            `educationList.${index}.institution`,
+                          )}
+                        />
+                      </Field>
+                      <Field>
+                        <FieldLabel className="font-bold">Major</FieldLabel>
+                        <Input
+                          placeholder="e.g. Computer Science"
+                          className="h-11 border-none shadow-none"
+                          variant="withBg"
+                          {...form.register(`educationList.${index}.major`)}
+                        />
+                      </Field>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6">
+                      <Field>
+                        <FieldLabel className="font-bold">
+                          Field of Study
+                        </FieldLabel>
+                        <Input
+                          placeholder="e.g. Design, Engineering"
+                          className="h-11 border-none shadow-none"
+                          variant="withBg"
+                          {...form.register(`educationList.${index}.field`)}
                         />
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">
-                          Dates Attended
+                          Gap (years)
                         </FieldLabel>
                         <Input
-                          placeholder="2014"
+                          placeholder="0"
+                          type="number"
+                          min={0}
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.endYear`)}
+                          {...form.register(`educationList.${index}.gap`, {
+                            valueAsNumber: true,
+                          })}
+                        />
+                      </Field>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6">
+                      <Field>
+                        <FieldLabel className="font-bold">
+                          Start Date
+                        </FieldLabel>
+                        <Input
+                          type="date"
+                          className="h-11 border-none shadow-none"
+                          variant="withBg"
+                          {...form.register(`educationList.${index}.startData`)}
+                        />
+                      </Field>
+                      <Field>
+                        <FieldLabel className="font-bold">End Date</FieldLabel>
+                        <Input
+                          type="date"
+                          className="h-11 border-none shadow-none"
+                          variant="withBg"
+                          {...form.register(`educationList.${index}.endData`)}
                         />
                       </Field>
                     </div>
                     <Field>
-                      <FieldLabel className="font-bold">Description</FieldLabel>
-                      <Textarea
-                        placeholder="Write something..."
-                        className="min-h-32 border-none shadow-none resize-none bg-[#F5F5F5] dark:bg-[#222222]"
-                        {...form.register(`educationList.${index}.description`)}
-                      />
+                      <label className="flex items-center gap-2 text-sm font-bold cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="size-4 accent-primary"
+                          {...form.register(
+                            `educationList.${index}.isStudying`,
+                          )}
+                        />
+                        Currently Studying
+                      </label>
                     </Field>
                   </FieldGroup>
                 </div>
@@ -433,11 +478,13 @@ export default function ProfileEdit() {
                 className="w-full flex items-center justify-center gap-2 py-6 border-dashed border-2 hover:bg-slate-50 transition-colors"
                 onClick={() =>
                   appendEducation({
-                    academy: "",
-                    title: "",
-                    startYear: "",
-                    endYear: "",
-                    description: "",
+                    institution: "",
+                    major: "",
+                    field: "",
+                    gap: 0,
+                    startData: "",
+                    endData: "",
+                    isStudying: false,
                   })
                 }
               >
@@ -471,46 +518,82 @@ export default function ProfileEdit() {
                     </div>
                   </div>
                   <FieldGroup className="grid grid-cols-1 gap-6">
-                    <Field>
-                      <FieldLabel className="font-bold">Company</FieldLabel>
-                      <Input
-                        placeholder="Avitex Inc"
-                        className="h-11 border-none shadow-none"
-                        variant="withBg"
-                        {...form.register(`experienceList.${index}.company`)}
-                      />
-                    </Field>
                     <div className="grid grid-cols-2 gap-6">
                       <Field>
-                        <FieldLabel className="font-bold">Dates</FieldLabel>
+                        <FieldLabel className="font-bold">Job Title</FieldLabel>
                         <Input
-                          placeholder="2012"
+                          placeholder="e.g. Software Engineer"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(
-                            `experienceList.${index}.startYear`,
-                          )}
+                          {...form.register(`experienceList.${index}.jobTitle`)}
                         />
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">
-                          Dates Attended
+                          Company Name
                         </FieldLabel>
                         <Input
-                          placeholder="2014"
+                          placeholder="Avitex Inc"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`experienceList.${index}.endYear`)}
+                          {...form.register(
+                            `experienceList.${index}.companyName`,
+                          )}
                         />
                       </Field>
                     </div>
+                    <Field>
+                      <FieldLabel className="font-bold">Industry</FieldLabel>
+                      <Input
+                        placeholder="e.g. Technology, Finance"
+                        className="h-11 border-none shadow-none"
+                        variant="withBg"
+                        {...form.register(`experienceList.${index}.industry`)}
+                      />
+                    </Field>
+                    <div className="grid grid-cols-2 gap-6">
+                      <Field>
+                        <FieldLabel className="font-bold">
+                          Start Date
+                        </FieldLabel>
+                        <Input
+                          type="date"
+                          className="h-11 border-none shadow-none"
+                          variant="withBg"
+                          {...form.register(
+                            `experienceList.${index}.startData`,
+                          )}
+                        />
+                      </Field>
+                      <Field>
+                        <FieldLabel className="font-bold">End Date</FieldLabel>
+                        <Input
+                          type="date"
+                          className="h-11 border-none shadow-none"
+                          variant="withBg"
+                          {...form.register(`experienceList.${index}.endData`)}
+                        />
+                      </Field>
+                    </div>
+                    <Field>
+                      <label className="flex items-center gap-2 text-sm font-bold cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="size-4 accent-primary"
+                          {...form.register(
+                            `experienceList.${index}.isWorking`,
+                          )}
+                        />
+                        Currently Working Here
+                      </label>
+                    </Field>
                     <Field>
                       <FieldLabel className="font-bold">Description</FieldLabel>
                       <Textarea
                         placeholder="Write something..."
                         className="min-h-32 border-none shadow-none resize-none bg-[#F5F5F5] dark:bg-[#222222]"
                         {...form.register(
-                          `experienceList.${index}.description`,
+                          `experienceList.${index}.Description`,
                         )}
                       />
                     </Field>
@@ -523,10 +606,13 @@ export default function ProfileEdit() {
                 className="w-full flex items-center justify-center gap-2 py-6 border-dashed border-2 hover:bg-slate-50 transition-colors"
                 onClick={() =>
                   appendExperience({
-                    company: "",
-                    startYear: "",
-                    endYear: "",
-                    description: "",
+                    jobTitle: "",
+                    companyName: "",
+                    industry: "",
+                    startData: "",
+                    endData: "",
+                    isWorking: false,
+                    Description: "",
                   })
                 }
               >
@@ -573,24 +659,6 @@ export default function ProfileEdit() {
                   icon: FaTwitter,
                   name: "twitter" as const,
                   label: "Twitter",
-                  placeholder: "URL",
-                },
-                {
-                  icon: FaPinterestP,
-                  name: "pinterest" as const,
-                  label: "Pinterest",
-                  placeholder: "URL",
-                },
-                {
-                  icon: FaInstagram,
-                  name: "instagram" as const,
-                  label: "Instagram",
-                  placeholder: "URL",
-                },
-                {
-                  icon: FaYoutube,
-                  name: "youtube" as const,
-                  label: "YouTube",
                   placeholder: "URL",
                 },
               ].map((item, index) => (

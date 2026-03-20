@@ -1,0 +1,76 @@
+import Container from "@/components/common/Container";
+import Paragraph from "@/components/common/Paragraph";
+import Stack from "@/components/common/Stack";
+import heroImage from "@/assets/images/hero-image-1-053a950af2f348330533d1ffb007f0b7.png";
+import { Button } from "@/components/ui/button";
+
+export default function AboutHero() {
+  return (
+    <section className="py-20 overflow-hidden">
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="relative z-10 w-full max-w-lg mx-auto">
+              <img
+                src={heroImage}
+                alt="About JobZilla"
+                className="w-full h-auto object-contain"
+              />
+
+              {/* Floating Cards - Simplified representation */}
+              <div className="absolute top-1/4 -right-10 bg-white dark:bg-slate-900 p-4 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 animate-bounce-slow">
+                <p className="text-2xl font-bold">25M+</p>
+                <p className="text-xs text-slate-500">Jobs Available</p>
+              </div>
+
+              <div className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 animate-float">
+                <div className="flex items-center gap-2">
+                  <div className="size-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                    <span className="text-xs font-bold text-emerald-600">
+                      480+
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold">Happy Candidates</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Background elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-emerald-400/20 blur-3xl rounded-full -z-10" />
+          </div>
+
+          <div className="order-1 lg:order-2 space-y-6">
+            <Stack gap="sm">
+              <h2 className="text-4xl font-black text-slate-900 dark:text-white leading-tight">
+                About Us
+              </h2>
+              <Paragraph className="text-lg text-slate-600 dark:text-slate-400">
+                Far much that one rank beheld blue and after outside ignobly
+                allegedly more when oh elegantly well neat irresolutely fuzzy
+                penguin insect and blindly view absolutely crudely meticulously
+                hastily dalmatian a glowered least one echidna ceremony.
+              </Paragraph>
+              <Paragraph className="text-slate-500 dark:text-slate-400">
+                Repeatedly dreamed a alas accompaniment dramatically despite
+                expeditiously that prepared vary glass that more structure
+                beneath kept and slept compactly far pure dare abidingly up
+                above thing to standard wiped set waywardly far the and penguin
+                more approving past that last caraway oh above launch
+                appropriate far much typically more therefore was less that hey
+                apart well like while suddenly on and whence one.
+              </Paragraph>
+            </Stack>
+            <Button
+              size="lg"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-md px-8"
+            >
+              Read More
+            </Button>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}

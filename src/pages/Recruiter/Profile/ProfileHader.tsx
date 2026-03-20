@@ -1,32 +1,70 @@
-import CommonWrapper from "@/components/common/CommonWrapper";
 import demoImage from "@assets/logos/profile-1.jpg";
-import { MapPin } from "lucide-react";
+import coverImage from "@assets/background/tech-people-trying-achieve-ambitious-sustainability-goals.avif";
+import { MapPin, Briefcase, Globe } from "lucide-react";
 import { Link } from "react-router";
+
 export default function ProfileHader() {
   return (
-    <CommonWrapper className="flex flex-col md:flex-row items-center justify-between gap-6 p-6">
-      <div className="flex items-center gap-5">
-        <div className="size-20 rounded-xl overflow-hidden border-2 border-border shadow-sm shrink-0">
-          <img
-            src={demoImage}
-            alt="ABC Tech"
-            className="size-full object-cover"
-          />
-        </div>
-        <div className="space-y-1">
-          <h3 className="text-2xl font-bold text-foreground">ABC Tech</h3>
-          <div className="flex items-center gap-1.5 text-muted-foreground">
-            <MapPin className="size-4 text-primary" />
-            <p className="text-sm font-medium">Dhaka, Bangladesh</p>
+    <div className="overflow-hidden bg-white">
+      {/* Cover Photo */}
+      <div className="relative h-48 md:h-60 w-full overflow-hidden">
+        <img
+          src={coverImage}
+          alt="Cover"
+          className="w-full h-full object-cover"
+        />
+        {/* Subtle dark gradient overlay at bottom for contrast */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+      </div>
+
+      {/* Profile Info Row */}
+      <div className="px-6 py-5 relative z-50 bg-white">
+        {/* Avatar — overlaps the cover photo */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div className="flex items-end gap-5">
+            <div className="-mt-12 md:-mt-14 shrink-0">
+              <div className="size-24 md:size-28 overflow-hidden">
+                <img
+                  src={demoImage}
+                  alt="ABC Tech"
+                  className="size-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Name & meta */}
+            <div className="pb-1 space-y-1">
+              <h3 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
+                ABC Tech
+              </h3>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-sm">
+                <span className="flex items-center gap-1">
+                  <MapPin className="size-3.5 text-primary" />
+                  Dhaka, Bangladesh
+                </span>
+                <span className="flex items-center gap-1">
+                  <Briefcase className="size-3.5 text-primary" />
+                  Technology &amp; SaaS
+                </span>
+                <span className="flex items-center gap-1">
+                  <Globe className="size-3.5 text-primary" />
+                  abctech.io
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Edit Button */}
+          <div className="md:pb-1">
+            <Link
+              to={"edit"}
+              className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow active:scale-95 rounded-lg text-sm"
+            >
+              Edit Profile
+            </Link>
           </div>
         </div>
       </div>
-      <Link
-        to={"edit"}
-        className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all shadow-sm active:scale-95"
-      >
-        Edit Profile
-      </Link>
-    </CommonWrapper>
+    </div>
   );
 }

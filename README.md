@@ -89,4 +89,4 @@ JobZilla prioritizes **Visual Excellence** and **Interactive Design**:
 
 ---
 
-Made with ❤️ by the JobZilla Team.
+Made with ❤️ by the Rahul Khan Suvo.

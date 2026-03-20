@@ -146,7 +146,7 @@ export default function Error() {
             <Link to="/">
               <Button
                 size="lg"
-                className="px-10 py-7 text-lg font-bold bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl shadow-[0_10px_30px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95 border-none"
+                className="px-10 py-7 text-lg font-bold bg-primary hover:bg-primary/80 text-white rounded shadow-[0_10px_30px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95 border-none"
               >
                 Return to Safety
               </Button>
@@ -154,7 +154,7 @@ export default function Error() {
             <Button
               variant="outline"
               size="lg"
-              className="px-10 py-7 text-lg font-bold border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-600 dark:hover:text-slate-300 rounded-2xl transition-all"
+              className="px-10 py-7 text-lg font-bold border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-600 dark:hover:text-slate-300 rounded transition-all"
               onClick={() => window.history.back()}
             >
               Go Back

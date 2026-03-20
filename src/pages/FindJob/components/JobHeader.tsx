@@ -17,7 +17,7 @@ interface JobHeaderProps {
 
 export default function JobHeader({ layout, setLayout }: JobHeaderProps) {
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div className="flex items-center gap-4">
         <div className="flex items-center bg-white dark:bg-slate-900 overflow-hidden p-1 ">
           <Button

@@ -3,6 +3,7 @@ import FeaturedJobsHeader from "./components/FeaturedJobsHeader";
 import { MoveRight } from "lucide-react";
 import demoLogo from "@assets/logos/profile-1.jpg";
 import JobCard, { type Job } from "./components/JobCard";
+import { Link } from "react-router";
 
 const mockFeaturedJobs: Job[] = [
   {
@@ -95,12 +96,13 @@ export default function FeaturedJobs() {
           <JobCard key={job.id} job={job} />
         ))}
       </div>
-
-      <div className="mt-12 text-center">
-        <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-white dark:bg-slate-900 border-2 border-emerald-500/20 dark:border-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all duration-300 group active:scale-95">
-          See More Jobs
-          <MoveRight className="size-5 group-hover:translate-x-1 transition-transform" />
-        </button>
+      <div className="text-center mt-12">
+        <Link to="/find-job" className="text-center">
+          <button className="inline-flex cursor-pointer items-center gap-2 px-8 py-3.5 bg-white dark:bg-slate-900 border-2 border-emerald-500/20 dark:border-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all duration-300 group active:scale-95">
+            See More Jobs
+            <MoveRight className="size-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </Link>
       </div>
     </Container>
   );
