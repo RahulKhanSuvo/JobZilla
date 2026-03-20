@@ -1,7 +1,15 @@
 import { cn } from "@/lib/utils";
-
-import { Logo, LogoImage, LogoText } from "@/components/common/logo";
 import Container from "../common/Container";
+import JobzillaLogo from "@/components/common/JobzillaLogo";
+import { Phone, MapPin, Send } from "lucide-react";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaTwitter,
+  FaPinterestP,
+  FaInstagram,
+  FaYoutube,
+} from "react-icons/fa";
 
 interface MenuItem {
   title: string;
@@ -11,127 +19,181 @@ interface MenuItem {
   }[];
 }
 
-interface Footer2Props {
-  logo?: {
-    url: string;
-    src: string;
-    alt: string;
-    title: string;
-  };
+interface FooterProps {
   className?: string;
-  tagline?: string;
-  menuItems?: MenuItem[];
-  copyright?: string;
-  bottomLinks?: {
-    text: string;
-    url: string;
-  }[];
 }
 
-const Footer = ({
-  logo = {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/block-1.svg",
-    alt: "blocks for shadcn/ui",
-    title: "Shadcnblocks.com",
-    url: "https://www.shadcnblocks.com",
+const footerMenu: MenuItem[] = [
+  {
+    title: "Quick Links",
+    links: [
+      { text: "Job Packages", url: "#" },
+      { text: "Post New Job", url: "#" },
+      { text: "Jobs Listing", url: "#" },
+      { text: "Jobs Style Grid", url: "#" },
+      { text: "Employer Listing", url: "#" },
+      { text: "Employers Grid", url: "#" },
+    ],
   },
-  className,
-  tagline = "Components made easy.",
-  menuItems = [
-    {
-      title: "Product",
-      links: [
-        { text: "Overview", url: "#" },
-        { text: "Pricing", url: "#" },
-        { text: "Marketplace", url: "#" },
-        { text: "Features", url: "#" },
-        { text: "Integrations", url: "#" },
-        { text: "Pricing", url: "#" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { text: "About", url: "#" },
-        { text: "Team", url: "#" },
-        { text: "Blog", url: "#" },
-        { text: "Careers", url: "#" },
-        { text: "Contact", url: "#" },
-        { text: "Privacy", url: "#" },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { text: "Help", url: "#fa" },
-        { text: "Sales", url: "#" },
-        { text: "Advertise", url: "#" },
-      ],
-    },
-    {
-      title: "Social",
-      links: [
-        { text: "Twitter", url: "#" },
-        { text: "Instagram", url: "#" },
-        { text: "LinkedIn", url: "#" },
-      ],
-    },
-  ],
-  copyright = "© 2024 Shadcnblocks.com. All rights reserved.",
-  bottomLinks = [
-    { text: "Terms and Conditions", url: "#" },
-    { text: "Privacy Policy", url: "#" },
-  ],
-}: Footer2Props) => {
+  {
+    title: "For Candidates",
+    links: [
+      { text: "User Dashboard", url: "#" },
+      { text: "CV Packages", url: "#" },
+      { text: "Candidate Listing", url: "#" },
+      { text: "Candidates Grid", url: "#" },
+      { text: "About us", url: "#" },
+      { text: "Contact us", url: "#" },
+    ],
+  },
+  {
+    title: "For Employers",
+    links: [
+      { text: "Post New Job", url: "#" },
+      { text: "Employer Listing", url: "#" },
+      { text: "Employers Grid", url: "#" },
+      { text: "Job Packages", url: "#" },
+      { text: "Jobs Listing", url: "#" },
+      { text: "Jobs Style Grid", url: "#" },
+    ],
+  },
+];
+
+const socialLinks = [
+  { icon: <FaFacebookF />, url: "#" },
+  { icon: <FaLinkedinIn />, url: "#" },
+  { icon: <FaTwitter />, url: "#" },
+  { icon: <FaPinterestP />, url: "#" },
+  { icon: <FaInstagram />, url: "#" },
+  { icon: <FaYoutube />, url: "#" },
+];
+
+const bottomLinks = [
+  { text: "Terms Of Services", url: "#" },
+  { text: "Privacy Policy", url: "#" },
+  { text: "Cookie Policy", url: "#" },
+];
+
+export function Footer({ className }: FooterProps) {
   return (
-    <section className={cn("py-32", className)}>
-      <Container size={"none"} className=" ">
-        <footer className="">
-          <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
-            <div className="col-span-2">
-              <div className="flex items-center gap-2 lg:justify-start">
-                <Logo url="https://shadcnblocks.com">
-                  <LogoImage
-                    src={logo.src}
-                    alt={logo.alt}
-                    title={logo.title}
-                    className="h-10 dark:invert"
-                  />
-                  <LogoText className="text-xl">{logo.title}</LogoText>
-                </Logo>
-              </div>
-              <p className="mt-4 font-bold">{tagline}</p>
+    <footer
+      className={cn(
+        "bg-[#F5F5F2] dark:bg-slate-900/50 pt-20 pb-6 transition-colors duration-300",
+        className,
+      )}
+    >
+      <Container>
+        {/* Top Section - Logo & Socials */}
+        <div className="flex flex-col md:flex-row justify-between items-center pb-12 border-b border-slate-200 dark:border-slate-800 gap-6">
+          <div className="flex items-center gap-2">
+            <JobzillaLogo />
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="font-bold text-slate-900 dark:text-white mr-2">
+              Follow Us:
+            </span>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social, idx) => (
+                <a
+                  key={idx}
+                  href={social.url}
+                  className="size-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 hover:shadow-sm transition-all duration-300 hover:-translate-y-1"
+                >
+                  {social.icon}
+                </a>
+              ))}
             </div>
-            {menuItems.map((section, sectionIdx) => (
-              <div key={sectionIdx}>
-                <h3 className="mb-4 font-bold">{section.title}</h3>
-                <ul className="space-y-4 text-muted-foreground">
-                  {section.links.map((link, linkIdx) => (
-                    <li
-                      key={linkIdx}
-                      className="font-medium hover:text-primary"
-                    >
-                      <a href={link.url}>{link.text}</a>
+          </div>
+        </div>
+
+        {/* Middle Section - Contact & Links */}
+        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+          {/* Contact Info (4 Columns) */}
+          <div className="lg:col-span-4 space-y-8">
+            <div className="flex items-start gap-4">
+              <div className="size-12 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0">
+                <Phone className="size-5 text-emerald-600 dark:text-emerald-500" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">
+                  Need help? 24/7
+                </p>
+                <p className="text-xl font-black text-slate-900 dark:text-white">
+                  001-1234-88888
+                </p>
+              </div>
+            </div>
+
+            <p className="text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+              Job Searching Just Got Easy. Use Jobtex to run a hiring site and
+              earn money in the process!
+            </p>
+
+            <div className="flex items-start gap-3 text-slate-500 dark:text-slate-400">
+              <MapPin className="size-5 shrink-0 mt-0.5" />
+              <p>101 E 129th St, East Chicago, IN 46312, US</p>
+            </div>
+
+            <div className="relative max-w-sm">
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="w-full h-12 pl-4 pr-12 rounded-xl bg-white dark:bg-slate-800 border-none shadow-sm focus:ring-2 focus:ring-emerald-500/50 outline-none text-sm dark:text-white"
+              />
+              <button className="absolute right-1 top-1 bottom-1 w-10 bg-emerald-500 text-white rounded-lg flex items-center justify-center hover:bg-emerald-600 transition-colors">
+                <Send className="size-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Links Grid (8 Columns span) */}
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
+            {footerMenu.map((menu, idx) => (
+              <div key={idx}>
+                <h4 className="font-black text-slate-900 dark:text-white mb-6 text-lg">
+                  {menu.title}
+                </h4>
+                <ul className="space-y-4">
+                  {menu.links.map((link, linkIdx) => (
+                    <li key={linkIdx}>
+                      <a
+                        href={link.url}
+                        className="text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 font-medium transition-colors"
+                      >
+                        {link.text}
+                      </a>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-          <div className="mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium text-muted-foreground md:flex-row md:items-center">
-            <p>{copyright}</p>
-            <ul className="flex gap-4">
-              {bottomLinks.map((link, linkIdx) => (
-                <li key={linkIdx} className="underline hover:text-primary">
-                  <a href={link.url}>{link.text}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </footer>
-      </Container>
-    </section>
-  );
-};
+        </div>
 
-export { Footer };
+        {/* Bottom Section - Copyright & Legal */}
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-400">
+            <p>©2026 Jobtex. All Rights Reserved.</p>
+            <div className="flex items-center gap-2 px-3 py-1 bg-white dark:bg-slate-800 rounded-md shadow-sm border border-slate-100 dark:border-slate-700">
+              <span className="text-lg leading-none">🇬🇧</span>
+              <span>English</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6">
+            {bottomLinks.map((link, idx) => (
+              <a
+                key={idx}
+                href={link.url}
+                className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+              >
+                {link.text}
+              </a>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </footer>
+  );
+}

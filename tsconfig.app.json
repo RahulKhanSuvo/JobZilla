@@ -9,9 +9,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["src/*"],          
+      "@assets/*": ["src/assets/*"]  
     },
 
     /* Bundler mode */
@@ -29,6 +28,7 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
+    
   },
   "include": ["src"]
 }

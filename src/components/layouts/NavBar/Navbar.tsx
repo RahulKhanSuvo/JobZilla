@@ -1,4 +1,4 @@
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -25,9 +24,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ModeToggle } from "../ModeToggle";
-import { Link } from "react-router";
-
-interface MenuItem {
+import { Link, NavLink } from "react-router";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { AvatarDropdown } from "@/components/ui/DropdownMenuAvatar";
+import JobzillaLogo from "@/components/common/JobzillaLogo";
+export interface MenuItem {
   title: string;
   url: string;
   description?: string;
@@ -39,12 +41,12 @@ interface Navbar1Props {
   className?: string;
   logo?: {
     url: string;
-    src: string;
-    alt: string;
-    title: string;
+    src?: string;
+    alt?: string;
     className?: string;
   };
   menu?: MenuItem[];
+  dropdownMenu?: MenuItem[];
   auth?: {
     login: {
       title: string;
@@ -59,124 +61,89 @@ interface Navbar1Props {
 
 const Navbar = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
-    alt: "logo",
-    title: "Shadcnblocks.com",
+    url: "/",
   },
   menu = [
     { title: "Home", url: "/" },
+
     {
-      title: "Products",
-      url: "#",
-      items: [
-        {
-          title: "Blog",
-          description: "The latest industry news, updates, and info",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Company",
-          description: "Our mission is to innovate and empower the world",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Careers",
-          description: "Browse job listing and discover our workspace",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Support",
-          description:
-            "Get in touch with our support team or visit our community forums",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
+      title: "Find Jobs",
+      url: "/find-job",
     },
     {
-      title: "Resources",
-      url: "#",
-      items: [
-        {
-          title: "Help Center",
-          description: "Get all the answers you need right here",
-          icon: <Zap className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Contact Us",
-          description: "We are here to help you with any questions you have",
-          icon: <Sunset className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Status",
-          description: "Check the current status of our services and APIs",
-          icon: <Trees className="size-5 shrink-0" />,
-          url: "#",
-        },
-        {
-          title: "Terms of Service",
-          description: "Our terms and conditions for using our services",
-          icon: <Book className="size-5 shrink-0" />,
-          url: "#",
-        },
-      ],
+      title: "About Us",
+      url: "/about",
     },
     {
-      title: "Pricing",
-      url: "#",
+      title: "Contact Us",
+      url: "/contact",
     },
+  ],
+  dropdownMenu = [
     {
-      title: "Blog",
-      url: "#",
+      title: "Dashboard",
+      url: "/candidate",
     },
   ],
   auth = {
-    login: { title: "Login", url: "/login" },
-    signup: { title: "Sign up", url: "/sign-up" },
+    login: { title: "Login", url: "auth/login" },
+    signup: { title: "Sign up", url: "auth/sign-up" },
   },
   className,
 }: Navbar1Props) => {
+  const user = useSelector(selectCurrentUser);
+  console.log(user);
+
   return (
-    <section className={cn("py-4", className)}>
-      <div className="container mx-auto ">
+    <section
+      className={cn(
+        "py-4 bg-white shadow-[0_3px_9px_0_rgba(0,0,0,0.05)] dark:bg-background ",
+        className,
+      )}
+    >
+      <div className="max-w-[1905px] mx-auto  px-10">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
-          <div className="flex items-center gap-6">
+          <div className="flex-1 ">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </a>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
+            <Link to={logo.url}>
+              <JobzillaLogo />
+            </Link>
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center justify-center flex-1 ">
+            <NavigationMenu>
+              <NavigationMenuList>
+                {menu.map((item) => renderMenuItem(item))}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+          <div className="flex justify-end flex-1 items-center gap-1.5">
             <div>
               <ModeToggle />
             </div>
-            <Button asChild variant="outline" size="sm">
-              <Link to={auth.login.url}>{auth.login.title}</Link>
-            </Button>
-            <Button asChild size="sm">
-              <Link to={auth.signup.url}>{auth.signup.title}</Link>
-            </Button>
+            {!user ? (
+              <>
+                <Button
+                  className="rounded w-[185px] h-[48px]"
+                  asChild
+                  variant="outline"
+                  size="sm"
+                >
+                  <Link to={auth.login.url}>{auth.login.title}</Link>
+                </Button>
+                <Button
+                  className="rounded w-[185px] h-[48px]"
+                  asChild
+                  size="sm"
+                >
+                  <Link to={auth.signup.url}>{auth.signup.title}</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <AvatarDropdown menu={dropdownMenu} user={user} />
+              </>
+            )}
           </div>
         </nav>
 
@@ -184,13 +151,9 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-            </a>
+            <Link to={logo.url}>
+              <JobzillaLogo />
+            </Link>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -200,13 +163,9 @@ const Navbar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a>
+                    <Link to={logo.url}>
+                      <JobzillaLogo />
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">
@@ -243,9 +202,7 @@ const renderMenuItem = (item: MenuItem) => {
         <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
         <NavigationMenuContent className="bg-popover text-popover-foreground">
           {item.items.map((subItem) => (
-            <NavigationMenuLink asChild key={subItem.title} className="w-80">
-              <SubMenuLink item={subItem} />
-            </NavigationMenuLink>
+            <SubMenuLink item={subItem} />
           ))}
         </NavigationMenuContent>
       </NavigationMenuItem>
@@ -254,12 +211,17 @@ const renderMenuItem = (item: MenuItem) => {
 
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
-        asChild
-        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
+      <NavLink
+        to={item.url}
+        className={({ isActive }) =>
+          cn(
+            "group inline-flex h-10 w-max items-center justify-center rounded-md uppercase px-4 py-2 text-sm font-bold transition-colors hover:text-primary",
+            isActive ? "text-primary" : "text-slate-600",
+          )
+        }
       >
-        <Link to={item.url}>{item.title}</Link>
-      </NavigationMenuLink>
+        {item.title}
+      </NavLink>
     </NavigationMenuItem>
   );
 };
@@ -267,7 +229,7 @@ const renderMenuItem = (item: MenuItem) => {
 const renderMobileMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
-      <AccordionItem key={item.title} value={item.title} className="border-b-0">
+      <AccordionItem key={item.title} value={item.title} className="-b-0">
         <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
           {item.title}
         </AccordionTrigger>
@@ -281,17 +243,31 @@ const renderMobileMenuItem = (item: MenuItem) => {
   }
 
   return (
-    <a key={item.title} href={item.url} className="text-md font-semibold">
+    <NavLink
+      key={item.title}
+      to={item.url}
+      className={({ isActive }) =>
+        cn(
+          "text-md font-bold transition-colors hover:text-primary",
+          isActive ? "text-primary" : "text-slate-900",
+        )
+      }
+    >
       {item.title}
-    </a>
+    </NavLink>
   );
 };
 
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
   return (
-    <a
-      className="flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-muted hover:text-accent-foreground"
-      href={item.url}
+    <NavLink
+      to={item.url}
+      className={({ isActive }) =>
+        cn(
+          "flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:text-primary text-slate-600",
+          isActive && "text-primary",
+        )
+      }
     >
       <div className="text-foreground">{item.icon}</div>
       <div>
@@ -302,7 +278,7 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
           </p>
         )}
       </div>
-    </a>
+    </NavLink>
   );
 };
 

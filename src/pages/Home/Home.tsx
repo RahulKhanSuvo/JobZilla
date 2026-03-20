@@ -1,10 +1,17 @@
-import Container from "@/components/common/Container";
-import HeroSection from "./HeroSection";
+import HeroSection from "./hero/HeroSection";
+import Sponsor from "./Sponsor";
+import FeaturedJobs from "./Featured/FeaturedJobs";
+import WhyJobZilla from "./Why/WhyJobZilla";
+import ClinetReview from "./ClientReview/ClinetReview";
 
 export default function Home() {
   return (
-    <Container>
+    <>
       <HeroSection />
-    </Container>
+      <FeaturedJobs />
+      <WhyJobZilla />
+      <ClinetReview />
+      <Sponsor />
+    </>
   );
 }

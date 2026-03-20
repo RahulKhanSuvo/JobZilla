@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# 💼 JobZilla - Modern Job Recruitment Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+JobZilla is a premium, high-performance job portal designed to bridge the gap between talented candidates and top-tier recruiters. Built with a cutting-edge tech stack, it offers a seamless, interactive, and visually stunning experience for all users.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Key Features
 
-## React Compiler
+### 👤 For Candidates
+- **Enhanced Profile Management**: Showcase your professional journey with detailed education, skills, and work experience.
+- **Smart Job Search**: Filter and find the perfect role matching your expertise.
+- **Application Tracking**: Keep tabs on your job applications with real-time status updates (Pending, Shortlisted, Hired).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🏢 For Recruiters
+- **Company Branding**: Build a professional company profile to attract top talent.
+- **Seamless Job Posting**: Post, manage, and track job openings with ease.
+- **Applicant Management**: Streamlined workflow to review, shortlist, and hire candidates.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The client is built using a modern toolchain for maximum performance and a premium developer experience:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Core**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/) & [Redux Persist](https://github.com/rt2zz/redux-persist)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
+- **Forms & Validation**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+- **Routing**: [React Router 7](https://reactrouter.com/)
+- **Rich Text Editing**: [Jodit React](https://github.com/xdanilov/jodit-react)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🛠 Installation & Setup
+
+Ensure you have [Bun](https://bun.sh/) installed for the best experience.
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd JobZilla/Client
+   ```
+
+2. **Install dependencies**
+   ```bash
+   bun install
+   ```
+
+3. **Configure Environment Variables**
+   Create a `.env` file in the `Client` directory and add necessary variables (e.g., API URL).
+
+4. **Run the development server**
+   ```bash
+   bun run dev
+   ```
+
+5. **Build for production**
+   ```bash
+   bun run build
+   ```
+
+---
+
+## 📁 Project Structure
+
+```text
+src/
+├── assets/         # Images, fonts, and static assets
+├── components/     # Reusable UI components (shadcn/ui, etc.)
+├── hooks/          # Custom React hooks
+├── layouts/        # Page layout wrappers
+├── lib/            # External library configurations
+├── pages/          # Full page components
+├── providers/      # Context providers (Redux, Themes)
+├── redux/          # Global state management slices
+├── routes/         # Application routing configuration
+└── utils/          # Helper functions and constants
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🎨 UI & UX Philosophy
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+JobZilla prioritizes **Visual Excellence** and **Interactive Design**:
+- **Glassmorphism & Gradients**: Modern, high-end aesthetics.
+- **Micro-animations**: Subtle interactions using Framer Motion to enhance user engagement.
+- **Responsive Layouts**: Optimized for seamless viewing across all device types.
+
+---
+
+Made with ❤️ by the JobZilla Team.
