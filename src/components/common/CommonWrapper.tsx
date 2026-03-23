@@ -11,7 +11,6 @@ const wrapperVariant = {
   noBorder: "p-6",
   noBorderNoPadding: "",
 };
-
 export default function CommonWrapper({
   children,
   className,

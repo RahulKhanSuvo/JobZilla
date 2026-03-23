@@ -39,6 +39,8 @@ export default function ProfileEdit() {
 
   const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const candidate = (userData?.data as any)?.candidate || {};
   const avatarUrl = previewUrl || candidate.avatar || emptyImage;
 
@@ -154,6 +156,7 @@ export default function ProfileEdit() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
     }
@@ -161,14 +164,20 @@ export default function ProfileEdit() {
 
   const onSubmit = async (data: ProfileFormData) => {
     console.log("Form Data:", data);
+
+    const formData = new FormData();
+    if (selectedFile) {
+      formData.append("avatar", selectedFile);
+    }
+
     try {
-      const res = await updateCandidate(data).unwrap();
+      const res = await updateCandidate({ ...formData, ...data }).unwrap();
       console.log(res);
       toast.success("Profile updated successfully!");
       setPreviewUrl(null);
+      setSelectedFile(null);
     } catch (error) {
       errorToast(error);
-      console.log(error);
     }
   };
 
