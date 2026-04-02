@@ -30,7 +30,7 @@ export default function RecruiterProfileEdit() {
       website: "",
       foundedDate: "",
       companySize: "",
-      showProfile: "show",
+      showProfile: true,
       industry: "",
       aboutCompany: "",
       facebook: "",
