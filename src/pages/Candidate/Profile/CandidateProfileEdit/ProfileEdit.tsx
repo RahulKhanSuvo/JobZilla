@@ -95,7 +95,9 @@ export default function ProfileEdit() {
         email: email,
         phone: candidate.phone || "",
         location: candidate.location || "",
-        dob: candidate.dob || "",
+        dob: candidate.dob
+          ? new Date(candidate.dob).toISOString().split("T")[0]
+          : "",
         gender: candidate.gender || null,
         maritalStatus: candidate.maritalStatus || "",
         language: candidate.language || null,
