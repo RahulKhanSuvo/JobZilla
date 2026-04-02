@@ -3,14 +3,7 @@ import SectionTitle from "@/components/common/SectionTitle";
 import { Input } from "@/components/ui/input";
 import type { UseFormReturn } from "react-hook-form";
 import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-  FaPinterestP,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 
 interface SocialNetworkSectionProps {
   form: UseFormReturn<RecruiterProfileFormData>;
@@ -27,9 +20,6 @@ export default function SocialNetworkSection({
           { name: "facebook", icon: FaFacebookF, label: "Facebook" },
           { name: "linkedin", icon: FaLinkedinIn, label: "Linkedin" },
           { name: "twitter", icon: FaTwitter, label: "Twitter" },
-          { name: "pinterest", icon: FaPinterestP, label: "Pinterest" },
-          { name: "instagram", icon: FaInstagram, label: "Instagram" },
-          { name: "youtube", icon: FaYoutube, label: "Youtube" },
         ].map((social) => (
           <div key={social.name} className="flex items-center gap-3">
             <div className="size-11 flex items-center justify-center bg-slate-50 rounded-lg shrink-0 border border-border">
