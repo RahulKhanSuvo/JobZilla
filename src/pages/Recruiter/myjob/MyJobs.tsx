@@ -19,68 +19,86 @@ import {
 } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { useGetMyJobsQuery } from "@/redux/features/job/job.api";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { IJob } from "@/types/job";
 
 const stats = [
   {
     label: "Job Published",
-    value: "1,235",
+    value: "0",
     icon: Briefcase,
     color: "bg-blue-50 text-blue-600",
   },
   {
     label: "Total Applicants",
-    value: "112",
+    value: "0",
     icon: Users,
     color: "bg-emerald-50 text-emerald-600",
   },
   {
     label: "Pending Review",
-    value: "12",
+    value: "0",
     icon: Clock,
     color: "bg-amber-50 text-amber-600",
   },
 ];
 
-const jobs = [
-  {
-    id: 1,
-    title: "Junior Marketing",
-    location: "Tokyo, Japan",
-    applicants: "213 Applicants",
-    created: "Oct 18, 2022",
-    expiry: "Sept 5, 2023",
-    status: "Published",
-  },
-  {
-    id: 2,
-    title: "UI UX Designer",
-    location: "Tokyo, Japan",
-    applicants: "213 Applicants",
-    created: "Oct 18, 2022",
-    expiry: "Sept 5, 2023",
-    status: "Published",
-  },
-  {
-    id: 3,
-    title: "Intern Digital Marketing",
-    location: "Tokyo, Japan",
-    applicants: "213 Applicants",
-    created: "Oct 18, 2022",
-    expiry: "Sept 5, 2023",
-    status: "Published",
-  },
-  {
-    id: 4,
-    title: "Content Marketing",
-    location: "Tokyo, Japan",
-    applicants: "213 Applicants",
-    created: "Oct 18, 2022",
-    expiry: "Sept 5, 2023",
-    status: "Published",
-  },
-];
+const formatDate = (dateString: string) => {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(dateString));
+};
 
 export default function MyJobs() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  const { data: jobResponse, isLoading } = useGetMyJobsQuery({
+    searchTerm: debouncedSearch,
+    sortBy,
+    sortOrder,
+    page: 1,
+    limit: 10,
+  });
+
+  const jobs = jobResponse?.data?.data || [];
+  const meta = jobResponse?.data?.meta;
+
+  const handleSortChange = (value: string) => {
+    if (value === "newest") {
+      setSortBy("createdAt");
+      setSortOrder("desc");
+    } else if (value === "oldest") {
+      setSortBy("createdAt");
+      setSortOrder("asc");
+    } else {
+      setSortBy("createdAt");
+      setSortOrder("desc");
+    }
+  };
+
+  // Update stats based on real data
+  const updatedStats = [
+    {
+      ...stats[0],
+      value: meta?.total?.toString() || "0",
+    },
+    ...stats.slice(1),
+  ];
+
   return (
     <div className="space-y-8 pb-12">
       {/* Header */}
@@ -96,7 +114,7 @@ export default function MyJobs() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {stats.map((stat, index) => (
+        {updatedStats.map((stat, index) => (
           <CommonWrapper
             key={index}
             className="px-6 py-6 flex items-center gap-5"
@@ -122,6 +140,8 @@ export default function MyJobs() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-slate-400" />
           <Input
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-12 h-12 bg-slate-50/50 border-none rounded-xl"
           />
         </div>
@@ -129,12 +149,11 @@ export default function MyJobs() {
           <span className="text-sm text-slate-500 font-medium whitespace-nowrap">
             Sort by:
           </span>
-          <Select defaultValue="default">
+          <Select defaultValue="newest" onValueChange={handleSortChange}>
             <SelectTrigger className="h-12 border-none bg-slate-50/50 rounded-xl px-4 min-w-[160px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="default">Default</SelectItem>
               <SelectItem value="newest">Newest</SelectItem>
               <SelectItem value="oldest">Oldest</SelectItem>
             </SelectContent>
@@ -166,75 +185,92 @@ export default function MyJobs() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {jobs.map((job) => (
-                <tr
-                  key={job.id}
-                  className="group hover:bg-slate-50/50 transition-colors"
-                >
-                  <td className="px-8 py-6">
-                    <div className="flex items-start gap-2">
-                      <h4 className="text-[17px] font-bold text-slate-900 leading-tight group-hover:text-primary transition-colors cursor-pointer">
-                        {job.title}
-                      </h4>
-                      <div className="size-5 bg-blue-100/50 rounded-full flex items-center justify-center mt-1 shrink-0">
-                        <Plus className="size-3 text-blue-500 rotate-45" />
+              {isLoading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i}>
+                    <td colSpan={5} className="px-8 py-4">
+                      <Skeleton className="h-20 w-full rounded-xl" />
+                    </td>
+                  </tr>
+                ))
+              ) : jobs.length > 0 ? (
+                jobs.map((job: IJob) => (
+                  <tr
+                    key={job.id}
+                    className="group hover:bg-slate-50/50 transition-colors"
+                  >
+                    <td className="px-8 py-6">
+                      <div className="flex items-start gap-2">
+                        <h4 className="text-[17px] font-bold text-slate-900 leading-tight group-hover:text-primary transition-colors cursor-pointer capitalize">
+                          {job.title}
+                        </h4>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-slate-400 mt-1.5">
-                      <Search className="size-4" /> {/* Map icon alternative */}
-                      <span className="text-sm font-medium">
-                        {job.location}
+                      <div className="flex items-center gap-1.5 text-slate-400 mt-1.5">
+                        <Briefcase className="size-4" />
+                        <span className="text-sm font-medium">
+                          {job.jobType?.replace("_", " ")}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-8 py-6">
+                      <span className="text-sm text-slate-600 font-semibold">
+                        0 Applicants
                       </span>
-                    </div>
-                  </td>
-                  <td className="px-8 py-6">
-                    <span className="text-sm text-slate-600 font-semibold">
-                      {job.applicants}
-                    </span>
-                  </td>
-                  <td className="px-8 py-6">
-                    <div className="space-y-1">
-                      <p className="text-sm text-slate-600 font-medium">
-                        Created:{" "}
-                        <span className="text-slate-900">{job.created}</span>
-                      </p>
-                      <p className="text-sm text-slate-600 font-medium">
-                        Expiry date:{" "}
-                        <span className="text-slate-900">{job.expiry}</span>
-                      </p>
-                    </div>
-                  </td>
-                  <td className="px-8 py-6">
-                    <span className="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">
-                      {job.status}
-                    </span>
-                  </td>
-                  <td className="px-8 py-6">
-                    <div className="flex items-center justify-end gap-3">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                      >
-                        <Lock className="size-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                      >
-                        <Edit2 className="size-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="h-10 px-6 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg"
-                      >
-                        Cancel
-                      </Button>
-                    </div>
+                    </td>
+                    <td className="px-8 py-6">
+                      <div className="space-y-1">
+                        <p className="text-sm text-slate-600 font-medium">
+                          Created:{" "}
+                          <span className="text-slate-900">
+                            {formatDate(job.createdAt)}
+                          </span>
+                        </p>
+                        <p className="text-sm text-slate-600 font-medium">
+                          Expiry date:{" "}
+                          <span className="text-slate-900">
+                            {job.deadline ? formatDate(job.deadline) : "N/A"}
+                          </span>
+                        </p>
+                      </div>
+                    </td>
+                    <td className="px-8 py-6">
+                      <span className="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">
+                        Published
+                      </span>
+                    </td>
+                    <td className="px-8 py-6">
+                      <div className="flex items-center justify-end gap-3">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                        >
+                          <Lock className="size-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                        >
+                          <Edit2 className="size-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="h-10 px-6 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="px-8 py-10 text-center">
+                    <p className="text-slate-500 font-medium">No jobs found.</p>
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

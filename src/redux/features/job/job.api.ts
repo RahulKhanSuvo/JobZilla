@@ -1,4 +1,5 @@
 import baseApi from "../hook/baseApi";
+import type { IApiResponse, IJobQueryParams, IJobResponse } from "@/types/job";
 
 const jobApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +18,16 @@ const jobApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Jobs"],
     }),
+    getMyJobs: builder.query<IApiResponse<IJobResponse>, IJobQueryParams>({
+      query: (params) => ({
+        url: "/jobs/my-jobs",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["Jobs"],
+    }),
   }),
 });
 
-export const { useCreateJobMutation, useGetAllJobsQuery } = jobApi;
+export const { useCreateJobMutation, useGetAllJobsQuery, useGetMyJobsQuery } =
+  jobApi;
