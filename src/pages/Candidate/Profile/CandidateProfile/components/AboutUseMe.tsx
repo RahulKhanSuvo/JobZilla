@@ -17,7 +17,7 @@ export default function AboutUseMe({ userData }: AboutUseMeProps) {
       <h3 className="font-semibold text-xl mb-4 dark:text-white">About Me</h3>
       {plainAbout ? (
         <div
-          className="text-[#64666c] dark:text-gray-300 mb-4 leading-relaxed"
+          className="text-[#64666c] dark:text-gray-300 mb-4 leading-relaxed prose dark:prose-invert max-w-none [&>ul]:list-disc [&>ul]:pl-5 [&>ol]:list-decimal [&>ol]:pl-5"
           dangerouslySetInnerHTML={{ __html: aboutMe }}
         />
       ) : (

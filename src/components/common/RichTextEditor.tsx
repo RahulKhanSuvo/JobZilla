@@ -78,6 +78,16 @@ const RichTextEditor = ({
                     color: white !important;
                     border-top: 1px solid #444444 !important;
                 }
+                
+                /* Override Tailwind preflight to restore list styles inside the editor */
+                .jodit-wysiwyg ul {
+                    list-style-type: disc !important;
+                    padding-left: 2.5rem !important;
+                }
+                .jodit-wysiwyg ol {
+                    list-style-type: decimal !important;
+                    padding-left: 2.5rem !important;
+                }
                 `}
       </style>
       <JoditEditor
