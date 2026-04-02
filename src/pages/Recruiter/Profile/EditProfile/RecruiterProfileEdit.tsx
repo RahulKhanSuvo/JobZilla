@@ -15,9 +15,12 @@ import AboutCompanySection from "./components/AboutCompanySection";
 import SocialNetworkSection from "./components/SocialNetworkSection";
 import ContactInformationSection from "./components/ContactInformationSection";
 import CoverImage from "./components/CoverImage";
+import { useUpdateRecruiterMutation } from "@/redux/features/recruiter/recruiter.api";
+import { errorToast } from "@/utils/errorToast";
 
 export default function RecruiterProfileEdit() {
   const navigate = useNavigate();
+  const [updateRecruiter, { isLoading }] = useUpdateRecruiterMutation();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
 
@@ -60,10 +63,16 @@ export default function RecruiterProfileEdit() {
     }
   };
 
-  const onSubmit = (data: RecruiterProfileFormData) => {
+  const onSubmit = async (data: RecruiterProfileFormData) => {
     console.log("Recruiter Profile Data:", data);
-    toast.success("Profile updated successfully!");
-    navigate("/recruiter/profile");
+    try {
+      const result = await updateRecruiter(data).unwrap();
+      console.log(result);
+      toast.success("Profile updated successfully!");
+      navigate("/recruiter/profile");
+    } catch (error) {
+      errorToast(error);
+    }
   };
 
   return (
@@ -85,7 +94,7 @@ export default function RecruiterProfileEdit() {
           form="profile-edit-form"
           className="bg-primary rounded-none text-white font-bold px-8"
         >
-          Save Profile
+          {isLoading ? "Saving..." : "Save Profile"}
         </Button>
       </div>
 

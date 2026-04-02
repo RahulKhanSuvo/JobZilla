@@ -1,10 +1,10 @@
 import baseApi from "../hook/baseApi";
 
-const candidateApi = baseApi.injectEndpoints({
+const recruiterApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    updataCandidate: builder.mutation({
+    updateRecruiter: builder.mutation({
       query: (payload) => ({
-        url: "/candidate/update",
+        url: "/recruiter/update",
         method: "PATCH",
         body: payload,
       }),
@@ -13,4 +13,4 @@ const candidateApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useUpdataCandidateMutation } = candidateApi;
+export const { useUpdateRecruiterMutation } = recruiterApi;
