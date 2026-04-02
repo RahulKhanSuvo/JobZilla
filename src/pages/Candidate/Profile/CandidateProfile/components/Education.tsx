@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Timeline, TimelineItem } from "../../../components/common/Timeline";
+
+import { Timeline, TimelineItem } from "@/components/common/Timeline";
 
 interface EducationProps {
   eductions: any[];

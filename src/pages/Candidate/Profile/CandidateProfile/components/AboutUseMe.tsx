@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Education from "./Education";
 import WorkExperience from "./WorkExperience";
+import Education from "./Education";
 
 interface AboutUseMeProps {
   userData: any;

@@ -26,7 +26,7 @@ import { useNavigate } from "react-router";
 import { ArrowLeft, Edit2, PlusCircle, Trash2 } from "lucide-react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { profileSchema, type ProfileFormData } from "./profileSchema";
+import { profileSchema, type ProfileFormData } from "../profileSchema";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
@@ -42,7 +42,7 @@ export default function ProfileEdit() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const candidate = (userData?.data as any)?.candidate || {};
-  const avatarUrl = previewUrl || candidate.avatar || emptyImage;
+  const avatarUrl = previewUrl || candidate.profileImage || emptyImage;
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -90,7 +90,6 @@ export default function ProfileEdit() {
       const data = userData.data as any;
       const email = data.email || "";
       const candidate = data.candidate || {};
-
       form.reset({
         fullName: data.name || "",
         email: email,
