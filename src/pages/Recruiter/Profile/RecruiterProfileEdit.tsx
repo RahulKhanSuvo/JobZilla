@@ -38,13 +38,9 @@ export default function RecruiterProfileEdit() {
       facebook: "",
       linkedin: "",
       twitter: "",
-      pinterest: "",
-      instagram: "",
-      youtube: "",
       address: "",
       location: "",
       mapLocation: "",
-      gallery: [],
     },
   });
 

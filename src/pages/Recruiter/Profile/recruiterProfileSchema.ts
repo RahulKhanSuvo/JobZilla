@@ -21,13 +21,9 @@ export const recruiterProfileSchema = z.object({
   facebook: z.string().url("Invalid URL").optional().or(z.literal("")),
   linkedin: z.string().url("Invalid URL").optional().or(z.literal("")),
   twitter: z.string().url("Invalid URL").optional().or(z.literal("")),
-  pinterest: z.string().url("Invalid URL").optional().or(z.literal("")),
-  instagram: z.string().url("Invalid URL").optional().or(z.literal("")),
-  youtube: z.string().url("Invalid URL").optional().or(z.literal("")),
   address: z.string().min(5, "Address must be at least 5 characters"),
   location: z.string().min(1, "Location is required"),
   mapLocation: z.string().min(1, "Map location is required"),
-  gallery: z.array(z.object({ url: z.string() })).optional(),
 });
 
 export type RecruiterProfileFormData = z.infer<typeof recruiterProfileSchema>;
