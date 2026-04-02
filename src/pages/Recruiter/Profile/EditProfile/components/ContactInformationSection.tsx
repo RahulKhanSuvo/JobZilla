@@ -57,14 +57,6 @@ export default function ContactInformationSection({
           />
           <FieldError>{form.formState.errors.location?.message}</FieldError>
         </Field>
-        <Field>
-          <FieldLabel>Map Location</FieldLabel>
-          <Input
-            {...form.register("mapLocation")}
-            placeholder="243- 235 St. Takayamio, Tokyo"
-          />
-          <FieldError>{form.formState.errors.mapLocation?.message}</FieldError>
-        </Field>
       </FieldGroup>
     </CommonWrapper>
   );
