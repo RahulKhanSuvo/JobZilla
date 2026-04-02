@@ -1,3 +1,5 @@
+import type { RecruiterProfileFormData } from "@/pages/Recruiter/Profile/recruiterProfileSchema";
+
 export interface User {
   id: string;
   firstName: string;
@@ -61,7 +63,7 @@ export type AuthUser = {
   createdAt: string;
   updatedAt: string;
   candidate?: CandidateProfile | null;
-  company?: unknown;
+  company?: RecruiterProfileFormData | null;
 };
 
 export interface Education {
