@@ -17,12 +17,13 @@ import ContactInformationSection from "./components/ContactInformationSection";
 import CoverImage from "./components/CoverImage";
 import { useUpdateRecruiterMutation } from "@/redux/features/recruiter/recruiter.api";
 import { errorToast } from "@/utils/errorToast";
-import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 export default function RecruiterProfileEdit() {
   const navigate = useNavigate();
   const [updateRecruiter, { isLoading }] = useUpdateRecruiterMutation();
-  const { data: user } = useCurrentUserQuery();
+  const user = useSelector(selectCurrentUser);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
 
@@ -49,8 +50,8 @@ export default function RecruiterProfileEdit() {
   });
 
   useEffect(() => {
-    if (user?.data) {
-      const userData = user.data;
+    if (user) {
+      const userData = user;
       const companyData = userData.company;
 
       form.reset({
@@ -72,7 +73,7 @@ export default function RecruiterProfileEdit() {
         coverImage: companyData?.coverImage || "",
       });
     }
-  }, [user?.data, form]);
+  }, [user, form]);
 
   const employerName = useWatch({
     control: form.control,
@@ -130,9 +131,8 @@ export default function RecruiterProfileEdit() {
   };
 
   // Derive preview sources: newly uploaded file preview OR the existing URL from the data
-  const currentLogoPreview = logoPreview || user?.data?.company?.logo || null;
-  const currentCoverPreview =
-    coverPreview || user?.data?.company?.coverImage || null;
+  const currentLogoPreview = logoPreview || user?.company?.logo || null;
+  const currentCoverPreview = coverPreview || user?.company?.coverImage || null;
 
   return (
     <div className="space-y-6 pb-12">

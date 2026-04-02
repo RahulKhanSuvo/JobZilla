@@ -35,8 +35,8 @@ export default function CompanyInfo({
     { label: "Email", value: user?.email },
     { label: "Industry", value: user?.company?.industry },
     { label: "Company size", value: user?.company?.companySize },
-    { label: "Headquarters", value: "448544" },
-    { label: "Founded", value: "2017" },
+    { label: "Headquarters", value: user?.company?.address },
+    { label: "Founded", value: user?.company?.foundedDate },
   ];
 
   const socials = [
