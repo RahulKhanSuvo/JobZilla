@@ -5,7 +5,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: "CANDIDATE" | "RECRUITER" | "ADMIN";
+  role: "CANDIDATE" | "EMPLOYER" | "ADMIN";
   phone?: string;
   resumeUrl: string | null;
   createdAt: string;
