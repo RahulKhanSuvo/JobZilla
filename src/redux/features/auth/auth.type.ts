@@ -1,3 +1,4 @@
+import type { ProfileFormData } from "@/pages/Candidate/Profile/profileSchema";
 import type { RecruiterProfileFormData } from "@/pages/Recruiter/Profile/recruiterProfileSchema";
 
 export interface User {
@@ -10,7 +11,8 @@ export interface User {
   resumeUrl: string | null;
   createdAt: string;
   updatedAt: string;
-  candidate?: unknown;
+  candidate?: ProfileFormData | null;
+  company?: RecruiterProfileFormData | null;
 }
 
 export interface LoginSuccessResponse {

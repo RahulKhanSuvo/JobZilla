@@ -1,13 +1,7 @@
 import CommonWrapper from "@/components/common/CommonWrapper";
-import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaTwitter,
-  FaPinterestP,
-  FaInstagram,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import type { IconType } from "react-icons";
+import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
 
 interface InfoRowProps {
   label: string;
@@ -32,29 +26,30 @@ const SocialIcon = ({ icon: Icon, href }: { icon: IconType; href: string }) => (
   </a>
 );
 
-export default function CompanyInfo() {
+export default function CompanyInfo({
+  company,
+}: {
+  company: RecruiterProfileFormData | null | undefined;
+}) {
   const companyData = [
-    { label: "Email", value: "hi.avitex@gmail.com" },
-    { label: "Industry", value: "Internet Publishing" },
-    { label: "Company size", value: "51-200 Employees" },
-    { label: "Headquarters", value: "Valley , Las Vegas, USA" },
+    { label: "Email", value: company?.email },
+    { label: "Industry", value: company?.industry },
+    { label: "Company size", value: company?.companySize },
+    { label: "Headquarters", value: "448544" },
     { label: "Founded", value: "2017" },
   ];
 
   const socials = [
-    { icon: FaFacebookF, href: "#" },
-    { icon: FaLinkedinIn, href: "#" },
-    { icon: FaTwitter, href: "#" },
-    { icon: FaPinterestP, href: "#" },
-    { icon: FaInstagram, href: "#" },
-    { icon: FaYoutube, href: "#" },
+    { icon: FaFacebookF, href: company?.facebook || "#" },
+    { icon: FaLinkedinIn, href: company?.linkedin || "#" },
+    { icon: FaTwitter, href: company?.twitter || "#" },
   ];
 
   return (
     <CommonWrapper className="p-0 overflow-hidden">
       <div className="px-6 py-2">
         {companyData.map((item, index) => (
-          <InfoRow key={index} label={item.label} value={item.value} />
+          <InfoRow key={index} label={item.label} value={item.value || "N/A"} />
         ))}
       </div>
 
