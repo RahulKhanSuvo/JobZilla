@@ -35,8 +35,7 @@ const baseQueryWithReauth = async (
     );
     if (refreshResult?.data) {
       const data = refreshResult.data as RefreshResponse;
-      const user = (api.getState() as RootState).auth.user;
-      api.dispatch(setCredentials({ token: data.accessToken, user }));
+      api.dispatch(setCredentials({ token: data.accessToken }));
       result = await baseQuery(args, api, extraOptions);
     } else {
       api.dispatch(logOut());
