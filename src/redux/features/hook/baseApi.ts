@@ -33,7 +33,6 @@ const baseQueryWithReauth = async (
       api,
       extraOptions,
     );
-    console.log(refreshResult);
     if (refreshResult?.data) {
       const data = refreshResult.data as RefreshResponse;
       const user = (api.getState() as RootState).auth.user;
