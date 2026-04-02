@@ -36,7 +36,7 @@ export default function ContactInformationSection({
           />
           <FieldError>{form.formState.errors.address?.message}</FieldError>
         </Field>
-        <Field>
+        <Field className="col-span-2">
           <FieldLabel>Location</FieldLabel>
           <Controller
             name="location"
