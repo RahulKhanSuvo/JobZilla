@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Timeline, TimelineItem } from "@/components/common/Timeline";
+import type { Education } from "@/redux/features/auth/auth.type";
 
 interface EducationProps {
-  eductions: any[];
+  eductions: Education[];
 }
 
 function formatYear(dateStr: string | null | undefined): string {

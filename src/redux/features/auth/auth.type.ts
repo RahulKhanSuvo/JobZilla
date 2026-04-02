@@ -39,6 +39,28 @@ export type AuthUser = {
   company?: unknown;
 };
 
+export interface Education {
+  id: string;
+  institution: string;
+  major: string;
+  field: string;
+  gap: number | null;
+  startData: string | null;
+  endData: string | null;
+  isStudying: boolean;
+}
+
+export interface WorkExperience {
+  id: string;
+  jobTitle: string;
+  companyName: string;
+  industry: string;
+  startData: string | null;
+  endData: string | null;
+  isWorking: boolean;
+  description: string | null;
+}
+
 export type CurrentUserResponse = {
   success: boolean;
   message: string;
