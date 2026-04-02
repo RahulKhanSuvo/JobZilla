@@ -16,7 +16,7 @@ export default function AboutCompanySection({
     <CommonWrapper className="p-8 space-y-8">
       <SectionTitle size={"sm"}>About Company</SectionTitle>
       <Controller
-        name="aboutCompany"
+        name="description"
         control={form.control}
         render={({ field }) => (
           <RichTextEditor
@@ -26,7 +26,7 @@ export default function AboutCompanySection({
           />
         )}
       />
-      <FieldError>{form.formState.errors.aboutCompany?.message}</FieldError>
+      <FieldError>{form.formState.errors.description?.message}</FieldError>
     </CommonWrapper>
   );
 }

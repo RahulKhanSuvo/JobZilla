@@ -28,9 +28,6 @@ const RichTextEditor = ({
         "ul",
         "ol",
         "|",
-        "font",
-        "fontsize",
-        "brush",
         "paragraph",
         "|",
         "align",
@@ -38,7 +35,6 @@ const RichTextEditor = ({
         "redo",
         "|",
         "hr",
-        "eraser",
         "fullsize",
       ],
       // Styling to match the theme if possible

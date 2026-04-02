@@ -132,7 +132,7 @@ export default function InformationSection({ form }: InformationSectionProps) {
                 <SelectTrigger>
                   <SelectValue placeholder="Select industry" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent position="popper">
                   <SelectItem value="IT">IT</SelectItem>
                   <SelectItem value="Education">Education</SelectItem>
                   <SelectItem value="Healthcare">Healthcare</SelectItem>
