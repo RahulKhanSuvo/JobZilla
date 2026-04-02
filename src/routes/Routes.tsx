@@ -1,4 +1,4 @@
-import Error from "@/pages/Error";
+import Error from "@/pages/errors/Error";
 import { createBrowserRouter } from "react-router";
 import { mainRoutes } from "./main.routes";
 import { authRoutes } from "./auth.routes";

@@ -2,7 +2,7 @@ import CommonWrapper from "@/components/common/CommonWrapper";
 import SectionTitle from "@/components/common/SectionTitle";
 import { Input } from "@/components/ui/input";
 import type { UseFormReturn } from "react-hook-form";
-import type { RecruiterProfileFormData } from "../recruiterProfileSchema";
+import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
 import {
   FaFacebookF,
   FaTwitter,

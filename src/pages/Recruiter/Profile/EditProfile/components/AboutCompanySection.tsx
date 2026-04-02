@@ -3,7 +3,7 @@ import SectionTitle from "@/components/common/SectionTitle";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { FieldError } from "@/components/ui/field";
 import { Controller, type UseFormReturn } from "react-hook-form";
-import type { RecruiterProfileFormData } from "../recruiterProfileSchema";
+import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
 
 interface AboutCompanySectionProps {
   form: UseFormReturn<RecruiterProfileFormData>;

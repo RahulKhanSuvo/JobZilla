@@ -1,7 +1,7 @@
 import DashboardTitle from "@/components/common/DashboardTitle";
-import ProfileHader from "./ProfileHader";
-import CompanyInfo from "./CompanyInfo";
-import AboutCompany from "./AboutCompany";
+import ProfileHader from "./components/ProfileHader";
+import CompanyInfo from "./components/CompanyInfo";
+import AboutCompany from "./components/AboutCompany";
 
 export default function RecruiterProfilePage() {
   return (

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   recruiterProfileSchema,
   type RecruiterProfileFormData,
-} from "./recruiterProfileSchema";
+} from "../recruiterProfileSchema";
 import { toast } from "sonner";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";

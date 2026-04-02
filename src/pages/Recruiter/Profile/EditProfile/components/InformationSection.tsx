@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Controller, type UseFormReturn } from "react-hook-form";
-import type { RecruiterProfileFormData } from "../recruiterProfileSchema";
+import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
 
 interface InformationSectionProps {
   form: UseFormReturn<RecruiterProfileFormData>;
