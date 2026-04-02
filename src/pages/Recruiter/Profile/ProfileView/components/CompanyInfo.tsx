@@ -1,7 +1,7 @@
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import type { IconType } from "react-icons";
-import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
+import type { User } from "@/redux/features/auth/auth.type";
 
 interface InfoRowProps {
   label: string;
@@ -27,22 +27,22 @@ const SocialIcon = ({ icon: Icon, href }: { icon: IconType; href: string }) => (
 );
 
 export default function CompanyInfo({
-  company,
+  user,
 }: {
-  company: RecruiterProfileFormData | null | undefined;
+  user: User | null | undefined;
 }) {
   const companyData = [
-    { label: "Email", value: company?.email },
-    { label: "Industry", value: company?.industry },
-    { label: "Company size", value: company?.companySize },
+    { label: "Email", value: user?.email },
+    { label: "Industry", value: user?.company?.industry },
+    { label: "Company size", value: user?.company?.companySize },
     { label: "Headquarters", value: "448544" },
     { label: "Founded", value: "2017" },
   ];
 
   const socials = [
-    { icon: FaFacebookF, href: company?.facebook || "#" },
-    { icon: FaLinkedinIn, href: company?.linkedin || "#" },
-    { icon: FaTwitter, href: company?.twitter || "#" },
+    { icon: FaFacebookF, href: user?.company?.facebook || "#" },
+    { icon: FaLinkedinIn, href: user?.company?.linkedin || "#" },
+    { icon: FaTwitter, href: user?.company?.twitter || "#" },
   ];
 
   return (

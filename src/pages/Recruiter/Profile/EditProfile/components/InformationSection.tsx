@@ -65,8 +65,10 @@ export default function InformationSection({ form }: InformationSectionProps) {
             control={form.control}
             render={({ field }) => (
               <Select
+                key={field.value || "empty"}
                 onValueChange={field.onChange}
                 value={field.value || undefined}
+                defaultValue={field.value || undefined}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Year" />
@@ -90,8 +92,10 @@ export default function InformationSection({ form }: InformationSectionProps) {
             control={form.control}
             render={({ field }) => (
               <Select
+                key={field.value || "empty"}
                 onValueChange={field.onChange}
                 value={field.value || undefined}
+                defaultValue={field.value || undefined}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select size" />
@@ -153,8 +157,10 @@ export default function InformationSection({ form }: InformationSectionProps) {
             control={form.control}
             render={({ field }) => (
               <Select
+                key={field.value || "empty"}
                 onValueChange={field.onChange}
                 value={field.value || undefined}
+                defaultValue={field.value || undefined}
               >
                 <SelectTrigger aria-invalid={!!form.formState.errors.industry}>
                   <SelectValue placeholder="Select industry" />

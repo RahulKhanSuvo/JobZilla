@@ -14,7 +14,7 @@ export default function RecruiterProfilePage() {
       <ProfileHader user={user} />
       <div className="flex flex-col gap-6">
         <div className="">
-          <CompanyInfo company={company} />
+          <CompanyInfo user={user} />
         </div>
         <div className="">
           <AboutCompany company={company} />

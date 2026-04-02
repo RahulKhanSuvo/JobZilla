@@ -56,11 +56,9 @@ export default function RecruiterProfileEdit() {
       form.reset({
         name: userData.name || "",
         email: userData.email || "",
-        phone: userData.phone || "",
+        phone: companyData?.phone || userData.phone || "",
         website: companyData?.website || "",
-        foundedDate: companyData?.foundedDate
-          ? companyData.foundedDate.split("T")[0]
-          : "",
+        foundedDate: companyData?.foundedDate || "",
         companySize: companyData?.companySize || "",
         showProfile: companyData?.showProfile ?? true,
         industry: companyData?.industry || "",

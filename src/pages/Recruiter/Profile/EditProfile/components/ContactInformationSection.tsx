@@ -42,7 +42,12 @@ export default function ContactInformationSection({
             name="location"
             control={form.control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                key={field.value || "empty"}
+                onValueChange={field.onChange}
+                value={field.value || undefined}
+                defaultValue={field.value || undefined}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Location" />
                 </SelectTrigger>
