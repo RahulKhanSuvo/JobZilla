@@ -49,7 +49,7 @@ export function LoginForm({
       toast.success("Login successful");
       dispatch(setCredentials({ user: data.user, token: data.accessToken }));
 
-      if (data.user.role === "EMPLOYER") {
+      if (data.user.role === "RECRUITER") {
         navigate("/recruiter", { replace: true });
       } else {
         navigate("/candidate", { replace: true });
