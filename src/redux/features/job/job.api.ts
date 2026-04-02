@@ -4,7 +4,7 @@ const jobApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createJob: builder.mutation({
       query: (payload) => ({
-        url: "/job",
+        url: "/jobs",
         method: "POST",
         body: payload,
       }),
@@ -12,7 +12,7 @@ const jobApi = baseApi.injectEndpoints({
     }),
     getAllJobs: builder.query({
       query: () => ({
-        url: "/job",
+        url: "/jobs",
         method: "GET",
       }),
       providesTags: ["Jobs"],
