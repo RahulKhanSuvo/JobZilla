@@ -104,28 +104,33 @@ export default function InformationSection({ form }: InformationSectionProps) {
 
         <div className="space-y-3">
           <FieldLabel>Show profile</FieldLabel>
+
           <div className="flex gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
               <Input
                 type="radio"
-                {...form.register("showProfile")}
-                value="show"
-                aria-invalid={!!form.formState.errors.showProfile}
+                value="true"
+                {...form.register("showProfile", {
+                  setValueAs: (value) => value === "true",
+                })}
                 className="size-4 accent-primary"
               />
               <span className="text-sm font-medium">Show</span>
             </label>
+
             <label className="flex items-center gap-2 cursor-pointer">
               <Input
                 type="radio"
-                {...form.register("showProfile")}
-                value="hidden"
-                aria-invalid={!!form.formState.errors.showProfile}
+                value="false"
+                {...form.register("showProfile", {
+                  setValueAs: (value) => value === "true",
+                })}
                 className="size-4 accent-primary"
               />
               <span className="text-sm font-medium">Hidden</span>
             </label>
           </div>
+
           <FieldError>{form.formState.errors.showProfile?.message}</FieldError>
         </div>
 

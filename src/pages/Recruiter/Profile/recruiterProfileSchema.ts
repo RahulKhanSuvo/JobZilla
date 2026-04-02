@@ -7,7 +7,7 @@ export const recruiterProfileSchema = z.object({
   website: z.string().url("Invalid website URL").optional().or(z.literal("")),
   foundedDate: z.string().optional(),
   companySize: z.string().min(1, "Company size is required"),
-  showProfile: z.boolean().default(true).optional(),
+  showProfile: z.boolean(),
   logo: z.string().optional().or(z.literal("")),
   coverImage: z.string().optional().or(z.literal("")),
   industry: z.string().min(1, "At least one category is required"),
