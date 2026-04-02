@@ -1,7 +1,4 @@
-import {
-  selectCurrentUser,
-  selectLoading,
-} from "@/redux/features/auth/authSlice";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import type { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
@@ -14,11 +11,6 @@ export default function ProtectedRoute({
   allowRole = [],
 }: ProtectedRouteProps) {
   const user = useSelector(selectCurrentUser);
-  const loading = useSelector(selectLoading);
-  console.log(user);
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   if (!user) {
     return <Navigate to={"/auth/login"} replace />;
   }
