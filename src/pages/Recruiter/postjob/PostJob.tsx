@@ -22,8 +22,11 @@ import {
 import { Calendar } from "lucide-react";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import SkillTagsInput from "@/components/common/SkillTagsInput";
+import { useCreateJobMutation } from "@/redux/features/job/job.api";
+import { errorToast } from "@/utils/errorToast";
 
 export default function PostJob() {
+  const [createJob, { isLoading }] = useCreateJobMutation();
   const form = useForm<PostJobFormData>({
     resolver: zodResolver(postJobSchema),
     defaultValues: {
@@ -47,9 +50,13 @@ export default function PostJob() {
     },
   });
 
-  const onSubmit = (data: PostJobFormData) => {
-    console.log("Post Job Data:", data);
-    toast.success("Job posted successfully!");
+  const onSubmit = async (data: PostJobFormData) => {
+    try {
+      await createJob(data).unwrap();
+      toast.success("Job posted successfully!");
+    } catch (error) {
+      errorToast(error);
+    }
   };
 
   return (
@@ -402,7 +409,7 @@ export default function PostJob() {
               type="submit"
               className="bg-primary text-white font-bold px-12 h-12 rounded-xl"
             >
-              Post Job
+              {isLoading ? "Posting Job..." : "Post Job"}
             </Button>
           </div>
         </CommonWrapper>
