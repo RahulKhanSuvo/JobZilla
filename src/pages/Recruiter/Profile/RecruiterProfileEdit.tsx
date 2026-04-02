@@ -367,6 +367,7 @@ export default function RecruiterProfileEdit() {
                   <social.icon className="size-5 text-slate-600" />
                 </div>
                 <Input
+                  type="url"
                   {...form.register(
                     social.name as keyof RecruiterProfileFormData,
                   )}

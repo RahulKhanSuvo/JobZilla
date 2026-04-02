@@ -100,13 +100,26 @@ export default function ProfileEdit() {
         gender: candidate.gender || null,
         maritalStatus: candidate.maritalStatus || "",
         language: candidate.language || null,
-        skills: candidate.skills || [],
+        skills: candidate.skills?.length
+          ? candidate.skills
+              .map((s: any) => (typeof s === "string" ? s : s.skill))
+              .filter(Boolean)
+          : [],
         aboutMe: candidate.aboutMe || "",
         facebook: candidate.facebook || "",
         linkedin: candidate.linkedin || "",
         twitter: candidate.twitter || "",
-        educationList: candidate.educationList?.length
-          ? candidate.educationList
+        educationList: candidate.eductions?.length
+          ? candidate.eductions.map((e: any) => ({
+              ...e,
+              startData: e.startData
+                ? new Date(e.startData).toISOString().split("T")[0]
+                : "",
+              endData: e.endData
+                ? new Date(e.endData).toISOString().split("T")[0]
+                : "",
+              gap: Number(e.gap) || 0,
+            }))
           : [
               {
                 institution: "",
@@ -118,8 +131,16 @@ export default function ProfileEdit() {
                 isStudying: false,
               },
             ],
-        experienceList: candidate.experienceList?.length
-          ? candidate.experienceList
+        experienceList: candidate.workExperiences?.length
+          ? candidate.workExperiences.map((e: any) => ({
+              ...e,
+              startData: e.startData
+                ? new Date(e.startData).toISOString().split("T")[0]
+                : "",
+              endData: e.endData
+                ? new Date(e.endData).toISOString().split("T")[0]
+                : "",
+            }))
           : [
               {
                 jobTitle: "",
@@ -170,8 +191,10 @@ export default function ProfileEdit() {
       formData.append("avatar", selectedFile);
     }
 
+    formData.append("data", JSON.stringify(data));
+
     try {
-      const res = await updateCandidate({ ...formData, ...data }).unwrap();
+      const res = await updateCandidate(formData).unwrap();
       console.log(res);
       toast.success("Profile updated successfully!");
       setPreviewUrl(null);
@@ -248,6 +271,7 @@ export default function ProfileEdit() {
                   className="h-11"
                   variant="withBg"
                   type="email"
+                  disabled
                   {...form.register("email")}
                   aria-invalid={!!form.formState.errors.email}
                 />

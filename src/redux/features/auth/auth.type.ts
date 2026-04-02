@@ -26,14 +26,17 @@ export interface LoginErrorResponse {
 }
 export type AuthUser = {
   id: string;
-  firstName: string;
-  lastName: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  role: "USER" | "ADMIN";
-  phone: string;
-  resumeUrl: string | null;
+  role: string;
+  phone?: string;
+  resumeUrl?: string | null;
   createdAt: string;
   updatedAt: string;
+  candidate?: unknown;
+  company?: unknown;
 };
 
 export type CurrentUserResponse = {

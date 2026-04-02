@@ -7,20 +7,22 @@ import { Navigate } from "react-router";
 
 export default function CandidateProfilePage() {
   const { data: userData, isLoading } = useCurrentUserQuery();
+  console.log("user", userData);
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!userData?.data?.candidate) {
+  const candidate = (userData?.data as { candidate?: unknown })?.candidate;
+  if (!candidate) {
     return <Navigate to="edit" />;
   }
 
   return (
     <div className="space-y-6">
       <DashboardTitle>Profile</DashboardTitle>
-      <InfoHeader />
+      <InfoHeader userData={userData} />
       <div className="flex gap-6">
-        <BasicInfo />
-        <AboutUseMe />
+        <BasicInfo userData={userData} />
+        <AboutUseMe userData={userData} />
       </div>
     </div>
   );
