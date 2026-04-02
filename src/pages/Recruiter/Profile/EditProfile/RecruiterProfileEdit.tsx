@@ -51,15 +51,14 @@ export default function RecruiterProfileEdit() {
     name: "name",
   });
 
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [coverFile, setCoverFile] = useState<File | null>(null);
+
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setLogoPreview(URL.createObjectURL(file));
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        form.setValue("logo", reader.result as string, { shouldDirty: true });
-      };
-      reader.readAsDataURL(file);
+      setLogoFile(file);
     }
   };
 
@@ -67,20 +66,33 @@ export default function RecruiterProfileEdit() {
     const file = e.target.files?.[0];
     if (file) {
       setCoverPreview(URL.createObjectURL(file));
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        form.setValue("coverImage", reader.result as string, {
-          shouldDirty: true,
-        });
-      };
-      reader.readAsDataURL(file);
+      setCoverFile(file);
     }
   };
 
   const onSubmit = async (data: RecruiterProfileFormData) => {
-    console.log("Recruiter Profile Data:", data);
     try {
-      const result = await updateRecruiter(data).unwrap();
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        if (
+          key !== "logo" &&
+          key !== "coverImage" &&
+          value !== undefined &&
+          value !== null
+        ) {
+          formData.append(key, String(value));
+        }
+      });
+
+      // Append files if selected
+      if (logoFile) {
+        formData.append("logo", logoFile);
+      }
+      if (coverFile) {
+        formData.append("coverImage", coverFile);
+      }
+
+      const result = await updateRecruiter(formData).unwrap();
       console.log(result);
       toast.success("Profile updated successfully!");
       navigate("/recruiter/profile");
