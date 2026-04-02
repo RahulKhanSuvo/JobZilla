@@ -2,14 +2,19 @@ import demoImage from "@assets/logos/profile-1.jpg";
 import coverImage from "@assets/background/tech-people-trying-achieve-ambitious-sustainability-goals.avif";
 import { MapPin, Briefcase, Globe } from "lucide-react";
 import { Link } from "react-router";
+import type { User } from "@/redux/features/auth/auth.type";
 
-export default function ProfileHader() {
+export default function ProfileHader({
+  user,
+}: {
+  user: User | null | undefined;
+}) {
   return (
     <div className="overflow-hidden bg-white">
       {/* Cover Photo */}
       <div className="relative h-48 md:h-60 w-full overflow-hidden">
         <img
-          src={coverImage}
+          src={user?.company?.coverImage || coverImage}
           alt="Cover"
           className="w-full h-full object-cover"
         />
@@ -25,7 +30,7 @@ export default function ProfileHader() {
             <div className="-mt-12 md:-mt-14 shrink-0">
               <div className="size-24 md:size-28 overflow-hidden">
                 <img
-                  src={demoImage}
+                  src={user?.company?.logo || demoImage}
                   alt="ABC Tech"
                   className="size-full object-cover"
                 />
@@ -35,20 +40,20 @@ export default function ProfileHader() {
             {/* Name & meta */}
             <div className="pb-1 space-y-1">
               <h3 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
-                ABC Tech
+                {user?.name}
               </h3>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground text-sm">
                 <span className="flex items-center gap-1">
                   <MapPin className="size-3.5 text-primary" />
-                  Dhaka, Bangladesh
+                  {user?.company?.location}
                 </span>
                 <span className="flex items-center gap-1">
                   <Briefcase className="size-3.5 text-primary" />
-                  Technology &amp; SaaS
+                  {user?.company?.industry}
                 </span>
                 <span className="flex items-center gap-1">
                   <Globe className="size-3.5 text-primary" />
-                  abctech.io
+                  {user?.company?.website}
                 </span>
               </div>
             </div>

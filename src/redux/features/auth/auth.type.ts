@@ -3,11 +3,10 @@ import type { RecruiterProfileFormData } from "@/pages/Recruiter/Profile/recruit
 
 export interface User {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  role: string;
-  phone: string;
+  role: "CANDIDATE" | "RECRUITER" | "ADMIN";
+  phone?: string;
   resumeUrl: string | null;
   createdAt: string;
   updatedAt: string;
@@ -59,7 +58,7 @@ export type AuthUser = {
   firstName?: string;
   lastName?: string;
   email: string;
-  role: string;
+  role: "CANDIDATE" | "RECRUITER" | "ADMIN";
   phone?: string;
   resumeUrl?: string | null;
   createdAt: string;

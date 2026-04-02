@@ -11,7 +11,7 @@ export default function RecruiterProfilePage() {
   return (
     <div className="space-y-6">
       <DashboardTitle>Recruiter Profile</DashboardTitle>
-      <ProfileHader />
+      <ProfileHader user={user} />
       <div className="flex flex-col gap-6">
         <div className="">
           <CompanyInfo company={company} />
