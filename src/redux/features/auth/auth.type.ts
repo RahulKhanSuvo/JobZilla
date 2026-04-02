@@ -24,6 +24,31 @@ export interface LoginErrorResponse {
   success: false;
   message: string;
 }
+export interface Skill {
+  id: string;
+  skill: string;
+  candideId: string;
+}
+
+export interface CandidateProfile {
+  id: string;
+  userId: string;
+  phone: string | null;
+  location: string | null;
+  dob: string | null;
+  gender: string | null;
+  maritalStatus: string | null;
+  language: string | null;
+  aboutMe: string | null;
+  profileImage: string | null;
+  facebook: string | null;
+  linkedin: string | null;
+  twitter: string | null;
+  skills: Skill[];
+  eductions: Education[];
+  workExperiences: WorkExperience[];
+}
+
 export type AuthUser = {
   id: string;
   name?: string;
@@ -35,7 +60,7 @@ export type AuthUser = {
   resumeUrl?: string | null;
   createdAt: string;
   updatedAt: string;
-  candidate?: unknown;
+  candidate?: CandidateProfile | null;
   company?: unknown;
 };
 

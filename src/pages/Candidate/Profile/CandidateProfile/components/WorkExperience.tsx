@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Timeline, TimelineItem } from "@/components/common/Timeline";
+import type { WorkExperience } from "@/redux/features/auth/auth.type";
 
 interface WorkExperienceProps {
-  workExperiences: any[];
+  workExperiences: WorkExperience[];
 }
 
 function formatYear(dateStr: string | null | undefined): string {
@@ -30,7 +30,7 @@ export default function WorkExperience({
               title={exp.jobTitle}
               subtitle={`${exp.companyName}${exp.industry ? ` · ${exp.industry}` : ""}`}
               date={`${start} – ${end}`}
-              description={exp.Description || undefined}
+              description={exp.description || undefined}
             />
           );
         })}
