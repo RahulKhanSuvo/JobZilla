@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postJobSchema, type PostJobFormData } from "./postJobSchema";
 import { toast } from "sonner";
@@ -46,6 +46,7 @@ export default function PostJob() {
       deadline: new Date(),
       jobType: "FULL_TIME",
       skills: "",
+
       applyType: "Internal",
     },
   });
@@ -59,11 +60,18 @@ export default function PostJob() {
     }
   };
 
+  const onError = (errors: FieldErrors<PostJobFormData>) => {
+    console.log("Form Validation Errors:", errors);
+  };
+
   return (
     <div className="space-y-6 pb-12">
       <DashboardTitle>Post A New Job</DashboardTitle>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit, onError)}
+        className="space-y-6"
+      >
         <CommonWrapper className="p-8 space-y-8">
           <FieldGroup className="space-y-6">
             <Field>
@@ -146,6 +154,7 @@ export default function PostJob() {
                     />
                   )}
                 />
+                <FieldError>{form.formState.errors.tags?.message}</FieldError>
               </Field>
 
               <Field>
