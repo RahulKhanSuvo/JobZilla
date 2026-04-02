@@ -41,7 +41,7 @@ export default function CoverImage({
             variant="secondary"
             size="sm"
             onClick={() => document.getElementById("cover-upload")?.click()}
-            className="absolute bottom-4 right-4 gap-2 shadow rounded bg-white hover:bg-slate-50 text-slate-900 border-none"
+            className="absolute bottom-4 right-4 gap-2 shadow rounded bg-white hover:bg-slate-50 text-slate-900 border-none z-10"
           >
             <Camera className="size-4" />
             <span className="hidden sm:inline">Edit Cover Photo</span>
@@ -56,8 +56,8 @@ export default function CoverImage({
         </div>
 
         {/* Logo Upload Container (Overlapping) */}
-        <div className="px-8 pb-4">
-          <div className="relative -mt-16 sm:-mt-20 flex flex-col items-start gap-4">
+        <div className="px-8 pb-4 pointer-events-none">
+          <div className="relative -mt-16 sm:-mt-20 flex flex-col items-start gap-4 pointer-events-auto w-fit">
             <div className="group relative size-28 sm:size-36 rounded overflow-hidden border-4 border-white shadow bg-white shrink-0">
               {logoPreview ? (
                 <img

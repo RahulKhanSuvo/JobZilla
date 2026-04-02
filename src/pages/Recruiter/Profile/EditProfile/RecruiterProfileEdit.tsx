@@ -41,6 +41,8 @@ export default function RecruiterProfileEdit() {
       twitter: "",
       address: "",
       location: "",
+      logo: "",
+      coverImage: "",
     },
   });
 
@@ -53,6 +55,11 @@ export default function RecruiterProfileEdit() {
     const file = e.target.files?.[0];
     if (file) {
       setLogoPreview(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        form.setValue("logo", reader.result as string, { shouldDirty: true });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -60,6 +67,13 @@ export default function RecruiterProfileEdit() {
     const file = e.target.files?.[0];
     if (file) {
       setCoverPreview(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        form.setValue("coverImage", reader.result as string, {
+          shouldDirty: true,
+        });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
