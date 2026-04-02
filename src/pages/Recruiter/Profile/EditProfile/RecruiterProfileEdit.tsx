@@ -7,7 +7,7 @@ import {
   type RecruiterProfileFormData,
 } from "../recruiterProfileSchema";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import InformationSection from "./components/InformationSection";
@@ -17,10 +17,12 @@ import ContactInformationSection from "./components/ContactInformationSection";
 import CoverImage from "./components/CoverImage";
 import { useUpdateRecruiterMutation } from "@/redux/features/recruiter/recruiter.api";
 import { errorToast } from "@/utils/errorToast";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 
 export default function RecruiterProfileEdit() {
   const navigate = useNavigate();
   const [updateRecruiter, { isLoading }] = useUpdateRecruiterMutation();
+  const { data: user } = useCurrentUserQuery();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
 
@@ -45,6 +47,34 @@ export default function RecruiterProfileEdit() {
       coverImage: "",
     },
   });
+
+  useEffect(() => {
+    if (user?.data) {
+      const userData = user.data;
+      const companyData = userData.company;
+
+      form.reset({
+        name: userData.name || "",
+        email: userData.email || "",
+        phone: userData.phone || "",
+        website: companyData?.website || "",
+        foundedDate: companyData?.foundedDate
+          ? companyData.foundedDate.split("T")[0]
+          : "",
+        companySize: companyData?.companySize || "",
+        showProfile: companyData?.showProfile ?? true,
+        industry: companyData?.industry || "",
+        description: companyData?.description || "",
+        facebook: companyData?.facebook || "",
+        linkedin: companyData?.linkedin || "",
+        twitter: companyData?.twitter || "",
+        address: companyData?.address || "",
+        location: companyData?.location || "",
+        logo: companyData?.logo || "",
+        coverImage: companyData?.coverImage || "",
+      });
+    }
+  }, [user?.data, form]);
 
   const employerName = useWatch({
     control: form.control,
@@ -101,6 +131,11 @@ export default function RecruiterProfileEdit() {
     }
   };
 
+  // Derive preview sources: newly uploaded file preview OR the existing URL from the data
+  const currentLogoPreview = logoPreview || user?.data?.company?.logo || null;
+  const currentCoverPreview =
+    coverPreview || user?.data?.company?.coverImage || null;
+
   return (
     <div className="space-y-6 pb-12">
       <div className="flex items-center justify-between">
@@ -130,8 +165,8 @@ export default function RecruiterProfileEdit() {
         className="space-y-6"
       >
         <CoverImage
-          coverPreview={coverPreview}
-          logoPreview={logoPreview}
+          coverPreview={currentCoverPreview}
+          logoPreview={currentLogoPreview}
           handleCoverChange={handleCoverChange}
           handleLogoChange={handleLogoChange}
           employerName={employerName}

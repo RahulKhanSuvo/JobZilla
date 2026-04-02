@@ -64,7 +64,10 @@ export default function InformationSection({ form }: InformationSectionProps) {
             name="foundedDate"
             control={form.control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value || undefined}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Year" />
                 </SelectTrigger>
@@ -86,7 +89,10 @@ export default function InformationSection({ form }: InformationSectionProps) {
             name="companySize"
             control={form.control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value || undefined}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
@@ -146,7 +152,10 @@ export default function InformationSection({ form }: InformationSectionProps) {
             name="industry"
             control={form.control}
             render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value || undefined}
+              >
                 <SelectTrigger aria-invalid={!!form.formState.errors.industry}>
                   <SelectValue placeholder="Select industry" />
                 </SelectTrigger>
