@@ -11,7 +11,7 @@ export const recruiterProfileSchema = z.object({
   logo: z.string().optional().or(z.literal("")),
   coverImage: z.string().optional().or(z.literal("")),
   industry: z.string().min(1, "At least one category is required"),
-  aboutCompany: z.string().min(10, "About company description is too short"),
+  description: z.string().min(10, "About company description is too short"),
   facebook: z.string().url("Invalid URL").optional().or(z.literal("")),
   linkedin: z.string().url("Invalid URL").optional().or(z.literal("")),
   twitter: z.string().url("Invalid URL").optional().or(z.literal("")),
