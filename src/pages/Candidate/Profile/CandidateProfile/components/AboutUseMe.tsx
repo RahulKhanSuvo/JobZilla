@@ -10,7 +10,6 @@ export default function AboutUseMe({ userData }: AboutUseMeProps) {
   const candidate = userData?.data?.candidate || {};
   const aboutMe: string = candidate.aboutMe || "";
 
-  // Strip HTML tags from rich text for display
   const plainAbout = aboutMe.replace(/<[^>]+>/g, "").trim();
 
   return (

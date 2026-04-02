@@ -322,10 +322,7 @@ export default function ProfileEdit() {
                   name="gender"
                   control={form.control}
                   render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                         <SelectValue className="" placeholder="Select gender" />
                       </SelectTrigger>
@@ -354,10 +351,7 @@ export default function ProfileEdit() {
                   name="language"
                   control={form.control}
                   render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                         <SelectValue
                           className=""
