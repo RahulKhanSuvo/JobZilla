@@ -24,29 +24,26 @@ export default function RecruiterProfileEdit() {
   const form = useForm<RecruiterProfileFormData>({
     resolver: zodResolver(recruiterProfileSchema),
     defaultValues: {
-      employerName: "",
+      name: "",
       email: "",
       phone: "",
       website: "",
       foundedDate: "",
       companySize: "",
       showProfile: "show",
-      categories: [],
-      profileUrl: "",
+      industry: "",
       aboutCompany: "",
-      introVideo: "",
       facebook: "",
       linkedin: "",
       twitter: "",
       address: "",
       location: "",
-      mapLocation: "",
     },
   });
 
   const employerName = useWatch({
     control: form.control,
-    name: "employerName",
+    name: "name",
   });
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {

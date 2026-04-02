@@ -1,6 +1,5 @@
 import CommonWrapper from "@/components/common/CommonWrapper";
 import SectionTitle from "@/components/common/SectionTitle";
-import SkillTagsInput from "@/components/common/SkillTagsInput";
 import {
   Field,
   FieldGroup,
@@ -29,11 +28,8 @@ export default function InformationSection({ form }: InformationSectionProps) {
       <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field>
           <FieldLabel>Employer Name</FieldLabel>
-          <Input
-            {...form.register("employerName")}
-            placeholder="Avitex Agency"
-          />
-          <FieldError>{form.formState.errors.employerName?.message}</FieldError>
+          <Input {...form.register("name")} placeholder="Avitex Agency" />
+          <FieldError>{form.formState.errors.name?.message}</FieldError>
         </Field>
         <Field>
           <FieldLabel>Email</FieldLabel>
@@ -126,20 +122,28 @@ export default function InformationSection({ form }: InformationSectionProps) {
 
         <Field className="md:col-span-2">
           <FieldLabel>
-            Categories <span className="text-red-500">*</span>
+            Industry <span className="text-red-500">*</span>
           </FieldLabel>
           <Controller
-            name="categories"
+            name="industry"
             control={form.control}
             render={({ field }) => (
-              <SkillTagsInput
-                placeholder="Add category..."
-                value={field.value}
-                onChange={field.onChange}
-              />
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select industry" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="IT">IT</SelectItem>
+                  <SelectItem value="Education">Education</SelectItem>
+                  <SelectItem value="Healthcare">Healthcare</SelectItem>
+                  <SelectItem value="Finance">Finance</SelectItem>
+                  <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             )}
           />
-          <FieldError>{form.formState.errors.categories?.message}</FieldError>
+          <FieldError>{form.formState.errors.industry?.message}</FieldError>
         </Field>
       </FieldGroup>
     </CommonWrapper>
