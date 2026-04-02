@@ -106,29 +106,33 @@ export default function InformationSection({ form }: InformationSectionProps) {
           <FieldLabel>Show profile</FieldLabel>
 
           <div className="flex gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <Input
-                type="radio"
-                value="true"
-                {...form.register("showProfile", {
-                  setValueAs: (value) => value === "true",
-                })}
-                className="size-4 accent-primary"
-              />
-              <span className="text-sm font-medium">Show</span>
-            </label>
+            <Controller
+              name="showProfile"
+              control={form.control}
+              render={({ field }) => (
+                <>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <Input
+                      type="radio"
+                      checked={field.value === true}
+                      onChange={() => field.onChange(true)}
+                      className="size-4 accent-primary"
+                    />
+                    <span className="text-sm font-medium">Show</span>
+                  </label>
 
-            <label className="flex items-center gap-2 cursor-pointer">
-              <Input
-                type="radio"
-                value="false"
-                {...form.register("showProfile", {
-                  setValueAs: (value) => value === "true",
-                })}
-                className="size-4 accent-primary"
-              />
-              <span className="text-sm font-medium">Hidden</span>
-            </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <Input
+                      type="radio"
+                      checked={field.value === false}
+                      onChange={() => field.onChange(false)}
+                      className="size-4 accent-primary"
+                    />
+                    <span className="text-sm font-medium">Hidden</span>
+                  </label>
+                </>
+              )}
+            />
           </div>
 
           <FieldError>{form.formState.errors.showProfile?.message}</FieldError>
