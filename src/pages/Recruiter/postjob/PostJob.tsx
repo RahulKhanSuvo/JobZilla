@@ -30,20 +30,20 @@ export default function PostJob() {
       title: "",
       description: "",
       category: "",
-      type: "",
       tags: [],
       gender: "",
-      applyType: "Internal",
       externalUrl: "",
       applyEmail: "",
       salaryType: "",
-      minSalary: "",
-      maxSalary: "",
+      salaryMin: 0,
+      salaryMax: 0,
       experience: "",
       careerLevel: "",
       qualification: "",
-      videoUrl: "",
-      deadline: "",
+      deadline: new Date(),
+      jobType: "FULL_TIME",
+      skills: "",
+      applyType: "Internal",
     },
   });
 
@@ -99,23 +99,30 @@ export default function PostJob() {
               <Field>
                 <FieldLabel className="font-semibold">Type</FieldLabel>
                 <Controller
-                  name="type"
+                  name="jobType"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "FULL_TIME"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Freelance" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Full-time">Full-time</SelectItem>
-                        <SelectItem value="Part-time">Part-time</SelectItem>
-                        <SelectItem value="Freelance">Freelance</SelectItem>
-                        <SelectItem value="Remote">Remote</SelectItem>
+                        <SelectItem value="FULL_TIME">Full-time</SelectItem>
+                        <SelectItem value="PART_TIME">Part-time</SelectItem>
+                        <SelectItem value="FREELANCE">Freelance</SelectItem>
+                        <SelectItem value="REMOTE">Remote</SelectItem>
+                        <SelectItem value="CONTRACT">Contract</SelectItem>
+                        <SelectItem value="INTERN">Intern</SelectItem>
                       </SelectContent>
                     </Select>
                   )}
                 />
-                <FieldError>{form.formState.errors.type?.message}</FieldError>
+                <FieldError>
+                  {form.formState.errors.jobType?.message}
+                </FieldError>
               </Field>
 
               <Field>
@@ -140,7 +147,10 @@ export default function PostJob() {
                   name="gender"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "Any"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full rounded-none">
                         <SelectValue placeholder="10 - 50" />
                       </SelectTrigger>
@@ -163,7 +173,10 @@ export default function PostJob() {
                   name="applyType"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "Internal"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Internal" />
                       </SelectTrigger>
@@ -182,6 +195,7 @@ export default function PostJob() {
                   External URL for Apply Job
                 </FieldLabel>
                 <Input
+                  type="url"
                   {...form.register("externalUrl")}
                   placeholder="https://"
                   variant="withBg"
@@ -211,7 +225,10 @@ export default function PostJob() {
                   name="salaryType"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "Monthly"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="1 Month" />
                       </SelectTrigger>
@@ -235,12 +252,12 @@ export default function PostJob() {
                 </FieldLabel>
                 <Input
                   type="number"
-                  {...form.register("minSalary")}
+                  {...form.register("salaryMin")}
                   placeholder="e.g. 1000"
                   variant="withBg"
                 />
                 <FieldError>
-                  {form.formState.errors.minSalary?.message}
+                  {form.formState.errors.salaryMin?.message}
                 </FieldError>
               </Field>
 
@@ -250,12 +267,12 @@ export default function PostJob() {
                 </FieldLabel>
                 <Input
                   type="number"
-                  {...form.register("maxSalary")}
+                  {...form.register("salaryMax")}
                   placeholder="e.g. 5000"
                   variant="withBg"
                 />
                 <FieldError>
-                  {form.formState.errors.maxSalary?.message}
+                  {form.formState.errors.salaryMax?.message}
                 </FieldError>
               </Field>
 
@@ -265,7 +282,10 @@ export default function PostJob() {
                   name="experience"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "Fresher"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="1 Years" />
                       </SelectTrigger>
@@ -289,7 +309,10 @@ export default function PostJob() {
                   name="careerLevel"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "Entry"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Managerial" />
                       </SelectTrigger>
@@ -313,7 +336,10 @@ export default function PostJob() {
                   name="qualification"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || "High School"}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Certificate" />
                       </SelectTrigger>
