@@ -40,11 +40,11 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
           <Button variant="ghost" size="icon" className="rounded-full">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
-              <AvatarFallback>{user?.firstName ?? "Rak"}</AvatarFallback>
+              <AvatarFallback>{user?.name ?? "Rak"}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <h4>{user?.firstName ?? "rahul"}</h4>
+        <h4>{user?.name ?? "rahul"}</h4>
       </div>
 
       <DropdownMenuContent className="w-32">
