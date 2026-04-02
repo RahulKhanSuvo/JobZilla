@@ -34,6 +34,7 @@ export default function InformationSection({ form }: InformationSectionProps) {
         <Field>
           <FieldLabel>Email</FieldLabel>
           <Input
+            aria-invalid={!!form.formState.errors.email}
             {...form.register("email")}
             placeholder="hi.avitex@gmail.com"
           />
@@ -41,12 +42,17 @@ export default function InformationSection({ form }: InformationSectionProps) {
         </Field>
         <Field>
           <FieldLabel>Phone Number</FieldLabel>
-          <Input {...form.register("phone")} placeholder="123 456 7890" />
+          <Input
+            aria-invalid={!!form.formState.errors.phone}
+            {...form.register("phone")}
+            placeholder="123 456 7890"
+          />
           <FieldError>{form.formState.errors.phone?.message}</FieldError>
         </Field>
         <Field>
           <FieldLabel>Website</FieldLabel>
           <Input
+            aria-invalid={!!form.formState.errors.website}
             {...form.register("website")}
             placeholder="https://avitex.com"
           />
@@ -100,24 +106,27 @@ export default function InformationSection({ form }: InformationSectionProps) {
           <FieldLabel>Show profile</FieldLabel>
           <div className="flex gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input
+              <Input
                 type="radio"
                 {...form.register("showProfile")}
                 value="show"
+                aria-invalid={!!form.formState.errors.showProfile}
                 className="size-4 accent-primary"
               />
               <span className="text-sm font-medium">Show</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input
+              <Input
                 type="radio"
                 {...form.register("showProfile")}
                 value="hidden"
+                aria-invalid={!!form.formState.errors.showProfile}
                 className="size-4 accent-primary"
               />
               <span className="text-sm font-medium">Hidden</span>
             </label>
           </div>
+          <FieldError>{form.formState.errors.showProfile?.message}</FieldError>
         </div>
 
         <Field className="md:col-span-2">
@@ -129,7 +138,7 @@ export default function InformationSection({ form }: InformationSectionProps) {
             control={form.control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger>
+                <SelectTrigger aria-invalid={!!form.formState.errors.industry}>
                   <SelectValue placeholder="Select industry" />
                 </SelectTrigger>
                 <SelectContent position="popper">
