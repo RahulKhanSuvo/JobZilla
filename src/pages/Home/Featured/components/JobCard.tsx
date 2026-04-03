@@ -2,27 +2,10 @@ import { MapPin, Clock, Star } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { IoHeart } from "react-icons/io5";
 import { Link } from "react-router";
-import JobIllustration, {
-  type IllustrationType,
-} from "@/components/common/JobIllustration";
-
-export interface Job {
-  id: number;
-  company: string;
-  logo: string;
-  title: string;
-  location: string;
-  postedAt: string;
-  salary: string;
-  deadline: string;
-  tags: string[];
-  rating: number;
-  isVerified?: boolean;
-  illustrationType?: IllustrationType;
-}
+import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 
 interface FeaturedJobCardProps {
-  job: Job;
+  job: PostJobFormData;
 }
 
 export default function JobCard({ job }: FeaturedJobCardProps) {
@@ -35,20 +18,16 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
 
         <div className="space-y-5">
           <div className="flex items-start gap-4">
-            <div className="size-[60px] shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
-              {job.illustrationType ? (
-                <JobIllustration type={job.illustrationType} />
-              ) : (
-                <img
-                  src={job.logo}
-                  alt={job.company}
-                  className="size-full object-contain"
-                />
-              )}
+            <div className="size-15 shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
+              <img
+                src={job.company?.logo}
+                alt={job.company?.user.name}
+                className="size-full object-contain"
+              />
             </div>
             <div className="overflow-hidden">
               <p className="font-medium text-primary dark:text-primary  cursor-pointer transition-all">
-                {job.company}
+                {job.company?.user.name}
               </p>
               <div className="flex items-center">
                 <h4 className="text-xl font-bold text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors truncate">
@@ -58,11 +37,15 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
               <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-bold mt-1.5">
                 <div className="flex items-center gap-0.5">
                   <MapPin className="size-3.5 text-slate-400/80" />
-                  <span className="text-xs">{job.location}</span>
+                  <span className="text-xs">{job.company?.location}</span>
                 </div>
                 <div className="flex items-center gap-0.5">
                   <Clock className="size-3.5 text-slate-400/80" />
-                  <span className="text-xs">{job.postedAt}</span>
+                  <span className="text-xs">
+                    {job.createdAt
+                      ? new Date(job.createdAt).toLocaleDateString()
+                      : "N/A"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -83,7 +66,7 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  className={`size-3 ${star <= job.rating ? "text-amber-400 fill-amber-400" : "text-slate-200 dark:text-slate-800"}`}
+                  className={`size-3 ${star <= 2 ? "text-amber-400 fill-amber-400" : "text-slate-200 dark:text-slate-800"}`}
                 />
               ))}
             </div>
@@ -95,12 +78,14 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
                 <span className="text-emerald-600 font-black text-xs">$</span>
               </div>
               <p className="text-lg font-black text-slate-900 dark:text-white">
-                {job.salary}
+                {job.salaryMin}
                 <span className="text-slate-400 text-sm font-bold">/year</span>
               </p>
             </div>
             <p className="text-xs text-slate-400 dark:text-slate-500 font-bold">
-              {job.deadline}
+              {job.deadline
+                ? new Date(job.deadline).toLocaleDateString()
+                : "N/A"}
             </p>
           </div>
         </div>

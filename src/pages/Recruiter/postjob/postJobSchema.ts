@@ -10,6 +10,7 @@ export const JobTypeEnum = z.enum([
 ]);
 
 export const postJobSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(1, "Job title is required"),
   description: z.string().min(1, "Job description is required"),
   category: z.string().min(1, "Job category is required"),
@@ -29,6 +30,16 @@ export const postJobSchema = z.object({
   applyType: z.string().optional().nullable(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
+  company: z
+    .object({
+      location: z.string(),
+      user: z.object({
+        name: z.string(),
+        email: z.email(),
+      }),
+      logo: z.string(),
+    })
+    .optional(),
 });
 
 export type PostJobFormData = z.infer<typeof postJobSchema>;
