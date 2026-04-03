@@ -6,9 +6,10 @@ import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 
 interface FeaturedJobCardProps {
   job: PostJobFormData;
+  onSave: (jobId: string) => void;
 }
 
-export default function JobCard({ job }: FeaturedJobCardProps) {
+export default function JobCard({ job, onSave }: FeaturedJobCardProps) {
   return (
     <Link to={`/job/${job.id}`}>
       <CommonWrapper className="p-6 group transition-all duration-300 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 relative ">
@@ -16,8 +17,9 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            onSave(job.id!);
           }}
-          className="absolute top-6 right-6 p-2 cursor-pointer rounded-full border dark:bg-slate-950 text-slate-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors z-10"
+          className={`absolute top-6 right-6 p-2 cursor-pointer rounded-full border dark:bg-slate-950  hover:text-red-500 dark:hover:text-red-400 transition-colors z-10 ${job.isSaved ? "text-red-500" : "text-slate-400 dark:text-slate-500"}`}
         >
           <IoHeart className="size-5" />
         </button>

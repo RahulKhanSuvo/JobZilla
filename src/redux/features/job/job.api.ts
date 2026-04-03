@@ -36,6 +36,7 @@ const jobApi = baseApi.injectEndpoints({
         method: "POST",
         body: { jobId },
       }),
+      invalidatesTags: ["Jobs"],
     }),
   }),
 });
@@ -45,4 +46,5 @@ export const {
   useGetAllJobsQuery,
   useGetMyJobsQuery,
   useGetJobByIdQuery,
+  useSaveJobMutation,
 } = jobApi;

@@ -1,6 +1,9 @@
 import { motion, type Variants } from "framer-motion";
 import JobCard from "@/pages/Home/Featured/components/JobCard";
 import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
+import { useSaveJobMutation } from "@/redux/features/job/job.api";
+import { errorToast } from "@/utils/errorToast";
+import { toast } from "sonner";
 
 interface JobListProps {
   layout: "grid" | "list";
@@ -9,7 +12,7 @@ interface JobListProps {
 
 export default function JobList({ layout, jobs }: JobListProps) {
   console.log(jobs);
-
+  const [saveJob] = useSaveJobMutation();
   const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,7 +31,15 @@ export default function JobList({ layout, jobs }: JobListProps) {
       transition: { duration: 0.4 },
     },
   };
-
+  // handel save
+  const handelSave = async (jobId: string) => {
+    try {
+      await saveJob(jobId).unwrap();
+      toast.success("save success full");
+    } catch (error) {
+      errorToast(error);
+    }
+  };
   return (
     <motion.div
       variants={container}
@@ -42,7 +53,7 @@ export default function JobList({ layout, jobs }: JobListProps) {
     >
       {jobs.map((job) => (
         <motion.div key={job.id} variants={item}>
-          <JobCard job={job} />
+          <JobCard job={job} onSave={handelSave} />
         </motion.div>
       ))}
     </motion.div>

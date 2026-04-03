@@ -30,6 +30,7 @@ export const postJobSchema = z.object({
   applyType: z.string().optional().nullable(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
+  isSaved: z.boolean().optional(),
   company: z
     .object({
       location: z.string(),
