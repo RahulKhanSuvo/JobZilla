@@ -21,7 +21,6 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
         >
           <IoHeart className="size-5" />
         </button>
-
         <div className="space-y-5">
           <div className="flex items-start gap-4">
             <div className="size-15 shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
