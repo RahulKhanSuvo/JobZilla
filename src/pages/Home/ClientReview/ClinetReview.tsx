@@ -67,7 +67,7 @@ const mockReviews: Review[] = [
   },
 ];
 
-export default function ClinetReview() {
+export default function ClientReview() {
   return (
     <div className="bg-slate-50 dark:bg-slate-950/20 py-24 transition-colors duration-300 overflow-hidden">
       <Container>
