@@ -3,7 +3,6 @@ import JobCard from "@/pages/Home/Featured/components/JobCard";
 import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 import { useSaveJobMutation } from "@/redux/features/job/job.api";
 import { errorToast } from "@/utils/errorToast";
-import { toast } from "sonner";
 import { useState } from "react";
 
 interface JobListProps {
@@ -37,7 +36,6 @@ export default function JobList({ layout, jobs }: JobListProps) {
     try {
       setSavingJobId(jobId);
       await saveJob(jobId).unwrap();
-      toast.success("save success full");
     } catch (error) {
       errorToast(error);
     } finally {
