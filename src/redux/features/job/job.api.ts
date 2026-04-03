@@ -30,6 +30,13 @@ const jobApi = baseApi.injectEndpoints({
     getJobById: builder.query({
       query: (jobId: string) => `jobs/${jobId}`,
     }),
+    saveJob: builder.mutation({
+      query: (jobId: string) => ({
+        url: "jobs/save-job",
+        method: "POST",
+        body: { jobId },
+      }),
+    }),
   }),
 });
 
