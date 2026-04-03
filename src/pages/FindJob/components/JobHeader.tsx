@@ -57,7 +57,7 @@ export default function JobHeader({ layout, setLayout }: JobHeaderProps) {
 
       <div className="flex items-center gap-3">
         <Select defaultValue="12">
-          <SelectTrigger className="h-10 bg-[#F1F1F1] dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-none  w-[130px]  font-bold text-slate-600 dark:text-slate-400 shadow-none">
+          <SelectTrigger className="h-10 bg-[#F1F1F1] dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-none  w-32.5  font-bold text-slate-600 dark:text-slate-400 shadow-none">
             <SelectValue placeholder="12 Per Page" />
           </SelectTrigger>
           <SelectContent
@@ -71,7 +71,7 @@ export default function JobHeader({ layout, setLayout }: JobHeaderProps) {
         </Select>
 
         <Select defaultValue="default">
-          <SelectTrigger className="h-10 bg-[#F1F1F1] dark:bg-slate-900 border-slate-100 dark:border-slate-800 shadow-none rounded-none  w-[150px]  font-bold text-slate-600 dark:text-slate-400">
+          <SelectTrigger className="h-10 bg-[#F1F1F1] dark:bg-slate-900 border-slate-100 dark:border-slate-800 shadow-none rounded-none  w-37.5  font-bold text-slate-600 dark:text-slate-400">
             <SelectValue placeholder="Sort by (Default)" />
           </SelectTrigger>
           <SelectContent
