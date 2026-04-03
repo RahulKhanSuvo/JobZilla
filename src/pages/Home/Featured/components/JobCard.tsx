@@ -79,7 +79,8 @@ export default function JobCard({ job }: FeaturedJobCardProps) {
               </div>
               <p className="text-lg font-black text-slate-900 dark:text-white">
                 {job.salaryMin}
-                <span className="text-slate-400 text-sm font-bold">/year</span>
+                <span className="text-slate-400 text-sm font-bold">/</span>
+                {job.salaryMax}
               </p>
             </div>
             <p className="text-xs text-slate-400 dark:text-slate-500 font-bold">
