@@ -13,10 +13,10 @@ const jobApi = baseApi.injectEndpoints({
       invalidatesTags: ["Jobs"],
     }),
     getAllJobs: builder.query<GetJobsResponse, IJobQueryParams>({
-      query: ({ page = 1, limit = 10 }) => ({
+      query: ({ page = 1, limit = 10, searchTerm }) => ({
         url: "/jobs",
         method: "GET",
-        params: { page, limit },
+        params: { page, limit, searchTerm },
       }),
       providesTags: ["Jobs"],
     }),
