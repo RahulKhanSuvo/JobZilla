@@ -8,7 +8,8 @@ import { useGetAllJobsQuery } from "@/redux/features/job/job.api";
 import type { PostJobFormData } from "../Recruiter/postjob/postJobSchema";
 
 export default function FindJob() {
-  const { data, isLoading } = useGetAllJobsQuery();
+  const [params, setParams] = useState({ page: 1, limit: 10 });
+  const { data, isLoading } = useGetAllJobsQuery(params);
   const jobs: PostJobFormData[] = data?.data ?? [];
   const [layout, setLayout] = useState<"grid" | "list">("list");
   if (isLoading) return <div>loading</div>;
@@ -25,7 +26,11 @@ export default function FindJob() {
           <main className="flex-1 space-y-4">
             <JobHeader layout={layout} setLayout={setLayout} />
             <JobList layout={layout} jobs={jobs} />
-            <Pagination />
+            <Pagination
+              page={params.page}
+              totalPage={data?.meta?.totalPage || 0}
+              onPageChange={(page) => setParams({ ...params, page })}
+            />
           </main>
         </div>
       </Container>
