@@ -48,6 +48,7 @@ const jobApi = baseApi.injectEndpoints({
     }),
     getJobById: builder.query({
       query: (jobId: string) => `jobs/${jobId}`,
+      providesTags: ["Jobs", "SavedJobs"],
     }),
     saveJob: builder.mutation({
       query: (jobId: string) => ({
@@ -55,7 +56,7 @@ const jobApi = baseApi.injectEndpoints({
         method: "POST",
         body: { jobId },
       }),
-      invalidatesTags: ["Jobs"],
+      invalidatesTags: ["Jobs", "SavedJobs"],
     }),
   }),
 });

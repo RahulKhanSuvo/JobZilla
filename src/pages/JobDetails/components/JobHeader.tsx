@@ -2,7 +2,6 @@ import {
   MapPin,
   Calendar,
   Share2,
-  Heart,
   Send,
   Star,
   CircleDollarSign,
@@ -11,12 +10,16 @@ import {
 import { Button } from "@/components/ui/button";
 import Container from "@/components/common/Container";
 import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
+import { IoHeart } from "react-icons/io5";
+import { errorToast } from "@/utils/errorToast";
+import { useSaveJobMutation } from "@/redux/features/job/job.api";
 
 interface JobHeaderProps {
   job: PostJobFormData;
 }
 
 export default function JobHeader({ job }: JobHeaderProps) {
+  const [saveJob] = useSaveJobMutation();
   const deadlineDate = job.deadline ? new Date(job.deadline) : null;
   const daysLeft =
     deadlineDate && deadlineDate > new Date()
@@ -25,6 +28,13 @@ export default function JobHeader({ job }: JobHeaderProps) {
             (1000 * 60 * 60 * 24),
         )
       : 0;
+  const handelSave = async (jobId: string) => {
+    try {
+      await saveJob(jobId).unwrap();
+    } catch (error) {
+      errorToast(error);
+    }
+  };
 
   return (
     <div className="bg-white sticky top-20 z-20 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
@@ -83,9 +93,10 @@ export default function JobHeader({ job }: JobHeaderProps) {
             <Button
               variant="outline"
               size="icon"
+              onClick={() => handelSave(job.id ?? "")}
               className={`size-10 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
             >
-              <Heart className="size-5" />
+              <IoHeart className="size-5" />
             </Button>
             <Button className="h-12 px-20 py-4 rounded-lg bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 transition-all active:scale-95">
               <Send className="size-5 rotate-[-20deg]" />
