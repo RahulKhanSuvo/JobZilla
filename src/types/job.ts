@@ -47,7 +47,11 @@ export interface IJobQueryParams {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   searchTerm?: string;
-  [key: string]: string | number | boolean | undefined;
+  location?: string;
+  jobType?: string;
+  salary?: string[];
+  postedAnytime?: string;
+  seniorityLevel?: string;
 }
 
 export interface IApiResponse<T> {
