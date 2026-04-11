@@ -23,7 +23,6 @@ export default function FindJob() {
     defaultValues: {
       searchTerm: "",
       location: "all",
-      category: "all",
       jobType: "all",
       salary: [],
       postedAnytime: "anytime",
