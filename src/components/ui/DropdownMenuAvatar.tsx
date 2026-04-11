@@ -44,11 +44,13 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <h4>{user?.name ?? "rahul"}</h4>
       </div>
 
       <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <p>{user?.name ?? "rahul"}</p>
+          </DropdownMenuItem>
           {menu.map((item) => (
             <DropdownMenuItem key={item.title}>
               <Link to={item.url}>{item.title}</Link>
