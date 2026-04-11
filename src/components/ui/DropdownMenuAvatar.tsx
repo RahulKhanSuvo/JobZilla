@@ -49,7 +49,7 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
       <DropdownMenuContent className="w-32">
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <p>{user?.name ?? "rahul"}</p>
+            <p className="text-sm font-medium">{user?.name ?? "rahul"}</p>
           </DropdownMenuItem>
           {menu.map((item) => (
             <DropdownMenuItem key={item.title}>
