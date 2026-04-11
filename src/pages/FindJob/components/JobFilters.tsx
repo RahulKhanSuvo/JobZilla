@@ -70,7 +70,7 @@ export default function JobFilters({ form }: JobFiltersProps) {
       </Field>
 
       {/* Job Category */}
-      <Field className="space-y-2">
+      {/* <Field className="space-y-2">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
           Job Category
         </label>
@@ -94,7 +94,7 @@ export default function JobFilters({ form }: JobFiltersProps) {
             </Select>
           )}
         />
-      </Field>
+      </Field> */}
 
       {/* On-Site/Remote */}
       <Field className="space-y-2">
