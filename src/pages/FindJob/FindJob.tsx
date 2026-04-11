@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Container from "@/components/common/Container";
 import JobFilters from "./components/JobFilters";
 import JobHeader from "./components/JobHeader";
@@ -15,8 +15,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function FindJob() {
   const [params, setParams] = useState({ page: 1, limit: 10 });
-  const { data, isLoading } = useGetAllJobsQuery(params);
-  const jobs: PostJobFormData[] = data?.data ?? [];
   const [layout, setLayout] = useState<"grid" | "list">("list");
   const form = useForm<JobFilterValues>({
     resolver: zodResolver(jobFilterSchema),
@@ -36,9 +34,9 @@ export default function FindJob() {
     control,
   });
 
-  useEffect(() => {
-    console.log("Filter Data:", filters);
-  }, [filters]);
+  const { data, isLoading } = useGetAllJobsQuery({ ...params, ...filters });
+  const jobs: PostJobFormData[] = data?.data ?? [];
+
   if (isLoading) return <div>loading</div>;
 
   return (
