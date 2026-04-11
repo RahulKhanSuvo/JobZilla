@@ -1,5 +1,10 @@
 import baseApi from "../hook/baseApi";
-import type { IApiResponse, IJobQueryParams, IJobResponse } from "@/types/job";
+import type {
+  IApiResponse,
+  IJobQueryParams,
+  IJobResponse,
+  ISavedJob,
+} from "@/types/job";
 import type { GetJobsResponse } from "./job.type";
 
 const jobApi = baseApi.injectEndpoints({
@@ -58,13 +63,20 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Jobs", "SavedJobs"],
     }),
-    getSaveJob: builder.query<IApiResponse<IJobResponse>, IJobQueryParams>({
+    getSaveJob: builder.query<IApiResponse<ISavedJob[]>, IJobQueryParams>({
       query: (params) => ({
         url: "jobs/save-job",
         method: "GET",
         params,
       }),
       providesTags: ["SavedJobs"],
+    }),
+    unSaveJob: builder.mutation({
+      query: (jobId: string) => ({
+        url: `jobs/save-job/${jobId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["SavedJobs"],
     }),
   }),
 });
@@ -76,4 +88,5 @@ export const {
   useGetJobByIdQuery,
   useSaveJobMutation,
   useGetSaveJobQuery,
+  useUnSaveJobMutation,
 } = jobApi;

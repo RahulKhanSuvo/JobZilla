@@ -59,3 +59,21 @@ export interface IApiResponse<T> {
   message: string;
   data: T;
 }
+
+export interface ISavedJob {
+  id: string;
+  userId: string;
+  jobId: string;
+  createdAt: string;
+  updatedAt: string;
+  job: IJob & {
+    company: {
+      user: {
+        name: string;
+        email: string;
+      };
+      location: string;
+      logo: string;
+    };
+  };
+}

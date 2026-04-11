@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import SavedJobTable from "./components/SavedJobTable";
-import { type Job } from "./components/SavedJobRow";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -10,63 +9,63 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
-const DUMMY_JOBS: Job[] = [
-  {
-    id: "1",
-    title: "UI UX Designer",
-    company: "Diamond Trading Estates",
-    logo: "https://api.dicebear.com/7.x/initials/svg?seed=DT&backgroundColor=00d084",
-    postedAt: "2 days ago",
-    category: "Part-time",
-    datePosted: "December 18, 2023",
-  },
-  {
-    id: "2",
-    title: "Human Resource",
-    company: "Sun West Condominiums",
-    logo: "https://api.dicebear.com/7.x/initials/svg?seed=SW&backgroundColor=0693e3",
-    postedAt: "2 days ago",
-    category: "Full-time",
-    datePosted: "December 18, 2023",
-  },
-  {
-    id: "3",
-    title: "Python Developer",
-    company: "Eclipse Estates",
-    logo: "https://api.dicebear.com/7.x/initials/svg?seed=EE&backgroundColor=eb144c",
-    postedAt: "2 days ago",
-    category: "Contract",
-    datePosted: "December 18, 2023",
-  },
-  {
-    id: "4",
-    title: "PHP Developer",
-    company: "Southeastern Properties",
-    logo: "https://api.dicebear.com/7.x/initials/svg?seed=SP&backgroundColor=ff6900",
-    postedAt: "2 days ago",
-    category: "On site",
-    datePosted: "December 18, 2023",
-  },
-];
+import {
+  useGetSaveJobQuery,
+  useUnSaveJobMutation,
+} from "@/redux/features/job/job.api";
+import { type Job } from "./components/SavedJobRow";
+import { errorToast } from "@/utils/errorToast";
+import { toast } from "sonner";
 
 export default function SaveJob() {
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("Default");
-
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const { data: saveJobs, isLoading } = useGetSaveJobQuery({
+    sortBy,
+    sortOrder,
+    searchTerm: search,
+  });
+  const [unSaveJob] = useUnSaveJobMutation();
   const handleView = (id: string) => {
     console.log("Viewing job:", id);
   };
 
-  const handleRemove = (id: string) => {
-    console.log("Removing job:", id);
+  const handleRemove = async (id: string) => {
+    try {
+      await unSaveJob(id).unwrap();
+      toast.success("Job unsaved successfully");
+    } catch (error) {
+      errorToast(error);
+    }
   };
 
-  const filteredJobs = DUMMY_JOBS.filter(
-    (job) =>
-      job.title.toLowerCase().includes(search.toLowerCase()) ||
-      job.company.toLowerCase().includes(search.toLowerCase()),
-  );
+  const formattedJobs: Job[] = (saveJobs?.data || []).map((saved) => {
+    const date = new Date(saved.job.createdAt);
+    const jobTypeMap: Record<string, string> = {
+      FULL_TIME: "Full-time",
+      PART_TIME: "Part-time",
+      CONTRACT: "Contract",
+      INTERN: "Intern",
+      FREELANCE: "Freelance",
+      REMOTE: "Remote",
+    };
+
+    return {
+      id: saved.jobId,
+      title: saved.job.title,
+      company: saved.job.company.user.name,
+      logo: saved.job.company.logo || "",
+      postedAt: "Recently",
+      category: (jobTypeMap[saved.job.jobType as string] ||
+        "Full-time") as Job["category"],
+      datePosted: date.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      }),
+    };
+  });
 
   return (
     <div>
@@ -96,18 +95,41 @@ export default function SaveJob() {
               variant="outline"
               className="h-11 px-4 bg-gray-50 dark:bg-slate-800 border-none font-normal text-gray-600 dark:text-gray-300 gap-2"
             >
-              <span>Sort by ({sortBy})</span>
+              <span>
+                Sort by (
+                {sortBy === "createdAt"
+                  ? sortOrder === "desc"
+                    ? "Newest"
+                    : "Oldest"
+                  : "Default"}
+                )
+              </span>
               <ChevronDown className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem onClick={() => setSortBy("Default")}>
+            <DropdownMenuItem
+              onClick={() => {
+                setSortBy("createdAt");
+                setSortOrder("desc");
+              }}
+            >
               Default
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy("Newest")}>
+            <DropdownMenuItem
+              onClick={() => {
+                setSortBy("createdAt");
+                setSortOrder("desc");
+              }}
+            >
               Newest
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setSortBy("Oldest")}>
+            <DropdownMenuItem
+              onClick={() => {
+                setSortBy("createdAt");
+                setSortOrder("asc");
+              }}
+            >
               Oldest
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -116,9 +138,10 @@ export default function SaveJob() {
 
       {/* Jobs Table */}
       <SavedJobTable
-        jobs={filteredJobs}
+        jobs={formattedJobs}
         onView={handleView}
         onRemove={handleRemove}
+        isLoading={isLoading}
       />
 
       {/* Footer / Pagination Placeholder */}

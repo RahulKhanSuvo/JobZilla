@@ -1,15 +1,18 @@
 import SavedJobRow, { type Job } from "./SavedJobRow";
+import SavedJobSkeleton from "./SavedJobSkeleton";
 
 interface SavedJobTableProps {
   jobs: Job[];
   onView: (id: string) => void;
   onRemove: (id: string) => void;
+  isLoading?: boolean;
 }
 
 export default function SavedJobTable({
   jobs,
   onView,
   onRemove,
+  isLoading,
 }: SavedJobTableProps) {
   return (
     <div className="w-full bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 overflow-hidden">
@@ -31,7 +34,9 @@ export default function SavedJobTable({
 
       {/* Table Body */}
       <div className="flex flex-col">
-        {jobs.length > 0 ? (
+        {isLoading ? (
+          Array.from({ length: 5 }).map((_, i) => <SavedJobSkeleton key={i} />)
+        ) : jobs.length > 0 ? (
           jobs.map((job) => (
             <SavedJobRow
               key={job.id}

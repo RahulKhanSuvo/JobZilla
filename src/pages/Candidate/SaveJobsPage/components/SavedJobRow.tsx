@@ -15,7 +15,14 @@ export interface Job {
   logo: string;
   location?: string;
   postedAt: string;
-  category: "Part-time" | "Full-time" | "Contract" | "On site";
+  category:
+    | "Part-time"
+    | "Full-time"
+    | "Contract"
+    | "On site"
+    | "Intern"
+    | "Freelance"
+    | "Remote";
   datePosted: string;
 }
 
@@ -33,6 +40,10 @@ const categoryStyles = {
   Contract: "bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400",
   "On site":
     "bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400",
+  Intern:
+    "bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400",
+  Freelance: "bg-cyan-50 text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400",
+  Remote: "bg-gray-50 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
 };
 
 export default function SavedJobRow({
