@@ -37,13 +37,13 @@ export default function JobCard({
             <div className="size-15 shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
               <img
                 src={job.company?.logo}
-                alt={job.company?.user.name}
+                alt={job.company?.user?.name}
                 className="size-full object-contain"
               />
             </div>
             <div className="overflow-hidden">
               <p className="font-medium text-primary dark:text-primary  cursor-pointer transition-all">
-                {job.company?.user.name}
+                {job.company?.user?.name}
               </p>
               <div className="flex items-center">
                 <h4 className="text-xl font-bold text-slate-900 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary transition-colors truncate">
