@@ -6,7 +6,7 @@ import CandidateProfilePage from "@/pages/Candidate/Profile/CandidateProfile/Can
 import ProfileEdit from "@/pages/Candidate/Profile/CandidateProfileEdit/ProfileEdit";
 import MyCV from "@/pages/Candidate/MyCv/MyCV";
 import AppliedJob from "@/pages/Candidate/AppliedJob";
-import SaveJob from "@/pages/Candidate/SaveJob";
+import SaveJob from "@/pages/Candidate/SaveJobsPage/SaveJob";
 import FollowCompany from "@/pages/Candidate/FollowCompany";
 import JobVisitHistory from "@/pages/Candidate/JobVisitHistory";
 import CandidateSettings from "@/pages/Candidate/CandidateSettings";
@@ -25,7 +25,7 @@ export const candidateRoutes: RouteObject = {
     { path: "profile/edit", element: <ProfileEdit /> },
     { path: "my-cv", element: <MyCV /> },
     { path: "applied-job", element: <AppliedJob /> },
-    { path: "save-job", element: <SaveJob /> },
+    { path: "saved-jobs", element: <SaveJob /> },
     { path: "followed-companies", element: <FollowCompany /> },
     { path: "recent-jobs", element: <JobVisitHistory /> },
     { path: "setting", element: <CandidateSettings /> },

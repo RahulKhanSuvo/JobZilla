@@ -7,7 +7,6 @@ import { Navigate } from "react-router";
 
 export default function CandidateProfilePage() {
   const { data: userData, isLoading } = useCurrentUserQuery();
-  console.log("user", userData);
 
   if (isLoading) return <div>Loading...</div>;
 

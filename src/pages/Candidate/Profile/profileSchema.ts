@@ -6,9 +6,9 @@ export const profileSchema = z.object({
   phone: z.string().min(10, "Phone number must be at least 10 characters"),
   location: z.string().min(2, "Location must be at least 2 characters"),
   dob: z.string().optional(),
-  gender: z.enum(["male", "female", "other"]).optional(),
-  maritalStatus: z.string().optional(),
-  language: z.string().optional(),
+  gender: z.enum(["male", "female", "other"]).nullable().optional(),
+  maritalStatus: z.string().nullable().optional(),
+  language: z.string().nullable().optional(),
   aboutMe: z.string().optional(),
 
   // Skills — array of skill strings

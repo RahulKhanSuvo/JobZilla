@@ -324,16 +324,30 @@ export default function ProfileEdit() {
                   name="gender"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                        <SelectValue className="" placeholder="Select gender" />
-                      </SelectTrigger>
-                      <SelectContent className="rounded-none" position="popper">
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <div className="space-y-2 text-left">
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value || undefined}
+                      >
+                        <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                          <SelectValue
+                            className=""
+                            placeholder="Select gender"
+                          />
+                        </SelectTrigger>
+                        <SelectContent
+                          className="rounded-none"
+                          position="popper"
+                        >
+                          <SelectItem value="male">Male</SelectItem>
+                          <SelectItem value="female">Female</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {form.formState.errors.gender && (
+                        <FieldError errors={[form.formState.errors.gender]} />
+                      )}
+                    </div>
                   )}
                 />
               </Field>
@@ -353,19 +367,30 @@ export default function ProfileEdit() {
                   name="language"
                   control={form.control}
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                        <SelectValue
-                          className=""
-                          placeholder="Select your language"
-                        />
-                      </SelectTrigger>
-                      <SelectContent className="rounded-none" position="popper">
-                        <SelectItem value="english">English</SelectItem>
-                        <SelectItem value="hindi">Hindi</SelectItem>
-                        <SelectItem value="bengali">Bengali</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <div className="space-y-2 text-left">
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value || undefined}
+                      >
+                        <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                          <SelectValue
+                            className=""
+                            placeholder="Select your language"
+                          />
+                        </SelectTrigger>
+                        <SelectContent
+                          className="rounded-none"
+                          position="popper"
+                        >
+                          <SelectItem value="english">English</SelectItem>
+                          <SelectItem value="hindi">Hindi</SelectItem>
+                          <SelectItem value="bengali">Bengali</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {form.formState.errors.language && (
+                        <FieldError errors={[form.formState.errors.language]} />
+                      )}
+                    </div>
                   )}
                 />
               </Field>
@@ -423,7 +448,20 @@ export default function ProfileEdit() {
                           {...form.register(
                             `educationList.${index}.institution`,
                           )}
+                          aria-invalid={
+                            !!form.formState.errors.educationList?.[index]
+                              ?.institution
+                          }
                         />
+                        {form.formState.errors.educationList?.[index]
+                          ?.institution && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.educationList[index]!
+                                .institution!,
+                            ]}
+                          />
+                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">Major</FieldLabel>
@@ -432,7 +470,20 @@ export default function ProfileEdit() {
                           className="h-11 border-none shadow-none"
                           variant="withBg"
                           {...form.register(`educationList.${index}.major`)}
+                          aria-invalid={
+                            !!form.formState.errors.educationList?.[index]
+                              ?.major
+                          }
                         />
+                        {form.formState.errors.educationList?.[index]
+                          ?.major && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.educationList[index]!
+                                .major!,
+                            ]}
+                          />
+                        )}
                       </Field>
                     </div>
                     <div className="grid grid-cols-2 gap-6">
@@ -445,7 +496,20 @@ export default function ProfileEdit() {
                           className="h-11 border-none shadow-none"
                           variant="withBg"
                           {...form.register(`educationList.${index}.field`)}
+                          aria-invalid={
+                            !!form.formState.errors.educationList?.[index]
+                              ?.field
+                          }
                         />
+                        {form.formState.errors.educationList?.[index]
+                          ?.field && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.educationList[index]!
+                                .field!,
+                            ]}
+                          />
+                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">
@@ -473,7 +537,20 @@ export default function ProfileEdit() {
                           className="h-11 border-none shadow-none"
                           variant="withBg"
                           {...form.register(`educationList.${index}.startData`)}
+                          aria-invalid={
+                            !!form.formState.errors.educationList?.[index]
+                              ?.startData
+                          }
                         />
+                        {form.formState.errors.educationList?.[index]
+                          ?.startData && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.educationList[index]!
+                                .startData!,
+                            ]}
+                          />
+                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">End Date</FieldLabel>
@@ -554,7 +631,20 @@ export default function ProfileEdit() {
                           className="h-11 border-none shadow-none"
                           variant="withBg"
                           {...form.register(`experienceList.${index}.jobTitle`)}
+                          aria-invalid={
+                            !!form.formState.errors.experienceList?.[index]
+                              ?.jobTitle
+                          }
                         />
+                        {form.formState.errors.experienceList?.[index]
+                          ?.jobTitle && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.experienceList[index]!
+                                .jobTitle!,
+                            ]}
+                          />
+                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">
@@ -567,7 +657,20 @@ export default function ProfileEdit() {
                           {...form.register(
                             `experienceList.${index}.companyName`,
                           )}
+                          aria-invalid={
+                            !!form.formState.errors.experienceList?.[index]
+                              ?.companyName
+                          }
                         />
+                        {form.formState.errors.experienceList?.[index]
+                          ?.companyName && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.experienceList[index]!
+                                .companyName!,
+                            ]}
+                          />
+                        )}
                       </Field>
                     </div>
                     <Field>
@@ -577,7 +680,20 @@ export default function ProfileEdit() {
                         className="h-11 border-none shadow-none"
                         variant="withBg"
                         {...form.register(`experienceList.${index}.industry`)}
+                        aria-invalid={
+                          !!form.formState.errors.experienceList?.[index]
+                            ?.industry
+                        }
                       />
+                      {form.formState.errors.experienceList?.[index]
+                        ?.industry && (
+                        <FieldError
+                          errors={[
+                            form.formState.errors.experienceList[index]!
+                              .industry!,
+                          ]}
+                        />
+                      )}
                     </Field>
                     <div className="grid grid-cols-2 gap-6">
                       <Field>
@@ -591,7 +707,20 @@ export default function ProfileEdit() {
                           {...form.register(
                             `experienceList.${index}.startData`,
                           )}
+                          aria-invalid={
+                            !!form.formState.errors.experienceList?.[index]
+                              ?.startData
+                          }
                         />
+                        {form.formState.errors.experienceList?.[index]
+                          ?.startData && (
+                          <FieldError
+                            errors={[
+                              form.formState.errors.experienceList[index]!
+                                .startData!,
+                            ]}
+                          />
+                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">End Date</FieldLabel>
