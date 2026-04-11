@@ -58,6 +58,14 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Jobs", "SavedJobs"],
     }),
+    getSaveJob: builder.query<IApiResponse<IJobResponse>, IJobQueryParams>({
+      query: (params) => ({
+        url: "jobs/save-job",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["SavedJobs"],
+    }),
   }),
 });
 
@@ -67,4 +75,5 @@ export const {
   useGetMyJobsQuery,
   useGetJobByIdQuery,
   useSaveJobMutation,
+  useGetSaveJobQuery,
 } = jobApi;
