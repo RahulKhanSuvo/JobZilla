@@ -47,6 +47,7 @@ interface Navbar1Props {
   };
   menu?: MenuItem[];
   dropdownMenu?: MenuItem[];
+  dropdownMenuEmployer?: MenuItem[];
   auth?: {
     login: {
       title: string;
@@ -84,6 +85,36 @@ const Navbar = ({
       title: "Dashboard",
       url: "/candidate",
     },
+    {
+      title: "Saved Jobs",
+      url: "/candidate/saved-jobs",
+    },
+    {
+      title: "Applied Jobs",
+      url: "/candidate/applied-jobs",
+    },
+    {
+      title: "Profile",
+      url: "/candidate/profile",
+    },
+  ],
+  dropdownMenuEmployer = [
+    {
+      title: "Dashboard",
+      url: "/recruiter",
+    },
+    {
+      title: "Post Job",
+      url: "/recruiter/post-job",
+    },
+    {
+      title: "My Jobs",
+      url: "/recruiter/my-jobs",
+    },
+    {
+      title: "Profile",
+      url: "/recruiter/profile",
+    },
   ],
   auth = {
     login: { title: "Login", url: "auth/login" },
@@ -92,7 +123,7 @@ const Navbar = ({
   className,
 }: Navbar1Props) => {
   const user = useSelector(selectCurrentUser);
-  console.log(user);
+  console.log("currentUse", user);
 
   return (
     <section
@@ -141,7 +172,14 @@ const Navbar = ({
               </>
             ) : (
               <>
-                <AvatarDropdown menu={dropdownMenu} user={user} />
+                <AvatarDropdown
+                  menu={
+                    user.role === "EMPLOYER"
+                      ? dropdownMenuEmployer
+                      : dropdownMenu
+                  }
+                  user={user}
+                />
               </>
             )}
           </div>
