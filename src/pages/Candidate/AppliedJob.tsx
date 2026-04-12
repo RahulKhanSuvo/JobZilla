@@ -7,6 +7,7 @@ import {
   Download,
   ChevronDown,
 } from "lucide-react";
+import { useGetAllApplicationsQuery } from "@/redux/features/recruiter/application.api";
 
 // ── Types ────────────────────────────────────────────────
 
@@ -212,9 +213,10 @@ const filterTabs: FilterStatus[] = [
 // ── Component ─────────────────────────────────────────────
 
 export default function AppliedJob() {
+  const { data: applications } = useGetAllApplicationsQuery();
   const [activeFilter, setActiveFilter] = useState<FilterStatus>("All Status");
   const [page, setPage] = useState(1);
-
+  console.log(applications);
   const filtered =
     activeFilter === "All Status"
       ? allApplications
@@ -245,7 +247,7 @@ export default function AppliedJob() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Applied */}
         <div className="bg-white rounded-xl border border-border shadow-sm p-5">
-          <p className="text-[10px] font-semibold tracking-widest text-[color:var(--paragraph)] uppercase">
+          <p className="text-[10px] font-semibold tracking-widest text-paragraph uppercase">
             Total Applied
           </p>
           <div className="flex items-end gap-3 mt-2">
@@ -260,7 +262,7 @@ export default function AppliedJob() {
         </div>
         {/* Interviewing */}
         <div className="bg-white rounded-xl border border-border shadow-sm p-5">
-          <p className="text-[10px] font-semibold tracking-widest text-[color:var(--paragraph)] uppercase">
+          <p className="text-[10px] font-semibold tracking-widest text-paragraph uppercase">
             Interviewing
           </p>
           <div className="flex items-end gap-3 mt-2">
@@ -274,7 +276,7 @@ export default function AppliedJob() {
         </div>
         {/* Shortlisted */}
         <div className="bg-white rounded-xl border border-border shadow-sm p-5">
-          <p className="text-[10px] font-semibold tracking-widest text-[color:var(--paragraph)] uppercase">
+          <p className="text-[10px] font-semibold tracking-widest text-paragraph uppercase">
             Shortlisted
           </p>
           <div className="flex items-end gap-3 mt-2">
@@ -288,7 +290,7 @@ export default function AppliedJob() {
         </div>
         {/* Rejections */}
         <div className="bg-white rounded-xl border border-border shadow-sm p-5">
-          <p className="text-[10px] font-semibold tracking-widest text-[color:var(--paragraph)] uppercase">
+          <p className="text-[10px] font-semibold tracking-widest text-paragraph uppercase">
             Rejections
           </p>
           <div className="flex items-end gap-3 mt-2">
@@ -308,9 +310,7 @@ export default function AppliedJob() {
         {/* Filter bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 px-5 pt-5 pb-4 border-b border-border">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm text-[color:var(--paragraph)] mr-1">
-              Filter by:
-            </span>
+            <span className="text-sm text-paragraph mr-1">Filter by:</span>
             {filterTabs.map((f) => (
               <button
                 key={f}
@@ -318,7 +318,7 @@ export default function AppliedJob() {
                 className={`text-sm px-3 py-1 rounded-full border transition-all ${
                   activeFilter === f
                     ? "bg-foreground text-white border-foreground"
-                    : "border-border text-[color:var(--paragraph)] hover:bg-muted"
+                    : "border-border text-paragraph hover:bg-muted"
                 }`}
               >
                 {f}
@@ -328,7 +328,7 @@ export default function AppliedJob() {
           <div className="flex items-center gap-2">
             <button className="flex items-center gap-1.5 text-sm border border-border rounded-lg px-3 py-1.5 text-foreground hover:bg-muted transition-colors">
               Last 30 Days
-              <ChevronDown className="size-4 text-[color:var(--paragraph)]" />
+              <ChevronDown className="size-4 text-paragraph" />
             </button>
             <button className="flex items-center gap-1.5 text-sm border border-border rounded-lg px-3 py-1.5 text-foreground hover:bg-muted transition-colors">
               <Download className="size-4" />

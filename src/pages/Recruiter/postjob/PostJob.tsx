@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, Controller, type FieldErrors } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "@tanstack/react-form";
+import { zodValidator, type ZodValidator } from "@tanstack/zod-form-adapter";
 import { postJobSchema, type PostJobFormData } from "./postJobSchema";
 import { toast } from "sonner";
 import {
@@ -27,16 +27,14 @@ import { errorToast } from "@/utils/errorToast";
 
 export default function PostJob() {
   const [createJob, { isLoading }] = useCreateJobMutation();
-  const form = useForm<PostJobFormData>({
-    resolver: zodResolver(postJobSchema),
+
+  const form = useForm<PostJobFormData, ZodValidator>({
     defaultValues: {
       title: "",
       description: "",
       category: "",
       tags: [],
       gender: "",
-      externalUrl: "",
-      applyEmail: "",
       salaryType: "",
       salaryMin: 0,
       salaryMax: 0,
@@ -46,54 +44,68 @@ export default function PostJob() {
       deadline: new Date(),
       jobType: "FULL_TIME",
       skills: "",
-
       applyType: "Internal",
     },
+    validatorAdapter: zodValidator(),
+    validators: {
+      onChange: postJobSchema,
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        await createJob(value).unwrap();
+        toast.success("Job posted successfully!");
+      } catch (error) {
+        errorToast(error);
+      }
+    },
   });
-
-  const onSubmit = async (data: PostJobFormData) => {
-    try {
-      await createJob(data).unwrap();
-      toast.success("Job posted successfully!");
-    } catch (error) {
-      errorToast(error);
-    }
-  };
-
-  const onError = (errors: FieldErrors<PostJobFormData>) => {
-    console.log("Form Validation Errors:", errors);
-  };
 
   return (
     <div className="space-y-6 pb-12">
       <DashboardTitle>Post A New Job</DashboardTitle>
 
       <form
-        onSubmit={form.handleSubmit(onSubmit, onError)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
         className="space-y-6"
       >
         <CommonWrapper className="p-8 space-y-8">
           <FieldGroup className="space-y-6">
-            <Field>
-              <FieldLabel className="font-semibold">
-                Job Title <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Input
-                {...form.register("title")}
-                placeholder="UI UX Designer"
-                variant="withBg"
-              />
-              <FieldError>{form.formState.errors.title?.message}</FieldError>
-            </Field>
+            <form.Field
+              name="title"
+              children={(field) => (
+                <Field data-invalid={!!field.state.meta.errors.length}>
+                  <FieldLabel className="font-semibold">
+                    Job Title <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Input
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="UI UX Designer"
+                    variant="withBg"
+                    aria-invalid={!!field.state.meta.errors.length}
+                  />
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Field>
-                <FieldLabel className="font-semibold">Category</FieldLabel>
-                <Controller
-                  name="category"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Select onValueChange={field.onChange} value={field.value}>
+              <form.Field
+                name="category"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">Category</FieldLabel>
+                    <Select
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value}
+                    >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border h-12 shadow-none w-full">
                         <SelectValue placeholder="Accountng/ Finance" />
                       </SelectTrigger>
@@ -104,22 +116,21 @@ export default function PostJob() {
                         <SelectItem value="Finance">Finance</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>
-                  {form.formState.errors.category?.message}
-                </FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">Type</FieldLabel>
-                <Controller
-                  name="jobType"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="jobType"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">Type</FieldLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "FULL_TIME"}
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value || "FULL_TIME"}
                     >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Freelance" />
@@ -133,39 +144,37 @@ export default function PostJob() {
                         <SelectItem value="INTERN">Intern</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>
-                  {form.formState.errors.jobType?.message}
-                </FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">Tag</FieldLabel>
-                <Controller
-                  name="tags"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="tags"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">Tag</FieldLabel>
                     <SkillTagsInput
-                      value={field.value || []}
-                      onChange={field.onChange}
+                      value={field.state.value || []}
+                      onChange={field.handleChange}
                       placeholder="Add tag..."
                       variant="withBg"
                     />
-                  )}
-                />
-                <FieldError>{form.formState.errors.tags?.message}</FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">Gender</FieldLabel>
-                <Controller
-                  name="gender"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="gender"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">Gender</FieldLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "Any"}
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value || "Any"}
                     >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full rounded-none">
                         <SelectValue placeholder="10 - 50" />
@@ -176,74 +185,23 @@ export default function PostJob() {
                         <SelectItem value="Any">Any</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>{form.formState.errors.gender?.message}</FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">
-                  Job Apply Type
-                </FieldLabel>
-                <Controller
-                  name="applyType"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="salaryType"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Salary Type
+                    </FieldLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "Internal"}
-                    >
-                      <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
-                        <SelectValue placeholder="Internal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Internal">Internal</SelectItem>
-                        <SelectItem value="External">External</SelectItem>
-                        <SelectItem value="Email">Email</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </Field>
-
-              <Field>
-                <FieldLabel className="font-semibold">
-                  External URL for Apply Job
-                </FieldLabel>
-                <Input
-                  type="url"
-                  {...form.register("externalUrl")}
-                  placeholder="https://"
-                  variant="withBg"
-                />
-                <FieldError>
-                  {form.formState.errors.externalUrl?.message}
-                </FieldError>
-              </Field>
-
-              <Field>
-                <FieldLabel className="font-semibold">
-                  Job Apply Email
-                </FieldLabel>
-                <Input
-                  {...form.register("applyEmail")}
-                  placeholder="email@example.com"
-                  variant="withBg"
-                />
-                <FieldError>
-                  {form.formState.errors.applyEmail?.message}
-                </FieldError>
-              </Field>
-
-              <Field>
-                <FieldLabel className="font-semibold">Salary Type</FieldLabel>
-                <Controller
-                  name="salaryType"
-                  control={form.control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "Monthly"}
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value || "Monthly"}
                     >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="1 Month" />
@@ -255,52 +213,69 @@ export default function PostJob() {
                         <SelectItem value="Fixed">Fixed</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>
-                  {form.formState.errors.salaryType?.message}
-                </FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">
-                  Minimum Salary
-                </FieldLabel>
-                <Input
-                  type="number"
-                  {...form.register("salaryMin")}
-                  placeholder="e.g. 1000"
-                  variant="withBg"
-                />
-                <FieldError>
-                  {form.formState.errors.salaryMin?.message}
-                </FieldError>
-              </Field>
+              <form.Field
+                name="salaryMin"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Minimum Salary
+                    </FieldLabel>
+                    <Input
+                      type="number"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) =>
+                        field.handleChange(Number(e.target.value))
+                      }
+                      placeholder="e.g. 1000"
+                      variant="withBg"
+                      aria-invalid={!!field.state.meta.errors.length}
+                    />
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">
-                  Maximum Salary
-                </FieldLabel>
-                <Input
-                  type="number"
-                  {...form.register("salaryMax")}
-                  placeholder="e.g. 5000"
-                  variant="withBg"
-                />
-                <FieldError>
-                  {form.formState.errors.salaryMax?.message}
-                </FieldError>
-              </Field>
+              <form.Field
+                name="salaryMax"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Maximum Salary
+                    </FieldLabel>
+                    <Input
+                      type="number"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) =>
+                        field.handleChange(Number(e.target.value))
+                      }
+                      placeholder="e.g. 5000"
+                      variant="withBg"
+                      aria-invalid={!!field.state.meta.errors.length}
+                    />
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">Experience</FieldLabel>
-                <Controller
-                  name="experience"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="experience"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Experience
+                    </FieldLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "Fresher"}
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value || "Fresher"}
                     >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="1 Years" />
@@ -312,22 +287,23 @@ export default function PostJob() {
                         <SelectItem value="3+ Years">3+ Years</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>
-                  {form.formState.errors.experience?.message}
-                </FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">Career Level</FieldLabel>
-                <Controller
-                  name="careerLevel"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="careerLevel"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Career Level
+                    </FieldLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "Entry"}
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value || "Entry"}
                     >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Managerial" />
@@ -339,22 +315,23 @@ export default function PostJob() {
                         <SelectItem value="Managerial">Managerial</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>
-                  {form.formState.errors.careerLevel?.message}
-                </FieldError>
-              </Field>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
 
-              <Field>
-                <FieldLabel className="font-semibold">Qualification</FieldLabel>
-                <Controller
-                  name="qualification"
-                  control={form.control}
-                  render={({ field }) => (
+              <form.Field
+                name="qualification"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Qualification
+                    </FieldLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value || "High School"}
+                      onValueChange={(val) =>
+                        field.handleChange(val as typeof field.state.value)
+                      }
+                      value={field.state.value || "High School"}
                     >
                       <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
                         <SelectValue placeholder="Certificate" />
@@ -369,48 +346,56 @@ export default function PostJob() {
                         <SelectItem value="Certificate">Certificate</SelectItem>
                       </SelectContent>
                     </Select>
-                  )}
-                />
-                <FieldError>
-                  {form.formState.errors.qualification?.message}
-                </FieldError>
-              </Field>
-
-              <Field>
-                <FieldLabel className="font-semibold flex items-center gap-2">
-                  <Calendar className="size-4 text-primary" />
-                  Applicant Deadline Date
-                </FieldLabel>
-                <Input
-                  type="date"
-                  {...form.register("deadline")}
-                  variant="withBg"
-                  className="cursor-pointer"
-                />
-                <FieldError>
-                  {form.formState.errors.deadline?.message}
-                </FieldError>
-              </Field>
-            </div>
-            <Field>
-              <FieldLabel className="font-semibold">
-                Job Description <span className="text-red-500">*</span>
-              </FieldLabel>
-              <Controller
-                name="description"
-                control={form.control}
-                render={({ field }) => (
-                  <RichTextEditor
-                    value={field.value}
-                    onChange={field.onChange}
-                    placeholder="Start typings..."
-                  />
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
                 )}
               />
-              <FieldError>
-                {form.formState.errors.description?.message}
-              </FieldError>
-            </Field>
+
+              <form.Field
+                name="deadline"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold flex items-center gap-2">
+                      <Calendar className="size-4 text-primary" />
+                      Applicant Deadline Date
+                    </FieldLabel>
+                    <Input
+                      type="date"
+                      value={
+                        field.state.value instanceof Date
+                          ? field.state.value.toISOString().split("T")[0]
+                          : field.state.value
+                      }
+                      onBlur={field.handleBlur}
+                      onChange={(e) =>
+                        field.handleChange(new Date(e.target.value))
+                      }
+                      variant="withBg"
+                      className="cursor-pointer"
+                      aria-invalid={!!field.state.meta.errors.length}
+                    />
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
+            </div>
+
+            <form.Field
+              name="description"
+              children={(field) => (
+                <Field data-invalid={!!field.state.meta.errors.length}>
+                  <FieldLabel className="font-semibold">
+                    Job Description <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <RichTextEditor
+                    value={field.state.value}
+                    onChange={field.handleChange}
+                    placeholder="Start typing..."
+                  />
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            />
           </FieldGroup>
 
           <div className="pt-6 flex justify-end">

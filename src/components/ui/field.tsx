@@ -187,7 +187,8 @@ function FieldError({
   errors,
   ...props
 }: React.ComponentProps<"div"> & {
-  errors?: Array<{ message?: string } | undefined>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors?: any[] | undefined;
 }) {
   const content = useMemo(() => {
     if (children) {
@@ -198,20 +199,31 @@ function FieldError({
       return null;
     }
 
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values(),
-    ];
+    // Filter and normalize errors
+    const normalizedErrors = errors
+      .map((error) => {
+        if (typeof error === "string") return error;
+        if (error && typeof error === "object" && "message" in error)
+          return error.message;
+        return null;
+      })
+      .filter(
+        (msg): msg is string => typeof msg === "string" && msg.length > 0,
+      );
 
-    if (uniqueErrors?.length == 1) {
-      return uniqueErrors[0]?.message;
+    if (normalizedErrors.length === 0) {
+      return null;
+    }
+
+    if (normalizedErrors.length === 1) {
+      return normalizedErrors[0];
     }
 
     return (
       <ul className="ml-4 flex list-disc flex-col gap-1">
-        {uniqueErrors.map(
-          (error, index) =>
-            error?.message && <li key={index}>{error.message}</li>,
-        )}
+        {normalizedErrors.map((error, index) => (
+          <li key={index}>{error}</li>
+        ))}
       </ul>
     );
   }, [children, errors]);

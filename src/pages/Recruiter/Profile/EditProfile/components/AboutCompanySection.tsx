@@ -2,31 +2,34 @@ import CommonWrapper from "@/components/common/CommonWrapper";
 import SectionTitle from "@/components/common/SectionTitle";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import { FieldError } from "@/components/ui/field";
-import { Controller, type UseFormReturn } from "react-hook-form";
+import { type FormApi, useField } from "@tanstack/react-form";
+import { type ZodValidator } from "@tanstack/zod-form-adapter";
 import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
 
 interface AboutCompanySectionProps {
-  form: UseFormReturn<RecruiterProfileFormData>;
+  form: FormApi<RecruiterProfileFormData, ZodValidator>;
 }
 
 export default function AboutCompanySection({
   form,
 }: AboutCompanySectionProps) {
+  const field = useField({
+    form,
+    name: "description",
+  });
+
   return (
-    <CommonWrapper className="p-8 space-y-8">
+    <CommonWrapper
+      className="p-8 space-y-8"
+      data-invalid={!!field.state.meta.errors.length}
+    >
       <SectionTitle size={"sm"}>About Company</SectionTitle>
-      <Controller
-        name="description"
-        control={form.control}
-        render={({ field }) => (
-          <RichTextEditor
-            value={field.value}
-            onChange={field.onChange}
-            placeholder="Start typing..."
-          />
-        )}
+      <RichTextEditor
+        value={field.state.value}
+        onChange={field.handleChange}
+        placeholder="Start typing..."
       />
-      <FieldError>{form.formState.errors.description?.message}</FieldError>
+      <FieldError errors={field.state.meta.errors} />
     </CommonWrapper>
   );
 }

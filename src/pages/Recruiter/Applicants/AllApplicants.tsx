@@ -18,6 +18,7 @@ import {
   Download,
   MapPin,
 } from "lucide-react";
+import { useGetAllApplicationsQuery } from "@/redux/features/recruiter/application.api";
 
 const stats = [
   {
@@ -84,6 +85,8 @@ const applicants = [
 ];
 
 export default function AllApplicants() {
+  const { data: applications } = useGetAllApplicationsQuery();
+  console.log(applications);
   return (
     <div className="space-y-8 pb-12">
       <DashboardTitle>Applicants Jobs</DashboardTitle>

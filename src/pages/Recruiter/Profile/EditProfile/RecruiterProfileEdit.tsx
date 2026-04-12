@@ -1,7 +1,6 @@
 import DashboardTitle from "@/components/common/DashboardTitle";
 import { Button } from "@/components/ui/button";
-import { useForm, useWatch } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, useStore } from "@tanstack/react-form";
 import {
   recruiterProfileSchema,
   type RecruiterProfileFormData,
@@ -19,6 +18,7 @@ import { useUpdateRecruiterMutation } from "@/redux/features/recruiter/recruiter
 import { errorToast } from "@/utils/errorToast";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
+import type { ZodValidator } from "@tanstack/zod-form-adapter";
 
 export default function RecruiterProfileEdit() {
   const navigate = useNavigate();
@@ -27,8 +27,7 @@ export default function RecruiterProfileEdit() {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [coverPreview, setCoverPreview] = useState<string | null>(null);
 
-  const form = useForm<RecruiterProfileFormData>({
-    resolver: zodResolver(recruiterProfileSchema),
+  const form = useForm<RecruiterProfileFormData, ZodValidator>({
     defaultValues: {
       name: "",
       email: "",
@@ -47,6 +46,39 @@ export default function RecruiterProfileEdit() {
       logo: "",
       coverImage: "",
     },
+    validators: {
+      onChange: recruiterProfileSchema,
+    },
+    onSubmit: async ({ value }) => {
+      try {
+        const formData = new FormData();
+        Object.entries(value).forEach(([key, value]) => {
+          if (
+            key !== "logo" &&
+            key !== "coverImage" &&
+            value !== undefined &&
+            value !== null
+          ) {
+            formData.append(key, String(value));
+          }
+        });
+
+        // Append files if selected
+        if (logoFile) {
+          formData.append("logo", logoFile);
+        }
+        if (coverFile) {
+          formData.append("coverImage", coverFile);
+        }
+
+        const result = await updateRecruiter(formData).unwrap();
+        console.log(result);
+        toast.success("Profile updated successfully!");
+        navigate("/recruiter/profile");
+      } catch (error) {
+        errorToast(error);
+      }
+    },
   });
 
   useEffect(() => {
@@ -54,31 +86,26 @@ export default function RecruiterProfileEdit() {
       const userData = user;
       const companyData = userData.company;
 
-      form.reset({
-        name: userData.name || "",
-        email: userData.email || "",
-        phone: companyData?.phone || userData.phone || "",
-        website: companyData?.website || "",
-        foundedDate: companyData?.foundedDate || "",
-        companySize: companyData?.companySize || "",
-        showProfile: companyData?.showProfile ?? true,
-        industry: companyData?.industry || "",
-        description: companyData?.description || "",
-        facebook: companyData?.facebook || "",
-        linkedin: companyData?.linkedin || "",
-        twitter: companyData?.twitter || "",
-        address: companyData?.address || "",
-        location: companyData?.location || "",
-        logo: companyData?.logo || "",
-        coverImage: companyData?.coverImage || "",
-      });
+      form.setFieldValue("name", userData.name || "");
+      form.setFieldValue("email", userData.email || "");
+      form.setFieldValue("phone", companyData?.phone || userData.phone || "");
+      form.setFieldValue("website", companyData?.website || "");
+      form.setFieldValue("foundedDate", companyData?.foundedDate || "");
+      form.setFieldValue("companySize", companyData?.companySize || "");
+      form.setFieldValue("showProfile", companyData?.showProfile ?? true);
+      form.setFieldValue("industry", companyData?.industry || "");
+      form.setFieldValue("description", companyData?.description || "");
+      form.setFieldValue("facebook", companyData?.facebook || "");
+      form.setFieldValue("linkedin", companyData?.linkedin || "");
+      form.setFieldValue("twitter", companyData?.twitter || "");
+      form.setFieldValue("address", companyData?.address || "");
+      form.setFieldValue("location", companyData?.location || "");
+      form.setFieldValue("logo", companyData?.logo || "");
+      form.setFieldValue("coverImage", companyData?.coverImage || "");
     }
   }, [user, form]);
 
-  const employerName = useWatch({
-    control: form.control,
-    name: "name",
-  });
+  const employerName = useStore(form.store, (state) => state.values.name);
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [coverFile, setCoverFile] = useState<File | null>(null);
@@ -99,38 +126,6 @@ export default function RecruiterProfileEdit() {
     }
   };
 
-  const onSubmit = async (data: RecruiterProfileFormData) => {
-    try {
-      const formData = new FormData();
-      Object.entries(data).forEach(([key, value]) => {
-        if (
-          key !== "logo" &&
-          key !== "coverImage" &&
-          value !== undefined &&
-          value !== null
-        ) {
-          formData.append(key, String(value));
-        }
-      });
-
-      // Append files if selected
-      if (logoFile) {
-        formData.append("logo", logoFile);
-      }
-      if (coverFile) {
-        formData.append("coverImage", coverFile);
-      }
-
-      const result = await updateRecruiter(formData).unwrap();
-      console.log(result);
-      toast.success("Profile updated successfully!");
-      navigate("/recruiter/profile");
-    } catch (error) {
-      errorToast(error);
-    }
-  };
-
-  // Derive preview sources: newly uploaded file preview OR the existing URL from the data
   const currentLogoPreview = logoPreview || user?.company?.logo || null;
   const currentCoverPreview = coverPreview || user?.company?.coverImage || null;
 
@@ -148,18 +143,15 @@ export default function RecruiterProfileEdit() {
           </Button>
           <DashboardTitle>Profile Setting</DashboardTitle>
         </div>
-        <Button
-          type="submit"
-          form="profile-edit-form"
-          className="bg-primary rounded-none text-white font-bold px-8"
-        >
-          {isLoading ? "Saving..." : "Save Profile"}
-        </Button>
       </div>
 
       <form
         id="profile-edit-form"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
         className="space-y-6"
       >
         <CoverImage
@@ -173,6 +165,16 @@ export default function RecruiterProfileEdit() {
         <AboutCompanySection form={form} />
         <SocialNetworkSection form={form} />
         <ContactInformationSection form={form} />
+        <div className="flex justify-end">
+          {" "}
+          <Button
+            type="submit"
+            form="profile-edit-form"
+            className="bg-primary rounded-none text-white font-bold px-8"
+          >
+            {isLoading ? "Saving..." : "Save Profile"}
+          </Button>
+        </div>
       </form>
     </div>
   );

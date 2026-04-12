@@ -14,53 +14,66 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Controller, type UseFormReturn } from "react-hook-form";
+import { type FormApi, useField } from "@tanstack/react-form";
+import { type ZodValidator } from "@tanstack/zod-form-adapter";
 import type { RecruiterProfileFormData } from "../../recruiterProfileSchema";
 
 interface ContactInformationSectionProps {
-  form: UseFormReturn<RecruiterProfileFormData>;
+  form: FormApi<RecruiterProfileFormData, ZodValidator>;
 }
 
 export default function ContactInformationSection({
   form,
 }: ContactInformationSectionProps) {
+  const addressField = useField({ form, name: "address" });
+  const locationField = useField({ form, name: "location" });
+
   return (
     <CommonWrapper className="p-8 space-y-8">
       <SectionTitle size={"sm"}>Contact Information</SectionTitle>
       <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Field className="md:col-span-2">
+        <Field
+          className="md:col-span-2"
+          data-invalid={!!addressField.state.meta.errors.length}
+        >
           <FieldLabel>Address</FieldLabel>
           <Input
-            {...form.register("address")}
+            value={addressField.state.value}
+            onBlur={addressField.handleBlur}
+            onChange={(e) => addressField.handleChange(e.target.value)}
             placeholder="71 St. Takayamio, Tokyo"
+            aria-invalid={!!addressField.state.meta.errors.length}
           />
-          <FieldError>{form.formState.errors.address?.message}</FieldError>
+          <FieldError errors={addressField.state.meta.errors} />
         </Field>
-        <Field className="col-span-2">
+
+        <Field
+          className="col-span-2"
+          data-invalid={!!locationField.state.meta.errors.length}
+        >
           <FieldLabel>Location</FieldLabel>
-          <Controller
-            name="location"
-            control={form.control}
-            render={({ field }) => (
-              <Select
-                key={field.value || "empty"}
-                onValueChange={field.onChange}
-                value={field.value || undefined}
-                defaultValue={field.value || undefined}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Location" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="VietNam">VietNam</SelectItem>
-                  <SelectItem value="USA">USA</SelectItem>
-                  <SelectItem value="Japan">Japan</SelectItem>
-                  <SelectItem value="Bangladesh">Bangladesh</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
-          />
-          <FieldError>{form.formState.errors.location?.message}</FieldError>
+          <Select
+            key={(locationField.state.value as string) || "empty"}
+            onValueChange={(val) =>
+              locationField.handleChange(
+                val as typeof locationField.state.value,
+              )
+            }
+            value={locationField.state.value || undefined}
+          >
+            <SelectTrigger
+              aria-invalid={!!locationField.state.meta.errors.length}
+            >
+              <SelectValue placeholder="Select Location" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="VietNam">VietNam</SelectItem>
+              <SelectItem value="USA">USA</SelectItem>
+              <SelectItem value="Japan">Japan</SelectItem>
+              <SelectItem value="Bangladesh">Bangladesh</SelectItem>
+            </SelectContent>
+          </Select>
+          <FieldError errors={locationField.state.meta.errors} />
         </Field>
       </FieldGroup>
     </CommonWrapper>
