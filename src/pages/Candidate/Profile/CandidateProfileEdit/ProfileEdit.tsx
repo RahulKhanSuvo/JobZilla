@@ -326,6 +326,7 @@ export default function ProfileEdit() {
                   render={({ field }) => (
                     <div className="space-y-2 text-left">
                       <Select
+                        key={field.value || "empty"}
                         onValueChange={field.onChange}
                         value={field.value || undefined}
                       >
@@ -353,12 +354,39 @@ export default function ProfileEdit() {
               </Field>
               <Field>
                 <FieldLabel className="font-bold">Marital Status</FieldLabel>
-                <Input
-                  placeholder="Enter your marital status"
-                  className="h-11"
-                  variant="withBg"
-                  type="text"
-                  {...form.register("maritalStatus")}
+                <Controller
+                  name="maritalStatus"
+                  control={form.control}
+                  render={({ field }) => (
+                    <div className="space-y-2 text-left">
+                      <Select
+                        key={field.value || "empty"}
+                        onValueChange={field.onChange}
+                        value={field.value || undefined}
+                      >
+                        <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                          <SelectValue
+                            className=""
+                            placeholder="Select marital status"
+                          />
+                        </SelectTrigger>
+                        <SelectContent
+                          className="rounded-none"
+                          position="popper"
+                        >
+                          <SelectItem value="single">Single</SelectItem>
+                          <SelectItem value="married">Married</SelectItem>
+                          <SelectItem value="divorced">Divorced</SelectItem>
+                          <SelectItem value="widowed">Widowed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {form.formState.errors.maritalStatus && (
+                        <FieldError
+                          errors={[form.formState.errors.maritalStatus]}
+                        />
+                      )}
+                    </div>
+                  )}
                 />
               </Field>
               <Field>
@@ -369,6 +397,7 @@ export default function ProfileEdit() {
                   render={({ field }) => (
                     <div className="space-y-2 text-left">
                       <Select
+                        key={field.value || "empty"}
                         onValueChange={field.onChange}
                         value={field.value || undefined}
                       >
