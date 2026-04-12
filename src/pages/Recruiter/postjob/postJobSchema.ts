@@ -28,7 +28,6 @@ export const postJobSchema = z
     qualification: z.string().optional(),
     deadline: z.coerce.date().optional(),
     skills: z.string().max(200).optional(),
-    applyType: z.string().optional(),
     createdAt: z.date().optional(),
     updatedAt: z.date().optional(),
     isSaved: z.boolean().optional(),

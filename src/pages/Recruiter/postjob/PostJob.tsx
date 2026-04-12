@@ -44,7 +44,6 @@ export default function PostJob() {
       deadline: new Date(),
       jobType: "FULL_TIME",
       skills: "",
-      applyType: "Internal",
     },
     validatorAdapter: zodValidator(),
     validators: {
@@ -64,6 +63,18 @@ export default function PostJob() {
     <div className="space-y-6 pb-12">
       <DashboardTitle>Post A New Job</DashboardTitle>
 
+      <form.Subscribe
+        selector={(state) => ({
+          values: state.values,
+          errors: state.errors,
+          fieldMeta: state.fieldMeta,
+        })}
+        children={(state) => (
+          <pre className="text-red-500 bg-red-100 p-2 text-xs overflow-auto max-h-64">
+            {JSON.stringify(state, null, 2)}
+          </pre>
+        )}
+      />
       <form
         onSubmit={(e) => {
           e.preventDefault();
