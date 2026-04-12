@@ -19,10 +19,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useGetResumesQuery } from "@/redux/features/candidate/resume.api";
-import { useApplyJobMutation } from "@/redux/features/job/job.api";
 import { toast } from "sonner";
 import { FileText, Upload, Loader2, Send } from "lucide-react";
 import { errorToast } from "@/utils/errorToast";
+import { useApplyJobMutation } from "@/redux/features/recruiter/application.api";
 
 interface ApplyModalProps {
   isOpen: boolean;
