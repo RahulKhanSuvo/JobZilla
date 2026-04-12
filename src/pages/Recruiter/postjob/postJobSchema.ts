@@ -20,8 +20,8 @@ export const postJobSchema = z
     // externalUrl: z.string().url().optional(),
     // applyEmail: z.string().email().optional(),
     salaryType: z.string().optional(),
-    salaryMin: z.string().optional(),
-    salaryMax: z.string().optional(),
+    salaryMin: z.string(),
+    salaryMax: z.string(),
     jobType: JobTypeEnum.optional(),
     experience: z.string().max(100).optional(),
     careerLevel: z.string().optional(),
@@ -44,14 +44,17 @@ export const postJobSchema = z
       })
       .optional(),
   })
-  .refine((data) => {
-    if (data.salaryMin && data.salaryMax) {
-      if (Number(data.salaryMin) > Number(data.salaryMax)) {
-        return {
-          salaryMin: "Salary min must be less than salary max",
-        };
+  .refine(
+    (data) => {
+      if (data.salaryMin && data.salaryMax) {
+        return Number(data.salaryMin) <= Number(data.salaryMax);
       }
-    }
-  });
+      return true;
+    },
+    {
+      message: "Salary min must be less than or equal to salary max",
+      path: ["salaryMin"],
+    },
+  );
 
 export type PostJobFormData = z.infer<typeof postJobSchema>;
