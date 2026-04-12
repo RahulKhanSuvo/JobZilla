@@ -10,7 +10,15 @@ const candidateApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    getCandidateAppliedJobs: builder.query({
+      query: () => ({
+        url: "/applications/candidate/applied",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
   }),
 });
 
-export const { useUpdataCandidateMutation } = candidateApi;
+export const { useUpdataCandidateMutation, useGetCandidateAppliedJobsQuery } =
+  candidateApi;
