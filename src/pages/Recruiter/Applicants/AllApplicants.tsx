@@ -17,6 +17,7 @@ import {
   Download,
   MapPin,
   X,
+  Loader2,
 } from "lucide-react";
 import {
   useGetAllApplicationsQuery,
@@ -25,6 +26,7 @@ import {
 import type { Application, ApplicationStatus } from "@/types/application";
 import { errorToast } from "@/utils/errorToast";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const statusStyles: Record<string, string> = {
   PENDING: "bg-amber-50 text-amber-600",
@@ -43,6 +45,7 @@ function formatDate(dateStr: string) {
 
 export default function AllApplicants() {
   const { data: response, isLoading } = useGetAllApplicationsQuery();
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
   const applicationList: Application[] = response?.data ?? [];
 
@@ -80,10 +83,13 @@ export default function AllApplicants() {
     status: ApplicationStatus,
   ) => {
     try {
+      setLoadingId(applicationId);
       await updateApplicationStatus({ applicationId, status }).unwrap();
       toast.success("Application status updated successfully");
     } catch (error) {
       errorToast(error);
+    } finally {
+      setLoadingId(null);
     }
   };
 
@@ -237,21 +243,31 @@ export default function AllApplicants() {
                               handleUpdateStatus(applicant.id, "SHORTLISTED")
                             }
                             size="icon"
+                            disabled={loadingId === applicant.id}
                             title="Shortlist"
                             className="size-10 bg-slate-50 text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg"
                           >
-                            <Check className="size-4" />
+                            {loadingId === applicant.id ? (
+                              <Loader2 className="size-4 animate-spin" />
+                            ) : (
+                              <Check className="size-4" />
+                            )}
                           </Button>
                           <Button
                             variant="ghost"
                             size="icon"
                             title="Reject"
+                            disabled={loadingId === applicant.id}
                             onClick={() =>
                               handleUpdateStatus(applicant.id, "REJECTED")
                             }
                             className="size-10 bg-slate-50 text-slate-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
                           >
-                            <X className="size-4" />
+                            {loadingId === applicant.id ? (
+                              <Loader2 className="size-4 animate-spin" />
+                            ) : (
+                              <X className="size-4" />
+                            )}
                           </Button>
                           <Button
                             variant="ghost"
