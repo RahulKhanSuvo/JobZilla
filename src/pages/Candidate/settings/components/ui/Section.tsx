@@ -13,7 +13,7 @@ export function Section({
 }) {
   return (
     <div
-      className={`bg-white rounded-xl shadow-sm border ${
+      className={`bg-white border ${
         danger ? "border-red-200" : "border-gray-100"
       }`}
     >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Bell } from "lucide-react";
 import { Section } from "./ui/Section";
 import { Checkbox } from "./ui/Checkbox";

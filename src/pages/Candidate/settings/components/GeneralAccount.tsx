@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ShieldAlert } from "lucide-react";
 import { Section } from "./ui/Section";
+import { Input } from "@/components/ui/input";
 
 export default function GeneralAccount() {
   const [email, setEmail] = useState("rahul.khan@example.com");
@@ -20,7 +21,7 @@ export default function GeneralAccount() {
           >
             Email Address
           </label>
-          <input
+          <Input
             id="settings-email"
             type="email"
             value={email}

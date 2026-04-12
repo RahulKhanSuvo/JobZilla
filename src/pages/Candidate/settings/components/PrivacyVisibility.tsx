@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Eye } from "lucide-react";
 import { Section } from "./ui/Section";
 import { Toggle } from "./ui/Toggle";
