@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -29,7 +29,10 @@ export default function SignUp() {
     defaultValues: { role: "CANDIDATE" },
   });
 
-  const selectedRole = form.watch("role");
+  const selectedRole = useWatch({
+    control: form.control,
+    name: "role",
+  });
 
   const onSubmit: SubmitHandler<signUpFormData> = async (data) => {
     console.log("userSignUp", data);
