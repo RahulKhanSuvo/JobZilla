@@ -7,9 +7,11 @@ import ProfileEdit from "@/pages/Candidate/Profile/CandidateProfileEdit/ProfileE
 import MyCV from "@/pages/Candidate/MyCv/MyCV";
 import AppliedJob from "@/pages/Candidate/appliedJob/AppliedJob";
 import SaveJob from "@/pages/Candidate/SaveJobsPage/SaveJob";
-import FollowCompany from "@/pages/Candidate/FollowCompany";
+import FollowCompany from "@/pages/Candidate/FollowCompany/FollowCompany";
 import JobVisitHistory from "@/pages/Candidate/JobVisitHistory";
 import CandidateSettings from "@/pages/Candidate/CandidateSettings";
+import Message from "@/pages/Candidate/message/Message";
+import Notification from "@/pages/Candidate/Notification/Notification";
 
 export const candidateRoutes: RouteObject = {
   path: "/candidate",
@@ -27,6 +29,22 @@ export const candidateRoutes: RouteObject = {
     { path: "my-applied-jobs", element: <AppliedJob /> },
     { path: "saved-jobs", element: <SaveJob /> },
     { path: "followed-companies", element: <FollowCompany /> },
+    {
+      path: "followed-companies/:id",
+      element: <FollowCompany />,
+    },
+    {
+      path: "messages",
+      element: <Message />,
+    },
+    {
+      path: "messages/:id",
+      element: <Message />,
+    },
+    {
+      path: "notifications",
+      element: <Notification />,
+    },
     { path: "recent-jobs", element: <JobVisitHistory /> },
     { path: "setting", element: <CandidateSettings /> },
   ],
