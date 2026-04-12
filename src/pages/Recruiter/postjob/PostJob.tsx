@@ -36,8 +36,8 @@ export default function PostJob() {
       tags: [],
       gender: "",
       salaryType: "",
-      salaryMin: 0,
-      salaryMax: 0,
+      salaryMin: "",
+      salaryMax: "",
       experience: "",
       careerLevel: "",
       qualification: "",
@@ -229,9 +229,7 @@ export default function PostJob() {
                       type="number"
                       value={field.state.value}
                       onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(Number(e.target.value))
-                      }
+                      onChange={(e) => field.handleChange(e.target.value)}
                       placeholder="e.g. 1000"
                       variant="withBg"
                       aria-invalid={!!field.state.meta.errors.length}
@@ -252,9 +250,7 @@ export default function PostJob() {
                       type="number"
                       value={field.state.value}
                       onBlur={field.handleBlur}
-                      onChange={(e) =>
-                        field.handleChange(Number(e.target.value))
-                      }
+                      onChange={(e) => field.handleChange(e.target.value)}
                       placeholder="e.g. 5000"
                       variant="withBg"
                       aria-invalid={!!field.state.meta.errors.length}
