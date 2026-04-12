@@ -4,6 +4,7 @@ const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllApplications: builder.query({
       query: () => "applications",
+      providesTags: ["Applications"],
     }),
   }),
 });
