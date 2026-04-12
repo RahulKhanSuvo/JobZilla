@@ -18,8 +18,13 @@ import {
   MapPin,
   X,
 } from "lucide-react";
-import { useGetAllApplicationsQuery } from "@/redux/features/recruiter/application.api";
-import type { Application } from "@/types/application";
+import {
+  useGetAllApplicationsQuery,
+  useUpdateApplicationStatusMutation,
+} from "@/redux/features/recruiter/application.api";
+import type { Application, ApplicationStatus } from "@/types/application";
+import { errorToast } from "@/utils/errorToast";
+import { toast } from "sonner";
 
 const statusStyles: Record<string, string> = {
   PENDING: "bg-amber-50 text-amber-600",
@@ -38,6 +43,7 @@ function formatDate(dateStr: string) {
 
 export default function AllApplicants() {
   const { data: response, isLoading } = useGetAllApplicationsQuery();
+  const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
   const applicationList: Application[] = response?.data ?? [];
 
   const totalCount = applicationList.length;
@@ -68,6 +74,18 @@ export default function AllApplicants() {
       color: "bg-red-50 text-red-600",
     },
   ];
+
+  const handleUpdateStatus = async (
+    applicationId: string,
+    status: ApplicationStatus,
+  ) => {
+    try {
+      await updateApplicationStatus({ applicationId, status }).unwrap();
+      toast.success("Application status updated successfully");
+    } catch (error) {
+      errorToast(error);
+    }
+  };
 
   return (
     <div className="space-y-8 pb-12">
@@ -215,6 +233,9 @@ export default function AllApplicants() {
                         <div className="flex items-center justify-end gap-2">
                           <Button
                             variant="ghost"
+                            onClick={() =>
+                              handleUpdateStatus(applicant.id, "SHORTLISTED")
+                            }
                             size="icon"
                             title="Shortlist"
                             className="size-10 bg-slate-50 text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg"
@@ -225,6 +246,9 @@ export default function AllApplicants() {
                             variant="ghost"
                             size="icon"
                             title="Reject"
+                            onClick={() =>
+                              handleUpdateStatus(applicant.id, "REJECTED")
+                            }
                             className="size-10 bg-slate-50 text-slate-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
                           >
                             <X className="size-4" />

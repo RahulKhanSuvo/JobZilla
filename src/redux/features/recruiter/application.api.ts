@@ -22,4 +22,7 @@ const applicationApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllApplicationsQuery } = applicationApi;
+export const {
+  useGetAllApplicationsQuery,
+  useUpdateApplicationStatusMutation,
+} = applicationApi;
