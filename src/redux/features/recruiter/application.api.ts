@@ -23,6 +23,15 @@ const applicationApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Applications"],
     }),
+    applyJob: builder.mutation({
+      query: (data: { jobId: string; resumeId: string; file: File }) => ({
+        url: "applications",
+        method: "POST",
+        body: data,
+        formData: true,
+      }),
+      invalidatesTags: ["Jobs", "Applications"],
+    }),
   }),
 });
 
@@ -30,4 +39,5 @@ export const {
   useGetAllApplicationsQuery,
   useGetApplicationByIdQuery,
   useUpdateApplicationStatusMutation,
+  useApplyJobMutation,
 } = applicationApi;
