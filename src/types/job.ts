@@ -28,6 +28,7 @@ export interface IJob {
   updatedAt: string;
   companyId: string;
   applyType?: string | null;
+  totalApplications?: number | null;
 }
 
 export interface IJobMeta {

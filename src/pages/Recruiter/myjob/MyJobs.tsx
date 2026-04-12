@@ -214,7 +214,7 @@ export default function MyJobs() {
                     </td>
                     <td className="px-8 py-6">
                       <span className="text-sm text-slate-600 font-semibold">
-                        0 Applicants
+                        {job?.totalApplications || 0} Applicants
                       </span>
                     </td>
                     <td className="px-8 py-6">
