@@ -52,11 +52,13 @@ export default function FindJob() {
           <main className="flex-1 space-y-4">
             <JobHeader layout={layout} setLayout={setLayout} />
             <JobList layout={layout} jobs={jobs} />
-            <Pagination
-              page={params.page}
-              totalPage={data?.meta?.totalPage || 0}
-              onPageChange={(page) => setParams({ ...params, page })}
-            />
+            {(data?.meta?.totalPage ?? 0) > 1 && (
+              <Pagination
+                page={params.page}
+                totalPage={data?.meta?.totalPage ?? 0}
+                onPageChange={(page) => setParams({ ...params, page })}
+              />
+            )}
           </main>
         </div>
       </Container>
