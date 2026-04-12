@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "@tanstack/react-form";
-import { zodValidator, type ZodValidator } from "@tanstack/zod-form-adapter";
+import { type ZodValidator } from "@tanstack/zod-form-adapter";
 import { postJobSchema, type PostJobFormData } from "./postJobSchema";
 import { toast } from "sonner";
 import {
@@ -46,7 +46,6 @@ export default function PostJob() {
       skills: "",
       applyType: "Internal",
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: postJobSchema,
     },
