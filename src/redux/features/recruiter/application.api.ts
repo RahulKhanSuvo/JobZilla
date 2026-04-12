@@ -1,8 +1,9 @@
+import type { Application } from "@/types/application";
 import baseApi from "../hook/baseApi";
 
 const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllApplications: builder.query<unknown, void>({
+    getAllApplications: builder.query<Application[], void>({
       query: () => "applications",
       providesTags: ["Applications"],
     }),
