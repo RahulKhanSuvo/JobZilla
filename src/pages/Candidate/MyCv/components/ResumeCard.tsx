@@ -16,7 +16,7 @@ interface ResumeCardProps {
 
 const ResumeCard = ({ resume, onDelete, onSetPrimary }: ResumeCardProps) => {
   return (
-    <div className="bg-white dark:bg-[#1A1A1A] border border-border p-5 space-y-4 hover:shadow-lg transition-all group flex flex-col h-full rounded-xl">
+    <div className="bg-white dark:bg-[#1A1A1A] border border-border p-5 space-y-4 hover:shadow-lg transition-all group flex flex-col h-full rounded">
       {/* Review/Preview area */}
       <div className="h-48 bg-[#F8F9FA] dark:bg-[#222222] rounded-lg flex items-center justify-center relative overflow-hidden shrink-0 border border-border/50">
         <FileText className="size-16 text-primary/20" />

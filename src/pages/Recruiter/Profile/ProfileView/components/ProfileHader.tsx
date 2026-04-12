@@ -1,8 +1,7 @@
-import demoImage from "@assets/logos/profile-1.jpg";
-import coverImage from "@assets/background/tech-people-trying-achieve-ambitious-sustainability-goals.avif";
-import { MapPin, Briefcase, Globe } from "lucide-react";
+import { MapPin, Briefcase, Globe, User as UserIcon } from "lucide-react";
 import { Link } from "react-router";
 import type { User } from "@/redux/features/auth/auth.type";
+import { MdPhoto } from "react-icons/md";
 
 export default function ProfileHader({
   user,
@@ -13,11 +12,19 @@ export default function ProfileHader({
     <div className="overflow-hidden bg-white">
       {/* Cover Photo */}
       <div className="relative h-48 md:h-60 w-full overflow-hidden">
-        <img
-          src={user?.company?.coverImage || coverImage}
-          alt="Cover"
-          className="w-full h-full object-cover"
-        />
+        {user?.company?.coverImage ? (
+          <img
+            src={user?.company?.coverImage}
+            alt="Cover"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-white flex items-center justify-center">
+            <span className="text-primary/50">
+              <MdPhoto className="size-12" />
+            </span>
+          </div>
+        )}
         {/* Subtle dark gradient overlay at bottom for contrast */}
         <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
       </div>
@@ -29,11 +36,19 @@ export default function ProfileHader({
           <div className="flex items-end gap-5">
             <div className="-mt-12 md:-mt-14 shrink-0">
               <div className="size-24 md:size-28 overflow-hidden">
-                <img
-                  src={user?.company?.logo || demoImage}
-                  alt="ABC Tech"
-                  className="size-full object-cover"
-                />
+                {user?.company?.logo ? (
+                  <img
+                    src={user?.company?.logo}
+                    alt="ABC Tech"
+                    className="size-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-white flex items-center justify-center">
+                    <span className="text-primary/50">
+                      <UserIcon className="size-12" />
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
