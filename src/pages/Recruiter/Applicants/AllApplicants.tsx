@@ -11,82 +11,64 @@ import {
 } from "@/components/ui/select";
 import {
   Search,
-  Plus,
   Users,
   Check,
   RotateCcw,
   Download,
   MapPin,
+  X,
 } from "lucide-react";
 import { useGetAllApplicationsQuery } from "@/redux/features/recruiter/application.api";
+import type { Application } from "@/types/application";
 
-const stats = [
-  {
-    label: "Total Applicants",
-    value: "1,235",
-    icon: Users,
-    color: "bg-blue-50 text-blue-600",
-  },
-  {
-    label: "Shortlisted",
-    value: "112",
-    icon: Check,
-    color: "bg-emerald-50 text-emerald-600",
-  },
-  {
-    label: "Rejected",
-    value: "12",
-    icon: RotateCcw,
-    color: "bg-red-50 text-red-600",
-  },
-];
+const statusStyles: Record<string, string> = {
+  PENDING: "bg-amber-50 text-amber-600",
+  ACCEPTED: "bg-emerald-50 text-emerald-600",
+  SHORTLISTED: "bg-blue-50 text-blue-600",
+  REJECTED: "bg-red-50 text-red-600",
+};
 
-const applicants = [
-  {
-    id: 1,
-    name: "Arlene McCoy",
-    role: "Computational Wizard",
-    location: "Tokyo, Japan",
-    status: "Approved",
-    appliedDate: "December 18, 2023",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Arlene",
-    available: true,
-  },
-  {
-    id: 2,
-    name: "Mrs Dianne Russell",
-    role: "Computational Wizard",
-    location: "Tokyo, Japan",
-    status: "Approved",
-    appliedDate: "December 18, 2023",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Dianne",
-    available: true,
-  },
-  {
-    id: 3,
-    name: "Mr Guy Hawkins",
-    role: "Computational Wizard",
-    location: "Tokyo, Japan",
-    status: "Pending",
-    appliedDate: "December 18, 2023",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Guy",
-    available: true,
-  },
-  {
-    id: 4,
-    name: "Lady Darlene Robertson",
-    role: "Computational Wizard",
-    location: "Tokyo, Japan",
-    status: "Pending",
-    appliedDate: "December 18, 2023",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Darlene",
-    available: true,
-  },
-];
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 
 export default function AllApplicants() {
-  const { data: applications } = useGetAllApplicationsQuery();
-  console.log(applications);
+  const { data: response, isLoading } = useGetAllApplicationsQuery();
+  const applicationList: Application[] = response?.data ?? [];
+
+  const totalCount = applicationList.length;
+  const shortlistedCount = applicationList.filter(
+    (a) => a.status === "SHORTLISTED",
+  ).length;
+  const rejectedCount = applicationList.filter(
+    (a) => a.status === "REJECTED",
+  ).length;
+
+  const stats = [
+    {
+      label: "Total Applicants",
+      value: totalCount,
+      icon: Users,
+      color: "bg-blue-50 text-blue-600",
+    },
+    {
+      label: "Shortlisted",
+      value: shortlistedCount,
+      icon: Check,
+      color: "bg-emerald-50 text-emerald-600",
+    },
+    {
+      label: "Rejected",
+      value: rejectedCount,
+      icon: RotateCcw,
+      color: "bg-red-50 text-red-600",
+    },
+  ];
+
   return (
     <div className="space-y-8 pb-12">
       <DashboardTitle>Applicants Jobs</DashboardTitle>
@@ -165,95 +147,114 @@ export default function AllApplicants() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
-                {applicants.map((applicant) => (
-                  <tr
-                    key={applicant.id}
-                    className="group hover:bg-slate-50/50 transition-colors"
-                  >
-                    <td className="px-8 py-6">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={applicant.image}
-                          alt={applicant.name}
-                          className="size-14 rounded-full bg-slate-100"
-                        />
-                        <div className="space-y-1">
-                          <p className="text-xs font-bold text-emerald-600 uppercase tracking-tight">
-                            {applicant.role}
-                          </p>
-                          <h4 className="text-[17px] font-bold text-slate-900 leading-tight">
-                            {applicant.name}
-                          </h4>
-                          <div className="flex items-center gap-3">
-                            {applicant.available && (
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-600">
-                                Available now
-                              </span>
-                            )}
+                {isLoading ? (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="px-8 py-16 text-center text-slate-400 text-sm"
+                    >
+                      Loading applicants...
+                    </td>
+                  </tr>
+                ) : applicationList.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="px-8 py-16 text-center text-slate-400 text-sm"
+                    >
+                      No applicants found.
+                    </td>
+                  </tr>
+                ) : (
+                  applicationList.map((applicant) => (
+                    <tr
+                      key={applicant.id}
+                      className="group hover:bg-slate-50/50 transition-colors"
+                    >
+                      <td className="px-8 py-6">
+                        <div className="flex items-center gap-4">
+                          <img
+                            src={
+                              applicant.user.candidate.profileImage ??
+                              `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant.user.name}`
+                            }
+                            alt={applicant.user.name}
+                            className="size-14 rounded-full bg-slate-100 object-cover"
+                          />
+                          <div className="space-y-1">
+                            <p className="text-xs font-bold text-emerald-600 uppercase tracking-tight">
+                              {applicant.job.title}
+                            </p>
+                            <h4 className="text-[17px] font-bold text-slate-900 leading-tight">
+                              {applicant.user.name}
+                            </h4>
                             <div className="flex items-center gap-1.5 text-slate-400">
                               <MapPin className="size-3.5" />
                               <span className="text-xs font-medium">
-                                {applicant.location}
+                                {applicant.user.candidate.location}
                               </span>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-8 py-6">
-                      <span
-                        className={`inline-flex items-center px-4 py-2 rounded-full text-xs font-bold ${
-                          applicant.status === "Approved"
-                            ? "bg-emerald-50 text-emerald-600"
-                            : "bg-amber-50 text-amber-600"
-                        }`}
-                      >
-                        {applicant.status}
-                      </span>
-                    </td>
-                    <td className="px-8 py-6 text-sm text-slate-500 font-medium">
-                      {applicant.appliedDate}
-                    </td>
-                    <td className="px-8 py-6">
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                      </td>
+                      <td className="px-8 py-6">
+                        <span
+                          className={`inline-flex items-center px-4 py-2 rounded-full text-xs font-bold ${
+                            statusStyles[applicant.status] ??
+                            "bg-slate-50 text-slate-500"
+                          }`}
                         >
-                          <Plus className="size-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                        >
-                          <Check className="size-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                        >
-                          <RotateCcw className="size-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                        >
-                          <Download className="size-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          className="h-10 px-4 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg ml-2"
-                        >
-                          View Applicant
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          {applicant.status.charAt(0) +
+                            applicant.status.slice(1).toLowerCase()}
+                        </span>
+                      </td>
+                      <td className="px-8 py-6 text-sm text-slate-500 font-medium">
+                        {formatDate(applicant.createdAt)}
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="flex items-center justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            title="Shortlist"
+                            className="size-10 bg-slate-50 text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 rounded-lg"
+                          >
+                            <Check className="size-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            title="Reject"
+                            className="size-10 bg-slate-50 text-slate-500 hover:bg-red-50 hover:text-red-600 rounded-lg"
+                          >
+                            <X className="size-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            title="Download Resume"
+                            className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                            asChild
+                          >
+                            <a
+                              href={applicant.resume.fileUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <Download className="size-4" />
+                            </a>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            className="h-10 px-4 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg ml-2"
+                          >
+                            View Applicant
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
