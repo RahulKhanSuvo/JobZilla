@@ -152,7 +152,10 @@ export default function PostJob() {
               <form.Field
                 name="tags"
                 children={(field) => (
-                  <Field data-invalid={!!field.state.meta.errors.length}>
+                  <Field
+                    className="col-span-2"
+                    data-invalid={!!field.state.meta.errors.length}
+                  >
                     <FieldLabel className="font-semibold">Tag</FieldLabel>
                     <SkillTagsInput
                       value={field.state.value || []}
