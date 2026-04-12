@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   MapPin,
   Calendar,
@@ -12,6 +13,7 @@ import Container from "@/components/common/Container";
 import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 import { IoHeart } from "react-icons/io5";
 import { errorToast } from "@/utils/errorToast";
+import ApplyModal from "./ApplyModal";
 import { useSaveJobMutation } from "@/redux/features/job/job.api";
 
 interface JobHeaderProps {
@@ -19,6 +21,7 @@ interface JobHeaderProps {
 }
 
 export default function JobHeader({ job }: JobHeaderProps) {
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [saveJob] = useSaveJobMutation();
   const deadlineDate = job.deadline ? new Date(job.deadline) : null;
   const daysLeft =
@@ -98,9 +101,13 @@ export default function JobHeader({ job }: JobHeaderProps) {
             >
               <IoHeart className="size-5" />
             </Button>
-            <Button className="h-12 px-20 py-4 rounded-lg bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 transition-all active:scale-95">
+            <Button
+              onClick={() => setIsApplyModalOpen(true)}
+              disabled={job.isApplied}
+              className="h-12 px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
+            >
               <Send className="size-5 rotate-[-20deg]" />
-              Apply Now
+              {job.isApplied ? "Applied" : "Apply Now"}
             </Button>
           </div>
 
@@ -134,6 +141,12 @@ export default function JobHeader({ job }: JobHeaderProps) {
           </div>
         </div>
       </Container>
+      <ApplyModal
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        jobId={job.id ?? ""}
+        jobTitle={job.title}
+      />
     </div>
   );
 }

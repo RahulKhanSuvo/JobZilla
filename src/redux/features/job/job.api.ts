@@ -78,6 +78,15 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SavedJobs"],
     }),
+    applyJob: builder.mutation({
+      query: (data: { jobId: string; resumeId: string; file: File }) => ({
+        url: "applications",
+        method: "POST",
+        body: data,
+        formData: true,
+      }),
+      invalidatesTags: ["Jobs"],
+    }),
   }),
 });
 
@@ -89,4 +98,5 @@ export const {
   useSaveJobMutation,
   useGetSaveJobQuery,
   useUnSaveJobMutation,
+  useApplyJobMutation,
 } = jobApi;
