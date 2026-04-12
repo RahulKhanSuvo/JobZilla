@@ -9,7 +9,7 @@ import AppliedJob from "@/pages/Candidate/appliedJob/AppliedJob";
 import SaveJob from "@/pages/Candidate/SaveJobsPage/SaveJob";
 import FollowCompany from "@/pages/Candidate/FollowCompany/FollowCompany";
 import JobVisitHistory from "@/pages/Candidate/JobVisitHistory";
-import CandidateSettings from "@/pages/Candidate/CandidateSettings";
+import CandidateSettings from "@/pages/Candidate/settings/CandidateSettings";
 import Message from "@/pages/Candidate/message/Message";
 import Notification from "@/pages/Candidate/Notification/Notification";
 
@@ -46,6 +46,6 @@ export const candidateRoutes: RouteObject = {
       element: <Notification />,
     },
     { path: "recent-jobs", element: <JobVisitHistory /> },
-    { path: "setting", element: <CandidateSettings /> },
+    { path: "settings", element: <CandidateSettings /> },
   ],
 };
