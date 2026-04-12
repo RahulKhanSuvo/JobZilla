@@ -41,13 +41,46 @@ export interface ApplicationJob {
   company: ApplicationCompany;
 }
 
+export interface WorkExperience {
+  id: string;
+  jobTitle: string;
+  companyName: string;
+  industry: string;
+  startData: string;
+  endData: string | null;
+  Description: string;
+  isWorking: boolean;
+}
+
+export interface Skill {
+  id: string;
+  skill: string;
+}
+
+export interface Education {
+  id: string;
+  institution: string;
+  major: string;
+  field: string;
+  gap: number;
+  startData: string;
+  endData: string | null;
+  isStudying: boolean;
+}
+
 export interface ApplicationCandidate {
-  location: string;
+  location: string | null;
   profileImage: string | null;
+  aboutMe?: string | null;
+  language?: string | null;
+  skills?: Skill[];
+  eductions?: Education[];
+  workExperiences?: WorkExperience[];
 }
 
 export interface ApplicationUser {
   name: string;
+  email?: string;
   candidate: ApplicationCandidate;
 }
 

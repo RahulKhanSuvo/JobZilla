@@ -27,6 +27,7 @@ import type { Application, ApplicationStatus } from "@/types/application";
 import { errorToast } from "@/utils/errorToast";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Link } from "react-router";
 
 const statusStyles: Record<string, string> = {
   PENDING: "bg-amber-50 text-amber-600",
@@ -287,8 +288,11 @@ export default function AllApplicants() {
                           <Button
                             variant="outline"
                             className="h-10 px-4 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg ml-2"
+                            asChild
                           >
-                            View Applicant
+                            <Link to={`/recruiter/applicants/${applicant.id}`}>
+                              View Applicant
+                            </Link>
                           </Button>
                         </div>
                       </td>

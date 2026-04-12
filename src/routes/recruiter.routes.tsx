@@ -8,6 +8,7 @@ import AllApplicants from "@/pages/Recruiter/Applicants/AllApplicants";
 import RecruiterProfilePage from "@/pages/Recruiter/Profile/ProfileView/RecruiterProfilePage";
 import RecruiterProfileEdit from "@/pages/Recruiter/Profile/EditProfile/RecruiterProfileEdit";
 import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
+import ApplicantDetailPage from "@/pages/Recruiter/applicantDetailPage/ApilicantDetailPage";
 
 export const recruiterRoutes: RouteObject = {
   path: "/recruiter",
@@ -26,6 +27,7 @@ export const recruiterRoutes: RouteObject = {
       element: <div className="p-6">Manage Jobs Page</div>,
     },
     { path: "applicants", element: <AllApplicants /> },
+    { path: "applicants/:id", element: <ApplicantDetailPage /> },
     { path: "profile", element: <RecruiterProfilePage /> },
     { path: "profile/edit", element: <RecruiterProfileEdit /> },
     { path: "setting", element: <RecruiterSettings /> },

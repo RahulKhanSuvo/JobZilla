@@ -8,6 +8,10 @@ const applicationApi = baseApi.injectEndpoints({
       query: () => "applications",
       providesTags: ["Applications"],
     }),
+    getApplicationById: builder.query<IApiResponse<Application>, string>({
+      query: (id) => `applications/${id}`,
+      providesTags: ["Applications"],
+    }),
     updateApplicationStatus: builder.mutation<
       IApiResponse<Application>,
       { applicationId: string; status: ApplicationStatus }
@@ -24,5 +28,6 @@ const applicationApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllApplicationsQuery,
+  useGetApplicationByIdQuery,
   useUpdateApplicationStatusMutation,
 } = applicationApi;

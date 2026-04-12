@@ -64,7 +64,7 @@ export default function JobSidebar({ job }: JobSidebarProps) {
     },
     {
       label: "Email",
-      value: job.applyEmail || job.company?.user?.email || "Not specified",
+      value: job.company?.user?.email || "Not specified",
       icon: Mail,
       color: "text-blue-500",
     },
