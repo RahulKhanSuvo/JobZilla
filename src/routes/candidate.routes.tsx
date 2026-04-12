@@ -1,7 +1,7 @@
 import { Navigate, type RouteObject } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import CandidateLayout from "@/layouts/CandidateLayout";
-import CandidateDashboard from "@/pages/Candidate/CandidateDashboard";
+import CandidateDashboard from "@/pages/Candidate/Dashbaord/CandidateDashboard";
 import CandidateProfilePage from "@/pages/Candidate/Profile/CandidateProfile/CandidateProfilePage";
 import ProfileEdit from "@/pages/Candidate/Profile/CandidateProfileEdit/ProfileEdit";
 import MyCV from "@/pages/Candidate/MyCv/MyCV";

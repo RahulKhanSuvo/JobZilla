@@ -1,7 +1,7 @@
 import { Navigate, type RouteObject } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import RecruiterLayout from "@/layouts/RecruiterLayout";
-import RecruiterDashboard from "@/pages/Recruiter/RecruiterDashboard";
+import RecruiterDashboard from "@/pages/Recruiter/Dashboard/RecruiterDashboard";
 import MyJobs from "@/pages/Recruiter/myjob/MyJobs";
 import PostJob from "@/pages/Recruiter/postjob/PostJob";
 import AllApplicants from "@/pages/Recruiter/Applicants/AllApplicants";
