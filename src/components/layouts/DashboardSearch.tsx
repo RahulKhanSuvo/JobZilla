@@ -4,61 +4,51 @@ import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
 import { MapPin, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export default function DashboardSearch() {
+export default function DashboardSearch({ className }: { className?: string }) {
   return (
-    <div className="flex items-center border px-2 border-[#E2E8F0] rounded-4xl bg-[#F8FAFC] dark:bg-accent">
+    <div
+      className={cn(
+        "flex items-center w-full max-w-[500px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all shadow-sm group",
+        className,
+      )}
+    >
       {/* Location Select */}
-      <div className="shrink-0 flex gap-4 items-center">
-        <MapPin />
+      <div className="flex items-center gap-1 border-r border-slate-200 dark:border-slate-800 pr-2 mr-2 shrink-0">
+        <MapPin className="size-4 text-slate-400 group-focus-within:text-primary transition-colors" />
         <Select>
-          <SelectTrigger className="w-full border-none shadow-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 border border-[#E2E8F0] px-4 py-2.5 text-sm text-gray-700">
+          <SelectTrigger className="border-none shadow-none focus:ring-0 h-8 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 w-[90px] sm:w-[110px] hover:bg-slate-50 dark:hover:bg-slate-800 rounded transition-colors">
             <SelectValue placeholder="Location" />
           </SelectTrigger>
-          <SelectContent
-            position="popper"
-            className="bg-white border border-[#E2E8F0] shadow-md rounded-md z-50 *:data-[slot=select-item-indicator]:hidden"
-          >
-            <SelectGroup>
-              <SelectLabel>Location</SelectLabel>
-              <SelectItem
-                value="apple"
-                className="focus:bg-transparent focus:text-gray-700 cursor-pointer"
-              >
-                Us{" "}
-              </SelectItem>
-              <SelectItem
-                value="banana"
-                className="focus:bg-transparent focus:text-gray-700 cursor-pointer"
-              >
-                Banana
-              </SelectItem>
-              <SelectItem
-                value="blueberry"
-                className="focus:bg-transparent focus:text-gray-700 cursor-pointer"
-              >
-                Blueberry
-              </SelectItem>
-            </SelectGroup>
+          <SelectContent className="z-[70]">
+            <SelectItem value="remote">Remote</SelectItem>
+            <SelectItem value="london">London</SelectItem>
+            <SelectItem value="new-york">New York</SelectItem>
+            <SelectItem value="dhaka">Dhaka</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      {/* Search Input with Icon */}
-      <div className="relative flex-1">
+      {/* Search Input */}
+      <div className="flex items-center gap-2 flex-1 min-w-0">
+        <Search className="size-4 text-slate-400 shrink-0 group-focus-within:text-primary transition-colors" />
         <Input
-          variant="ghost"
-          placeholder="Job title, Keyword, Company"
-          className="border-none shadow-none focus:ring-0 pr-10 bg-transparent "
+          placeholder="Search jobs, companies..."
+          className="border-none shadow-none focus-visible:ring-0 h-8 text-xs sm:text-sm bg-transparent p-0 placeholder:text-slate-400"
         />
-        <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+      </div>
+
+      {/* Shortcut Hint */}
+      <div className="hidden lg:flex items-center ml-2 border border-slate-200 dark:border-slate-800 rounded-md px-1.5 py-0.5 bg-slate-50 dark:bg-slate-800/50">
+        <span className="text-[10px] font-bold text-slate-400 tracking-tighter uppercase whitespace-nowrap">
+          Ctrl K
+        </span>
       </div>
     </div>
   );
