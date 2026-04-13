@@ -1,6 +1,6 @@
 import Container from "@/components/common/Container";
 import { CheckCircle2 } from "lucide-react";
-import worldMap from "@/assets/images/office_main.png"; // Using office_main as a placeholder for the world map illustration
+import worldMap from "@assets/background/worldmap.png";
 
 const benefits = [
   "Access to millions of job seekers",
@@ -15,19 +15,15 @@ export default function AboutFeatures() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
-            <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative z-10 rounded-3xl overflow-hidden">
               <img
                 src={worldMap}
                 alt="Global Opportunities"
-                className="w-full h-auto object-cover"
+                className="h-auto object-cover"
               />
             </div>
-            {/* Decoration */}
-            <div className="absolute -top-10 -left-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl -z-10" />
-            <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl -z-10" />
 
-            {/* Floating candidate count - simplified */}
-            <div className="absolute top-10 left-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-2xl shadow-xl flex items-center gap-3 animate-float">
+            <div className="absolute top-10 z-30 left-10 bg-white dark:bg-slate-90 p-4 rounded-2xl shadow-[0_14px_20px_0_hsla(0,0%,6%,0.1)] flex items-center gap-3 animate-float">
               <div className="size-10 rounded-full bg-blue-100 flex items-center justify-center">
                 <span className="text-blue-600 font-bold">19k+</span>
               </div>
