@@ -24,7 +24,7 @@ export default function DashboardNavbar() {
   ];
 
   return (
-    <nav className="border-b bg-white dark:bg-slate-900 sticky top-0 z-[60]">
+    <nav className="border-b bg-white dark:bg-slate-900 sticky top-0 z-50">
       <header className="flex justify-between h-16 shrink-0 items-center gap-2 px-4">
         <div className="flex items-center gap-3">
           <Button
