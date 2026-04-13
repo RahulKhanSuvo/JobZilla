@@ -7,7 +7,7 @@ export default function AboutUseChose() {
       className="bg-cover text-center flex flex-col items-center justify-center text-white md:min-h-[286px] gap-8"
     >
       <div className="flex flex-col items-center justify-center gap-4">
-        <h2 className="text-4xl font-bold">
+        <h2 className="text-3xl font-bold">
           Job Opportunities Are Always Open
         </h2>
         <p className="text-lg">
