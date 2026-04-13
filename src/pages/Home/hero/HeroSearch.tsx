@@ -4,9 +4,9 @@ import { MapPin, Search } from "lucide-react";
 
 export default function HeroSearch() {
   return (
-    <form className="flex items-center gap-3 bg-white dark:bg-background p-4 rounded-[5px] shadow-[16px_41px_89px_0_rgba(129,129,129,0.16)] ">
+    <form className="flex flex-col md:flex-row items-center gap-3 bg-white dark:bg-background p-2 md:p-4 rounded-[5px] shadow-[16px_41px_89px_0_rgba(129,129,129,0.16)] ">
       {/* Job title */}
-      <div className="relative flex-1">
+      <div className="relative flex-1 w-full md:w-auto">
         <Search
           className="absolute left-3 text-primary top-1/2 -translate-y-1/2 "
           size={20}
@@ -19,7 +19,7 @@ export default function HeroSearch() {
       </div>
 
       {/* Location */}
-      <div className="relative flex-1 ">
+      <div className="relative flex-1 w-full md:w-auto">
         <MapPin
           className="absolute text-primary left-3 top-1/2 -translate-y-1/2"
           size={18}
@@ -32,7 +32,7 @@ export default function HeroSearch() {
       </div>
 
       {/* Search button */}
-      <Button className="h-12 px-6 rounded-[3px] flex  min-w-34.25">
+      <Button className="h-12 px-6 rounded-[3px] flex  min-w-34.25 w-full md:w-auto">
         Search
       </Button>
     </form>

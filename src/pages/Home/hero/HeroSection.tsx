@@ -39,7 +39,7 @@ export default function HeroSection() {
       }`}
     >
       {/* Background Illustration */}
-      <div className="absolute right-[-100px] top-0 h-full w-[60%] lg:w-[50%] z-0 opacity-80 md:opacity-100 transition-opacity">
+      <div className="absolute -right-20 sm:-right-24 lg:-right-36 top-0 h-full w-[80%] sm:w-[70%] lg:w-[50%] z-0 opacity-30 sm:opacity-50 lg:opacity-100 transition-opacity pointer-events-none">
         <JobzillaHeroIllustration />
       </div>
 
