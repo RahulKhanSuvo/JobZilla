@@ -7,6 +7,8 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
 import JobDetails from "@/pages/JobDetails/JobDetails";
 import Pricing from "@/pages/Pricing/Pricing";
 import { type RouteObject } from "react-router";
+import Login from "@/pages/auth/Login";
+import SignUp from "@/pages/auth/SignUp";
 
 export const mainRoutes: RouteObject = {
   path: "/",
@@ -19,5 +21,7 @@ export const mainRoutes: RouteObject = {
     { path: "/contact", element: <Contact /> },
     { path: "/about", element: <About /> },
     { path: "/pricing", element: <Pricing /> },
+    { path: "/auth/login", element: <Login /> },
+    { path: "/auth/sign-up", element: <SignUp /> },
   ],
 };
