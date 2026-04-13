@@ -3,9 +3,11 @@ import ContactCTA from "./components/ContactCTA";
 
 export default function Contact() {
   return (
-    <div className="pt-20">
+    <>
+      <title>Contact Us - JobZilla</title>
+      <meta name="description" content="Contact Us - JobZilla" />
       <ContactFormSection />
       <ContactCTA />
-    </div>
+    </>
   );
 }

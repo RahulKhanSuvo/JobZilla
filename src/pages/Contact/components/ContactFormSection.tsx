@@ -32,8 +32,8 @@ const contactInfo = [
 export default function ContactFormSection() {
   return (
     <section className="py-20">
-      <Container>
-        <div className="flex flex-col lg:flex-row overflow-hidden rounded-[20px] shadow-2xl border border-slate-100 dark:border-slate-800">
+      <Container className="max-w-7xl">
+        <div className="flex flex-col lg:flex-row overflow-hidden rounded-md border border-slate-100 dark:border-slate-800">
           {/* Left Side - Contact Info */}
           <div className="lg:w-1/3 bg-[#139a74] p-12 text-white flex flex-col justify-between">
             <Stack gap="xl">
