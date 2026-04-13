@@ -2,7 +2,6 @@ import Container from "@/components/common/Container";
 import Paragraph from "@/components/common/Paragraph";
 import Stack from "@/components/common/Stack";
 import heroImage from "@/assets/background/thumb2.png";
-import { Button } from "@/components/ui/button";
 
 export default function AboutHero() {
   return (
@@ -43,7 +42,7 @@ export default function AboutHero() {
 
           <div className="order-1 lg:order-2 space-y-6">
             <Stack gap="sm">
-              <h2 className="text-4xl font-black text-slate-900 dark:text-white leading-tight">
+              <h2 className="text-4xl font-bold text-slate-900 dark:text-white leading-tight">
                 About Us
               </h2>
               <Paragraph className="text-lg text-slate-600 dark:text-slate-400">
@@ -62,12 +61,6 @@ export default function AboutHero() {
                 apart well like while suddenly on and whence one.
               </Paragraph>
             </Stack>
-            <Button
-              size="lg"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-md px-8"
-            >
-              Read More
-            </Button>
           </div>
         </div>
       </Container>
