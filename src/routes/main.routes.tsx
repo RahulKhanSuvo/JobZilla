@@ -4,6 +4,7 @@ import FindJob from "@/pages/FindJob/FindJob";
 import About from "@/pages/About/About";
 import Contact from "@/pages/Contact/Contact";
 import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService/TermsOfService";
 import JobDetails from "@/pages/JobDetails/JobDetails";
 import Pricing from "@/pages/Pricing/Pricing";
 import { type RouteObject } from "react-router";
@@ -18,6 +19,7 @@ export const mainRoutes: RouteObject = {
     { path: "/find-job", element: <FindJob /> },
     { path: "/job/:id", element: <JobDetails /> },
     { path: "/privacy-policy", element: <PrivacyPolicy /> },
+    { path: "/terms", element: <TermsOfService /> },
     { path: "/contact", element: <Contact /> },
     { path: "/about", element: <About /> },
     { path: "/pricing", element: <Pricing /> },
