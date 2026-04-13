@@ -1,7 +1,7 @@
 import Container from "@/components/common/Container";
 import Paragraph from "@/components/common/Paragraph";
 import Stack from "@/components/common/Stack";
-import heroImage from "@/assets/images/hero-image-1-053a950af2f348330533d1ffb007f0b7.png";
+import heroImage from "@/assets/background/thumb2.png";
 import { Button } from "@/components/ui/button";
 
 export default function AboutHero() {
