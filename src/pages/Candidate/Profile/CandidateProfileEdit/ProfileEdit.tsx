@@ -23,9 +23,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNavigate } from "react-router";
-import { ArrowLeft, Edit2, PlusCircle, Trash2 } from "lucide-react";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft, Edit2, Loader2, PlusCircle, Trash2 } from "lucide-react";
+import {
+  useForm,
+  useField,
+  useStore,
+  type FormApi,
+} from "@tanstack/react-form";
 import { profileSchema, type ProfileFormData } from "../profileSchema";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
@@ -33,9 +37,31 @@ import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { useUpdataCandidateMutation } from "@/redux/features/candidate/candidate.api";
 import { errorToast } from "@/utils/errorToast";
 
+// ─── Education item default ────────────────────────────────────────────────────
+const emptyEducation = () => ({
+  institution: "",
+  major: "",
+  field: "",
+  gap: 0,
+  startData: "",
+  endData: "",
+  isStudying: false,
+});
+
+// ─── Experience item default ───────────────────────────────────────────────────
+const emptyExperience = () => ({
+  jobTitle: "",
+  companyName: "",
+  industry: "",
+  startData: "",
+  endData: "",
+  isWorking: false,
+  Description: "",
+});
+
 export default function ProfileEdit() {
   const { data: userData } = useCurrentUserQuery();
-  const [updateCandidate] = useUpdataCandidateMutation();
+  const [updateCandidate, { isLoading }] = useUpdataCandidateMutation();
 
   const navigate = useNavigate();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -45,7 +71,6 @@ export default function ProfileEdit() {
   const avatarUrl = previewUrl || candidate.profileImage || emptyImage;
 
   const form = useForm<ProfileFormData>({
-    resolver: zodResolver(profileSchema),
     defaultValues: {
       fullName: "",
       email: "",
@@ -60,58 +85,64 @@ export default function ProfileEdit() {
       facebook: "",
       linkedin: "",
       twitter: "",
-      educationList: [
-        {
-          institution: "",
-          major: "",
-          field: "",
-          gap: 0,
-          startData: "",
-          endData: "",
-          isStudying: false,
-        },
-      ],
-      experienceList: [
-        {
-          jobTitle: "",
-          companyName: "",
-          industry: "",
-          startData: "",
-          endData: "",
-          isWorking: false,
-          Description: "",
-        },
-      ],
+      educationList: [emptyEducation()],
+      experienceList: [emptyExperience()],
+    },
+    validators: {
+      onChange: profileSchema,
+    },
+    onSubmit: async ({ value }) => {
+      const formData = new FormData();
+      if (selectedFile) {
+        formData.append("avatar", selectedFile);
+      }
+      formData.append("data", JSON.stringify(value));
+
+      try {
+        const res = await updateCandidate(formData).unwrap();
+        console.log(res);
+        toast.success("Profile updated successfully!");
+        setPreviewUrl(null);
+        setSelectedFile(null);
+      } catch (error) {
+        errorToast(error);
+      }
     },
   });
 
+  // ─── Populate form from server data ─────────────────────────────────────────
   useEffect(() => {
     if (userData?.data) {
       const data = userData.data as any;
-      const email = data.email || "";
-      const candidate = data.candidate || {};
-      form.reset({
-        fullName: data.name || "",
-        email: email,
-        phone: candidate.phone || "",
-        location: candidate.location || "",
-        dob: candidate.dob
-          ? new Date(candidate.dob).toISOString().split("T")[0]
-          : "",
-        gender: candidate.gender || null,
-        maritalStatus: candidate.maritalStatus || "",
-        language: candidate.language || null,
-        skills: candidate.skills?.length
-          ? candidate.skills
+      const c = data.candidate || {};
+
+      form.setFieldValue("fullName", data.name || "");
+      form.setFieldValue("email", data.email || "");
+      form.setFieldValue("phone", c.phone || "");
+      form.setFieldValue("location", c.location || "");
+      form.setFieldValue(
+        "dob",
+        c.dob ? new Date(c.dob).toISOString().split("T")[0] : "",
+      );
+      form.setFieldValue("gender", c.gender || null);
+      form.setFieldValue("maritalStatus", c.maritalStatus || "");
+      form.setFieldValue("language", c.language || null);
+      form.setFieldValue(
+        "skills",
+        c.skills?.length
+          ? c.skills
               .map((s: any) => (typeof s === "string" ? s : s.skill))
               .filter(Boolean)
           : [],
-        aboutMe: candidate.aboutMe || "",
-        facebook: candidate.facebook || "",
-        linkedin: candidate.linkedin || "",
-        twitter: candidate.twitter || "",
-        educationList: candidate.eductions?.length
-          ? candidate.eductions.map((e: any) => ({
+      );
+      form.setFieldValue("aboutMe", c.aboutMe || "");
+      form.setFieldValue("facebook", c.facebook || "");
+      form.setFieldValue("linkedin", c.linkedin || "");
+      form.setFieldValue("twitter", c.twitter || "");
+      form.setFieldValue(
+        "educationList",
+        c.eductions?.length
+          ? c.eductions.map((e: any) => ({
               ...e,
               startData: e.startData
                 ? new Date(e.startData).toISOString().split("T")[0]
@@ -121,19 +152,12 @@ export default function ProfileEdit() {
                 : "",
               gap: Number(e.gap) || 0,
             }))
-          : [
-              {
-                institution: "",
-                major: "",
-                field: "",
-                gap: 0,
-                startData: "",
-                endData: "",
-                isStudying: false,
-              },
-            ],
-        experienceList: candidate.workExperiences?.length
-          ? candidate.workExperiences.map((e: any) => ({
+          : [emptyEducation()],
+      );
+      form.setFieldValue(
+        "experienceList",
+        c.workExperiences?.length
+          ? c.workExperiences.map((e: any) => ({
               ...e,
               startData: e.startData
                 ? new Date(e.startData).toISOString().split("T")[0]
@@ -142,38 +166,10 @@ export default function ProfileEdit() {
                 ? new Date(e.endData).toISOString().split("T")[0]
                 : "",
             }))
-          : [
-              {
-                jobTitle: "",
-                companyName: "",
-                industry: "",
-                startData: "",
-                endData: "",
-                isWorking: false,
-                Description: "",
-              },
-            ],
-      });
+          : [emptyExperience()],
+      );
     }
   }, [userData, form]);
-
-  const {
-    fields: educationFields,
-    append: appendEducation,
-    remove: removeEducation,
-  } = useFieldArray({
-    control: form.control,
-    name: "educationList",
-  });
-
-  const {
-    fields: experienceFields,
-    append: appendExperience,
-    remove: removeExperience,
-  } = useFieldArray({
-    control: form.control,
-    name: "experienceList",
-  });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -184,25 +180,84 @@ export default function ProfileEdit() {
     }
   };
 
-  const onSubmit = async (data: ProfileFormData) => {
-    console.log("Form Data:", data);
+  // ─── Field hooks ─────────────────────────────────────────────────────────────
+  // Cast to FormApi<any> to prevent TS2589 deep type instantiation while keeping
+  // useField as a stable standalone import (React Rules of Hooks compliant).
 
-    const formData = new FormData();
-    if (selectedFile) {
-      formData.append("avatar", selectedFile);
-    }
+  const f = form as FormApi<any, any>;
+  const fullNameField = useField({ form: f, name: "fullName" });
+  const emailField = useField({ form: f, name: "email" });
+  const phoneField = useField({ form: f, name: "phone" });
+  const locationField = useField({ form: f, name: "location" });
+  const dobField = useField({ form: f, name: "dob" });
+  const genderField = useField({ form: f, name: "gender" });
+  const maritalStatusField = useField({ form: f, name: "maritalStatus" });
+  const languageField = useField({ form: f, name: "language" });
+  const skillsField = useField({ form: f, name: "skills" });
+  const aboutMeField = useField({ form: f, name: "aboutMe" });
+  const facebookField = useField({ form: f, name: "facebook" });
+  const linkedinField = useField({ form: f, name: "linkedin" });
+  const twitterField = useField({ form: f, name: "twitter" });
 
-    formData.append("data", JSON.stringify(data));
+  // ─── Dynamic list values ──────────────────────────────────────────────────────
+  const educationList = useStore(
+    form.store,
+    (s) =>
+      (s.values.educationList ?? [emptyEducation()]) as NonNullable<
+        ProfileFormData["educationList"]
+      >,
+  );
+  const experienceList = useStore(
+    form.store,
+    (s) =>
+      (s.values.experienceList ?? [emptyExperience()]) as NonNullable<
+        ProfileFormData["experienceList"]
+      >,
+  );
 
-    try {
-      const res = await updateCandidate(formData).unwrap();
-      console.log(res);
-      toast.success("Profile updated successfully!");
-      setPreviewUrl(null);
-      setSelectedFile(null);
-    } catch (error) {
-      errorToast(error);
-    }
+  // ─── Education helpers ────────────────────────────────────────────────────────
+  const appendEducation = () => {
+    form.setFieldValue("educationList", [...educationList, emptyEducation()]);
+  };
+  const removeEducation = (index: number) => {
+    form.setFieldValue(
+      "educationList",
+      educationList.filter((_, i) => i !== index),
+    );
+  };
+  const setEducationField = (
+    index: number,
+    key: keyof NonNullable<ProfileFormData["educationList"]>[number],
+    value: any,
+  ) => {
+    const updated = educationList.map((item, i) =>
+      i === index ? { ...item, [key]: value } : item,
+    );
+    form.setFieldValue("educationList", updated);
+  };
+
+  // ─── Experience helpers ───────────────────────────────────────────────────────
+  const appendExperience = () => {
+    form.setFieldValue("experienceList", [
+      ...experienceList,
+      emptyExperience(),
+    ]);
+  };
+  const removeExperience = (index: number) => {
+    form.setFieldValue(
+      "experienceList",
+      experienceList.filter((_, i) => i !== index),
+    );
+  };
+  const setExperienceField = (
+    index: number,
+    key: keyof NonNullable<ProfileFormData["experienceList"]>[number],
+    value: any,
+  ) => {
+    const updated = experienceList.map((item, i) =>
+      i === index ? { ...item, [key]: value } : item,
+    );
+    form.setFieldValue("experienceList", updated);
   };
 
   return (
@@ -219,8 +274,15 @@ export default function ProfileEdit() {
         <DashboardTitle>Profile Edit</DashboardTitle>
       </div>
       <CommonWrapper className="p-7">
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* user photo*/}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+          className="space-y-8"
+        >
+          {/* user photo */}
           <div className="flex gap-4 pb-7 border-b ">
             <div className="size-28 ">
               <img
@@ -247,25 +309,25 @@ export default function ProfileEdit() {
             </div>
           </div>
 
-          {/* usr info form */}
+          {/* user info form */}
           <div className="space-y-6">
             <SectionTitle size={"sm"}>Information</SectionTitle>
             <FieldGroup className="grid grid-cols-2 gap-6">
-              <Field>
+              <Field data-invalid={!!fullNameField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Full Name</FieldLabel>
                 <Input
                   placeholder="Enter your full name"
                   className="h-11"
                   variant="withBg"
                   type="text"
-                  {...form.register("fullName")}
-                  aria-invalid={!!form.formState.errors.fullName}
+                  value={fullNameField.state.value}
+                  onBlur={fullNameField.handleBlur}
+                  onChange={(e) => fullNameField.handleChange(e.target.value)}
+                  aria-invalid={!!fullNameField.state.meta.errors.length}
                 />
-                {form.formState.errors.fullName && (
-                  <FieldError errors={[form.formState.errors.fullName]} />
-                )}
+                <FieldError errors={fullNameField.state.meta.errors} />
               </Field>
-              <Field>
+              <Field data-invalid={!!emailField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Email</FieldLabel>
                 <Input
                   placeholder="Enter your email address"
@@ -273,40 +335,40 @@ export default function ProfileEdit() {
                   variant="withBg"
                   type="email"
                   disabled
-                  {...form.register("email")}
-                  aria-invalid={!!form.formState.errors.email}
+                  value={emailField.state.value}
+                  onBlur={emailField.handleBlur}
+                  onChange={(e) => emailField.handleChange(e.target.value)}
+                  aria-invalid={!!emailField.state.meta.errors.length}
                 />
-                {form.formState.errors.email && (
-                  <FieldError errors={[form.formState.errors.email]} />
-                )}
+                <FieldError errors={emailField.state.meta.errors} />
               </Field>
-              <Field>
+              <Field data-invalid={!!phoneField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Phone</FieldLabel>
                 <Input
                   placeholder="Enter your phone number"
                   className="h-11"
                   variant="withBg"
                   type="tel"
-                  {...form.register("phone")}
-                  aria-invalid={!!form.formState.errors.phone}
+                  value={phoneField.state.value}
+                  onBlur={phoneField.handleBlur}
+                  onChange={(e) => phoneField.handleChange(e.target.value)}
+                  aria-invalid={!!phoneField.state.meta.errors.length}
                 />
-                {form.formState.errors.phone && (
-                  <FieldError errors={[form.formState.errors.phone]} />
-                )}
+                <FieldError errors={phoneField.state.meta.errors} />
               </Field>
-              <Field>
+              <Field data-invalid={!!locationField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Location</FieldLabel>
                 <Input
                   placeholder="Enter your location"
                   className="h-11"
                   variant="withBg"
                   type="text"
-                  {...form.register("location")}
-                  aria-invalid={!!form.formState.errors.location}
+                  value={locationField.state.value}
+                  onBlur={locationField.handleBlur}
+                  onChange={(e) => locationField.handleChange(e.target.value)}
+                  aria-invalid={!!locationField.state.meta.errors.length}
                 />
-                {form.formState.errors.location && (
-                  <FieldError errors={[form.formState.errors.location]} />
-                )}
+                <FieldError errors={locationField.state.meta.errors} />
               </Field>
               <Field>
                 <FieldLabel className="font-bold">Date of Birth</FieldLabel>
@@ -315,127 +377,93 @@ export default function ProfileEdit() {
                   className="h-11"
                   variant="withBg"
                   type="date"
-                  {...form.register("dob")}
+                  value={dobField.state.value}
+                  onBlur={dobField.handleBlur}
+                  onChange={(e) => dobField.handleChange(e.target.value)}
                 />
               </Field>
-              <Field>
+              <Field data-invalid={!!genderField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Gender</FieldLabel>
-                <Controller
-                  name="gender"
-                  control={form.control}
-                  render={({ field }) => (
-                    <div className="space-y-2 text-left">
-                      <Select
-                        key={field.value || "empty"}
-                        onValueChange={field.onChange}
-                        value={field.value || undefined}
-                      >
-                        <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                          <SelectValue
-                            className=""
-                            placeholder="Select gender"
-                          />
-                        </SelectTrigger>
-                        <SelectContent
-                          className="rounded-none"
-                          position="popper"
-                        >
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      {form.formState.errors.gender && (
-                        <FieldError errors={[form.formState.errors.gender]} />
-                      )}
-                    </div>
-                  )}
-                />
+                <div className="space-y-2 text-left">
+                  <Select
+                    key={(genderField.state.value as string) || "empty"}
+                    onValueChange={(val) =>
+                      genderField.handleChange(
+                        val as typeof genderField.state.value,
+                      )
+                    }
+                    value={genderField.state.value || undefined}
+                  >
+                    <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                      <SelectValue placeholder="Select gender" />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-none" position="popper">
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FieldError errors={genderField.state.meta.errors} />
+                </div>
               </Field>
-              <Field>
+              <Field
+                data-invalid={!!maritalStatusField.state.meta.errors.length}
+              >
                 <FieldLabel className="font-bold">Marital Status</FieldLabel>
-                <Controller
-                  name="maritalStatus"
-                  control={form.control}
-                  render={({ field }) => (
-                    <div className="space-y-2 text-left">
-                      <Select
-                        key={field.value || "empty"}
-                        onValueChange={field.onChange}
-                        value={field.value || undefined}
-                      >
-                        <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                          <SelectValue
-                            className=""
-                            placeholder="Select marital status"
-                          />
-                        </SelectTrigger>
-                        <SelectContent
-                          className="rounded-none"
-                          position="popper"
-                        >
-                          <SelectItem value="single">Single</SelectItem>
-                          <SelectItem value="married">Married</SelectItem>
-                          <SelectItem value="divorced">Divorced</SelectItem>
-                          <SelectItem value="widowed">Widowed</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      {form.formState.errors.maritalStatus && (
-                        <FieldError
-                          errors={[form.formState.errors.maritalStatus]}
-                        />
-                      )}
-                    </div>
-                  )}
-                />
+                <div className="space-y-2 text-left">
+                  <Select
+                    key={(maritalStatusField.state.value as string) || "empty"}
+                    onValueChange={(val) =>
+                      maritalStatusField.handleChange(
+                        val as typeof maritalStatusField.state.value,
+                      )
+                    }
+                    value={maritalStatusField.state.value || undefined}
+                  >
+                    <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                      <SelectValue placeholder="Select marital status" />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-none" position="popper">
+                      <SelectItem value="single">Single</SelectItem>
+                      <SelectItem value="married">Married</SelectItem>
+                      <SelectItem value="divorced">Divorced</SelectItem>
+                      <SelectItem value="widowed">Widowed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FieldError errors={maritalStatusField.state.meta.errors} />
+                </div>
               </Field>
-              <Field>
+              <Field data-invalid={!!languageField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Language</FieldLabel>
-                <Controller
-                  name="language"
-                  control={form.control}
-                  render={({ field }) => (
-                    <div className="space-y-2 text-left">
-                      <Select
-                        key={field.value || "empty"}
-                        onValueChange={field.onChange}
-                        value={field.value || undefined}
-                      >
-                        <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
-                          <SelectValue
-                            className=""
-                            placeholder="Select your language"
-                          />
-                        </SelectTrigger>
-                        <SelectContent
-                          className="rounded-none"
-                          position="popper"
-                        >
-                          <SelectItem value="english">English</SelectItem>
-                          <SelectItem value="hindi">Hindi</SelectItem>
-                          <SelectItem value="bengali">Bengali</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      {form.formState.errors.language && (
-                        <FieldError errors={[form.formState.errors.language]} />
-                      )}
-                    </div>
-                  )}
-                />
+                <div className="space-y-2 text-left">
+                  <Select
+                    key={(languageField.state.value as string) || "empty"}
+                    onValueChange={(val) =>
+                      languageField.handleChange(
+                        val as typeof languageField.state.value,
+                      )
+                    }
+                    value={languageField.state.value || undefined}
+                  >
+                    <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
+                      <SelectValue placeholder="Select your language" />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-none" position="popper">
+                      <SelectItem value="english">English</SelectItem>
+                      <SelectItem value="hindi">Hindi</SelectItem>
+                      <SelectItem value="bengali">Bengali</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FieldError errors={languageField.state.meta.errors} />
+                </div>
               </Field>
 
               <Field className="col-span-2">
                 <FieldLabel className="font-bold">Skills</FieldLabel>
-                <Controller
-                  name="skills"
-                  control={form.control}
-                  render={({ field }) => (
-                    <SkillTagsInput
-                      value={field.value}
-                      onChange={field.onChange}
-                      variant="withBg"
-                    />
-                  )}
+                <SkillTagsInput
+                  value={skillsField.state.value ?? []}
+                  onChange={(val) => skillsField.handleChange(val)}
+                  variant="withBg"
                 />
               </Field>
             </FieldGroup>
@@ -445,8 +473,8 @@ export default function ProfileEdit() {
           <div className="space-y-6 pt-4 border-t">
             <SectionTitle size={"sm"}>Education</SectionTitle>
             <div className="space-y-8">
-              {educationFields.map((field, index) => (
-                <div key={field.id} className="space-y-6">
+              {educationList.map((edu, index) => (
+                <div key={index} className="space-y-6">
                   <div className="flex items-center justify-between p-4 bg-[#F5F5F5] dark:bg-[#222222]">
                     <span className="font-bold">Education {index + 1}</span>
                     <div className="flex gap-2">
@@ -474,23 +502,15 @@ export default function ProfileEdit() {
                           placeholder="Fine Arts University"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(
-                            `educationList.${index}.institution`,
-                          )}
-                          aria-invalid={
-                            !!form.formState.errors.educationList?.[index]
-                              ?.institution
+                          value={edu.institution}
+                          onChange={(e) =>
+                            setEducationField(
+                              index,
+                              "institution",
+                              e.target.value,
+                            )
                           }
                         />
-                        {form.formState.errors.educationList?.[index]
-                          ?.institution && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.educationList[index]!
-                                .institution!,
-                            ]}
-                          />
-                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">Major</FieldLabel>
@@ -498,21 +518,11 @@ export default function ProfileEdit() {
                           placeholder="e.g. Computer Science"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.major`)}
-                          aria-invalid={
-                            !!form.formState.errors.educationList?.[index]
-                              ?.major
+                          value={edu.major}
+                          onChange={(e) =>
+                            setEducationField(index, "major", e.target.value)
                           }
                         />
-                        {form.formState.errors.educationList?.[index]
-                          ?.major && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.educationList[index]!
-                                .major!,
-                            ]}
-                          />
-                        )}
                       </Field>
                     </div>
                     <div className="grid grid-cols-2 gap-6">
@@ -524,21 +534,11 @@ export default function ProfileEdit() {
                           placeholder="e.g. Design, Engineering"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.field`)}
-                          aria-invalid={
-                            !!form.formState.errors.educationList?.[index]
-                              ?.field
+                          value={edu.field}
+                          onChange={(e) =>
+                            setEducationField(index, "field", e.target.value)
                           }
                         />
-                        {form.formState.errors.educationList?.[index]
-                          ?.field && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.educationList[index]!
-                                .field!,
-                            ]}
-                          />
-                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">
@@ -550,9 +550,14 @@ export default function ProfileEdit() {
                           min={0}
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.gap`, {
-                            valueAsNumber: true,
-                          })}
+                          value={edu.gap ?? 0}
+                          onChange={(e) =>
+                            setEducationField(
+                              index,
+                              "gap",
+                              Number(e.target.value),
+                            )
+                          }
                         />
                       </Field>
                     </div>
@@ -565,21 +570,15 @@ export default function ProfileEdit() {
                           type="date"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.startData`)}
-                          aria-invalid={
-                            !!form.formState.errors.educationList?.[index]
-                              ?.startData
+                          value={edu.startData}
+                          onChange={(e) =>
+                            setEducationField(
+                              index,
+                              "startData",
+                              e.target.value,
+                            )
                           }
                         />
-                        {form.formState.errors.educationList?.[index]
-                          ?.startData && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.educationList[index]!
-                                .startData!,
-                            ]}
-                          />
-                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">End Date</FieldLabel>
@@ -587,7 +586,10 @@ export default function ProfileEdit() {
                           type="date"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`educationList.${index}.endData`)}
+                          value={edu.endData}
+                          onChange={(e) =>
+                            setEducationField(index, "endData", e.target.value)
+                          }
                         />
                       </Field>
                     </div>
@@ -596,9 +598,14 @@ export default function ProfileEdit() {
                         <input
                           type="checkbox"
                           className="size-4 accent-primary"
-                          {...form.register(
-                            `educationList.${index}.isStudying`,
-                          )}
+                          checked={edu.isStudying ?? false}
+                          onChange={(e) =>
+                            setEducationField(
+                              index,
+                              "isStudying",
+                              e.target.checked,
+                            )
+                          }
                         />
                         Currently Studying
                       </label>
@@ -610,17 +617,7 @@ export default function ProfileEdit() {
                 type="button"
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2 py-6 border-dashed border-2 hover:bg-slate-50 transition-colors"
-                onClick={() =>
-                  appendEducation({
-                    institution: "",
-                    major: "",
-                    field: "",
-                    gap: 0,
-                    startData: "",
-                    endData: "",
-                    isStudying: false,
-                  })
-                }
+                onClick={appendEducation}
               >
                 <PlusCircle className="size-5" />
                 <span>Add Another Education</span>
@@ -632,8 +629,8 @@ export default function ProfileEdit() {
           <div className="space-y-6 pt-4 border-t">
             <SectionTitle size={"sm"}>Experience</SectionTitle>
             <div className="space-y-8">
-              {experienceFields.map((field, index) => (
-                <div key={field.id} className="space-y-6">
+              {experienceList.map((exp, index) => (
+                <div key={index} className="space-y-6">
                   <div className="flex items-center justify-between p-4 bg-[#F5F5F5] dark:bg-[#222222]">
                     <span className="font-bold">Experience {index + 1}</span>
                     <div className="flex gap-2">
@@ -659,21 +656,15 @@ export default function ProfileEdit() {
                           placeholder="e.g. Software Engineer"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`experienceList.${index}.jobTitle`)}
-                          aria-invalid={
-                            !!form.formState.errors.experienceList?.[index]
-                              ?.jobTitle
+                          value={exp.jobTitle}
+                          onChange={(e) =>
+                            setExperienceField(
+                              index,
+                              "jobTitle",
+                              e.target.value,
+                            )
                           }
                         />
-                        {form.formState.errors.experienceList?.[index]
-                          ?.jobTitle && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.experienceList[index]!
-                                .jobTitle!,
-                            ]}
-                          />
-                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">
@@ -683,23 +674,15 @@ export default function ProfileEdit() {
                           placeholder="Avitex Inc"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(
-                            `experienceList.${index}.companyName`,
-                          )}
-                          aria-invalid={
-                            !!form.formState.errors.experienceList?.[index]
-                              ?.companyName
+                          value={exp.companyName}
+                          onChange={(e) =>
+                            setExperienceField(
+                              index,
+                              "companyName",
+                              e.target.value,
+                            )
                           }
                         />
-                        {form.formState.errors.experienceList?.[index]
-                          ?.companyName && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.experienceList[index]!
-                                .companyName!,
-                            ]}
-                          />
-                        )}
                       </Field>
                     </div>
                     <Field>
@@ -708,21 +691,11 @@ export default function ProfileEdit() {
                         placeholder="e.g. Technology, Finance"
                         className="h-11 border-none shadow-none"
                         variant="withBg"
-                        {...form.register(`experienceList.${index}.industry`)}
-                        aria-invalid={
-                          !!form.formState.errors.experienceList?.[index]
-                            ?.industry
+                        value={exp.industry}
+                        onChange={(e) =>
+                          setExperienceField(index, "industry", e.target.value)
                         }
                       />
-                      {form.formState.errors.experienceList?.[index]
-                        ?.industry && (
-                        <FieldError
-                          errors={[
-                            form.formState.errors.experienceList[index]!
-                              .industry!,
-                          ]}
-                        />
-                      )}
                     </Field>
                     <div className="grid grid-cols-2 gap-6">
                       <Field>
@@ -733,23 +706,15 @@ export default function ProfileEdit() {
                           type="date"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(
-                            `experienceList.${index}.startData`,
-                          )}
-                          aria-invalid={
-                            !!form.formState.errors.experienceList?.[index]
-                              ?.startData
+                          value={exp.startData}
+                          onChange={(e) =>
+                            setExperienceField(
+                              index,
+                              "startData",
+                              e.target.value,
+                            )
                           }
                         />
-                        {form.formState.errors.experienceList?.[index]
-                          ?.startData && (
-                          <FieldError
-                            errors={[
-                              form.formState.errors.experienceList[index]!
-                                .startData!,
-                            ]}
-                          />
-                        )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">End Date</FieldLabel>
@@ -757,7 +722,10 @@ export default function ProfileEdit() {
                           type="date"
                           className="h-11 border-none shadow-none"
                           variant="withBg"
-                          {...form.register(`experienceList.${index}.endData`)}
+                          value={exp.endData}
+                          onChange={(e) =>
+                            setExperienceField(index, "endData", e.target.value)
+                          }
                         />
                       </Field>
                     </div>
@@ -766,9 +734,14 @@ export default function ProfileEdit() {
                         <input
                           type="checkbox"
                           className="size-4 accent-primary"
-                          {...form.register(
-                            `experienceList.${index}.isWorking`,
-                          )}
+                          checked={exp.isWorking ?? false}
+                          onChange={(e) =>
+                            setExperienceField(
+                              index,
+                              "isWorking",
+                              e.target.checked,
+                            )
+                          }
                         />
                         Currently Working Here
                       </label>
@@ -778,9 +751,14 @@ export default function ProfileEdit() {
                       <Textarea
                         placeholder="Write something..."
                         className="min-h-32 border-none shadow-none resize-none bg-[#F5F5F5] dark:bg-[#222222]"
-                        {...form.register(
-                          `experienceList.${index}.Description`,
-                        )}
+                        value={exp.Description}
+                        onChange={(e) =>
+                          setExperienceField(
+                            index,
+                            "Description",
+                            e.target.value,
+                          )
+                        }
                       />
                     </Field>
                   </FieldGroup>
@@ -790,17 +768,7 @@ export default function ProfileEdit() {
                 type="button"
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2 py-6 border-dashed border-2 hover:bg-slate-50 transition-colors"
-                onClick={() =>
-                  appendExperience({
-                    jobTitle: "",
-                    companyName: "",
-                    industry: "",
-                    startData: "",
-                    endData: "",
-                    isWorking: false,
-                    Description: "",
-                  })
-                }
+                onClick={appendExperience}
               >
                 <PlusCircle className="size-5" />
                 <span>Add Another Experience</span>
@@ -811,16 +779,10 @@ export default function ProfileEdit() {
           {/* about me */}
           <div className="space-y-4 pt-4 border-t">
             <SectionTitle size={"sm"}>About Me</SectionTitle>
-            <Controller
-              name="aboutMe"
-              control={form.control}
-              render={({ field }) => (
-                <RichTextEditor
-                  value={field.value || ""}
-                  onChange={field.onChange}
-                  placeholder="Write about yourself..."
-                />
-              )}
+            <RichTextEditor
+              value={aboutMeField.state.value || ""}
+              onChange={(val) => aboutMeField.handleChange(val)}
+              placeholder="Write about yourself..."
             />
           </div>
 
@@ -831,19 +793,19 @@ export default function ProfileEdit() {
               {[
                 {
                   icon: FaFacebookF,
-                  name: "facebook" as const,
+                  field: facebookField,
                   label: "Facebook",
                   placeholder: "http://www.facebook.com/avitex",
                 },
                 {
                   icon: FaLinkedinIn,
-                  name: "linkedin" as const,
+                  field: linkedinField,
                   label: "LinkedIn",
                   placeholder: "URL",
                 },
                 {
                   icon: FaTwitter,
-                  name: "twitter" as const,
+                  field: twitterField,
                   label: "Twitter",
                   placeholder: "URL",
                 },
@@ -857,16 +819,16 @@ export default function ProfileEdit() {
                       placeholder={item.placeholder}
                       className="h-11 border-none shadow-none"
                       variant="withBg"
-                      {...form.register(item.name)}
-                      aria-invalid={!!form.formState.errors[item.name]}
+                      value={item.field.state.value}
+                      onBlur={item.field.handleBlur}
+                      onChange={(e) => item.field.handleChange(e.target.value)}
+                      aria-invalid={!!item.field.state.meta.errors.length}
                     />
                   </div>
-                  {form.formState.errors[item.name] && (
-                    <FieldError
-                      className="ml-14"
-                      errors={[form.formState.errors[item.name]]}
-                    />
-                  )}
+                  <FieldError
+                    className="ml-14"
+                    errors={item.field.state.meta.errors}
+                  />
                 </div>
               ))}
             </div>
@@ -874,7 +836,8 @@ export default function ProfileEdit() {
 
           <div className="pt-6 flex justify-end">
             <Button type="submit" size="lg" className="w-full md:w-auto px-10">
-              Save Profile
+              Save Profile{" "}
+              {isLoading && <Loader2 className="size-4 animate-spin" />}
             </Button>
           </div>
         </form>
