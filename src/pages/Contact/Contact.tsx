@@ -1,5 +1,5 @@
-import ContactFormSection from "./ContactFormSection";
-import ContactCTA from "./ContactCTA";
+import ContactFormSection from "./components/ContactFormSection";
+import ContactCTA from "./components/ContactCTA";
 
 export default function Contact() {
   return (
