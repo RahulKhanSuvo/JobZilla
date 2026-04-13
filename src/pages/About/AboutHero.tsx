@@ -3,6 +3,9 @@ import Paragraph from "@/components/common/Paragraph";
 import Stack from "@/components/common/Stack";
 import heroImage from "@/assets/background/thumb2.png";
 import { motion } from "motion/react";
+import badge1 from "@/assets/Icons/icon1.png";
+import badge2 from "@/assets/Icons/icon2.png";
+import badge3 from "@/assets/Icons/icon3.png";
 
 export default function AboutHero() {
   return (
@@ -16,6 +19,40 @@ export default function AboutHero() {
                 alt="About JobZilla"
                 className="w-full h-auto object-contain"
               />
+              {/* badges */}
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute top-1/4 left-2 z-10"
+              >
+                <img src={badge1} alt="badge1" className="size-15" />
+              </motion.div>
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute bottom-3/12 left-25 z-10"
+              >
+                <img src={badge2} alt="badge2" className="size-15" />
+              </motion.div>
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute bottom-1/4 -right-10 z-10"
+              >
+                <img src={badge3} alt="badge3" className="size-15" />
+              </motion.div>
 
               {/* Floating Cards - Simplified representation */}
               <div className="absolute top-1/4 -right-10 bg-white dark:bg-slate-900 p-4 rounded-xl shadow border border-slate-100 dark:border-slate-800 animate-bounce-slow">
@@ -23,7 +60,15 @@ export default function AboutHero() {
                 <p className="text-xs text-slate-500">Jobs Available</p>
               </div>
 
-              <motion.div className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-full shadow border border-slate-100 dark:border-slate-800 animate-float">
+              <motion.div
+                animate={{ x: [-10, 10, -10] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-full shadow border border-slate-100 dark:border-slate-800 animate-float"
+              >
                 <div className="flex items-center gap-2">
                   <div className="size-8 rounded-full bg-emerald-100 flex items-center justify-center">
                     <span className="text-xs font-bold text-emerald-600">
