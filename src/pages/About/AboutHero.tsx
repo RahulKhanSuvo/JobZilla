@@ -17,16 +17,16 @@ export default function AboutHero() {
               />
 
               {/* Floating Cards - Simplified representation */}
-              <div className="absolute top-1/4 -right-10 bg-white dark:bg-slate-900 p-4 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 animate-bounce-slow">
-                <p className="text-2xl font-bold">25M+</p>
+              <div className="absolute top-1/4 -right-10 bg-white dark:bg-slate-900 p-4 rounded-xl shadow border border-slate-100 dark:border-slate-800 animate-bounce-slow">
+                <p className="text-3xl font-bold">25M+</p>
                 <p className="text-xs text-slate-500">Jobs Available</p>
               </div>
 
-              <div className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 animate-float">
+              <div className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-full shadow border border-slate-100 dark:border-slate-800 animate-float">
                 <div className="flex items-center gap-2">
                   <div className="size-8 rounded-full bg-emerald-100 flex items-center justify-center">
                     <span className="text-xs font-bold text-emerald-600">
-                      480+
+                      400+
                     </span>
                   </div>
                   <div>
@@ -35,9 +35,6 @@ export default function AboutHero() {
                 </div>
               </div>
             </div>
-
-            {/* Background elements */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-emerald-400/20 blur-3xl rounded-full -z-10" />
           </div>
 
           <div className="order-1 lg:order-2 space-y-6">
