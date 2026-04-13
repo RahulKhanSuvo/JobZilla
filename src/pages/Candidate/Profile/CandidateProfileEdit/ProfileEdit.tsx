@@ -179,11 +179,6 @@ export default function ProfileEdit() {
       setPreviewUrl(url);
     }
   };
-
-  // ─── Field hooks ─────────────────────────────────────────────────────────────
-  // Cast to FormApi<any> to prevent TS2589 deep type instantiation while keeping
-  // useField as a stable standalone import (React Rules of Hooks compliant).
-
   const f = form as FormApi<any, any>;
   const fullNameField = useField({ form: f, name: "fullName" });
   const emailField = useField({ form: f, name: "email" });
