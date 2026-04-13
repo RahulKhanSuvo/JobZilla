@@ -41,7 +41,7 @@ export default function WhyJobZilla() {
         <Stack gap="xl">
           <div className="max-w-xl">
             <Stack gap="sm">
-              <SectionTitle className="text-3xl font-black text-slate-900 dark:text-white">
+              <SectionTitle className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">
                 What can I do with Jobtex?
               </SectionTitle>
               <Paragraph className="text-slate-500 dark:text-slate-400 font-medium">
