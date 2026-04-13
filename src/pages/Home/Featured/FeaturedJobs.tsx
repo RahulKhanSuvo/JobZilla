@@ -9,9 +9,10 @@ import {
 } from "@/redux/features/job/job.api";
 import { useState } from "react";
 import { errorToast } from "@/utils/errorToast";
+import { JobCardSkeleton } from "@/components/Skeleton/JobCardSkeleton";
 
 export default function FeaturedJobs() {
-  const { data: jobs } = useGetAllJobsQuery({});
+  const { data: jobs, isLoading } = useGetAllJobsQuery({});
   const [savingJobId, setSavingJobId] = useState<string | null>(null);
   const [saveJob] = useSaveJobMutation();
   const handelSave = async (jobId: string) => {
@@ -29,14 +30,18 @@ export default function FeaturedJobs() {
       <FeaturedJobsHeader />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        {jobs?.data.map((job) => (
-          <JobCard
-            onSave={handelSave}
-            isSaving={savingJobId === job.id}
-            key={job.id}
-            job={job}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, idx) => (
+              <JobCardSkeleton key={idx} />
+            ))
+          : jobs?.data.map((job) => (
+              <JobCard
+                onSave={handelSave}
+                isSaving={savingJobId === job.id}
+                key={job.id}
+                job={job}
+              />
+            ))}
       </div>
       <div className="text-center mt-12">
         <Link to="/find-job" className="text-center">
