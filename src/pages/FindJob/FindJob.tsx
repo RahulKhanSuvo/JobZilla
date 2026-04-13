@@ -37,8 +37,6 @@ export default function FindJob() {
   const { data, isLoading } = useGetAllJobsQuery({ ...params, ...filters });
   const jobs: PostJobFormData[] = data?.data ?? [];
 
-  if (isLoading) return <div>loading</div>;
-
   return (
     <div className="bg-white dark:bg-slate-950 min-h-screen py-10 transition-colors duration-300">
       <Container>
@@ -51,7 +49,7 @@ export default function FindJob() {
           {/* Main Content */}
           <main className="flex-1 space-y-4">
             <JobHeader layout={layout} setLayout={setLayout} />
-            <JobList layout={layout} jobs={jobs} />
+            <JobList layout={layout} jobs={jobs} isLoading={isLoading} />
             {(data?.meta?.totalPage ?? 0) > 1 && (
               <Pagination
                 page={params.page}

@@ -4,13 +4,15 @@ import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 import { useSaveJobMutation } from "@/redux/features/job/job.api";
 import { errorToast } from "@/utils/errorToast";
 import { useState } from "react";
+import { JobCardSkeleton } from "@/components/Skeleton/JobCardSkeleton";
 
 interface JobListProps {
   layout: "grid" | "list";
   jobs: PostJobFormData[];
+  isLoading?: boolean;
 }
 
-export default function JobList({ layout, jobs }: JobListProps) {
+export default function JobList({ layout, jobs, isLoading }: JobListProps) {
   const [savingJobId, setSavingJobId] = useState<string | null>(null);
   const [saveJob] = useSaveJobMutation();
   const container: Variants = {
@@ -53,15 +55,19 @@ export default function JobList({ layout, jobs }: JobListProps) {
           : "flex flex-col gap-6"
       }
     >
-      {jobs.map((job) => (
-        <motion.div key={job.id} variants={item}>
-          <JobCard
-            job={job}
-            onSave={handelSave}
-            isSaving={savingJobId === job.id}
-          />
-        </motion.div>
-      ))}
+      {isLoading
+        ? Array.from({ length: 10 }).map((_, idx) => (
+            <JobCardSkeleton key={idx} />
+          ))
+        : jobs.map((job) => (
+            <motion.div key={job.id} variants={item}>
+              <JobCard
+                job={job}
+                onSave={handelSave}
+                isSaving={savingJobId === job.id}
+              />
+            </motion.div>
+          ))}
     </motion.div>
   );
 }
