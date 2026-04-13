@@ -2,6 +2,7 @@ import Container from "@/components/common/Container";
 import Paragraph from "@/components/common/Paragraph";
 import Stack from "@/components/common/Stack";
 import heroImage from "@/assets/background/thumb2.png";
+import { motion } from "motion/react";
 
 export default function AboutHero() {
   return (
@@ -22,7 +23,7 @@ export default function AboutHero() {
                 <p className="text-xs text-slate-500">Jobs Available</p>
               </div>
 
-              <div className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-full shadow border border-slate-100 dark:border-slate-800 animate-float">
+              <motion.div className="absolute bottom-1/4 -left-10 bg-white dark:bg-slate-900 p-3 rounded-full shadow border border-slate-100 dark:border-slate-800 animate-float">
                 <div className="flex items-center gap-2">
                   <div className="size-8 rounded-full bg-emerald-100 flex items-center justify-center">
                     <span className="text-xs font-bold text-emerald-600">
@@ -33,7 +34,7 @@ export default function AboutHero() {
                     <p className="text-[10px] font-bold">Happy Candidates</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
 
