@@ -24,7 +24,7 @@ export default function DashboardSearch({ className }: { className?: string }) {
           <SelectTrigger className="border-none shadow-none focus:ring-0 h-8 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 w-[90px] sm:w-[110px] hover:bg-slate-50 dark:hover:bg-slate-800 rounded transition-colors">
             <SelectValue placeholder="Location" />
           </SelectTrigger>
-          <SelectContent className="z-[70]">
+          <SelectContent className="z-70">
             <SelectItem value="remote">Remote</SelectItem>
             <SelectItem value="london">London</SelectItem>
             <SelectItem value="new-york">New York</SelectItem>
