@@ -5,7 +5,7 @@ import AboutFeatures from "./AboutFeatures";
 
 export default function About() {
   return (
-    <div className="pt-20">
+    <div>
       <AboutHero />
       <AboutStats />
       <AboutSteps />
