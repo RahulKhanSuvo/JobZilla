@@ -1,28 +1,29 @@
 import Container from "@/components/common/Container";
 import Stack from "@/components/common/Stack";
-import { FileText, Briefcase, Heart } from "lucide-react";
-
+import stepIcon1 from "@assets/Icons/work-icon-1.jpg";
+import stepIcon2 from "@assets/Icons/work-icon-2.jpg";
+import stepIcon3 from "@assets/Icons/work-icon-3.jpg";
 const steps = [
   {
-    icon: <FileText className="size-8 text-blue-600" />,
+    icon: stepIcon1,
     title: "Free Resume Assessments",
     description:
       "Aenean Porta. Orci Locus Congue Lorem, Sit Amet Mollis Magna Velit Ac Trat Morbi Accumsan Purus Nec Vehicula Ornare, Nam Quis Tincidunt Nulla.",
-    color: "bg-blue-50",
+    color: "#e1e8ef",
   },
   {
-    icon: <Briefcase className="size-8 text-orange-600" />,
+    icon: stepIcon2,
     title: "Job Fit Scoring",
     description:
       "Aenean Porta. Orci Locus Congue Lorem, Sit Amet Mollis Magna Velit Ac Trat Morbi Accumsan Purus Nec Vehicula Ornare, Nam Quis Tincidunt Nulla.",
-    color: "bg-orange-50",
+    color: "#bce0fd",
   },
   {
-    icon: <Heart className="size-8 text-purple-600" />,
+    icon: stepIcon3,
     title: "Help Every Step Of The Way",
     description:
       "Aenean Porta. Orci Locus Congue Lorem, Sit Amet Mollis Magna Velit Ac Trat Morbi Accumsan Purus Nec Vehicula Ornare, Nam Quis Tincidunt Nulla.",
-    color: "bg-purple-50",
+    color: "#ffe1b3",
   },
 ];
 
@@ -45,12 +46,12 @@ export default function AboutSteps() {
             {steps.map((step, idx) => (
               <div
                 key={idx}
-                className="group p-8 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300"
+                className="group p-8 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:shadow transition-all duration-300 hover:border-primary"
               >
                 <div
-                  className={`size-16 rounded-2xl ${step.color} dark:bg-slate-900 flex items-center justify-center mb-6 mx-auto transition-transform duration-300 group-hover:scale-110`}
+                  className={`size-20 rounded-full overflow-hidden bg-[${step.color}] dark:bg-slate-900 flex items-center justify-center mb-6 mx-auto transition-transform duration-300 group-hover:scale-110`}
                 >
-                  {step.icon}
+                  <img src={step.icon} alt="" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
                   {step.title}
@@ -58,7 +59,7 @@ export default function AboutSteps() {
                 <p className="text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
                   {step.description}
                 </p>
-                <button className="text-sm font-bold text-slate-900 dark:text-white flex items-center justify-center gap-2 mx-auto hover:gap-3 transition-all">
+                <button className="text-sm text-primary cursor-pointer font-bold  dark:text-white flex items-center justify-center gap-2 mx-auto hover:gap-3 transition-all">
                   Start Now <span className="text-emerald-500">→</span>
                 </button>
               </div>
