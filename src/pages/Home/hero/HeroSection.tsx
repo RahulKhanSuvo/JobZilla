@@ -53,7 +53,7 @@ export default function HeroSection() {
 
       <Container
         size="none"
-        className="flex justify-between h-[80vh] min-h-[600px] gap-2.5 z-20 relative px-10"
+        className="flex justify-between h-auto lg:h-[80vh] min-h-[500px] lg:min-h-[600px] py-20 lg:py-0 gap-2.5 z-20 relative px-4 sm:px-6 lg:px-10"
       >
         {/* Left Content */}
         <motion.div
@@ -68,7 +68,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1
-              className={`text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter transition-colors duration-500 ${
+              className={`text-4xl sm:text-5xl md:text-7xl font-black leading-[1.1] tracking-tighter transition-colors duration-500 ${
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >

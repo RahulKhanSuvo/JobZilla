@@ -14,7 +14,7 @@ export default function ContactCTA() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="p-12 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative">
+        <div className="p-6 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-12 overflow-hidden relative text-center lg:text-left">
           <div className="space-y-2 max-w-xl relative z-10">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               Recruiting?

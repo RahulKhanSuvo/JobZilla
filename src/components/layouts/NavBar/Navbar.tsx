@@ -129,7 +129,7 @@ const Navbar = ({
     <section
       className={cn("py-4 bg-white dark:bg-slate-950 shadow ", className)}
     >
-      <div className="max-w-[1905px] mx-auto  px-10">
+      <div className="max-w-[1905px] mx-auto px-4 lg:px-10">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex-1 flex items-center">
@@ -213,12 +213,46 @@ const Navbar = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <Link to={auth.login.url}>{auth.login.title}</Link>
-                    </Button>
-                    <Button asChild>
-                      <Link to={auth.signup.url}>{auth.signup.title}</Link>
-                    </Button>
+                    {!user ? (
+                      <>
+                        <Button asChild variant="outline">
+                          <Link to={auth.login.url}>{auth.login.title}</Link>
+                        </Button>
+                        <Button asChild>
+                          <Link to={auth.signup.url}>{auth.signup.title}</Link>
+                        </Button>
+                      </>
+                    ) : (
+                      <div className="flex flex-col gap-4 border-t pt-6 border-slate-100 dark:border-slate-800">
+                        <div className="flex items-center gap-3 px-1">
+                          <div className="size-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                            {user.name?.[0]?.toUpperCase() || "U"}
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-slate-900 dark:text-white">
+                              {user.name}
+                            </p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400">
+                              {user.email}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 gap-2">
+                          {(user.role === "EMPLOYER"
+                            ? dropdownMenuEmployer
+                            : dropdownMenu
+                          ).map((item) => (
+                            <Link
+                              key={item.url}
+                              to={item.url}
+                              className="text-sm font-medium p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            >
+                              {item.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </SheetContent>
@@ -299,7 +333,7 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
       to={item.url}
       className={({ isActive }) =>
         cn(
-          "flex min-w-80 flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:text-primary text-slate-600",
+          "flex w-full flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:text-primary text-slate-600",
           isActive && "text-primary",
         )
       }

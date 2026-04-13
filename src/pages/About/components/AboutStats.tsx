@@ -1,5 +1,6 @@
 import Container from "@/components/common/Container";
 import Stack from "@/components/common/Stack";
+import { cn } from "@/lib/utils";
 import bg from "@assets/background/couter.2b1a7c9c.png";
 
 const stats = [
@@ -27,8 +28,14 @@ export default function AboutStats() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-300">
             {stats.map((stat, idx) => (
-              <div key={idx} className="border-r p-4 last:border-r-0">
-                <p className="text-4xl font-black text-slate-900  dark:text-white mb-2">
+              <div
+                key={idx}
+                className={cn(
+                  "p-8 transition-colors",
+                  "border-b last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0 border-slate-100 dark:border-slate-800",
+                )}
+              >
+                <p className="text-4xl font-black text-slate-900 dark:text-white mb-2">
                   {stat.value}
                 </p>
                 <p className="text-slate-500 dark:text-slate-400 font-medium">

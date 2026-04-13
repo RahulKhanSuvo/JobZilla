@@ -84,13 +84,13 @@ export function Footer({ className }: FooterProps) {
     >
       <Container>
         {/* Top Section - Logo & Socials */}
-        <div className="flex flex-col md:flex-row justify-between items-center pb-12 border-b border-slate-200 dark:border-slate-800 gap-6">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col md:flex-row justify-between items-center pb-12 border-b border-slate-200 dark:border-slate-800 gap-8">
+          <div className="flex items-center justify-center w-full md:w-auto">
             <JobzillaLogo />
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="font-bold text-slate-900 dark:text-white mr-2">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <span className="font-bold text-slate-900 dark:text-white sm:mr-2">
               Follow Us:
             </span>
             <div className="flex items-center gap-3">
@@ -172,16 +172,12 @@ export function Footer({ className }: FooterProps) {
         </div>
 
         {/* Bottom Section - Copyright & Legal */}
-        <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-400">
-            <p>©2026 Jobtex. All Rights Reserved.</p>
-            <div className="flex items-center gap-2 px-3 py-1 bg-white dark:bg-slate-800 rounded-md shadow-sm border border-slate-100 dark:border-slate-700">
-              <span className="text-lg leading-none">🇬🇧</span>
-              <span>English</span>
-            </div>
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-sm font-medium text-slate-500 dark:text-slate-400 text-center md:text-left">
+            <p>©2026 JobZilla. All Rights Reserved.</p>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {bottomLinks.map((link, idx) => (
               <a
                 key={idx}

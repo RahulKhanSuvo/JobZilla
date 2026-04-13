@@ -35,7 +35,7 @@ export default function ContactFormSection() {
       <Container className="max-w-7xl">
         <div className="flex flex-col lg:flex-row overflow-hidden rounded-md border border-slate-100 dark:border-slate-800">
           {/* Left Side - Contact Info */}
-          <div className="lg:w-1/3 bg-[#139a74] p-12 text-white flex flex-col justify-between">
+          <div className="lg:w-1/3 bg-[#139a74] p-6 md:p-12 text-white flex flex-col justify-between">
             <Stack gap="xl">
               {contactInfo.map((info, idx) => (
                 <div key={idx} className="flex gap-6 items-start">
@@ -63,7 +63,7 @@ export default function ContactFormSection() {
           </div>
 
           {/* Right Side - Form */}
-          <div className="lg:w-2/3 bg-white dark:bg-slate-950 p-12">
+          <div className="lg:w-2/3 bg-white dark:bg-slate-950 p-6 md:p-12">
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input

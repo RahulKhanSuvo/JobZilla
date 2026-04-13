@@ -29,7 +29,7 @@ const steps = [
 
 export default function AboutSteps() {
   return (
-    <section className="py-24">
+    <section className="py-16 md:py-24">
       <Container>
         <Stack gap="xl" className="text-center">
           <div className="space-y-4 max-w-2xl mx-auto">
