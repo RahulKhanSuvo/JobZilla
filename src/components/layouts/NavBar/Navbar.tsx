@@ -127,10 +127,7 @@ const Navbar = ({
 
   return (
     <section
-      className={cn(
-        "py-4 bg-white dark:bg-slate-950 shadow-[0_3px_9px_0_rgba(0,0,0,0.05)] ",
-        className,
-      )}
+      className={cn("py-4 bg-white dark:bg-slate-950 shadow ", className)}
     >
       <div className="max-w-[1905px] mx-auto  px-10">
         {/* Desktop Menu */}
