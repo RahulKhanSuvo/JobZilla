@@ -45,12 +45,18 @@ export function LoginForm({
         const { data } = await signIn(value).unwrap();
         toast.success("Login successful");
         dispatch(setCredentials({ user: data.user, token: data.accessToken }));
-
-        if (data.user.role === "EMPLOYER") {
-          navigate("/recruiter", { replace: true });
-        } else {
-          navigate("/candidate", { replace: true });
+        switch (data.user.role) {
+          case "EMPLOYER":
+            navigate("/recruiter", { replace: true });
+            break;
+          case "CANDIDATE":
+            navigate("/candidate", { replace: true });
+            break;
+          case "ADMIN":
+            navigate("/admin", { replace: true });
+            break;
         }
+        form.reset();
       } catch (error) {
         errorToast(error);
       }
