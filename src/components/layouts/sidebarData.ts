@@ -101,3 +101,40 @@ export const recruiterSidebarData = [
     icon: IoSettings,
   },
 ];
+export const adminSidebarData = [
+  {
+    title: "Dashboard",
+    href: "dashboard",
+    icon: MdDashboard,
+  },
+  {
+    title: "Users",
+    href: "users",
+    icon: FaUser,
+  },
+  {
+    title: "Jobs",
+    href: "jobs",
+    icon: TbBriefcase2Filled,
+  },
+  {
+    title: "Companies",
+    href: "companies",
+    icon: RiGroup2Fill,
+  },
+  {
+    title: "Messages",
+    href: "messages",
+    icon: BiSolidMessageDetail,
+  },
+  {
+    title: "Notifications",
+    href: "notifications",
+    icon: IoNotifications,
+  },
+  {
+    title: "Settings",
+    href: "settings",
+    icon: IoSettings,
+  },
+];
