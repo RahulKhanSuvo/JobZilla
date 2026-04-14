@@ -1,57 +1,53 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from "react";
-import type { FieldApi } from "@tanstack/react-form";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import SectionTitle from "@/components/common/SectionTitle";
 import { FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-type AnyField = FieldApi<any, any, any, any, any>;
+type Errors = Partial<Record<string, string[]>>;
 
 interface SocialLinksSectionProps {
-  facebookField: AnyField;
-  linkedinField: AnyField;
-  twitterField: AnyField;
+  facebook: string;
+  linkedin: string;
+  twitter: string;
+  errors?: Errors;
+  onChange: (field: string, value: string) => void;
 }
 
 const socialLinks = [
   {
     key: "facebook" as const,
     icon: FaFacebookF,
-    label: "Facebook",
     placeholder: "http://www.facebook.com/yourprofile",
   },
   {
     key: "linkedin" as const,
     icon: FaLinkedinIn,
-    label: "LinkedIn",
     placeholder: "https://linkedin.com/in/yourprofile",
   },
   {
     key: "twitter" as const,
     icon: FaTwitter,
-    label: "Twitter",
     placeholder: "https://twitter.com/yourhandle",
   },
 ];
 
 const SocialLinksSection: FC<SocialLinksSectionProps> = ({
-  facebookField,
-  linkedinField,
-  twitterField,
+  facebook,
+  linkedin,
+  twitter,
+  errors = {},
+  onChange,
 }) => {
-  const fieldMap = {
-    facebook: facebookField,
-    linkedin: linkedinField,
-    twitter: twitterField,
-  };
+  const values = { facebook, linkedin, twitter };
 
   return (
     <div className="space-y-6 pt-6 border-t">
       <SectionTitle size="sm">Social Network</SectionTitle>
       <div className="grid grid-cols-2 gap-6">
         {socialLinks.map((item) => {
-          const field = fieldMap[item.key];
+          const value = values[item.key];
+          const fieldErrors = errors[item.key] ?? [];
           return (
             <div key={item.key} className="flex flex-col gap-2">
               <div className="flex items-center gap-4">
@@ -62,13 +58,12 @@ const SocialLinksSection: FC<SocialLinksSectionProps> = ({
                   placeholder={item.placeholder}
                   className="h-11 border-none shadow-none"
                   variant="withBg"
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  aria-invalid={!!field.state.meta.errors.length}
+                  value={value ?? ""}
+                  onChange={(e) => onChange(item.key, e.target.value)}
+                  aria-invalid={!!fieldErrors.length}
                 />
               </div>
-              <FieldError className="ml-14" errors={field.state.meta.errors} />
+              <FieldError className="ml-14" errors={fieldErrors} />
             </div>
           );
         })}

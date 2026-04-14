@@ -165,21 +165,9 @@ export default function ProfileEdit() {
     }
   };
 
-  // ─── Field hooks ──────────────────────────────────────────────────────────
+  // ─── Field hooks (only aboutMe needs useField; others use formValues) ────────
   const f = form as FormApi<any, any>;
-  const fullNameField = useField({ form: f, name: "fullName" });
-  const emailField = useField({ form: f, name: "email" });
-  const phoneField = useField({ form: f, name: "phone" });
-  const locationField = useField({ form: f, name: "location" });
-  const dobField = useField({ form: f, name: "dob" });
-  const genderField = useField({ form: f, name: "gender" });
-  const maritalStatusField = useField({ form: f, name: "maritalStatus" });
-  const languageField = useField({ form: f, name: "language" });
-  const skillsField = useField({ form: f, name: "skills" });
   const aboutMeField = useField({ form: f, name: "aboutMe" });
-  const facebookField = useField({ form: f, name: "facebook" });
-  const linkedinField = useField({ form: f, name: "linkedin" });
-  const twitterField = useField({ form: f, name: "twitter" });
 
   // ─── Dynamic list values ──────────────────────────────────────────────────
   const educationList = useStore(
@@ -312,15 +300,18 @@ export default function ProfileEdit() {
           />
 
           <PersonalInfoSection
-            fullNameField={fullNameField}
-            emailField={emailField}
-            phoneField={phoneField}
-            locationField={locationField}
-            dobField={dobField}
-            genderField={genderField}
-            maritalStatusField={maritalStatusField}
-            languageField={languageField}
-            skillsField={skillsField}
+            values={{
+              fullName: formValues.fullName ?? "",
+              email: formValues.email ?? "",
+              phone: formValues.phone ?? "",
+              location: formValues.location ?? "",
+              dob: formValues.dob ?? "",
+              gender: formValues.gender,
+              maritalStatus: formValues.maritalStatus,
+              language: formValues.language,
+              skills: formValues.skills ?? [],
+            }}
+            onChange={(field, value) => form.setFieldValue(field as any, value)}
           />
 
           <EducationList
@@ -343,9 +334,10 @@ export default function ProfileEdit() {
           />
 
           <SocialLinksSection
-            facebookField={facebookField}
-            linkedinField={linkedinField}
-            twitterField={twitterField}
+            facebook={formValues.facebook ?? ""}
+            linkedin={formValues.linkedin ?? ""}
+            twitter={formValues.twitter ?? ""}
+            onChange={(field, value) => form.setFieldValue(field as any, value)}
           />
 
           <div className="pt-6 flex justify-end">

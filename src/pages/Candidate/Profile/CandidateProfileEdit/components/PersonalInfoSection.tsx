@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from "react";
-import type { FieldApi } from "@tanstack/react-form";
+import type { ProfileFormData } from "../../profileSchema";
 import SectionTitle from "@/components/common/SectionTitle";
 import SkillTagsInput from "@/components/common/SkillTagsInput";
 import {
@@ -18,53 +18,51 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type AnyField = FieldApi<any, any, any, any, any>;
+type Errors = Partial<Record<string, string[]>>;
 
 interface PersonalInfoSectionProps {
-  fullNameField: AnyField;
-  emailField: AnyField;
-  phoneField: AnyField;
-  locationField: AnyField;
-  dobField: AnyField;
-  genderField: AnyField;
-  maritalStatusField: AnyField;
-  languageField: AnyField;
-  skillsField: AnyField;
+  values: Pick<
+    ProfileFormData,
+    | "fullName"
+    | "email"
+    | "phone"
+    | "location"
+    | "dob"
+    | "gender"
+    | "maritalStatus"
+    | "language"
+    | "skills"
+  >;
+  errors?: Errors;
+  onChange: (field: keyof ProfileFormData, value: any) => void;
 }
 
 const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
-  fullNameField,
-  emailField,
-  phoneField,
-  locationField,
-  dobField,
-  genderField,
-  maritalStatusField,
-  languageField,
-  skillsField,
+  values,
+  errors = {},
+  onChange,
 }) => {
   return (
     <div className="space-y-6">
       <SectionTitle size="sm">Information</SectionTitle>
       <FieldGroup className="grid grid-cols-2 gap-6">
         {/* Full Name */}
-        <Field data-invalid={!!fullNameField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.fullName?.length}>
           <FieldLabel className="font-bold">Full Name</FieldLabel>
           <Input
             placeholder="Enter your full name"
             className="h-11"
             variant="withBg"
             type="text"
-            value={fullNameField.state.value}
-            onBlur={fullNameField.handleBlur}
-            onChange={(e) => fullNameField.handleChange(e.target.value)}
-            aria-invalid={!!fullNameField.state.meta.errors.length}
+            value={values.fullName ?? ""}
+            onChange={(e) => onChange("fullName", e.target.value)}
+            aria-invalid={!!errors.fullName?.length}
           />
-          <FieldError errors={fullNameField.state.meta.errors} />
+          <FieldError errors={errors.fullName ?? []} />
         </Field>
 
         {/* Email */}
-        <Field data-invalid={!!emailField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.email?.length}>
           <FieldLabel className="font-bold">Email</FieldLabel>
           <Input
             placeholder="Enter your email address"
@@ -72,44 +70,41 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
             variant="withBg"
             type="email"
             disabled
-            value={emailField.state.value}
-            onBlur={emailField.handleBlur}
-            onChange={(e) => emailField.handleChange(e.target.value)}
-            aria-invalid={!!emailField.state.meta.errors.length}
+            value={values.email ?? ""}
+            onChange={(e) => onChange("email", e.target.value)}
+            aria-invalid={!!errors.email?.length}
           />
-          <FieldError errors={emailField.state.meta.errors} />
+          <FieldError errors={errors.email ?? []} />
         </Field>
 
         {/* Phone */}
-        <Field data-invalid={!!phoneField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.phone?.length}>
           <FieldLabel className="font-bold">Phone</FieldLabel>
           <Input
             placeholder="Enter your phone number"
             className="h-11"
             variant="withBg"
             type="tel"
-            value={phoneField.state.value}
-            onBlur={phoneField.handleBlur}
-            onChange={(e) => phoneField.handleChange(e.target.value)}
-            aria-invalid={!!phoneField.state.meta.errors.length}
+            value={values.phone ?? ""}
+            onChange={(e) => onChange("phone", e.target.value)}
+            aria-invalid={!!errors.phone?.length}
           />
-          <FieldError errors={phoneField.state.meta.errors} />
+          <FieldError errors={errors.phone ?? []} />
         </Field>
 
         {/* Location */}
-        <Field data-invalid={!!locationField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.location?.length}>
           <FieldLabel className="font-bold">Location</FieldLabel>
           <Input
             placeholder="Enter your location"
             className="h-11"
             variant="withBg"
             type="text"
-            value={locationField.state.value}
-            onBlur={locationField.handleBlur}
-            onChange={(e) => locationField.handleChange(e.target.value)}
-            aria-invalid={!!locationField.state.meta.errors.length}
+            value={values.location ?? ""}
+            onChange={(e) => onChange("location", e.target.value)}
+            aria-invalid={!!errors.location?.length}
           />
-          <FieldError errors={locationField.state.meta.errors} />
+          <FieldError errors={errors.location ?? []} />
         </Field>
 
         {/* Date of Birth */}
@@ -119,22 +114,19 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
             className="h-11"
             variant="withBg"
             type="date"
-            value={dobField.state.value}
-            onBlur={dobField.handleBlur}
-            onChange={(e) => dobField.handleChange(e.target.value)}
+            value={values.dob ?? ""}
+            onChange={(e) => onChange("dob", e.target.value)}
           />
         </Field>
 
         {/* Gender */}
-        <Field data-invalid={!!genderField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.gender?.length}>
           <FieldLabel className="font-bold">Gender</FieldLabel>
           <div className="space-y-2 text-left">
             <Select
-              key={(genderField.state.value as string) || "empty"}
-              onValueChange={(val) =>
-                genderField.handleChange(val as typeof genderField.state.value)
-              }
-              value={genderField.state.value || undefined}
+              key={(values.gender as string) || "empty"}
+              onValueChange={(val) => onChange("gender", val)}
+              value={(values.gender as string) ?? undefined}
             >
               <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                 <SelectValue placeholder="Select gender" />
@@ -145,22 +137,18 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
                 <SelectItem value="other">Other</SelectItem>
               </SelectContent>
             </Select>
-            <FieldError errors={genderField.state.meta.errors} />
+            <FieldError errors={errors.gender ?? []} />
           </div>
         </Field>
 
         {/* Marital Status */}
-        <Field data-invalid={!!maritalStatusField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.maritalStatus?.length}>
           <FieldLabel className="font-bold">Marital Status</FieldLabel>
           <div className="space-y-2 text-left">
             <Select
-              key={(maritalStatusField.state.value as string) || "empty"}
-              onValueChange={(val) =>
-                maritalStatusField.handleChange(
-                  val as typeof maritalStatusField.state.value,
-                )
-              }
-              value={maritalStatusField.state.value || undefined}
+              key={(values.maritalStatus as string) || "empty"}
+              onValueChange={(val) => onChange("maritalStatus", val)}
+              value={(values.maritalStatus as string) ?? undefined}
             >
               <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                 <SelectValue placeholder="Select marital status" />
@@ -172,22 +160,18 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
                 <SelectItem value="widowed">Widowed</SelectItem>
               </SelectContent>
             </Select>
-            <FieldError errors={maritalStatusField.state.meta.errors} />
+            <FieldError errors={errors.maritalStatus ?? []} />
           </div>
         </Field>
 
         {/* Language */}
-        <Field data-invalid={!!languageField.state.meta.errors.length}>
+        <Field data-invalid={!!errors.language?.length}>
           <FieldLabel className="font-bold">Language</FieldLabel>
           <div className="space-y-2 text-left">
             <Select
-              key={(languageField.state.value as string) || "empty"}
-              onValueChange={(val) =>
-                languageField.handleChange(
-                  val as typeof languageField.state.value,
-                )
-              }
-              value={languageField.state.value || undefined}
+              key={(values.language as string) || "empty"}
+              onValueChange={(val) => onChange("language", val)}
+              value={(values.language as string) ?? undefined}
             >
               <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                 <SelectValue placeholder="Select your language" />
@@ -198,7 +182,7 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
                 <SelectItem value="bengali">Bengali</SelectItem>
               </SelectContent>
             </Select>
-            <FieldError errors={languageField.state.meta.errors} />
+            <FieldError errors={errors.language ?? []} />
           </div>
         </Field>
 
@@ -206,8 +190,8 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
         <Field className="col-span-2">
           <FieldLabel className="font-bold">Skills</FieldLabel>
           <SkillTagsInput
-            value={skillsField.state.value ?? []}
-            onChange={(val) => skillsField.handleChange(val)}
+            value={values.skills ?? []}
+            onChange={(val) => onChange("skills", val)}
             variant="withBg"
           />
         </Field>
