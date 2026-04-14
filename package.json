@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-switch": "^1.2.6",
     "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.0",
     "@tanstack/react-form": "^0.41.4",
@@ -39,7 +40,7 @@
     "swiper": "^12.1.2",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.0",
-    "zod": "^4.3.6"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^20.4.2",
