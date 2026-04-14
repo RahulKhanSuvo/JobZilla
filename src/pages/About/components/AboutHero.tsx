@@ -55,7 +55,7 @@ export default function AboutHero() {
               </motion.div>
 
               {/* Floating Cards - Simplified representation */}
-              <div className="absolute top-1/4 -right-4 sm:-right-10 bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 animate-bounce-slow">
+              <div className="absolute top-1/4 -right-4 sm:-right-10 bg-white dark:bg-slate-900 p-3 sm:p-4 rounded shadow-xl border border-slate-100 dark:border-slate-800 animate-bounce-slow">
                 <p className="text-3xl font-bold">25M+</p>
                 <p className="text-xs text-slate-500">Jobs Available</p>
               </div>

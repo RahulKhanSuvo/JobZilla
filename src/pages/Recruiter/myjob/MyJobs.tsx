@@ -142,7 +142,7 @@ export default function MyJobs() {
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12 h-12 bg-slate-50/50 border-none rounded-xl"
+            className="pl-12 h-12 bg-slate-50/50 border-none rounded"
           />
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto">
@@ -150,7 +150,7 @@ export default function MyJobs() {
             Sort by:
           </span>
           <Select defaultValue="newest" onValueChange={handleSortChange}>
-            <SelectTrigger className="h-12 border-none bg-slate-50/50 rounded-xl px-4 min-w-[160px]">
+            <SelectTrigger className="h-12 border-none bg-slate-50/50 rounded px-4 min-w-[160px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -189,7 +189,7 @@ export default function MyJobs() {
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i}>
                     <td colSpan={5} className="px-8 py-4">
-                      <Skeleton className="h-20 w-full rounded-xl" />
+                      <Skeleton className="h-20 w-full rounded" />
                     </td>
                   </tr>
                 ))

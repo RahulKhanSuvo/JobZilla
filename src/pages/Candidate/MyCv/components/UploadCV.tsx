@@ -20,7 +20,7 @@ const UploadCV = ({ onUpload, isUploading }: UploadCVProps) => {
   };
 
   return (
-    <label className="bg-white dark:bg-[#1A1A1A] border-2 border-dashed border-border rounded-xl p-5 flex flex-col items-center justify-center text-center space-y-4 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group h-full min-h-[300px]">
+    <label className="bg-white dark:bg-[#1A1A1A] border-2 border-dashed border-border rounded p-5 flex flex-col items-center justify-center text-center space-y-4 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group h-full min-h-[300px]">
       <input
         type="file"
         accept=".pdf"

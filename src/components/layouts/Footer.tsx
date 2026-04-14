@@ -139,7 +139,7 @@ export function Footer({ className }: FooterProps) {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="w-full h-12 pl-4 pr-12 rounded-xl bg-white dark:bg-slate-800 border-none shadow-sm focus:ring-2 focus:ring-emerald-500/50 outline-none text-sm dark:text-white"
+                className="w-full h-12 pl-4 pr-12 rounded bg-white dark:bg-slate-800 border-none shadow-sm focus:ring-2 focus:ring-emerald-500/50 outline-none text-sm dark:text-white"
               />
               <button className="absolute right-1 top-1 bottom-1 w-10 bg-emerald-500 text-white rounded-lg flex items-center justify-center hover:bg-emerald-600 transition-colors">
                 <Send className="size-4" />

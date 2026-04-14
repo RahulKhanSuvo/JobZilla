@@ -148,7 +148,7 @@ export default function PlanFormModal({
                 <SelectTrigger className="font-bold border-slate-200 h-10">
                   <SelectValue placeholder="Select interval" />
                 </SelectTrigger>
-                <SelectContent className="border-slate-100 shadow-xl rounded-xl">
+                <SelectContent className="border-slate-100 shadow-xl rounded">
                   <SelectItem value="monthly" className="font-bold text-sm">
                     Monthly
                   </SelectItem>
@@ -158,7 +158,7 @@ export default function PlanFormModal({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 mt-6">
+            <div className="flex items-center justify-between p-3 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 mt-6">
               <div className="flex flex-col">
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
                   Active Status
@@ -222,7 +222,7 @@ export default function PlanFormModal({
                 type="button"
                 onClick={handleAddFeature}
                 size="icon"
-                className="shrink-0 rounded-xl bg-slate-900 hover:bg-slate-800"
+                className="shrink-0 rounded bg-slate-900 hover:bg-slate-800"
               >
                 <ListPlus className="h-4 w-4" />
               </Button>
@@ -255,7 +255,7 @@ export default function PlanFormModal({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30">
+          <div className="flex items-center gap-2 p-3 rounded bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30">
             <Switch
               id="popular"
               checked={formData.popular}
@@ -281,13 +281,13 @@ export default function PlanFormModal({
           <Button
             variant="outline"
             onClick={onClose}
-            className="font-bold rounded-xl border-slate-300"
+            className="font-bold rounded border-slate-300"
           >
             Cancel
           </Button>
           <Button
             onClick={handleSubmit}
-            className="font-bold rounded-xl bg-slate-900 hover:bg-slate-800 text-white"
+            className="font-bold rounded bg-slate-900 hover:bg-slate-800 text-white"
           >
             {plan ? "Save Changes" : "Create Plan"}
           </Button>

@@ -46,7 +46,7 @@ export default function AboutSteps() {
             {steps.map((step, idx) => (
               <div
                 key={idx}
-                className="group p-8 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:shadow transition-all duration-300 hover:border-primary"
+                className="group p-8 rounded border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:shadow transition-all duration-300 hover:border-primary"
               >
                 <div
                   className={`size-20 rounded-full overflow-hidden bg-[${step.color}] dark:bg-slate-900 flex items-center justify-center mb-6 mx-auto transition-transform duration-300 group-hover:scale-110`}

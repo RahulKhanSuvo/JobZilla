@@ -193,7 +193,7 @@ export default function JobVisitHistory() {
       {/* ── Stats Bar ───────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5 flex items-center gap-4">
-          <div className="size-12 rounded-xl bg-green-50 flex items-center justify-center text-primary shrink-0">
+          <div className="size-12 rounded bg-green-50 flex items-center justify-center text-primary shrink-0">
             <History className="size-6" />
           </div>
           <div>
@@ -213,7 +213,7 @@ export default function JobVisitHistory() {
         </div>
 
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5 flex items-center gap-4">
-          <div className="size-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
+          <div className="size-12 rounded bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
             <BriefcaseBusiness className="size-6" />
           </div>
           <div>
@@ -227,7 +227,7 @@ export default function JobVisitHistory() {
         </div>
 
         <div className="bg-white rounded-2xl border border-border shadow-sm p-5 flex items-center gap-4">
-          <div className="size-12 rounded-xl bg-purple-50 flex items-center justify-center text-purple-500 shrink-0">
+          <div className="size-12 rounded bg-purple-50 flex items-center justify-center text-purple-500 shrink-0">
             <MapPin className="size-6" />
           </div>
           <div>
@@ -242,7 +242,7 @@ export default function JobVisitHistory() {
       </div>
 
       {/* ── Search & Filter ─────────────────────────────── */}
-      <div className="flex items-center gap-4 bg-white p-2 border border-border rounded-xl shadow-sm">
+      <div className="flex items-center gap-4 bg-white p-2 border border-border rounded shadow-sm">
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4.5 text-[color:var(--paragraph)]" />
           <input
@@ -348,12 +348,12 @@ export default function JobVisitHistory() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleRemove(item.id)}
-                        className="size-9 rounded-xl border border-border text-[color:var(--paragraph)] hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all flex items-center justify-center"
+                        className="size-9 rounded border border-border text-[color:var(--paragraph)] hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all flex items-center justify-center"
                         title="Remove from history"
                       >
                         <Trash2 className="size-4" />
                       </button>
-                      <button className="h-9 px-4 rounded-xl bg-foreground text-white text-xs font-bold hover:bg-foreground/90 transition-all flex items-center gap-2">
+                      <button className="h-9 px-4 rounded bg-foreground text-white text-xs font-bold hover:bg-foreground/90 transition-all flex items-center gap-2">
                         Visit Again
                         <ExternalLink className="size-3.5" />
                       </button>
@@ -387,7 +387,7 @@ export default function JobVisitHistory() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="size-10 rounded-xl border border-border flex items-center justify-center text-[color:var(--paragraph)] hover:bg-slate-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+              className="size-10 rounded border border-border flex items-center justify-center text-[color:var(--paragraph)] hover:bg-slate-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
             >
               <ChevronLeft className="size-4.5" />
             </button>
@@ -395,7 +395,7 @@ export default function JobVisitHistory() {
               <button
                 key={n}
                 onClick={() => setPage(n)}
-                className={`size-10 rounded-xl text-sm font-bold transition-all border ${
+                className={`size-10 rounded text-sm font-bold transition-all border ${
                   page === n
                     ? "bg-primary text-white border-primary shadow-lg shadow-primary/20"
                     : "bg-white border-border text-[color:var(--paragraph)] hover:border-primary hover:text-primary"
@@ -407,7 +407,7 @@ export default function JobVisitHistory() {
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="size-10 rounded-xl border border-border flex items-center justify-center text-[color:var(--paragraph)] hover:bg-slate-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+              className="size-10 rounded border border-border flex items-center justify-center text-[color:var(--paragraph)] hover:bg-slate-50 disabled:opacity-30 disabled:hover:bg-transparent transition-all"
             >
               <ChevronRight className="size-4.5" />
             </button>

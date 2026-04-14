@@ -18,7 +18,7 @@ export default function ApplicantExperience({ experiences }: Props) {
       <div className="space-y-5">
         {experiences.map((exp) => (
           <div key={exp.id} className="flex gap-4">
-            <div className="shrink-0 size-10 rounded-xl bg-blue-50 flex items-center justify-center mt-0.5">
+            <div className="shrink-0 size-10 rounded bg-blue-50 flex items-center justify-center mt-0.5">
               <Briefcase className="size-5 text-blue-600" />
             </div>
             <div>

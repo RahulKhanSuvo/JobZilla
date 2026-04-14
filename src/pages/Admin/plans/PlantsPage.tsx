@@ -96,7 +96,7 @@ export default function PlansPage() {
         </div>
         <Button
           onClick={handleAddClick}
-          className="bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl px-6 h-11 shadow-lg shadow-slate-200 dark:shadow-none transition-all active:scale-95"
+          className="bg-slate-900 hover:bg-slate-800 text-white font-bold rounded px-6 h-11 shadow-lg shadow-slate-200 dark:shadow-none transition-all active:scale-95"
         >
           <Plus className="mr-2 h-5 w-5" />
           Create New Plan
@@ -113,16 +113,16 @@ export default function PlansPage() {
               placeholder="Search plans by name or description..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-10 border-slate-200 focus:ring-primary/20 font-medium rounded-xl transition-all"
+              className="pl-10 h-10 border-slate-200 focus:ring-primary/20 font-medium rounded transition-all"
             />
           </div>
 
           <div className="flex items-center gap-3 w-full md:w-auto">
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full md:w-[150px] h-10 border-slate-200 font-bold rounded-xl">
+              <SelectTrigger className="w-full md:w-[150px] h-10 border-slate-200 font-bold rounded">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-slate-100 shadow-xl">
+              <SelectContent className="rounded border-slate-100 shadow-xl">
                 <SelectItem value="all" className="font-bold">
                   All Status
                 </SelectItem>
@@ -142,7 +142,7 @@ export default function PlansPage() {
               <Button
                 variant="ghost"
                 onClick={clearFilters}
-                className="h-10 px-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                className="h-10 px-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-500 hover:bg-red-50 rounded transition-all"
               >
                 <FilterX className="mr-2 h-4 w-4" />
                 Clear

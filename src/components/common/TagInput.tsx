@@ -45,7 +45,7 @@ export default function TagInput({
         <label className="text-sm font-bold text-slate-700">{label}</label>
       )}
 
-      <div className="flex flex-wrap items-center gap-2 p-2 border border-slate-200 rounded-xl min-h-14 focus-within:ring-2 focus-within:ring-blue-200">
+      <div className="flex flex-wrap items-center gap-2 p-2 border border-slate-200 rounded min-h-14 focus-within:ring-2 focus-within:ring-blue-200">
         {value.map((tag, index) => (
           <span
             key={index}

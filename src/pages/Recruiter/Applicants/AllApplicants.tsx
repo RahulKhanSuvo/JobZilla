@@ -126,7 +126,7 @@ export default function AllApplicants() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-slate-400" />
           <Input
             placeholder="Search"
-            className="pl-12 h-12 bg-slate-50/50 border-none rounded-xl"
+            className="pl-12 h-12 bg-slate-50/50 border-none rounded"
           />
         </div>
         <div className="flex items-center gap-3 w-full md:w-auto">
@@ -134,7 +134,7 @@ export default function AllApplicants() {
             Sort by:
           </span>
           <Select defaultValue="default">
-            <SelectTrigger className="h-12 border-none bg-slate-50/50 rounded-xl px-4 min-w-[160px]">
+            <SelectTrigger className="h-12 border-none bg-slate-50/50 rounded px-4 min-w-[160px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>

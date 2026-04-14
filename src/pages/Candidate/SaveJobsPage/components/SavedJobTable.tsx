@@ -15,7 +15,7 @@ export default function SavedJobTable({
   isLoading,
 }: SavedJobTableProps) {
   return (
-    <div className="w-full bg-white dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800 overflow-hidden">
+    <div className="w-full bg-white dark:bg-slate-900 rounded border border-gray-100 dark:border-slate-800 overflow-hidden">
       {/* Table Header */}
       <div className="grid grid-cols-[1fr_150px_200px_80px] items-center bg-gray-50/50 dark:bg-slate-800/50 py-4 px-4 border-b border-gray-100 dark:border-slate-800">
         <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">

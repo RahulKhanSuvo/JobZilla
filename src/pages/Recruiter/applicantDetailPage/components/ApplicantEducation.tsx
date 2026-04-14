@@ -18,7 +18,7 @@ export default function ApplicantEducation({ educations }: Props) {
       <div className="space-y-5">
         {educations.map((edu) => (
           <div key={edu.id} className="flex gap-4">
-            <div className="shrink-0 size-10 rounded-xl bg-emerald-50 flex items-center justify-center mt-0.5">
+            <div className="shrink-0 size-10 rounded bg-emerald-50 flex items-center justify-center mt-0.5">
               <GraduationCap className="size-5 text-emerald-600" />
             </div>
             <div>

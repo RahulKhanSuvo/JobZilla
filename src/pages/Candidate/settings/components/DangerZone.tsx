@@ -29,7 +29,7 @@ export default function DangerZone() {
 
       {/* Inline confirm */}
       {showDeleteConfirm && (
-        <div className="mt-5 p-5 bg-red-50/50 border border-red-200 rounded-xl animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="mt-5 p-5 bg-red-50/50 border border-red-200 rounded animate-in fade-in slide-in-from-top-2 duration-300">
           <p className="text-sm font-bold text-red-700">
             Are you absolutely sure?
           </p>

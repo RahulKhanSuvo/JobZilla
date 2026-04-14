@@ -75,7 +75,7 @@ export function PaymentSettings() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 border rounded-xl bg-muted/20">
+          <div className="flex items-center justify-between p-4 border rounded bg-muted/20">
             <div className="flex items-center gap-4">
               <div className="bg-[#635BFF] p-2 rounded-lg text-white">
                 <FaStripe className="text-2xl" />
@@ -95,7 +95,7 @@ export function PaymentSettings() {
             <Switch defaultChecked />
           </div>
 
-          <div className="flex items-center justify-between p-4 border rounded-xl bg-muted/20">
+          <div className="flex items-center justify-between p-4 border rounded bg-muted/20">
             <div className="flex items-center gap-4">
               <div className="bg-[#003087] p-2 rounded-lg text-white">
                 <RiPaypalFill className="text-2xl" />
@@ -110,7 +110,7 @@ export function PaymentSettings() {
             <Switch />
           </div>
 
-          <div className="flex items-center justify-between p-4 border rounded-xl bg-muted/20">
+          <div className="flex items-center justify-between p-4 border rounded bg-muted/20">
             <div className="flex items-center gap-4">
               <div className="bg-foreground p-2 rounded-lg text-background">
                 <div className="flex gap-1 text-xl">

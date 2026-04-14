@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export default function CandidateDashboard() {
-  const userName = "Rahul"; // This would normally come from auth state
+  const userName = "Rahul";
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -62,7 +62,7 @@ export default function CandidateDashboard() {
               Candidates who apply within the first 48 hours are 3x more likely
               to get hired. Turn on instant alerts.
             </p>
-            <button className="bg-white text-primary font-bold py-2.5 px-5 rounded-xl text-sm hover:bg-opacity-90 transition-all shadow-sm">
+            <button className="bg-white text-primary font-bold py-2.5 px-5 rounded text-sm hover:bg-opacity-90 transition-all shadow-sm">
               Enable Alerts
             </button>
           </div>

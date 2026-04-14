@@ -44,7 +44,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
       <Container className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 transition-colors py-8">
         {/* Left: Company Logo & Job Title */}
         <div className="flex flex-col md:flex-row items-start gap-6">
-          <div className="size-24 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 transition-all border border-slate-100 dark:border-slate-700 rounded-xl p-2">
+          <div className="size-24 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 transition-all border border-slate-100 dark:border-slate-700 rounded p-2">
             <img
               src={job.company?.logo}
               alt={job.company?.user?.name || "Company Logo"}

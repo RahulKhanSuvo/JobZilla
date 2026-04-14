@@ -79,7 +79,7 @@ export default function JobSidebar({ job }: JobSidebarProps) {
   return (
     <div className="space-y-8">
       {/* Job Overview */}
-      <div className="bg-slate-50 dark:bg-slate-900/40 rounded-xl p-6 border border-slate-100 dark:border-slate-800">
+      <div className="bg-slate-50 dark:bg-slate-900/40 rounded p-6 border border-slate-100 dark:border-slate-800">
         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
           Job Overview
         </h3>
@@ -103,7 +103,7 @@ export default function JobSidebar({ job }: JobSidebarProps) {
       </div>
 
       {/* About Company */}
-      <div className="bg-slate-50 dark:bg-slate-900/40 rounded-xl p-6 border border-slate-100 dark:border-slate-800">
+      <div className="bg-slate-50 dark:bg-slate-900/40 rounded p-6 border border-slate-100 dark:border-slate-800">
         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">
           About Company
         </h3>
@@ -126,7 +126,7 @@ export default function JobSidebar({ job }: JobSidebarProps) {
           ))}
         </div>
 
-        <Button className="w-full h-12 bg-white hover:bg-slate-100 text-emerald-600 border border-emerald-100 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded-xl shadow-sm transition-all active:scale-[0.98]">
+        <Button className="w-full h-12 bg-white hover:bg-slate-100 text-emerald-600 border border-emerald-100 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded shadow-sm transition-all active:scale-[0.98]">
           <Plus className="size-4 mr-2" />
           Follow Company
         </Button>

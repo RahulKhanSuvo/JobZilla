@@ -28,7 +28,7 @@ export function GeneralSettings() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center gap-8 p-4 border rounded-lg bg-muted/30">
-            <div className="shrink-0 bg-background p-4 rounded-xl shadow-sm border">
+            <div className="shrink-0 bg-background p-4 rounded shadow-sm border">
               <JobzillaLogo className="w-32" />
             </div>
             <div className="space-y-2">

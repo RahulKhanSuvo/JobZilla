@@ -54,11 +54,11 @@ export default function RecommendedJobs() {
         {jobs.map((job, index) => (
           <div
             key={index}
-            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-border/50 hover:border-primary/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-all duration-300"
+            className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded border border-border/50 hover:border-primary/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-all duration-300"
           >
             <div className="flex items-start gap-4">
               <div
-                className={`flex items-center justify-center size-12 rounded-xl text-xl font-bold shrink-0 ${job.logoBg}`}
+                className={`flex items-center justify-center size-12 rounded text-xl font-bold shrink-0 ${job.logoBg}`}
               >
                 {job.logo}
               </div>

@@ -88,7 +88,7 @@ export default function ApplicantSidebar({ application }: Props) {
         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
           Resume
         </p>
-        <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 mb-4">
+        <div className="flex items-center gap-3 p-3 rounded bg-slate-50 border border-slate-100 mb-4">
           <div className="size-10 rounded-lg bg-rose-50 flex items-center justify-center shrink-0">
             <span className="text-rose-500 text-xs font-bold">PDF</span>
           </div>

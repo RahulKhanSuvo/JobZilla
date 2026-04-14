@@ -42,7 +42,7 @@ export default function PlanActions({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="w-48 p-2 border-slate-200 dark:border-slate-800 shadow-xl rounded-xl"
+        className="w-48 p-2 border-slate-200 dark:border-slate-800 shadow-xl rounded"
       >
         <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-2 py-1.5">
           Actions

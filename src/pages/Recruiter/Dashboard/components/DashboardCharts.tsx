@@ -178,7 +178,7 @@ export function DashboardCharts() {
             </div>
 
             <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl">
+              <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/50 rounded">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-primary/10 rounded-lg">
                     <ArrowUpRight className="size-4 text-primary" />

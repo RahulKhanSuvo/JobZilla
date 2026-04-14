@@ -45,7 +45,7 @@ export default function ApplicantDetailPage() {
           variant="ghost"
           size="icon"
           onClick={() => navigate(-1)}
-          className="size-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600"
+          className="size-10 rounded bg-slate-100 hover:bg-slate-200 text-slate-600"
         >
           <ArrowLeft className="size-4" />
         </Button>

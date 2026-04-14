@@ -60,7 +60,7 @@ export default function CompanyStats({ companies }: CompanyStatsProps) {
                 </p>
                 <h3 className="text-2xl font-bold mt-1">{stat.value}</h3>
               </div>
-              <div className={`p-3 rounded-xl ${stat.bg}`}>
+              <div className={`p-3 rounded ${stat.bg}`}>
                 <stat.icon className={`h-6 w-6 ${stat.color}`} />
               </div>
             </div>

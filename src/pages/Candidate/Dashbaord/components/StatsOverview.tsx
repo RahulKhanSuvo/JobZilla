@@ -46,7 +46,7 @@ export default function StatsOverview() {
                 <p className="text-2xl font-bold">{stat.value}</p>
               </div>
               <div
-                className={`flex items-center justify-center size-12 rounded-xl ${stat.bg}`}
+                className={`flex items-center justify-center size-12 rounded ${stat.bg}`}
               >
                 <stat.icon className={`size-6 ${stat.color}`} />
               </div>

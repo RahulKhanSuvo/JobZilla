@@ -411,7 +411,7 @@ export default function PostJob() {
           <div className="pt-6 flex justify-end">
             <Button
               type="submit"
-              className="bg-primary text-white font-bold px-12 h-12 rounded-xl"
+              className="bg-primary text-white font-bold px-12 h-12 rounded"
             >
               {isLoading ? "Posting Job..." : "Post Job"}
             </Button>

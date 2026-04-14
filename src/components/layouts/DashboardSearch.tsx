@@ -13,7 +13,7 @@ export default function DashboardSearch({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex items-center w-full max-w-[500px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all shadow-sm group",
+        "flex items-center w-full max-w-[500px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded px-3 py-1.5 focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all shadow-sm group",
         className,
       )}
     >

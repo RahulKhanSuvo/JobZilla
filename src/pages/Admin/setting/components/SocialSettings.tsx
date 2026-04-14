@@ -84,7 +84,7 @@ export function SocialSettings() {
           <Field>
             <FieldLabel>Default Share Image (OG Image)</FieldLabel>
             <FieldContent>
-              <div className="border-2 border-dashed rounded-xl p-8 text-center bg-muted/20 hover:bg-muted/30 transition-colors cursor-pointer">
+              <div className="border-2 border-dashed rounded p-8 text-center bg-muted/20 hover:bg-muted/30 transition-colors cursor-pointer">
                 <p className="text-sm text-muted-foreground">
                   Click to upload or drag and drop
                 </p>

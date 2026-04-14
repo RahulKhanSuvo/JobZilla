@@ -60,7 +60,7 @@ export default function PlanStats({ plans }: PlanStatsProps) {
                   {stat.value}
                 </h3>
               </div>
-              <div className={`p-3 rounded-xl ${stat.bg}`}>
+              <div className={`p-3 rounded ${stat.bg}`}>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
             </div>

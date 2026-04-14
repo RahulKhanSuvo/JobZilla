@@ -69,23 +69,23 @@ export default function ContactFormSection() {
                 <input
                   type="text"
                   placeholder="Your Name"
-                  className="w-full px-6 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all"
+                  className="w-full px-6 py-4 rounded bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all"
                 />
                 <input
                   type="text"
                   placeholder="Subject"
-                  className="w-full px-6 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all"
+                  className="w-full px-6 py-4 rounded bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all"
                 />
               </div>
               <input
                 type="email"
                 placeholder="Your Email"
-                className="w-full px-6 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all"
+                className="w-full px-6 py-4 rounded bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all"
               />
               <textarea
                 placeholder="Your questions..."
                 rows={6}
-                className="w-full px-6 py-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all resize-none"
+                className="w-full px-6 py-4 rounded bg-slate-50 dark:bg-slate-900 border border-transparent focus:border-emerald-500 outline-none transition-all resize-none"
               />
               <Button className="bg-[#139a74] hover:bg-emerald-700 text-white rounded-md px-8 h-14 text-lg font-bold">
                 Send Message

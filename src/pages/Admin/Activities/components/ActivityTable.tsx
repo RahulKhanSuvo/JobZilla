@@ -93,7 +93,7 @@ export default function ActivityTable({ activities }: ActivityTableProps) {
                   className="group flex items-start gap-4 p-6 border-b border-slate-50 dark:border-slate-800 last:border-0 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-all"
                 >
                   <div
-                    className={`p-3 rounded-xl shrink-0 ${config.color} transition-transform group-hover:scale-110`}
+                    className={`p-3 rounded shrink-0 ${config.color} transition-transform group-hover:scale-110`}
                   >
                     <config.icon className="h-5 w-5" />
                   </div>

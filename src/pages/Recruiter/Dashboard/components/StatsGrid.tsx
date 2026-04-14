@@ -77,7 +77,7 @@ export function StatsGrid() {
           <Card className="border-none shadow hover:shadow-sm transition-shadow duration-300 rounded overflow-hidden bg-white dark:bg-slate-900">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className={cn("p-3 rounded-xl", stat.bgColor)}>
+                <div className={cn("p-3 rounded", stat.bgColor)}>
                   <stat.icon className={cn("size-6", stat.color)} />
                 </div>
                 <div

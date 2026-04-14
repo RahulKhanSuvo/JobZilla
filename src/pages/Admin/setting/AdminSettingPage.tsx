@@ -84,7 +84,7 @@ export default function AdminSettingPage() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group",
+                    "flex items-center justify-between px-4 py-3 rounded transition-all duration-200 group",
                     isActive
                       ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                       : "hover:bg-muted text-muted-foreground hover:text-foreground",

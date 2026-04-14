@@ -61,7 +61,7 @@ export default function PaymentStats({ payments }: PaymentStatsProps) {
         >
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-xl ${stat.bg}`}>
+              <div className={`p-3 rounded ${stat.bg}`}>
                 <stat.icon className={`h-6 w-6 ${stat.color}`} />
               </div>
               <span className="text-[10px] font-bold uppercase text-muted-foreground bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
