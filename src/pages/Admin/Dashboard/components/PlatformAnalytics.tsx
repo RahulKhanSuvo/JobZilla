@@ -30,7 +30,7 @@ export function PlatformAnalytics() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Card className="border-none shadow rounded-xl overflow-hidden bg-white dark:bg-slate-900 h-[400px]">
+        <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-[400px]">
           <CardHeader className="pb-2 border-b border-slate-50 dark:border-slate-800">
             <CardTitle className="text-xl font-bold">
               User Distribution
@@ -75,7 +75,7 @@ export function PlatformAnalytics() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card className="border-none shadow rounded-xl overflow-hidden bg-white dark:bg-slate-900 h-[400px]">
+        <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-[400px]">
           <CardHeader className="pb-2 border-b border-slate-50 dark:border-slate-800">
             <CardTitle className="text-xl font-bold">
               Jobs by Category
