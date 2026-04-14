@@ -46,11 +46,17 @@ export interface CandidateProfile {
   profileImage: string | null;
   facebook: string | null;
   linkedin: string | null;
+  github: string | null;
   twitter: string | null;
   skills: Skill[];
   eductions: Education[];
   workExperiences: WorkExperience[];
 }
+
+export type CandidateProfileData = CandidateProfile & {
+  fullName: string;
+  email: string;
+};
 
 export type AuthUser = {
   id: string;
