@@ -25,6 +25,7 @@ import EducationList from "./components/EducationList";
 import ExperienceList from "./components/ExperienceList";
 import AboutMeSection from "./components/AboutMeSection";
 import SocialLinksSection from "./components/SocialLinksSection";
+import EditProfileCompletenessBar from "./components/EditProfileCompletenessBar";
 
 // ─── Defaults ─────────────────────────────────────────────────────────────────
 const emptyEducation = () => ({
@@ -245,6 +246,40 @@ export default function ProfileEdit() {
     );
   };
 
+  // ─── Completeness checks (live) ──────────────────────────────────────────────
+  const formValues = useStore(form.store, (s) => s.values);
+  const completenessChecks = [
+    {
+      label: "Basic Info",
+      completed: !!(
+        formValues.fullName &&
+        formValues.phone &&
+        formValues.location
+      ),
+    },
+    { label: "About Me", completed: !!formValues.aboutMe },
+    {
+      label: "Skills",
+      completed: (formValues.skills?.length ?? 0) > 0,
+    },
+    {
+      label: "Education",
+      completed: (formValues.educationList ?? []).some((e) => !!e.institution),
+    },
+    {
+      label: "Experience",
+      completed: (formValues.experienceList ?? []).some((e) => !!e.jobTitle),
+    },
+    {
+      label: "Social Links",
+      completed: !!(
+        formValues.facebook ||
+        formValues.linkedin ||
+        formValues.twitter
+      ),
+    },
+  ];
+
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
@@ -269,6 +304,8 @@ export default function ProfileEdit() {
           }}
           className="space-y-8"
         >
+          <EditProfileCompletenessBar checks={completenessChecks} />
+
           <AvatarUpload
             avatarUrl={avatarUrl}
             onFileChange={handleImageChange}
