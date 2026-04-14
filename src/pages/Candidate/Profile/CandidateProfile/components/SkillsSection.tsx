@@ -27,8 +27,8 @@ const SkillsSection: FC<SkillsSectionProps> = ({ skills = [] }) => {
             {skills.map((s) => (
               <Badge
                 key={s.id}
-                variant="secondary"
-                className="px-4 py-1.5 text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
+                variant="outline"
+                className="px-4 py-1.5 text-sm font-medium bg-primary/5 text-primary border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
               >
                 {s.skill}
               </Badge>

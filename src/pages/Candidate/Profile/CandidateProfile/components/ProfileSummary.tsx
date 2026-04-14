@@ -41,27 +41,33 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
           </div>
 
           <div className="flex flex-wrap gap-2 pt-2">
-            <Badge
-              variant="secondary"
-              className="font-normal gap-1 px-2.5 py-0.5"
-            >
-              <MapPin className="size-3" />
-              {data.location}
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="font-normal gap-1 px-2.5 py-0.5"
-            >
-              <Mail className="size-3" />
-              {data.email}
-            </Badge>
-            <Badge
-              variant="secondary"
-              className="font-normal gap-1 px-2.5 py-0.5"
-            >
-              <Phone className="size-3" />
-              {data.phone}
-            </Badge>
+            {data.location && (
+              <Badge
+                variant="secondary"
+                className="font-normal gap-1.5 px-3 py-1 bg-primary/5 text-primary border-transparent hover:bg-primary/10 transition-colors"
+              >
+                <MapPin className="size-3.5" />
+                {data.location}
+              </Badge>
+            )}
+            {data.email && (
+              <Badge
+                variant="secondary"
+                className="font-normal gap-1.5 px-3 py-1 bg-primary/5 text-primary border-transparent hover:bg-primary/10 transition-colors"
+              >
+                <Mail className="size-3.5" />
+                {data.email}
+              </Badge>
+            )}
+            {data.phone && (
+              <Badge
+                variant="secondary"
+                className="font-normal gap-1.5 px-3 py-1 bg-primary/5 text-primary border-transparent hover:bg-primary/10 transition-colors"
+              >
+                <Phone className="size-3.5" />
+                {data.phone}
+              </Badge>
+            )}
           </div>
 
           <div className="flex gap-3 pt-2">

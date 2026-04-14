@@ -7,6 +7,7 @@ import EducationSection from "./components/EducationSection";
 import SkillsSection from "./components/SkillsSection";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
 
 const CandidateProfilePage: FC = () => {
   const { data: response, isLoading, isError } = useCurrentUserQuery();
@@ -67,14 +68,14 @@ const CandidateProfilePage: FC = () => {
     );
   }
 
-  const profileData = {
+  const profileData: CandidateProfileData = {
     ...candidate,
-    fullName: user.name,
+    fullName: user.name || "",
     email: user.email,
   };
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-7xl mx-auto p-4 md:p-8">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
       <h1 className="text-3xl font-bold tracking-tight mb-8">My Profile</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -86,7 +87,7 @@ const CandidateProfilePage: FC = () => {
 
         {/* Main Content Area */}
         <div className="space-y-6 lg:col-span-2">
-          <AboutSection data={candidate} />
+          <AboutSection data={profileData} />
           <ExperienceSection
             workExperiences={candidate.workExperiences || []}
           />
