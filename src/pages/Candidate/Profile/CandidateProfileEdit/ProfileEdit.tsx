@@ -236,6 +236,25 @@ export default function ProfileEdit() {
 
   // ─── Completeness checks (live) ──────────────────────────────────────────────
   const formValues = useStore(form.store, (s) => s.values);
+  // Validation errors keyed by field name
+  const fieldErrors = useStore(form.store, (s) => {
+    const meta = s.fieldMeta as Record<
+      string,
+      { errors?: string[] } | undefined
+    >;
+    return {
+      fullName: meta.fullName?.errors ?? [],
+      email: meta.email?.errors ?? [],
+      phone: meta.phone?.errors ?? [],
+      location: meta.location?.errors ?? [],
+      gender: meta.gender?.errors ?? [],
+      maritalStatus: meta.maritalStatus?.errors ?? [],
+      language: meta.language?.errors ?? [],
+      facebook: meta.facebook?.errors ?? [],
+      linkedin: meta.linkedin?.errors ?? [],
+      twitter: meta.twitter?.errors ?? [],
+    };
+  });
   const completenessChecks = [
     {
       label: "Basic Info",
@@ -311,6 +330,7 @@ export default function ProfileEdit() {
               language: formValues.language,
               skills: formValues.skills ?? [],
             }}
+            errors={fieldErrors}
             onChange={(field, value) => form.setFieldValue(field as any, value)}
           />
 
@@ -337,6 +357,7 @@ export default function ProfileEdit() {
             facebook={formValues.facebook ?? ""}
             linkedin={formValues.linkedin ?? ""}
             twitter={formValues.twitter ?? ""}
+            errors={fieldErrors}
             onChange={(field, value) => form.setFieldValue(field as any, value)}
           />
 
