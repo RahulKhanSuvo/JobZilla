@@ -44,8 +44,8 @@ export function RecentActivity() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
     >
-      <Card className="border-none shadow rounded-xl overflow-hidden bg-white dark:bg-slate-900">
-        <CardHeader className="flex flex-row items-center justify-between py-6 px-8 border-b border-slate-50 dark:border-slate-800">
+      <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900">
+        <CardHeader className="flex flex-row items-center justify-between px-8 border-b border-slate-50 dark:border-slate-800">
           <CardTitle className="text-xl font-bold">Recent Activity</CardTitle>
           <Button
             variant="ghost"

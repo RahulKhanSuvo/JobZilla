@@ -29,11 +29,11 @@ export default function AdminDashboard() {
           </Button>
           <Button
             variant="outline"
-            className="rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm size-10 p-0"
+            className="rounded border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm size-10 p-0"
           >
             <RefreshCw className="size-4 text-slate-400" />
           </Button>
-          <Button className="rounded-xl bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 font-bold flex items-center gap-2 px-6">
+          <Button className="rounded bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 font-bold flex items-center gap-2 px-6">
             <Download className="size-4" />
             Export Report
           </Button>

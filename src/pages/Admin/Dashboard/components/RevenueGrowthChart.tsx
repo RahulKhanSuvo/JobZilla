@@ -27,7 +27,7 @@ export function RevenueGrowthChart() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.2 }}
     >
-      <Card className="border-none shadow rounded-xl overflow-hidden bg-white dark:bg-slate-900 h-[450px]">
+      <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-[450px]">
         <CardHeader className="flex flex-row items-center justify-between pb-8 border-b border-slate-50 dark:border-slate-800">
           <div className="space-y-1">
             <CardTitle className="text-xl font-bold">Revenue Growth</CardTitle>
