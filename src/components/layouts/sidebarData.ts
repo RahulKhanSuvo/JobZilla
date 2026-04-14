@@ -3,7 +3,7 @@ import { FaRegCreditCard, FaUser } from "react-icons/fa";
 import { SiGoogledocs } from "react-icons/si";
 import { TbBriefcase2Filled } from "react-icons/tb";
 import { FaFileCircleCheck } from "react-icons/fa6";
-import { RiGroup2Fill } from "react-icons/ri";
+import { RiGroup2Fill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { LuSquareActivity } from "react-icons/lu";
 import {
   IoDocumentTextSharp,
@@ -131,7 +131,7 @@ export const adminSidebarData = [
   {
     title: "Payments",
     href: "payments",
-    icon: FaRegCreditCard,
+    icon: RiMoneyDollarCircleFill,
   },
   {
     title: "Plans",
