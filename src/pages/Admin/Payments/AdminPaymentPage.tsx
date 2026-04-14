@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { type Payment, DUMMY_PAYMENTS } from "./types";
 import PaymentStats from "./components/PaymentStats";
-import PaymentChart from "./components/PaymentChart";
 import PaymentFilters from "./components/PaymentFilters";
 import PaymentTable from "./components/PaymentTable";
 
@@ -63,8 +62,6 @@ export default function AdminPaymentPage() {
       </div>
 
       <PaymentStats payments={payments} />
-
-      <PaymentChart />
 
       <div className="space-y-4">
         <h2 className="text-xl font-black tracking-tight text-slate-900 dark:text-slate-100 uppercase">
