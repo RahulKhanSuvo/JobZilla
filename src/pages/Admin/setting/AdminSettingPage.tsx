@@ -73,7 +73,7 @@ export default function AdminSettingPage() {
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar Navigation */}
-        <aside className="w-full lg:w-64 flex-shrink-0">
+        <aside className="w-full lg:w-64 shrink-0">
           <nav className="flex flex-col gap-1">
             {SETTING_TABS.map((tab) => {
               const Icon = tab.icon;
