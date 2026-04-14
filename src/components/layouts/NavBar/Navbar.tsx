@@ -1,4 +1,20 @@
-import { Menu } from "lucide-react";
+import {
+  Menu,
+  Search,
+  Globe,
+  Code,
+  Megaphone,
+  Handshake,
+  LayoutDashboard,
+  Bookmark,
+  Send,
+  User,
+  PlusCircle,
+  FileText,
+  ChevronRight,
+  Settings,
+  HelpCircle,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -66,10 +82,41 @@ const Navbar = ({
   },
   menu = [
     { title: "Home", url: "/" },
-
     {
       title: "Find Jobs",
       url: "/find-job",
+      items: [
+        {
+          title: "All Jobs",
+          url: "/find-job",
+          description: "Browse all available job opportunities.",
+          icon: <Search className="size-5 text-blue-500" />,
+        },
+        {
+          title: "Remote Jobs",
+          url: "/find-job?type=remote",
+          description: "Work from anywhere in the world.",
+          icon: <Globe className="size-5 text-green-500" />,
+        },
+        {
+          title: "IT & Software",
+          url: "/find-job?category=it",
+          description: "Developers, engineers, and tech roles.",
+          icon: <Code className="size-5 text-purple-500" />,
+        },
+        {
+          title: "Marketing",
+          url: "/find-job?category=marketing",
+          description: "Digital marketing, SEO, and content.",
+          icon: <Megaphone className="size-5 text-orange-500" />,
+        },
+        {
+          title: "Sales",
+          url: "/find-job?category=sales",
+          description: "Sales representatives and account managers.",
+          icon: <Handshake className="size-5 text-pink-500" />,
+        },
+      ],
     },
     {
       title: "About Us",
@@ -84,36 +131,59 @@ const Navbar = ({
     {
       title: "Dashboard",
       url: "/candidate",
+      icon: <LayoutDashboard className="size-4" />,
     },
     {
       title: "Saved Jobs",
       url: "/candidate/saved-jobs",
+      icon: <Bookmark className="size-4" />,
     },
     {
       title: "Applied Jobs",
       url: "/candidate/applied-jobs",
+      icon: <Send className="size-4" />,
     },
     {
       title: "Profile",
       url: "/candidate/profile",
+      icon: <User className="size-4" />,
+    },
+    {
+      title: "Account Settings",
+      url: "/candidate/settings",
+      icon: <Settings className="size-4" />,
+    },
+    {
+      title: "Help Center",
+      url: "/help",
+      icon: <HelpCircle className="size-4" />,
     },
   ],
   dropdownMenuEmployer = [
     {
       title: "Dashboard",
       url: "/recruiter",
+      icon: <LayoutDashboard className="size-4" />,
     },
     {
       title: "Post Job",
       url: "/recruiter/post-job",
+      icon: <PlusCircle className="size-4" />,
     },
     {
       title: "My Jobs",
       url: "/recruiter/my-jobs",
+      icon: <FileText className="size-4" />,
     },
     {
       title: "Profile",
       url: "/recruiter/profile",
+      icon: <User className="size-4" />,
+    },
+    {
+      title: "Account Settings",
+      url: "/recruiter/settings",
+      icon: <Settings className="size-4" />,
     },
   ],
   auth = {
@@ -245,9 +315,14 @@ const Navbar = ({
                             <Link
                               key={item.url}
                               to={item.url}
-                              className="text-sm font-medium p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                              className="flex items-center gap-3 text-sm font-medium p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                             >
-                              {item.title}
+                              <div className="size-8 rounded-md bg-white dark:bg-slate-900 shadow-sm flex items-center justify-center text-slate-500">
+                                {item.icon}
+                              </div>
+                              <span className="text-slate-700 dark:text-slate-200">
+                                {item.title}
+                              </span>
                             </Link>
                           ))}
                         </div>
@@ -269,10 +344,12 @@ const renderMenuItem = (item: MenuItem) => {
     return (
       <NavigationMenuItem key={item.title}>
         <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
-        <NavigationMenuContent className="bg-popover text-popover-foreground">
-          {item.items.map((subItem) => (
-            <SubMenuLink item={subItem} />
-          ))}
+        <NavigationMenuContent className="p-4 bg-popover text-popover-foreground min-w-[400px]">
+          <div className="grid grid-cols-1 gap-1">
+            {item.items.map((subItem) => (
+              <SubMenuLink key={subItem.title} item={subItem} />
+            ))}
+          </div>
         </NavigationMenuContent>
       </NavigationMenuItem>
     );
@@ -298,13 +375,27 @@ const renderMenuItem = (item: MenuItem) => {
 const renderMobileMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
-      <AccordionItem key={item.title} value={item.title} className="-b-0">
-        <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">
+      <AccordionItem key={item.title} value={item.title} className="border-b-0">
+        <AccordionTrigger className="text-sm py-2 font-bold hover:no-underline uppercase text-slate-900 dark:text-white">
           {item.title}
         </AccordionTrigger>
-        <AccordionContent className="mt-2">
+        <AccordionContent className="mt-2 flex flex-col gap-1 pl-2 border-l-2 border-slate-100 dark:border-slate-800 ml-1">
           {item.items.map((subItem) => (
-            <SubMenuLink key={subItem.title} item={subItem} />
+            <NavLink
+              key={subItem.title}
+              to={subItem.url}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 p-2 rounded-md transition-colors",
+                  isActive
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900",
+                )
+              }
+            >
+              <div className="shrink-0">{subItem.icon}</div>
+              <span className="text-sm">{subItem.title}</span>
+            </NavLink>
           ))}
         </AccordionContent>
       </AccordionItem>
@@ -333,16 +424,24 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
       to={item.url}
       className={({ isActive }) =>
         cn(
-          "flex w-full flex-row gap-4 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:text-primary text-slate-600",
-          isActive && "text-primary",
+          "group flex w-full items-start gap-4 rounded-lg p-3 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800",
+          isActive &&
+            "bg-slate-50 dark:bg-slate-900 text-primary border-slate-100 dark:border-slate-800",
         )
       }
     >
-      <div className="text-foreground">{item.icon}</div>
-      <div>
-        <div className="text-sm font-semibold">{item.title}</div>
+      <div className="flex size-10 items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 transition-colors group-hover:bg-white dark:group-hover:bg-slate-700 shadow-sm border border-slate-100 dark:border-slate-800">
+        {item.icon}
+      </div>
+      <div className="flex-1 space-y-1">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold leading-none text-slate-900 dark:text-slate-100">
+            {item.title}
+          </p>
+          <ChevronRight className="size-4 text-slate-400 opacity-0 transition-all -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0" />
+        </div>
         {item.description && (
-          <p className="text-sm leading-snug text-muted-foreground">
+          <p className="text-xs leading-snug text-slate-500 dark:text-slate-400 line-clamp-1">
             {item.description}
           </p>
         )}
