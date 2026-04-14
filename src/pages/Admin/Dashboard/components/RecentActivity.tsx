@@ -35,14 +35,6 @@ const activities = [
     icon: FileText,
     color: "bg-purple-100 text-purple-600 dark:bg-purple-900/30",
   },
-  {
-    type: "VERIFY",
-    user: "Global Logistics",
-    action: "requested company verification",
-    time: "3 hours ago",
-    icon: Check,
-    color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30",
-  },
 ];
 
 export function RecentActivity() {
@@ -54,9 +46,7 @@ export function RecentActivity() {
     >
       <Card className="border-none shadow rounded-xl overflow-hidden bg-white dark:bg-slate-900">
         <CardHeader className="flex flex-row items-center justify-between py-6 px-8 border-b border-slate-50 dark:border-slate-800">
-          <CardTitle className="text-xl font-bold">
-            Recent Platform Activity
-          </CardTitle>
+          <CardTitle className="text-xl font-bold">Recent Activity</CardTitle>
           <Button
             variant="ghost"
             className="text-primary font-bold hover:bg-primary/5 text-sm"
