@@ -40,7 +40,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
   };
 
   return (
-    <div className="bg-white sticky top-20 z-20 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+    <div className="bg-white  dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
       <Container className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 transition-colors py-8">
         {/* Left: Company Logo & Job Title */}
         <div className="flex flex-col md:flex-row items-start gap-6">
