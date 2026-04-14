@@ -74,7 +74,7 @@ export function StatsGrid() {
     >
       {stats.map((stat, index) => (
         <motion.div key={index} variants={item}>
-          <Card className="border-none shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
+          <Card className="border-none shadow hover:shadow-sm transition-shadow duration-300 rounded overflow-hidden bg-white dark:bg-slate-900">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className={cn("p-3 rounded-xl", stat.bgColor)}>
