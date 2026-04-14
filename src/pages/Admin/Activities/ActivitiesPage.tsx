@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
 import { type Activity, DUMMY_ACTIVITIES } from "./types";
-import ActivityStats from "./components/ActivityStats";
 import ActivityFilters from "./components/ActivityFilters";
 import ActivityTable from "./components/ActivityTable";
 
@@ -62,8 +61,6 @@ export default function ActivitiesPage() {
           alerts.
         </p>
       </div>
-
-      <ActivityStats activities={activities} />
 
       <ActivityFilters
         searchQuery={searchQuery}

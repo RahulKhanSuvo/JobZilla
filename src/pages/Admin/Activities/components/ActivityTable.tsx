@@ -1,22 +1,18 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Info,
-  AlertTriangle,
-  XOctagon,
-  ShieldAlert,
-  CheckCircle2,
+  UserPlus,
+  FileText,
+  Briefcase,
+  ShieldCheck,
+  Settings,
   Clock,
+  CheckCircle2,
+  AlertCircle,
+  XCircle,
 } from "lucide-react";
-import type { Activity, ActivitySeverity, ActivityModule } from "../types";
+import type { Activity, ActivityModule, ActivitySeverity } from "../types";
 import ActivityActions from "./ActivityActions";
 import { formatDistanceToNow } from "date-fns";
 
@@ -33,153 +29,140 @@ export default function ActivityTable({
   onArchive,
   onViewDetails,
 }: ActivityTableProps) {
-  const getSeverityBadge = (
-    severity: ActivitySeverity,
-    isResolved?: boolean,
-  ) => {
-    if (isResolved) {
-      return (
-        <Badge
-          variant="outline"
-          className="text-green-600 border-green-200 bg-green-50 gap-1.5 font-normal"
-        >
-          <CheckCircle2 className="h-3 w-3" /> Resolved
-        </Badge>
-      );
-    }
-
-    switch (severity) {
-      case "critical":
-        return (
-          <Badge className="bg-red-600 hover:bg-red-700 text-white border-none gap-1.5 font-normal">
-            <ShieldAlert className="h-3 w-3 text-white" /> Critical
-          </Badge>
-        );
-      case "error":
-        return (
-          <Badge className="bg-rose-500 hover:bg-rose-600 text-white border-none gap-1.5 font-normal">
-            <XOctagon className="h-3 w-3 text-white" /> Error
-          </Badge>
-        );
-      case "warning":
-        return (
-          <Badge className="bg-amber-500 hover:bg-amber-600 text-white border-none gap-1.5 font-normal">
-            <AlertTriangle className="h-3 w-3 text-white" /> Warning
-          </Badge>
-        );
+  const getModuleConfig = (module: ActivityModule) => {
+    switch (module) {
+      case "User":
+        return {
+          icon: UserPlus,
+          color: "bg-blue-100 text-blue-600 dark:bg-blue-900/30",
+        };
+      case "Job":
+        return {
+          icon: FileText,
+          color: "bg-purple-100 text-purple-600 dark:bg-purple-900/30",
+        };
+      case "Company":
+        return {
+          icon: Briefcase,
+          color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30",
+        };
+      case "Auth":
+        return {
+          icon: ShieldCheck,
+          color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30",
+        };
+      case "System":
+        return {
+          icon: Settings,
+          color: "bg-slate-100 text-slate-600 dark:bg-slate-900/30",
+        };
       default:
-        return (
-          <Badge variant="secondary" className="gap-1.5 font-normal">
-            <Info className="h-3 w-3" /> Info
-          </Badge>
-        );
+        return {
+          icon: Settings,
+          color: "bg-slate-100 text-slate-600 dark:bg-slate-900/30",
+        };
     }
   };
 
-  const getModuleBadge = (module: ActivityModule) => {
-    return (
-      <Badge
-        variant="outline"
-        className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground border-slate-200"
-      >
-        {module}
-      </Badge>
-    );
+  const getSeverityIcon = (severity: ActivitySeverity) => {
+    switch (severity) {
+      case "critical":
+        return <XCircle className="h-3 w-3 text-red-500" />;
+      case "error":
+        return <AlertCircle className="h-3 w-3 text-rose-500" />;
+      case "warning":
+        return <AlertCircle className="h-3 w-3 text-amber-500" />;
+      default:
+        return <CheckCircle2 className="h-3 w-3 text-emerald-500" />;
+    }
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border-none overflow-hidden">
-      <Table>
-        <TableHeader className="bg-slate-50 dark:bg-slate-800/50">
-          <TableRow className="hover:bg-transparent border-none">
-            <TableHead className="w-[350px] font-semibold py-4">
-              Activity
-            </TableHead>
-            <TableHead className="font-semibold py-4 text-center">
-              Severity
-            </TableHead>
-            <TableHead className="font-semibold py-4">User</TableHead>
-            <TableHead className="font-semibold py-4">Module</TableHead>
-            <TableHead className="text-right font-semibold py-4">
-              Time
-            </TableHead>
-            <TableHead className="text-right font-semibold py-4">
-              Actions
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+    <Card className="border-none shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
+      <CardContent className="p-0">
+        <div className="flex flex-col">
           {activities.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={6}
-                className="h-32 text-center text-muted-foreground"
-              >
-                No activity logs found.
-              </TableCell>
-            </TableRow>
+            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-2">
+              <div className="p-4 rounded-full bg-slate-50 dark:bg-slate-800/50">
+                <Settings className="h-8 w-8 opacity-20" />
+              </div>
+              <p className="font-bold text-sm uppercase tracking-widest opacity-50 italic">
+                No activity logs found
+              </p>
+            </div>
           ) : (
-            activities.map((activity) => (
-              <TableRow
-                key={activity.id}
-                className={`hover:bg-slate-50/50 dark:hover:bg-slate-800/30 border-slate-100 dark:border-slate-800 ${activity.severity === "critical" ? "bg-red-50/10" : ""}`}
-              >
-                <TableCell className="py-4">
-                  <div className="flex flex-col gap-1">
-                    <span className="font-semibold text-slate-900 dark:text-slate-100">
-                      {activity.action}
-                    </span>
-                    <span className="text-xs text-muted-foreground line-clamp-1 w-[300px]">
-                      {activity.details}
-                    </span>
+            activities.map((activity, index) => {
+              const config = getModuleConfig(activity.module);
+              return (
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  key={activity.id}
+                  className="group flex items-start gap-4 p-6 border-b border-slate-50 dark:border-slate-800 last:border-0 hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-all"
+                >
+                  <div
+                    className={`p-3 rounded-xl shrink-0 ${config.color} transition-transform group-hover:scale-110`}
+                  >
+                    <config.icon className="h-5 w-5" />
                   </div>
-                </TableCell>
-                <TableCell className="py-4 text-center">
-                  {getSeverityBadge(activity.severity, activity.isResolved)}
-                </TableCell>
-                <TableCell className="py-4">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-7 w-7 border border-slate-100">
-                      <AvatarImage src={activity.user.avatar} />
-                      <AvatarFallback className="text-[10px] font-bold">
-                        {activity.user.name.substring(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm font-medium">
-                      {activity.user.name}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell className="py-4">
-                  {getModuleBadge(activity.module)}
-                </TableCell>
-                <TableCell className="py-4 text-right">
-                  <div className="flex flex-col items-end">
-                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                      {formatDistanceToNow(new Date(activity.timestamp))} ago
-                    </span>
-                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                      <Clock className="h-2.5 w-2.5" />
-                      {new Date(activity.timestamp).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+
+                  <div className="flex-1 space-y-1.5 min-w-0">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <Avatar className="h-5 w-5 border border-slate-100 dark:border-slate-800">
+                          <AvatarImage src={activity.user.avatar} />
+                          <AvatarFallback className="text-[8px] font-black">
+                            {activity.user.name.substring(0, 2).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm font-black text-slate-900 dark:text-slate-100 truncate">
+                          {activity.user.name}
+                        </span>
+                        <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-[9px] font-black text-slate-500 uppercase tracking-tighter">
+                          {getSeverityIcon(activity.severity)}
+                          {activity.module}
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap bg-slate-100/50 dark:bg-slate-800/50 px-2 py-1 rounded-md flex items-center gap-1.5">
+                        <Clock className="h-3 w-3" />
+                        {formatDistanceToNow(new Date(activity.timestamp))} ago
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                        {activity.action}
+                      </p>
+                      <p className="text-xs text-muted-foreground line-clamp-1 leading-relaxed">
+                        {activity.details}
+                      </p>
                     </div>
                   </div>
-                </TableCell>
-                <TableCell className="text-right py-4">
-                  <ActivityActions
-                    activity={activity}
-                    onResolve={onResolve}
-                    onArchive={onArchive}
-                    onViewDetails={onViewDetails}
-                  />
-                </TableCell>
-              </TableRow>
-            ))
+
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 self-center">
+                    {activity.isResolved ? (
+                      <div className="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/30 rounded-full flex items-center gap-1.5">
+                        <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                        <span className="text-[9px] font-black text-emerald-600 uppercase">
+                          Resolved
+                        </span>
+                      </div>
+                    ) : (
+                      <ActivityActions
+                        activity={activity}
+                        onResolve={onResolve}
+                        onArchive={onArchive}
+                        onViewDetails={onViewDetails}
+                      />
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })
           )}
-        </TableBody>
-      </Table>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
