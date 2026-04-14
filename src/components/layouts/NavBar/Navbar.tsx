@@ -1,10 +1,5 @@
 import {
   Menu,
-  Search,
-  Globe,
-  Code,
-  Megaphone,
-  Handshake,
   LayoutDashboard,
   Bookmark,
   Send,
@@ -85,38 +80,6 @@ const Navbar = ({
     {
       title: "Find Jobs",
       url: "/find-job",
-      items: [
-        {
-          title: "All Jobs",
-          url: "/find-job",
-          description: "Browse all available job opportunities.",
-          icon: <Search className="size-5 text-blue-500" />,
-        },
-        {
-          title: "Remote Jobs",
-          url: "/find-job?type=remote",
-          description: "Work from anywhere in the world.",
-          icon: <Globe className="size-5 text-green-500" />,
-        },
-        {
-          title: "IT & Software",
-          url: "/find-job?category=it",
-          description: "Developers, engineers, and tech roles.",
-          icon: <Code className="size-5 text-purple-500" />,
-        },
-        {
-          title: "Marketing",
-          url: "/find-job?category=marketing",
-          description: "Digital marketing, SEO, and content.",
-          icon: <Megaphone className="size-5 text-orange-500" />,
-        },
-        {
-          title: "Sales",
-          url: "/find-job?category=sales",
-          description: "Sales representatives and account managers.",
-          icon: <Handshake className="size-5 text-pink-500" />,
-        },
-      ],
     },
     {
       title: "About Us",
