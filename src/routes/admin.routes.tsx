@@ -9,6 +9,7 @@ import Message from "@/pages/Candidate/message/Message";
 import Notification from "@/pages/Candidate/Notification/Notification";
 import type { RouteObject } from "react-router";
 import ActivitiesPage from "@/pages/Admin/Activities/ActivitiesPage";
+import PlansPage from "@/pages/Admin/plans/PlantsPage";
 
 export const adminRoutes: RouteObject = {
   path: "/admin",
@@ -23,6 +24,8 @@ export const adminRoutes: RouteObject = {
     { path: "messages/:id", element: <Message /> },
     { path: "notifications", element: <Notification /> },
     { path: "activities", element: <ActivitiesPage /> },
+    { path: "payments", element: <AdminPaymentPage /> },
+    { path: "plans", element: <PlansPage /> },
     { path: "settings", element: <AdminSettingPage /> },
   ],
 };

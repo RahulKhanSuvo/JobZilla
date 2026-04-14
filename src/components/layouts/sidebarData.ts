@@ -1,5 +1,5 @@
 import { MdDashboard } from "react-icons/md";
-import { FaUser } from "react-icons/fa";
+import { FaRegCreditCard, FaUser } from "react-icons/fa";
 import { SiGoogledocs } from "react-icons/si";
 import { TbBriefcase2Filled } from "react-icons/tb";
 import { FaFileCircleCheck } from "react-icons/fa6";
@@ -127,6 +127,16 @@ export const adminSidebarData = [
     title: "Messages",
     href: "messages",
     icon: BiSolidMessageDetail,
+  },
+  {
+    title: "Payments",
+    href: "payments",
+    icon: FaRegCreditCard,
+  },
+  {
+    title: "Plans",
+    href: "plans",
+    icon: FaRegCreditCard,
   },
   {
     title: "Notifications",
