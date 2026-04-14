@@ -40,10 +40,10 @@ export default function ActivitiesPage() {
         <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-slate-100 uppercase italic">
           Activity Logs
         </h1>
-        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+        <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
           <div className="h-1 w-1 rounded-full bg-primary" />
           Real-time stream of system events and audit records
-        </p>
+        </div>
       </div>
 
       <ActivityFilters
