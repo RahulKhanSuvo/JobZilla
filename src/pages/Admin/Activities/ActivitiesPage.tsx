@@ -35,7 +35,7 @@ export default function ActivitiesPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6">
       <div className="flex flex-col gap-1 pb-4">
         <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-slate-100 uppercase italic">
           Activity Logs

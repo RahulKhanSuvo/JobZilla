@@ -69,7 +69,7 @@ export default function ActivityTable({ activities }: ActivityTableProps) {
   };
 
   return (
-    <Card className="border-none shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
+    <Card className="border-none shadow-sm rounded overflow-hidden bg-white dark:bg-slate-900">
       <CardContent className="p-0">
         <div className="flex flex-col">
           {activities.length === 0 ? (
