@@ -77,6 +77,7 @@ export default function ProfileEdit() {
       phone: "",
       location: "",
       dob: "",
+      careerFinding: "",
       gender: undefined,
       maritalStatus: "",
       language: undefined,
@@ -124,6 +125,7 @@ export default function ProfileEdit() {
         "dob",
         c.dob ? new Date(c.dob).toISOString().split("T")[0] : "",
       );
+      form.setFieldValue("careerFinding", c.careerFinding || "");
       form.setFieldValue("gender", c.gender || null);
       form.setFieldValue("maritalStatus", c.maritalStatus || "");
       form.setFieldValue("language", c.language || null);
@@ -184,6 +186,8 @@ export default function ProfileEdit() {
   const emailField = useField({ form: f, name: "email" });
   const phoneField = useField({ form: f, name: "phone" });
   const locationField = useField({ form: f, name: "location" });
+  const careerFindingField = useField({ form: f, name: "careerFinding" });
+
   const dobField = useField({ form: f, name: "dob" });
   const genderField = useField({ form: f, name: "gender" });
   const maritalStatusField = useField({ form: f, name: "maritalStatus" });
@@ -366,6 +370,24 @@ export default function ProfileEdit() {
                 <FieldError errors={locationField.state.meta.errors} />
               </Field>
               <Field>
+                <FieldLabel className="font-bold">
+                  Open to the following roles
+                </FieldLabel>
+                <Input
+                  placeholder="Enter your roles"
+                  className="h-11"
+                  variant="withBg"
+                  type="text"
+                  value={careerFindingField.state.value}
+                  onBlur={careerFindingField.handleBlur}
+                  onChange={(e) =>
+                    careerFindingField.handleChange(e.target.value)
+                  }
+                  aria-invalid={!!careerFindingField.state.meta.errors.length}
+                />
+                <FieldError errors={careerFindingField.state.meta.errors} />
+              </Field>
+              <Field>
                 <FieldLabel className="font-bold">Date of Birth</FieldLabel>
                 <Input
                   placeholder="Enter your date of birth"
@@ -428,6 +450,7 @@ export default function ProfileEdit() {
                   <FieldError errors={maritalStatusField.state.meta.errors} />
                 </div>
               </Field>
+
               <Field data-invalid={!!languageField.state.meta.errors.length}>
                 <FieldLabel className="font-bold">Language</FieldLabel>
                 <div className="space-y-2 text-left">
@@ -452,7 +475,6 @@ export default function ProfileEdit() {
                   <FieldError errors={languageField.state.meta.errors} />
                 </div>
               </Field>
-
               <Field className="col-span-2">
                 <FieldLabel className="font-bold">Skills</FieldLabel>
                 <SkillTagsInput

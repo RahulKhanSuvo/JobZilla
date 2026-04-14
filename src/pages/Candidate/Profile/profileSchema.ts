@@ -10,7 +10,7 @@ export const profileSchema = z.object({
   maritalStatus: z.string().nullable().optional(),
   language: z.string().nullable().optional(),
   aboutMe: z.string().optional(),
-
+  careerFinding: z.string().optional(),
   // Skills — array of skill strings
   skills: z.array(z.string()).optional(),
 
