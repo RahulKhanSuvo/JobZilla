@@ -5,8 +5,8 @@ import { RecentApplicants } from "./components/RecentApplicants";
 
 export default function RecruiterDashboard() {
   return (
-    <div className="min-h-screen bg-background/50 p-6 lg:p-10">
-      <div className="max-w-[1600px] mx-auto">
+    <div>
+      <div>
         {/* Top Header Section */}
         <DashboardHeader />
 
