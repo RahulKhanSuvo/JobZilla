@@ -4,8 +4,6 @@ import {
   Bookmark,
   Send,
   User,
-  PlusCircle,
-  FileText,
   ChevronRight,
   Settings,
   HelpCircle,
@@ -59,6 +57,7 @@ interface Navbar1Props {
   menu?: MenuItem[];
   dropdownMenu?: MenuItem[];
   dropdownMenuEmployer?: MenuItem[];
+  dropdownMenuAdmin?: MenuItem[];
   auth?: {
     login: {
       title: string;
@@ -129,16 +128,6 @@ const Navbar = ({
       icon: <LayoutDashboard className="size-4" />,
     },
     {
-      title: "Post Job",
-      url: "/recruiter/post-job",
-      icon: <PlusCircle className="size-4" />,
-    },
-    {
-      title: "My Jobs",
-      url: "/recruiter/my-jobs",
-      icon: <FileText className="size-4" />,
-    },
-    {
       title: "Profile",
       url: "/recruiter/profile",
       icon: <User className="size-4" />,
@@ -146,6 +135,23 @@ const Navbar = ({
     {
       title: "Account Settings",
       url: "/recruiter/settings",
+      icon: <Settings className="size-4" />,
+    },
+  ],
+  dropdownMenuAdmin = [
+    {
+      title: "Dashboard",
+      url: "/admin",
+      icon: <LayoutDashboard className="size-4" />,
+    },
+    {
+      title: "Profile",
+      url: "/admin/profile",
+      icon: <User className="size-4" />,
+    },
+    {
+      title: "Account Settings",
+      url: "/admin/settings",
       icon: <Settings className="size-4" />,
     },
   ],
@@ -206,7 +212,9 @@ const Navbar = ({
                   menu={
                     user.role === "EMPLOYER"
                       ? dropdownMenuEmployer
-                      : dropdownMenu
+                      : user.role === "ADMIN"
+                        ? dropdownMenuAdmin
+                        : dropdownMenu
                   }
                   user={user}
                 />
