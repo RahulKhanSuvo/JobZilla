@@ -4,6 +4,7 @@ import { SiGoogledocs } from "react-icons/si";
 import { TbBriefcase2Filled } from "react-icons/tb";
 import { FaFileCircleCheck } from "react-icons/fa6";
 import { RiGroup2Fill } from "react-icons/ri";
+import { LuSquareActivity } from "react-icons/lu";
 import {
   IoDocumentTextSharp,
   IoNotifications,
@@ -133,9 +134,9 @@ export const adminSidebarData = [
     icon: IoNotifications,
   },
   {
-    title: "System Log",
-    href: "system-log",
-    icon: IoSettings,
+    title: "Activities",
+    href: "activities",
+    icon: LuSquareActivity,
   },
   {
     title: "Settings",
