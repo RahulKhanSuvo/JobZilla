@@ -73,13 +73,13 @@ export function LoginForm({
               <span className="font-medium text-slate-700 dark:text-slate-300">
                 Username:
               </span>{" "}
-              candidate or employer
+              candidate or employer or admin
             </p>
             <p className="text-slate-500 dark:text-slate-400">
               <span className="font-medium text-slate-700 dark:text-slate-300">
                 Password:
               </span>{" "}
-              jobtex
+              123456
             </p>
           </div>
         </CardHeader>
