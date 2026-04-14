@@ -62,7 +62,7 @@ export default function CompanyTable({
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border-none overflow-hidden">
+    <div className="bg-white dark:bg-slate-900 rounded shadow-sm border-none overflow-hidden">
       <Table>
         <TableHeader className="bg-slate-50 dark:bg-slate-800/50">
           <TableRow className="hover:bg-transparent border-none">
