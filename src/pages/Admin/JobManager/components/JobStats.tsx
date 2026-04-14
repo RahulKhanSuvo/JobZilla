@@ -48,7 +48,7 @@ export default function JobStats({ jobs }: JobStatsProps) {
       {stats.map((stat) => (
         <Card
           key={stat.title}
-          className="border-none shadow-sm overflow-hidden"
+          className="border-none shadow-sm rounded overflow-hidden"
         >
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
