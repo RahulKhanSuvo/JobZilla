@@ -124,11 +124,6 @@ export const adminSidebarData = [
     icon: RiGroup2Fill,
   },
   {
-    title: "Messages",
-    href: "messages",
-    icon: BiSolidMessageDetail,
-  },
-  {
     title: "Payments",
     href: "payments",
     icon: RiMoneyDollarCircleFill,
