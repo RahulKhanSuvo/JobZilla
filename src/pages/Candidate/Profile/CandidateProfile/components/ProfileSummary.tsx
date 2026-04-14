@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Mail, Phone, Linkedin, Twitter, Facebook } from "lucide-react";
 import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import { Link } from "react-router";
 
 interface ProfileSummaryProps {
   data: CandidateProfileData;
@@ -27,8 +28,13 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
               {data.fullName?.charAt(0) || "U"}
             </AvatarFallback>
           </Avatar>
-          <Button variant="outline" size="sm" className="hidden sm:flex">
-            Edit Profile
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="hidden sm:flex rounded"
+          >
+            <Link to={"edit"}>Edit Profile</Link>
           </Button>
         </div>
 
