@@ -43,15 +43,16 @@ export function RecentActivity() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
+      className="h-full"
     >
-      <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900">
+      <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-full">
         <CardHeader className="flex flex-row items-center justify-between px-8 border-b border-slate-50 dark:border-slate-800">
           <CardTitle className="text-xl font-bold">Recent Activity</CardTitle>
           <Button
             variant="ghost"
             className="text-primary font-bold hover:bg-primary/5 text-sm"
           >
-            View System Log
+            View All
           </Button>
         </CardHeader>
         <CardContent className="p-0">
@@ -97,7 +98,7 @@ export function RecentActivity() {
               </div>
             ))}
           </div>
-          <div className="p-6 bg-slate-50 dark:bg-slate-900/50 flex justify-center">
+          <div className="bg-slate-50 dark:bg-slate-900/50 flex justify-center">
             <Button
               variant="link"
               className="text-slate-500 font-bold hover:text-primary transition-colors flex items-center gap-2 group"

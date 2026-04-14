@@ -48,7 +48,7 @@ export default function AdminDashboard() {
         <div className="xl:col-span-2">
           <RevenueGrowthChart />
         </div>
-        <div className="xl:col-span-1">
+        <div className="xl:col-span-1 h-ful">
           <RecentActivity />
         </div>
       </div>
