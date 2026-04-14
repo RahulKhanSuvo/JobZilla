@@ -10,10 +10,15 @@ import Notification from "@/pages/Candidate/Notification/Notification";
 import type { RouteObject } from "react-router";
 import ActivitiesPage from "@/pages/Admin/Activities/ActivitiesPage";
 import PlansPage from "@/pages/Admin/plans/PlantsPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const adminRoutes: RouteObject = {
   path: "/admin",
-  element: <AdminLayout />,
+  element: (
+    <ProtectedRoute allowRole={["ADMIN"]}>
+      <AdminLayout />
+    </ProtectedRoute>
+  ),
   children: [
     { path: "dashboard", element: <AdminDashboard /> },
     { path: "users", element: <AdminAllUserPage /> },
