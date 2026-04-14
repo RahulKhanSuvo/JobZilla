@@ -9,6 +9,7 @@ import {
   CreditCard,
   FileText,
 } from "lucide-react";
+import { Link } from "react-router";
 
 const activities = [
   {
@@ -48,12 +49,6 @@ export function RecentActivity() {
       <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-full">
         <CardHeader className="flex flex-row items-center justify-between px-8 border-b border-slate-50 dark:border-slate-800">
           <CardTitle className="text-xl font-bold">Recent Activity</CardTitle>
-          <Button
-            variant="ghost"
-            className="text-primary font-bold hover:bg-primary/5 text-sm"
-          >
-            View All
-          </Button>
         </CardHeader>
         <CardContent className="p-0">
           <div className="flex flex-col">
@@ -101,10 +96,14 @@ export function RecentActivity() {
           <div className="bg-slate-50 dark:bg-slate-900/50 flex justify-center">
             <Button
               variant="link"
+              asChild
               className="text-slate-500 font-bold hover:text-primary transition-colors flex items-center gap-2 group"
             >
-              See more activities
-              <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+              <Link to="/admin/activities">
+                {" "}
+                See more activities
+                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
         </CardContent>
