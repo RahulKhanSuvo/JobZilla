@@ -9,6 +9,8 @@ import RecruiterProfilePage from "@/pages/Recruiter/Profile/ProfileView/Recruite
 import RecruiterProfileEdit from "@/pages/Recruiter/Profile/EditProfile/RecruiterProfileEdit";
 import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
 import ApplicantDetailPage from "@/pages/Recruiter/applicantDetailPage/ApilicantDetailPage";
+import Message from "@/pages/Candidate/message/Message";
+import Notification from "@/pages/Candidate/Notification/Notification";
 
 export const recruiterRoutes: RouteObject = {
   path: "/recruiter",
@@ -29,6 +31,9 @@ export const recruiterRoutes: RouteObject = {
     { path: "applicants", element: <AllApplicants /> },
     { path: "applicants/:id", element: <ApplicantDetailPage /> },
     { path: "profile", element: <RecruiterProfilePage /> },
+    { path: "messages", element: <Message /> },
+    { path: "messages/:id", element: <Message /> },
+    { path: "notifications", element: <Notification /> },
     { path: "profile/edit", element: <RecruiterProfileEdit /> },
     { path: "setting", element: <RecruiterSettings /> },
   ],
