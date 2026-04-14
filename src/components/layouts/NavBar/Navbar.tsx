@@ -2,7 +2,6 @@ import {
   Menu,
   LayoutDashboard,
   Bookmark,
-  Send,
   User,
   ChevronRight,
   Settings,
@@ -101,16 +100,6 @@ const Navbar = ({
       icon: <Bookmark className="size-4" />,
     },
     {
-      title: "Applied Jobs",
-      url: "/candidate/applied-jobs",
-      icon: <Send className="size-4" />,
-    },
-    {
-      title: "Profile",
-      url: "/candidate/profile",
-      icon: <User className="size-4" />,
-    },
-    {
       title: "Account Settings",
       url: "/candidate/settings",
       icon: <Settings className="size-4" />,
@@ -141,7 +130,7 @@ const Navbar = ({
   dropdownMenuAdmin = [
     {
       title: "Dashboard",
-      url: "/admin",
+      url: "/admin/dashboard",
       icon: <LayoutDashboard className="size-4" />,
     },
     {
