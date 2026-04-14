@@ -22,7 +22,7 @@ export default function AdminDashboard() {
         <div className="flex items-center gap-3">
           <Button
             variant="outline"
-            className="rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm font-bold flex items-center gap-2"
+            className="rounded border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm font-bold flex items-center gap-2"
           >
             <Calendar className="size-4 text-slate-400" />
             Last 30 Days
