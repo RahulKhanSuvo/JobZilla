@@ -43,7 +43,7 @@ export function DashboardCharts() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <Card className="border-none shadow-md rounded-xl overflow-hidden bg-white dark:bg-slate-900 h-full">
+        <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-full">
           <CardHeader className="flex flex-row items-center justify-between pb-8 border-b border-slate-50 dark:border-slate-800">
             <div className="space-y-1">
               <CardTitle className="text-xl font-bold">
@@ -128,7 +128,7 @@ export function DashboardCharts() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <Card className="border-none shadow-md rounded-xl overflow-hidden bg-white dark:bg-slate-900 border-l-4 border-l-primary h-full">
+        <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 border-l-4 border-l-primary h-full">
           <CardHeader className="pb-8 border-b border-slate-50 dark:border-slate-800">
             <CardTitle className="text-xl font-bold">Hiring Pipeline</CardTitle>
             <p className="text-sm text-slate-500 dark:text-slate-400 font-lato">
@@ -165,7 +165,7 @@ export function DashboardCharts() {
                     }}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={32}>
-                    {pipelineData.map((entry, index) => (
+                    {pipelineData.map((_entry, index) => (
                       <Cell
                         key={`cell-${index}`}
                         fill="var(--primary)"
