@@ -133,6 +133,11 @@ export const adminSidebarData = [
     icon: IoNotifications,
   },
   {
+    title: "System Log",
+    href: "system-log",
+    icon: IoSettings,
+  },
+  {
     title: "Settings",
     href: "settings",
     icon: IoSettings,
