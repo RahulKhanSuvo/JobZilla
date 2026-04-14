@@ -13,22 +13,13 @@ import {
   XCircle,
 } from "lucide-react";
 import type { Activity, ActivityModule, ActivitySeverity } from "../types";
-import ActivityActions from "./ActivityActions";
 import { formatDistanceToNow } from "date-fns";
 
 interface ActivityTableProps {
   activities: Activity[];
-  onResolve: (id: string) => void;
-  onArchive: (id: string) => void;
-  onViewDetails: (activity: Activity) => void;
 }
 
-export default function ActivityTable({
-  activities,
-  onResolve,
-  onArchive,
-  onViewDetails,
-}: ActivityTableProps) {
+export default function ActivityTable({ activities }: ActivityTableProps) {
   const getModuleConfig = (module: ActivityModule) => {
     switch (module) {
       case "User":
@@ -138,24 +129,6 @@ export default function ActivityTable({
                         {activity.details}
                       </p>
                     </div>
-                  </div>
-
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 self-center">
-                    {activity.isResolved ? (
-                      <div className="px-3 py-1 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/30 rounded-full flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3 w-3 text-emerald-600" />
-                        <span className="text-[9px] font-black text-emerald-600 uppercase">
-                          Resolved
-                        </span>
-                      </div>
-                    ) : (
-                      <ActivityActions
-                        activity={activity}
-                        onResolve={onResolve}
-                        onArchive={onArchive}
-                        onViewDetails={onViewDetails}
-                      />
-                    )}
                   </div>
                 </motion.div>
               );
