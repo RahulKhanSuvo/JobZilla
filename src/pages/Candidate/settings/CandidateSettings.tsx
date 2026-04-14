@@ -7,7 +7,7 @@ import { ShieldAlert } from "lucide-react";
 
 export default function CandidateSettings() {
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6">
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
