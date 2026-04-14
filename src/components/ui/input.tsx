@@ -23,7 +23,7 @@ function Input({
   ...props
 }: InputProps) {
   const inputVariant = cva(
-    "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 h-[50px] w-full min-w-0 bg-transparent px-3 py-1 text-base outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+    "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 w-full min-w-0 bg-transparent px-3 py-1 text-base outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
     {
       variants: {
         variant: {
@@ -35,7 +35,7 @@ function Input({
             "border-none shadow-none  py-0 ring-0 focus-visible:ring-0 focus-visible:border-transparent px-0 h-auto",
         },
         size: {
-          default: "md:h-9 lg:h-10 px-4 py-2 has-[>svg]:px-3",
+          default: "h-10 px-4 py-2 has-[>svg]:px-3",
           xs: "h-6 gap-1 rounded-md px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
           sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
           lg: "h-10 rounded-md px-6 has-[>svg]:px-4",

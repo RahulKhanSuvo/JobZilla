@@ -29,8 +29,8 @@ export default function UserFilters({
   onClearFilters,
 }: UserFiltersProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
-      <div className="relative flex-1">
+    <div className="flex flex-col md:flex-row gap-4 mb-6 items-center">
+      <div className="relative flex-1 w-full">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search by name or email..."
@@ -45,7 +45,7 @@ export default function UserFilters({
           <SelectTrigger className="w-[150px] h-10 border-none shadow-sm bg-white dark:bg-slate-900">
             <SelectValue placeholder="All Roles" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper">
             <SelectItem value="all">All Roles</SelectItem>
             <SelectItem value="admin">Admin</SelectItem>
             <SelectItem value="candidate">Candidate</SelectItem>
