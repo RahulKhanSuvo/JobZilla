@@ -16,8 +16,10 @@ import {
 import { type Job } from "./components/SavedJobRow";
 import { errorToast } from "@/utils/errorToast";
 import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 export default function SaveJob() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -28,7 +30,7 @@ export default function SaveJob() {
   });
   const [unSaveJob] = useUnSaveJobMutation();
   const handleView = (id: string) => {
-    console.log("Viewing job:", id);
+    navigate(`${id}`);
   };
 
   const handleRemove = async (id: string) => {
