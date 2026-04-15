@@ -1,21 +1,41 @@
-import AdminLayout from "@/layouts/AdminLayout";
-import AdminDashboard from "@/pages/Admin/Dashboard/AdminDashboard";
-import AdminAllUserPage from "@/pages/Admin/Users/AdminAllUserPage";
-import AdminCompanyPage from "@/pages/Admin/company/AdminCompanyPage";
-import JobManagePage from "@/pages/Admin/JobManager/JobManagePage";
-import AdminPaymentPage from "@/pages/Admin/Payments/AdminPaymentPage";
-import AdminSettingPage from "@/pages/Admin/setting/AdminSettingPage";
-import Notification from "@/pages/Candidate/Notification/Notification";
+const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
+const AdminDashboard = lazy(
+  () => import("@/pages/Admin/Dashboard/AdminDashboard"),
+);
+const AdminAllUserPage = lazy(
+  () => import("@/pages/Admin/Users/AdminAllUserPage"),
+);
+const AdminCompanyPage = lazy(
+  () => import("@/pages/Admin/company/AdminCompanyPage"),
+);
+const JobManagePage = lazy(
+  () => import("@/pages/Admin/JobManager/JobManagePage"),
+);
+const AdminPaymentPage = lazy(
+  () => import("@/pages/Admin/Payments/AdminPaymentPage"),
+);
+const AdminSettingPage = lazy(
+  () => import("@/pages/Admin/setting/AdminSettingPage"),
+);
+const Notification = lazy(
+  () => import("@/pages/Candidate/Notification/Notification"),
+);
 import { Navigate, type RouteObject } from "react-router";
-import ActivitiesPage from "@/pages/Admin/Activities/ActivitiesPage";
-import PlansPage from "@/pages/Admin/plans/PlantsPage";
+const ActivitiesPage = lazy(
+  () => import("@/pages/Admin/Activities/ActivitiesPage"),
+);
+const PlansPage = lazy(() => import("@/pages/Admin/plans/PlantsPage"));
 import ProtectedRoute from "./ProtectedRoute";
+import JobzillaLoading from "@/components/common/JobzillaLoading";
+import { lazy, Suspense } from "react";
 
 export const adminRoutes: RouteObject = {
   path: "/admin",
   element: (
     <ProtectedRoute allowRole={["ADMIN"]}>
-      <AdminLayout />
+      <Suspense fallback={<JobzillaLoading />}>
+        <AdminLayout />
+      </Suspense>
     </ProtectedRoute>
   ),
   children: [
@@ -27,7 +47,6 @@ export const adminRoutes: RouteObject = {
     { path: "payments", element: <AdminPaymentPage /> },
     { path: "notifications", element: <Notification /> },
     { path: "activities", element: <ActivitiesPage /> },
-    { path: "payments", element: <AdminPaymentPage /> },
     { path: "plans", element: <PlansPage /> },
     { path: "settings", element: <AdminSettingPage /> },
   ],
