@@ -72,16 +72,11 @@ export const candidateRoutes: RouteObject = {
       ],
     },
     {
-      path: "followed-companies/:id",
-      element: <FollowCompany />,
-    },
-    {
       path: "messages",
-      element: <Message />,
-    },
-    {
-      path: "messages/:id",
-      element: <Message />,
+      children: [
+        { index: true, element: <Message /> },
+        { path: ":id", element: <Message /> },
+      ],
     },
     {
       path: "notifications",
