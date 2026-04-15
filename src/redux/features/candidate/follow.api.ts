@@ -3,7 +3,13 @@ import baseApi from "../hook/baseApi";
 const followApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     followACompany: builder.mutation({
-      query: ({ userId, companyId }) => ({
+      query: ({
+        userId,
+        companyId,
+      }: {
+        userId: string;
+        companyId: string;
+      }) => ({
         url: `/follow-company/${companyId}`,
         method: "POST",
         body: { userId },
@@ -11,7 +17,13 @@ const followApi = baseApi.injectEndpoints({
       invalidatesTags: ["followCompany"],
     }),
     unFollowACompany: builder.mutation({
-      query: ({ userId, companyId }) => ({
+      query: ({
+        userId,
+        companyId,
+      }: {
+        userId: string;
+        companyId: string;
+      }) => ({
         url: `/follow-company/${companyId}`,
         method: "DELETE",
         body: { userId },
@@ -19,7 +31,7 @@ const followApi = baseApi.injectEndpoints({
       invalidatesTags: ["followCompany"],
     }),
     getAllFollwedCompany: builder.query({
-      query: ({ userId }) => ({
+      query: ({ userId }: { userId: string }) => ({
         url: `/follow-company/${userId}`,
         method: "GET",
       }),
