@@ -6,7 +6,7 @@ import { Link } from "react-router";
 export const appliedJobColumns: ColumnDef<Application>[] = [
   {
     header: "JOBS",
-    className: "w-[45%]", // Make jobs column wider
+    className: "w-[45%]",
     cell: (item) => (
       <div className="flex items-center gap-4">
         {item.job?.company?.logo ? (
@@ -89,7 +89,7 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
     className: "text-right",
     cell: (item) => (
       <div className="flex justify-end">
-        <Link to={`/jobs/${item.jobId}`}>
+        <Link to={`/find-job/${item.jobId}`}>
           <button
             type="button"
             className="text-slate-400 cursor-pointer hover:text-primary transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800"

@@ -3,6 +3,7 @@ import { Navigate, type RouteObject } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import { lazy, Suspense } from "react";
 import JobzillaLoading from "@/components/common/JobzillaLoading";
+const JobDetails = lazy(() => import("@/pages/JobDetails/JobDetails"));
 const CandidateDashboard = lazy(
   () => import("@/pages/Candidate/Dashbaord/CandidateDashboard"),
 );
@@ -49,7 +50,13 @@ export const candidateRoutes: RouteObject = {
       ],
     },
     { path: "my-cv", element: <MyCV /> },
-    { path: "my-applied-jobs", element: <AppliedJob /> },
+    {
+      path: "my-applied-jobs",
+      children: [
+        { index: true, element: <AppliedJob /> },
+        { path: ":id", element: <JobDetails /> },
+      ],
+    },
     { path: "saved-jobs", element: <SaveJob /> },
     { path: "followed-companies", element: <FollowCompany /> },
     {
