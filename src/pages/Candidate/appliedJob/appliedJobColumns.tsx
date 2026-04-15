@@ -89,7 +89,7 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
     className: "text-right",
     cell: (item) => (
       <div className="flex justify-end">
-        <Link to={`/find-job/${item.jobId}`}>
+        <Link to={`${item.jobId}`}>
           <button
             type="button"
             className="text-slate-400 cursor-pointer hover:text-primary transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800"
