@@ -57,8 +57,20 @@ export const candidateRoutes: RouteObject = {
         { path: ":id", element: <JobDetails /> },
       ],
     },
-    { path: "saved-jobs", element: <SaveJob /> },
-    { path: "followed-companies", element: <FollowCompany /> },
+    {
+      path: "saved-jobs",
+      children: [
+        { index: true, element: <SaveJob /> },
+        { path: ":id", element: <JobDetails /> },
+      ],
+    },
+    {
+      path: "followed-companies",
+      children: [
+        { index: true, element: <FollowCompany /> },
+        { path: ":id", element: <FollowCompany /> },
+      ],
+    },
     {
       path: "followed-companies/:id",
       element: <FollowCompany />,
