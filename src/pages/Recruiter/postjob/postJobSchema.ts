@@ -32,10 +32,12 @@ export const postJobSchema = z
     updatedAt: z.date().optional(),
     isSaved: z.boolean().optional(),
     isApplied: z.boolean().optional(),
+    isFollowed: z.boolean().optional(),
     company: z
       .object({
         location: z.string(),
         user: z.object({
+          id: z.string(),
           name: z.string(),
           email: z.string().email(),
         }),

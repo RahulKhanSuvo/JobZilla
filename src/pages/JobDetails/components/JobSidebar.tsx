@@ -15,6 +15,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import {
+  useFollowACompanyMutation,
+  useUnFollowACompanyMutation,
+} from "@/redux/features/candidate/follow.api";
 
 interface JobSidebarProps {
   job: PostJobFormData;
@@ -76,6 +82,24 @@ export default function JobSidebar({ job }: JobSidebarProps) {
     },
   ];
 
+  const user = useSelector(selectCurrentUser);
+  const [followCompany, { isLoading: isFollowing }] =
+    useFollowACompanyMutation();
+  const [unFollowCompany, { isLoading: isUnFollowing }] =
+    useUnFollowACompanyMutation();
+  const handleFollowClick = () => {
+    if (job?.isFollowed) {
+      unFollowCompany({
+        userId: user?.id || "",
+        companyId: job.company?.user?.id || "",
+      });
+    } else {
+      followCompany({
+        userId: user?.id || "",
+        companyId: job.company?.user?.id || "",
+      });
+    }
+  };
   return (
     <div className="space-y-8">
       {/* Job Overview */}
@@ -126,9 +150,17 @@ export default function JobSidebar({ job }: JobSidebarProps) {
           ))}
         </div>
 
-        <Button className="w-full h-12 bg-white hover:bg-slate-100 text-emerald-600 border border-emerald-100 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded shadow-sm transition-all active:scale-[0.98]">
+        <Button
+          onClick={handleFollowClick}
+          disabled={isFollowing || isUnFollowing}
+          className="w-full h-12 bg-white hover:bg-slate-100 text-emerald-600 border border-emerald-100 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded shadow-sm transition-all active:scale-[0.98]"
+        >
           <Plus className="size-4 mr-2" />
-          Follow Company
+          {isFollowing || isUnFollowing
+            ? "Loading..."
+            : job?.isFollowed
+              ? "Unfollow Company"
+              : "Follow Company"}
         </Button>
 
         <div className="pt-6">
