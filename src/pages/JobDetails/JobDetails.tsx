@@ -53,7 +53,7 @@ export default function JobDetails() {
             {activeTab === "about" ? (
               <JobDescription description={jobData.description} />
             ) : (
-              <RelatedJobs />
+              <RelatedJobs companyId={jobData.companyId} />
             )}
           </div>
 

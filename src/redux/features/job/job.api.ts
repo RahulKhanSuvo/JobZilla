@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import baseApi from "../hook/baseApi";
 import type {
   IApiResponse,
@@ -78,6 +79,10 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SavedJobs"],
     }),
+    getCompanyJobs: builder.query<IApiResponse<any[]>, string>({
+      query: (companyId: string) => `jobs/company/${companyId}`,
+      providesTags: ["Jobs"],
+    }),
   }),
 });
 
@@ -89,4 +94,5 @@ export const {
   useSaveJobMutation,
   useGetSaveJobQuery,
   useUnSaveJobMutation,
+  useGetCompanyJobsQuery,
 } = jobApi;
