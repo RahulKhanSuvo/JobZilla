@@ -1,19 +1,28 @@
+import { lazy, Suspense } from "react";
 import MainLayout from "@/layouts/MainLayout";
-import Home from "@/pages/Home/Home";
-import FindJob from "@/pages/FindJob/FindJob";
-import About from "@/pages/About/About";
-import Contact from "@/pages/Contact/Contact";
-import PrivacyPolicy from "@/pages/PrivacyPolicy/PrivacyPolicy";
-import TermsOfService from "@/pages/TermsOfService/TermsOfService";
-import JobDetails from "@/pages/JobDetails/JobDetails";
-import Pricing from "@/pages/Pricing/Pricing";
 import { type RouteObject } from "react-router";
-import Login from "@/pages/auth/Login";
-import SignUp from "@/pages/auth/SignUp";
+import JobzillaLoading from "@/components/common/JobzillaLoading";
+
+const Home = lazy(() => import("@/pages/Home/Home"));
+const FindJob = lazy(() => import("@/pages/FindJob/FindJob"));
+const About = lazy(() => import("@/pages/About/About"));
+const Contact = lazy(() => import("@/pages/Contact/Contact"));
+const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy/PrivacyPolicy"));
+const TermsOfService = lazy(
+  () => import("@/pages/TermsOfService/TermsOfService"),
+);
+const JobDetails = lazy(() => import("@/pages/JobDetails/JobDetails"));
+const Pricing = lazy(() => import("@/pages/Pricing/Pricing"));
+const Login = lazy(() => import("@/pages/auth/Login"));
+const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 
 export const mainRoutes: RouteObject = {
   path: "/",
-  element: <MainLayout />,
+  element: (
+    <Suspense fallback={<JobzillaLoading />}>
+      <MainLayout />
+    </Suspense>
+  ),
   children: [
     { path: "/", element: <Home /> },
     { path: "/find-job", element: <FindJob /> },
