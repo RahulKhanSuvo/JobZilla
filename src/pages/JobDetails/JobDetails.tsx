@@ -43,7 +43,7 @@ export default function JobDetails() {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-950 min-h-screen transition-colors duration-300">
+    <div className="bg-white px-4 dark:bg-slate-950 min-h-screen transition-colors duration-300">
       <JobHeader job={jobData} />
       <Container className="space-y-6">
         <div className="grid grid-cols-1 pb-20 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
