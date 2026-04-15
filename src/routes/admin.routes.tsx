@@ -1,3 +1,7 @@
+import { lazy, Suspense } from "react";
+import { Navigate, type RouteObject } from "react-router";
+import ProtectedRoute from "./ProtectedRoute";
+import JobzillaLoading from "@/components/common/JobzillaLoading";
 const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
 const AdminDashboard = lazy(
   () => import("@/pages/Admin/Dashboard/AdminDashboard"),
@@ -20,14 +24,10 @@ const AdminSettingPage = lazy(
 const Notification = lazy(
   () => import("@/pages/Candidate/Notification/Notification"),
 );
-import { Navigate, type RouteObject } from "react-router";
 const ActivitiesPage = lazy(
   () => import("@/pages/Admin/Activities/ActivitiesPage"),
 );
 const PlansPage = lazy(() => import("@/pages/Admin/plans/PlantsPage"));
-import ProtectedRoute from "./ProtectedRoute";
-import JobzillaLoading from "@/components/common/JobzillaLoading";
-import { lazy, Suspense } from "react";
 
 export const adminRoutes: RouteObject = {
   path: "/admin",
