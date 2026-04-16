@@ -41,7 +41,6 @@ export default function PostJob() {
       experience: "",
       careerLevel: "",
       qualification: "",
-      location: "",
       deadline: new Date(),
       jobType: "FULL_TIME",
       skills: "",
@@ -171,26 +170,6 @@ export default function PostJob() {
                         <SelectItem value="INTERN">Intern</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              />
-
-              <form.Field
-                name="location"
-                children={(field) => (
-                  <Field data-invalid={!!field.state.meta.errors.length}>
-                    <FieldLabel className="font-semibold">
-                      Location <span className="text-red-500">*</span>
-                    </FieldLabel>
-                    <Input
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Dhaka"
-                      variant="withBg"
-                      aria-invalid={!!field.state.meta.errors.length}
-                    />
                     <FieldError errors={field.state.meta.errors} />
                   </Field>
                 )}

@@ -24,7 +24,6 @@ export const postJobSchema = z
     experience: z.string().max(100).optional(),
     careerLevel: z.string().optional(),
     qualification: z.string().optional(),
-    location: z.string().optional(),
     deadline: z.coerce.date().optional(),
     skills: z.string().max(200).optional(),
     createdAt: z.date().optional(),
