@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/select";
 import { Calendar } from "lucide-react";
 import RichTextEditor from "@/components/common/RichTextEditor";
-import SkillTagsInput from "@/components/common/SkillTagsInput";
 import { useCreateJobMutation } from "@/redux/features/job/job.api";
 import { errorToast } from "@/utils/errorToast";
 
@@ -33,7 +32,6 @@ export default function PostJob() {
       title: "",
       description: "",
       category: "",
-      tags: [],
       gender: "",
       salaryType: "",
       salaryMin: "",
@@ -170,25 +168,6 @@ export default function PostJob() {
                         <SelectItem value="INTERN">Intern</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              />
-
-              <form.Field
-                name="tags"
-                children={(field) => (
-                  <Field
-                    className="col-span-2"
-                    data-invalid={!!field.state.meta.errors.length}
-                  >
-                    <FieldLabel className="font-semibold">Tag</FieldLabel>
-                    <SkillTagsInput
-                      value={field.state.value || []}
-                      onChange={field.handleChange}
-                      placeholder="Add tag..."
-                      variant="withBg"
-                    />
                     <FieldError errors={field.state.meta.errors} />
                   </Field>
                 )}
