@@ -48,7 +48,11 @@ export default function FindJob() {
 
           {/* Main Content */}
           <main className="flex-1 space-y-4">
-            <JobHeader layout={layout} setLayout={setLayout} />
+            <JobHeader
+              layout={layout}
+              setLayout={setLayout}
+              total={data?.meta?.total || 0}
+            />
             <JobList layout={layout} jobs={jobs} isLoading={isLoading} />
             {(data?.meta?.totalPage ?? 0) > 1 && (
               <Pagination

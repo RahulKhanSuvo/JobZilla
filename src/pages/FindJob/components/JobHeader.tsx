@@ -13,9 +13,14 @@ import { FaList } from "react-icons/fa";
 interface JobHeaderProps {
   layout: "grid" | "list";
   setLayout: (layout: "grid" | "list") => void;
+  total: number;
 }
 
-export default function JobHeader({ layout, setLayout }: JobHeaderProps) {
+export default function JobHeader({
+  layout,
+  setLayout,
+  total,
+}: JobHeaderProps) {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div className="flex items-center gap-4">
@@ -49,9 +54,9 @@ export default function JobHeader({ layout, setLayout }: JobHeaderProps) {
         </div>
         <p className="text-sm font-bold text-slate-500 dark:text-slate-400">
           <span className="text-slate-900 dark:text-white mr-1 text-base">
-            9
+            {total}
           </span>{" "}
-          Result(s) Found
+          Results Found
         </p>
       </div>
 
