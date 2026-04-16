@@ -2,6 +2,7 @@
 import baseApi from "../hook/baseApi";
 import type { LoginFormData } from "@/pages/auth/authSchema";
 import type { LoginSuccessResponse, CurrentUserResponse } from "./auth.type";
+import { logOut, setCredentials } from "./authSlice";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -25,6 +26,16 @@ const authApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["User"],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled;
+          console.log(result);
+          dispatch(setCredentials(result.data));
+        } catch (error) {
+          console.log(error);
+          dispatch(logOut());
+        }
+      },
     }),
 
     userLogout: builder.mutation<any, void>({
