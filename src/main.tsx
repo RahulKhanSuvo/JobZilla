@@ -6,7 +6,7 @@ import router from "./routes/Routes.tsx";
 import ReduxProvider from "./providers/ReduxProvider.tsx";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "./providers/ThemeProvider.tsx";
-
+console.log(router);
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ReduxProvider>

@@ -7,11 +7,15 @@ import { MapPin, Mail, Phone, Linkedin, Twitter, Facebook } from "lucide-react";
 import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
 import { Link } from "react-router";
 
+import { calculateProfileCompletion } from "@/utils/profileCompletion";
+
 interface ProfileSummaryProps {
   data: CandidateProfileData;
 }
 
 const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
+  const { percentage } = calculateProfileCompletion(data);
+
   return (
     <Card className="overflow-hidden border-none shadow-sm dark:bg-slate-900">
       {/* Background Cover */}
@@ -40,10 +44,23 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
 
         {/* Info */}
         <div className="space-y-4">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">
-              {data.fullName}
-            </h2>
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <h2 className="text-2xl font-bold tracking-tight">
+                {data.fullName}
+              </h2>
+              <div className="flex items-center gap-2.5">
+                <div className="w-24 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary transition-all duration-1000 ease-out"
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
+                <span className="text-xs font-bold text-primary">
+                  {percentage}% Profile Complete
+                </span>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-2 pt-2">
