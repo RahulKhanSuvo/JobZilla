@@ -8,7 +8,7 @@ export const profileSchema = z.object({
   dob: z.string().optional(),
   gender: z.enum(["Male", "Female", "Other"]).nullable().optional(),
   maritalStatus: z.string().nullable().optional(),
-  language: z.string().nullable().optional(),
+  language: z.array(z.string()).optional(),
   aboutMe: z.string().optional(),
   careerFinding: z.string().optional(),
   // Skills — array of skill strings
