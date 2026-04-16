@@ -4,7 +4,13 @@ import SectionTitle from "@/components/common/SectionTitle";
 import { FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-type Errors = Partial<Record<string, string[]>>;
+type FieldState = {
+  errors: (string | Error | { message: string })[];
+  isTouched: boolean;
+  isValid: boolean;
+};
+
+type Errors = Partial<Record<string, FieldState>>;
 
 interface SocialLinksSectionProps {
   facebook: string;
@@ -47,7 +53,8 @@ const SocialLinksSection: FC<SocialLinksSectionProps> = ({
       <div className="grid grid-cols-2 gap-6">
         {socialLinks.map((item) => {
           const value = values[item.key];
-          const fieldErrors = errors[item.key] ?? [];
+          const fieldState = errors[item.key];
+          const isInvalid = fieldState?.isTouched && !fieldState?.isValid;
           return (
             <div key={item.key} className="flex flex-col gap-2">
               <div className="flex items-center gap-4">
@@ -60,10 +67,12 @@ const SocialLinksSection: FC<SocialLinksSectionProps> = ({
                   variant="withBg"
                   value={value ?? ""}
                   onChange={(e) => onChange(item.key, e.target.value)}
-                  aria-invalid={!!fieldErrors.length}
+                  aria-invalid={isInvalid}
                 />
               </div>
-              <FieldError className="ml-14" errors={fieldErrors} />
+              {isInvalid && (
+                <FieldError className="ml-14" errors={fieldState?.errors} />
+              )}
             </div>
           );
         })}

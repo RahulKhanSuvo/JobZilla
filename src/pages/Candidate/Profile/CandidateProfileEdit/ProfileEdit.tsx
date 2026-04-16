@@ -108,7 +108,10 @@ export default function ProfileEdit() {
       form.setFieldValue("careerFinding", c.careerFinding || "");
       form.setFieldValue("gender", c.gender || null);
       form.setFieldValue("maritalStatus", c.maritalStatus || "");
-      form.setFieldValue("language", c.language || null);
+      form.setFieldValue(
+        "language",
+        c.languages?.map((l: any) => l.language) || [],
+      );
       form.setFieldValue(
         "skills",
         c.skills?.length
@@ -233,24 +236,49 @@ export default function ProfileEdit() {
   // ─── Completeness checks (live) ──────────────────────────────────────────────
   const formValues = useStore(form.store, (s) => s.values);
   // Validation errors keyed by field name
-  const fieldErrors = useStore(form.store, (s) => {
-    const meta = s.fieldMeta as Record<
-      string,
-      { errors?: string[] } | undefined
-    >;
-    return {
-      fullName: meta.fullName?.errors ?? [],
-      email: meta.email?.errors ?? [],
-      phone: meta.phone?.errors ?? [],
-      location: meta.location?.errors ?? [],
-      gender: meta.gender?.errors ?? [],
-      maritalStatus: meta.maritalStatus?.errors ?? [],
-      language: meta.language?.errors ?? [],
-      facebook: meta.facebook?.errors ?? [],
-      linkedin: meta.linkedin?.errors ?? [],
-      twitter: meta.twitter?.errors ?? [],
-    };
-  });
+  const { scalarErrors, educationErrors, experienceErrors } = useStore(
+    form.store,
+    (s) => {
+      const meta = s.fieldMeta as Record<
+        string,
+        | { errors?: string[]; isTouched?: boolean; isValid?: boolean }
+        | undefined
+      >;
+
+      const getFieldState = (name: string) => ({
+        errors: meta[name]?.errors ?? [],
+        isTouched: meta[name]?.isTouched ?? false,
+        isValid: meta[name]?.isValid ?? true,
+      });
+
+      return {
+        scalarErrors: {
+          fullName: getFieldState("fullName"),
+          email: getFieldState("email"),
+          phone: getFieldState("phone"),
+          location: getFieldState("location"),
+          gender: getFieldState("gender"),
+          maritalStatus: getFieldState("maritalStatus"),
+          language: getFieldState("language"),
+          facebook: getFieldState("facebook"),
+          linkedin: getFieldState("linkedin"),
+          twitter: getFieldState("twitter"),
+        },
+        educationErrors: (s.values.educationList ?? []).map((_, i) => ({
+          institution: getFieldState(`educationList[${i}].institution`),
+          major: getFieldState(`educationList[${i}].major`),
+          field: getFieldState(`educationList[${i}].field`),
+          startData: getFieldState(`educationList[${i}].startData`),
+        })),
+        experienceErrors: (s.values.experienceList ?? []).map((_, i) => ({
+          jobTitle: getFieldState(`experienceList[${i}].jobTitle`),
+          companyName: getFieldState(`experienceList[${i}].companyName`),
+          industry: getFieldState(`experienceList[${i}].industry`),
+          startData: getFieldState(`experienceList[${i}].startData`),
+        })),
+      };
+    },
+  );
   const completenessChecks = [
     {
       label: "Basic Info",
@@ -326,12 +354,13 @@ export default function ProfileEdit() {
               language: formValues.language,
               skills: formValues.skills ?? [],
             }}
-            errors={fieldErrors}
+            errors={scalarErrors}
             onChange={(field, value) => form.setFieldValue(field as any, value)}
           />
 
           <EducationList
             educationList={educationList}
+            errors={educationErrors}
             appendEducation={appendEducation}
             removeEducation={removeEducation}
             setEducationField={setEducationField}
@@ -339,6 +368,7 @@ export default function ProfileEdit() {
 
           <ExperienceList
             experienceList={experienceList}
+            errors={experienceErrors}
             appendExperience={appendExperience}
             removeExperience={removeExperience}
             setExperienceField={setExperienceField}
@@ -353,7 +383,7 @@ export default function ProfileEdit() {
             facebook={formValues.facebook ?? ""}
             linkedin={formValues.linkedin ?? ""}
             twitter={formValues.twitter ?? ""}
-            errors={fieldErrors}
+            errors={scalarErrors}
             onChange={(field, value) => form.setFieldValue(field as any, value)}
           />
 

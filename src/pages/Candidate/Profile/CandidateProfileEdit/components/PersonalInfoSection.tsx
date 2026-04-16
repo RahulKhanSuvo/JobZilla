@@ -18,7 +18,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type Errors = Partial<Record<string, string[]>>;
+type FieldState = {
+  errors: (string | Error | { message: string })[];
+  isTouched: boolean;
+  isValid: boolean;
+};
+
+type Errors = Partial<Record<string, FieldState>>;
 
 interface PersonalInfoSectionProps {
   values: Pick<
@@ -47,7 +53,9 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
       <SectionTitle size="sm">Information</SectionTitle>
       <FieldGroup className="grid grid-cols-2 gap-6">
         {/* Full Name */}
-        <Field data-invalid={!!errors.fullName?.length}>
+        <Field
+          data-invalid={errors.fullName?.isTouched && !errors.fullName?.isValid}
+        >
           <FieldLabel className="font-bold">Full Name</FieldLabel>
           <Input
             placeholder="Enter your full name"
@@ -56,13 +64,17 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
             type="text"
             value={values.fullName ?? ""}
             onChange={(e) => onChange("fullName", e.target.value)}
-            aria-invalid={!!errors.fullName?.length}
+            aria-invalid={
+              errors.fullName?.isTouched && !errors.fullName?.isValid
+            }
           />
-          <FieldError errors={errors.fullName ?? []} />
+          {errors.fullName?.isTouched && !errors.fullName?.isValid && (
+            <FieldError errors={errors.fullName?.errors ?? []} />
+          )}
         </Field>
 
         {/* Email */}
-        <Field data-invalid={!!errors.email?.length}>
+        <Field data-invalid={errors.email?.isTouched && !errors.email?.isValid}>
           <FieldLabel className="font-bold">Email</FieldLabel>
           <Input
             placeholder="Enter your email address"
@@ -72,13 +84,15 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
             disabled
             value={values.email ?? ""}
             onChange={(e) => onChange("email", e.target.value)}
-            aria-invalid={!!errors.email?.length}
+            aria-invalid={errors.email?.isTouched && !errors.email?.isValid}
           />
-          <FieldError errors={errors.email ?? []} />
+          {errors.email?.isTouched && !errors.email?.isValid && (
+            <FieldError errors={errors.email?.errors ?? []} />
+          )}
         </Field>
 
         {/* Phone */}
-        <Field data-invalid={!!errors.phone?.length}>
+        <Field data-invalid={errors.phone?.isTouched && !errors.phone?.isValid}>
           <FieldLabel className="font-bold">Phone</FieldLabel>
           <Input
             placeholder="Enter your phone number"
@@ -87,13 +101,17 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
             type="tel"
             value={values.phone ?? ""}
             onChange={(e) => onChange("phone", e.target.value)}
-            aria-invalid={!!errors.phone?.length}
+            aria-invalid={errors.phone?.isTouched && !errors.phone?.isValid}
           />
-          <FieldError errors={errors.phone ?? []} />
+          {errors.phone?.isTouched && !errors.phone?.isValid && (
+            <FieldError errors={errors.phone?.errors ?? []} />
+          )}
         </Field>
 
         {/* Location */}
-        <Field data-invalid={!!errors.location?.length}>
+        <Field
+          data-invalid={errors.location?.isTouched && !errors.location?.isValid}
+        >
           <FieldLabel className="font-bold">Location</FieldLabel>
           <Input
             placeholder="Enter your location"
@@ -102,9 +120,13 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
             type="text"
             value={values.location ?? ""}
             onChange={(e) => onChange("location", e.target.value)}
-            aria-invalid={!!errors.location?.length}
+            aria-invalid={
+              errors.location?.isTouched && !errors.location?.isValid
+            }
           />
-          <FieldError errors={errors.location ?? []} />
+          {errors.location?.isTouched && !errors.location?.isValid && (
+            <FieldError errors={errors.location?.errors ?? []} />
+          )}
         </Field>
 
         {/* Date of Birth */}
@@ -120,7 +142,9 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
         </Field>
 
         {/* Gender */}
-        <Field data-invalid={!!errors.gender?.length}>
+        <Field
+          data-invalid={errors.gender?.isTouched && !errors.gender?.isValid}
+        >
           <FieldLabel className="font-bold">Gender</FieldLabel>
           <div className="space-y-2 text-left">
             <Select
@@ -132,17 +156,23 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
               <SelectContent className="rounded-none" position="popper">
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="Male">Male</SelectItem>
+                <SelectItem value="Female">Female</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
               </SelectContent>
             </Select>
-            <FieldError errors={errors.gender ?? []} />
+            {errors.gender?.isTouched && !errors.gender?.isValid && (
+              <FieldError errors={errors.gender?.errors ?? []} />
+            )}
           </div>
         </Field>
 
         {/* Marital Status */}
-        <Field data-invalid={!!errors.maritalStatus?.length}>
+        <Field
+          data-invalid={
+            errors.maritalStatus?.isTouched && !errors.maritalStatus?.isValid
+          }
+        >
           <FieldLabel className="font-bold">Marital Status</FieldLabel>
           <div className="space-y-2 text-left">
             <Select
@@ -154,35 +184,46 @@ const PersonalInfoSection: FC<PersonalInfoSectionProps> = ({
                 <SelectValue placeholder="Select marital status" />
               </SelectTrigger>
               <SelectContent className="rounded-none" position="popper">
-                <SelectItem value="single">Single</SelectItem>
-                <SelectItem value="married">Married</SelectItem>
-                <SelectItem value="divorced">Divorced</SelectItem>
-                <SelectItem value="widowed">Widowed</SelectItem>
+                <SelectItem value="Single">Single</SelectItem>
+                <SelectItem value="Married">Married</SelectItem>
+                <SelectItem value="Divorced">Divorced</SelectItem>
+                <SelectItem value="Widowed">Widowed</SelectItem>
               </SelectContent>
             </Select>
-            <FieldError errors={errors.maritalStatus ?? []} />
+            {errors.maritalStatus?.isTouched &&
+              !errors.maritalStatus?.isValid && (
+                <FieldError errors={errors.maritalStatus?.errors ?? []} />
+              )}
           </div>
         </Field>
 
         {/* Language */}
-        <Field data-invalid={!!errors.language?.length}>
+        <Field
+          data-invalid={errors.language?.isTouched && !errors.language?.isValid}
+        >
           <FieldLabel className="font-bold">Language</FieldLabel>
           <div className="space-y-2 text-left">
             <Select
-              key={(values.language as string) || "empty"}
-              onValueChange={(val) => onChange("language", val)}
-              value={(values.language as string) ?? undefined}
+              key={
+                Array.isArray(values.language) ? values.language[0] : "empty"
+              }
+              onValueChange={(val) => onChange("language", [val])}
+              value={
+                Array.isArray(values.language) ? values.language[0] : undefined
+              }
             >
               <SelectTrigger className="w-full rounded-none shadow-none bg-[#F5F5F5] dark:bg-[#222222]">
                 <SelectValue placeholder="Select your language" />
               </SelectTrigger>
               <SelectContent className="rounded-none" position="popper">
-                <SelectItem value="english">English</SelectItem>
-                <SelectItem value="hindi">Hindi</SelectItem>
-                <SelectItem value="bengali">Bengali</SelectItem>
+                <SelectItem value="English">English</SelectItem>
+                <SelectItem value="Hindi">Hindi</SelectItem>
+                <SelectItem value="Bengali">Bengali</SelectItem>
               </SelectContent>
             </Select>
-            <FieldError errors={errors.language ?? []} />
+            {errors.language?.isTouched && !errors.language?.isValid && (
+              <FieldError errors={errors.language?.errors ?? []} />
+            )}
           </div>
         </Field>
 

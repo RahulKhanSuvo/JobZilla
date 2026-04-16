@@ -1,6 +1,11 @@
 import { type FC, useState } from "react";
 import SectionTitle from "@/components/common/SectionTitle";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,8 +14,15 @@ import type { ProfileFormData } from "../../profileSchema";
 
 type ExperienceItem = NonNullable<ProfileFormData["experienceList"]>[number];
 
+type FieldState = {
+  errors: (string | Error | { message: string })[];
+  isTouched: boolean;
+  isValid: boolean;
+};
+
 interface ExperienceListProps {
   experienceList: ExperienceItem[];
+  errors?: Record<string, FieldState>[];
   appendExperience: () => void;
   removeExperience: (index: number) => void;
   setExperienceField: (
@@ -24,6 +36,7 @@ const isBlank = (exp: ExperienceItem) => !exp.jobTitle && !exp.companyName;
 
 const ExperienceList: FC<ExperienceListProps> = ({
   experienceList,
+  errors = [],
   appendExperience,
   removeExperience,
   setExperienceField,
@@ -69,6 +82,7 @@ const ExperienceList: FC<ExperienceListProps> = ({
       <div className="space-y-4">
         {experienceList.map((exp, index) => {
           const isEditing = editingSet.has(index);
+          const itemErrors = errors[index] || {};
 
           return (
             <div
@@ -171,7 +185,12 @@ const ExperienceList: FC<ExperienceListProps> = ({
                 <div className="px-5 py-5">
                   <FieldGroup className="grid grid-cols-1 gap-6">
                     <div className="grid grid-cols-2 gap-6">
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.jobTitle?.isTouched &&
+                          !itemErrors.jobTitle?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">Job Title</FieldLabel>
                         <Input
                           placeholder="e.g. Software Engineer"
@@ -185,9 +204,24 @@ const ExperienceList: FC<ExperienceListProps> = ({
                               e.target.value,
                             )
                           }
+                          aria-invalid={
+                            itemErrors.jobTitle?.isTouched &&
+                            !itemErrors.jobTitle?.isValid
+                          }
                         />
+                        {itemErrors.jobTitle?.isTouched &&
+                          !itemErrors.jobTitle?.isValid && (
+                            <FieldError
+                              errors={itemErrors.jobTitle?.errors ?? []}
+                            />
+                          )}
                       </Field>
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.companyName?.isTouched &&
+                          !itemErrors.companyName?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">
                           Company Name
                         </FieldLabel>
@@ -203,10 +237,25 @@ const ExperienceList: FC<ExperienceListProps> = ({
                               e.target.value,
                             )
                           }
+                          aria-invalid={
+                            itemErrors.companyName?.isTouched &&
+                            !itemErrors.companyName?.isValid
+                          }
                         />
+                        {itemErrors.companyName?.isTouched &&
+                          !itemErrors.companyName?.isValid && (
+                            <FieldError
+                              errors={itemErrors.companyName?.errors ?? []}
+                            />
+                          )}
                       </Field>
                     </div>
-                    <Field>
+                    <Field
+                      data-invalid={
+                        itemErrors.industry?.isTouched &&
+                        !itemErrors.industry?.isValid
+                      }
+                    >
                       <FieldLabel className="font-bold">Industry</FieldLabel>
                       <Input
                         placeholder="e.g. Technology, Finance"
@@ -216,10 +265,25 @@ const ExperienceList: FC<ExperienceListProps> = ({
                         onChange={(e) =>
                           setExperienceField(index, "industry", e.target.value)
                         }
+                        aria-invalid={
+                          itemErrors.industry?.isTouched &&
+                          !itemErrors.industry?.isValid
+                        }
                       />
+                      {itemErrors.industry?.isTouched &&
+                        !itemErrors.industry?.isValid && (
+                          <FieldError
+                            errors={itemErrors.industry?.errors ?? []}
+                          />
+                        )}
                     </Field>
                     <div className="grid grid-cols-2 gap-6">
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.startData?.isTouched &&
+                          !itemErrors.startData?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">
                           Start Date
                         </FieldLabel>
@@ -235,7 +299,17 @@ const ExperienceList: FC<ExperienceListProps> = ({
                               e.target.value,
                             )
                           }
+                          aria-invalid={
+                            itemErrors.startData?.isTouched &&
+                            !itemErrors.startData?.isValid
+                          }
                         />
+                        {itemErrors.startData?.isTouched &&
+                          !itemErrors.startData?.isValid && (
+                            <FieldError
+                              errors={itemErrors.startData?.errors ?? []}
+                            />
+                          )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">End Date</FieldLabel>

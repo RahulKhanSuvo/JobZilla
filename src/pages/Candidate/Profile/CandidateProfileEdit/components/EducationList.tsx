@@ -1,6 +1,11 @@
 import { type FC, useState } from "react";
 import SectionTitle from "@/components/common/SectionTitle";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Edit2, GraduationCap, PlusCircle, Trash2, X } from "lucide-react";
@@ -8,8 +13,15 @@ import type { ProfileFormData } from "../../profileSchema";
 
 type EducationItem = NonNullable<ProfileFormData["educationList"]>[number];
 
+type FieldState = {
+  errors: (string | Error | { message: string })[];
+  isTouched: boolean;
+  isValid: boolean;
+};
+
 interface EducationListProps {
   educationList: EducationItem[];
+  errors?: Record<string, FieldState>[];
   appendEducation: () => void;
   removeEducation: (index: number) => void;
   setEducationField: (
@@ -24,6 +36,7 @@ const isBlank = (edu: EducationItem) => !edu.institution && !edu.major;
 
 const EducationList: FC<EducationListProps> = ({
   educationList,
+  errors = [],
   appendEducation,
   removeEducation,
   setEducationField,
@@ -71,6 +84,7 @@ const EducationList: FC<EducationListProps> = ({
       <div className="space-y-4">
         {educationList.map((edu, index) => {
           const isEditing = editingSet.has(index);
+          const itemErrors = errors[index] || {};
 
           return (
             <div
@@ -171,7 +185,12 @@ const EducationList: FC<EducationListProps> = ({
                 <div className="px-5 py-5">
                   <FieldGroup className="grid grid-cols-1 gap-6">
                     <div className="grid grid-cols-2 gap-6">
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.institution?.isTouched &&
+                          !itemErrors.institution?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">
                           Institution
                         </FieldLabel>
@@ -187,9 +206,24 @@ const EducationList: FC<EducationListProps> = ({
                               e.target.value,
                             )
                           }
+                          aria-invalid={
+                            itemErrors.institution?.isTouched &&
+                            !itemErrors.institution?.isValid
+                          }
                         />
+                        {itemErrors.institution?.isTouched &&
+                          !itemErrors.institution?.isValid && (
+                            <FieldError
+                              errors={itemErrors.institution?.errors ?? []}
+                            />
+                          )}
                       </Field>
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.major?.isTouched &&
+                          !itemErrors.major?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">Major</FieldLabel>
                         <Input
                           placeholder="e.g. Computer Science"
@@ -199,11 +233,26 @@ const EducationList: FC<EducationListProps> = ({
                           onChange={(e) =>
                             setEducationField(index, "major", e.target.value)
                           }
+                          aria-invalid={
+                            itemErrors.major?.isTouched &&
+                            !itemErrors.major?.isValid
+                          }
                         />
+                        {itemErrors.major?.isTouched &&
+                          !itemErrors.major?.isValid && (
+                            <FieldError
+                              errors={itemErrors.major?.errors ?? []}
+                            />
+                          )}
                       </Field>
                     </div>
                     <div className="grid grid-cols-2 gap-6">
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.field?.isTouched &&
+                          !itemErrors.field?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">
                           Field of Study
                         </FieldLabel>
@@ -215,11 +264,26 @@ const EducationList: FC<EducationListProps> = ({
                           onChange={(e) =>
                             setEducationField(index, "field", e.target.value)
                           }
+                          aria-invalid={
+                            itemErrors.field?.isTouched &&
+                            !itemErrors.field?.isValid
+                          }
                         />
+                        {itemErrors.field?.isTouched &&
+                          !itemErrors.field?.isValid && (
+                            <FieldError
+                              errors={itemErrors.field?.errors ?? []}
+                            />
+                          )}
                       </Field>
                     </div>
                     <div className="grid grid-cols-2 gap-6">
-                      <Field>
+                      <Field
+                        data-invalid={
+                          itemErrors.startData?.isTouched &&
+                          !itemErrors.startData?.isValid
+                        }
+                      >
                         <FieldLabel className="font-bold">
                           Start Date
                         </FieldLabel>
@@ -235,7 +299,17 @@ const EducationList: FC<EducationListProps> = ({
                               e.target.value,
                             )
                           }
+                          aria-invalid={
+                            itemErrors.startData?.isTouched &&
+                            !itemErrors.startData?.isValid
+                          }
                         />
+                        {itemErrors.startData?.isTouched &&
+                          !itemErrors.startData?.isValid && (
+                            <FieldError
+                              errors={itemErrors.startData?.errors ?? []}
+                            />
+                          )}
                       </Field>
                       <Field>
                         <FieldLabel className="font-bold">End Date</FieldLabel>
