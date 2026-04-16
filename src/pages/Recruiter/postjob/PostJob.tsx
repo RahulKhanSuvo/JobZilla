@@ -41,6 +41,7 @@ export default function PostJob() {
       experience: "",
       careerLevel: "",
       qualification: "",
+      location: "",
       deadline: new Date(),
       jobType: "FULL_TIME",
       skills: "",
@@ -121,10 +122,25 @@ export default function PostJob() {
                         <SelectValue placeholder="Accountng/ Finance" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Design">Design</SelectItem>
-                        <SelectItem value="Development">Development</SelectItem>
-                        <SelectItem value="Marketing">Marketing</SelectItem>
-                        <SelectItem value="Finance">Finance</SelectItem>
+                        {[
+                          "Sales",
+                          "Marketing",
+                          "Finance",
+                          "Development",
+                          "IT",
+                          "HR",
+                          "Education",
+                          "Healthcare",
+                          "Customer Service",
+                          "Engineering",
+                          "Design",
+                          "Food and Beverage",
+                          "Other",
+                        ].map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FieldError errors={field.state.meta.errors} />
@@ -155,6 +171,26 @@ export default function PostJob() {
                         <SelectItem value="INTERN">Intern</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FieldError errors={field.state.meta.errors} />
+                  </Field>
+                )}
+              />
+
+              <form.Field
+                name="location"
+                children={(field) => (
+                  <Field data-invalid={!!field.state.meta.errors.length}>
+                    <FieldLabel className="font-semibold">
+                      Location <span className="text-red-500">*</span>
+                    </FieldLabel>
+                    <Input
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="Dhaka"
+                      variant="withBg"
+                      aria-invalid={!!field.state.meta.errors.length}
+                    />
                     <FieldError errors={field.state.meta.errors} />
                   </Field>
                 )}
@@ -295,6 +331,13 @@ export default function PostJob() {
                         <SelectItem value="1 Year">1 Year</SelectItem>
                         <SelectItem value="2 Years">2 Years</SelectItem>
                         <SelectItem value="3+ Years">3+ Years</SelectItem>
+                        <SelectItem value="4+ Years">4+ Years</SelectItem>
+                        <SelectItem value="5+ Years">5+ Years</SelectItem>
+                        <SelectItem value="6+ Years">6+ Years</SelectItem>
+                        <SelectItem value="7+ Years">7+ Years</SelectItem>
+                        <SelectItem value="8+ Years">8+ Years</SelectItem>
+                        <SelectItem value="9+ Years">9+ Years</SelectItem>
+                        <SelectItem value="10+ Years">10+ Years</SelectItem>
                       </SelectContent>
                     </Select>
                     <FieldError errors={field.state.meta.errors} />
