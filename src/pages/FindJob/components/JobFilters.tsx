@@ -114,9 +114,13 @@ export default function JobFilters({ form }: JobFiltersProps) {
                 className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
               >
                 <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="remote">Remote</SelectItem>
-                <SelectItem value="onsite">On-Site</SelectItem>
-                <SelectItem value="hybrid">Hybrid</SelectItem>
+                <SelectItem value="REMOTE">Remote</SelectItem>
+                <SelectItem value="ON_SITE">On-Site</SelectItem>
+                <SelectItem value="HYBRID">Hybrid</SelectItem>
+                <SelectItem value="FULL_TIME">Full Time</SelectItem>
+                <SelectItem value="PART_TIME">Part Time</SelectItem>
+                <SelectItem value="CONTRACT">Contract</SelectItem>
+                <SelectItem value="INTERN">Intern</SelectItem>
               </SelectContent>
             </Select>
           )}
