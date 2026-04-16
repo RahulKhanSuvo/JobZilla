@@ -132,7 +132,6 @@ export default function ProfileEdit() {
               endData: e.endData
                 ? new Date(e.endData).toISOString().split("T")[0]
                 : "",
-              gap: Number(e.gap) || 0,
             }))
           : [emptyEducation()],
       );

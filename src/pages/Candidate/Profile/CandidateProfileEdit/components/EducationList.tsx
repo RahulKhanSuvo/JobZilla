@@ -217,26 +217,6 @@ const EducationList: FC<EducationListProps> = ({
                           }
                         />
                       </Field>
-                      <Field>
-                        <FieldLabel className="font-bold">
-                          Gap (years)
-                        </FieldLabel>
-                        <Input
-                          placeholder="0"
-                          type="number"
-                          min={0}
-                          className="h-11 border-none shadow-none"
-                          variant="withBg"
-                          value={edu.gap ?? 0}
-                          onChange={(e) =>
-                            setEducationField(
-                              index,
-                              "gap",
-                              Number(e.target.value),
-                            )
-                          }
-                        />
-                      </Field>
                     </div>
                     <div className="grid grid-cols-2 gap-6">
                       <Field>
