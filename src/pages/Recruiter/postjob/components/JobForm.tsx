@@ -148,9 +148,9 @@ export default function JobForm({
                     <SelectContent>
                       <SelectItem value="FULL_TIME">Full-time</SelectItem>
                       <SelectItem value="PART_TIME">Part-time</SelectItem>
-                      <SelectItem value="FREELANCE">Freelance</SelectItem>
                       <SelectItem value="REMOTE">Remote</SelectItem>
                       <SelectItem value="CONTRACT">Contract</SelectItem>
+                      <SelectItem value="HYBRID">Hybrid</SelectItem>
                       <SelectItem value="INTERN">Intern</SelectItem>
                     </SelectContent>
                   </Select>
@@ -168,15 +168,15 @@ export default function JobForm({
                     onValueChange={(val) =>
                       field.handleChange(val as typeof field.state.value)
                     }
-                    value={field.state.value || "Any"}
+                    value={field.state.value || "ANY"}
                   >
                     <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full rounded-none">
-                      <SelectValue placeholder="10 - 50" />
+                      <SelectValue placeholder="Any" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Male">Male</SelectItem>
-                      <SelectItem value="Female">Female</SelectItem>
-                      <SelectItem value="Any">Any</SelectItem>
+                      <SelectItem value="MALE">Male</SelectItem>
+                      <SelectItem value="FEMALE">Female</SelectItem>
+                      <SelectItem value="ANY">Any</SelectItem>
                     </SelectContent>
                   </Select>
                   <FieldError errors={field.state.meta.errors} />
@@ -353,6 +353,7 @@ export default function JobForm({
                   </FieldLabel>
                   <Input
                     type="date"
+                    min={new Date().toISOString().split("T")[0]}
                     value={
                       field.state.value instanceof Date
                         ? field.state.value.toISOString().split("T")[0]
