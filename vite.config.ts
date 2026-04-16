@@ -20,7 +20,7 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "./src/assets"), // assets shortcut
     },
   },
-  esbuild: {
-    drop: ["console", "debugger"],
-  },
+  // esbuild: {
+  //   drop: ["console", "debugger"],
+  // },
 });

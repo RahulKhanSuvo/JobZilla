@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "@tanstack/react-form";
-import { zodValidator, type ZodValidator } from "@tanstack/zod-form-adapter";
+import { type ZodValidator } from "@tanstack/zod-form-adapter";
 import { postJobSchema, type PostJobFormData } from "./postJobSchema";
 import { toast } from "sonner";
 import {
@@ -24,7 +24,13 @@ import RichTextEditor from "@/components/common/RichTextEditor";
 import { useCreateJobMutation } from "@/redux/features/job/job.api";
 import { errorToast } from "@/utils/errorToast";
 
-export default function PostJob() {
+export default function PostJob({
+  isEdit = false,
+  defaultValues,
+}: {
+  isEdit?: boolean;
+  defaultValues?: PostJobFormData;
+}) {
   const [createJob, { isLoading }] = useCreateJobMutation();
 
   const form = useForm<PostJobFormData, ZodValidator>({
@@ -42,8 +48,8 @@ export default function PostJob() {
       deadline: new Date(),
       jobType: "FULL_TIME",
       skills: "",
+      ...defaultValues,
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: postJobSchema,
     },
@@ -59,9 +65,9 @@ export default function PostJob() {
 
   return (
     <div className="space-y-6 pb-12">
-      <DashboardTitle>Post A New Job</DashboardTitle>
+      <DashboardTitle> {isEdit ? "Edit Job" : "Post A New Job"}</DashboardTitle>
 
-      <form.Subscribe
+      {/* <form.Subscribe
         selector={(state) => ({
           values: state.values,
           errors: state.errors,
@@ -72,7 +78,7 @@ export default function PostJob() {
             {JSON.stringify(state, null, 2)}
           </pre>
         )}
-      />
+      /> */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
