@@ -26,7 +26,7 @@ const authApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["User"],
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const result = await queryFulfilled;
           console.log(result);
