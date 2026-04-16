@@ -4,6 +4,7 @@ import RecruiterLayout from "@/layouts/RecruiterLayout";
 import RecruiterDashboard from "@/pages/Recruiter/Dashboard/RecruiterDashboard";
 import MyJobs from "@/pages/Recruiter/myjob/MyJobs";
 import PostJob from "@/pages/Recruiter/postjob/PostJob";
+import EditJob from "@/pages/Recruiter/postjob/EditJob";
 import AllApplicants from "@/pages/Recruiter/Applicants/AllApplicants";
 import RecruiterProfilePage from "@/pages/Recruiter/Profile/ProfileView/RecruiterProfilePage";
 import RecruiterProfileEdit from "@/pages/Recruiter/Profile/EditProfile/RecruiterProfileEdit";
@@ -23,7 +24,9 @@ export const recruiterRoutes: RouteObject = {
     { index: true, element: <Navigate to={"dashboard"} /> },
     { path: "dashboard", element: <RecruiterDashboard /> },
     { path: "my-jobs", element: <MyJobs /> },
+
     { path: "my-jobs/post-job", element: <PostJob /> },
+    { path: "my-jobs/edit-job/:id", element: <EditJob /> },
     {
       path: "manage-jobs",
       element: <div className="p-6">Manage Jobs Page</div>,

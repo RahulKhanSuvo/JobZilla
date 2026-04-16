@@ -247,13 +247,15 @@ export default function MyJobs() {
                         >
                           <Lock className="size-4" />
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                        >
-                          <Edit2 className="size-4" />
-                        </Button>
+                        <Link to={`edit-job/${job.id}`}>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                          >
+                            <Edit2 className="size-4" />
+                          </Button>
+                        </Link>
                         <Button
                           variant="outline"
                           className="h-10 px-6 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg"

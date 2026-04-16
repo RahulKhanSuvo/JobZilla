@@ -83,6 +83,14 @@ const jobApi = baseApi.injectEndpoints({
       query: (companyId: string) => `jobs/company/${companyId}`,
       providesTags: ["Jobs"],
     }),
+    updateJob: builder.mutation({
+      query: ({ id, ...payload }) => ({
+        url: `/jobs/${id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["Jobs"],
+    }),
   }),
 });
 
@@ -95,4 +103,5 @@ export const {
   useGetSaveJobQuery,
   useUnSaveJobMutation,
   useGetCompanyJobsQuery,
+  useUpdateJobMutation,
 } = jobApi;
