@@ -199,10 +199,9 @@ export default function JobForm({
                       <SelectValue placeholder="1 Month" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Monthly">Monthly</SelectItem>
-                      <SelectItem value="Weekly">Weekly</SelectItem>
-                      <SelectItem value="Hourly">Hourly</SelectItem>
-                      <SelectItem value="Fixed">Fixed</SelectItem>
+                      <SelectItem value="MONTHLY">Monthly</SelectItem>
+                      <SelectItem value="YEARLY">Yearly</SelectItem>
+                      <SelectItem value="HOURLY">Hourly</SelectItem>
                     </SelectContent>
                   </Select>
                   <FieldError errors={field.state.meta.errors} />
