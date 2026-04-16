@@ -43,7 +43,7 @@ export default function JobForm({
       salaryMin: "",
       salaryMax: "",
       experience: "Fresher",
-      careerLevel: "Entry",
+      careerLevel: "ENTRY_LEVEL",
       qualification: "High School",
       deadline: new Date(),
       jobType: "FULL_TIME",
@@ -302,10 +302,12 @@ export default function JobForm({
                       <SelectValue placeholder="Managerial" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Entry">Entry Level</SelectItem>
-                      <SelectItem value="Mid">Mid Level</SelectItem>
-                      <SelectItem value="Senior">Senior Level</SelectItem>
-                      <SelectItem value="Managerial">Managerial</SelectItem>
+                      <SelectItem value="ENTRY_LEVEL">Entry Level</SelectItem>
+                      <SelectItem value="MID_LEVEL">Mid Level</SelectItem>
+                      <SelectItem value="SENIOR_LEVEL">Senior Level</SelectItem>
+                      <SelectItem value="EXECUTIVE_LEVEL">
+                        Executive Level
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FieldError errors={field.state.meta.errors} />
