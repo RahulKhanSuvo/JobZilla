@@ -15,6 +15,7 @@ interface SessionProviderProps {
 
 export default function SessionProvider({ children }: SessionProviderProps) {
   const { data: user, isLoading } = useCurrentUserQuery();
+  console.log(user);
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   useEffect(() => {
