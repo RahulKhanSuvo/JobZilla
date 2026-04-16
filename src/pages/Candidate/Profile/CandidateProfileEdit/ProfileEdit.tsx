@@ -32,7 +32,6 @@ const emptyEducation = () => ({
   institution: "",
   major: "",
   field: "",
-  gap: 0,
   startData: "",
   endData: "",
   isStudying: false,
@@ -93,8 +92,6 @@ export default function ProfileEdit() {
       }
     },
   });
-
-  // ─── Seed form from API data ──────────────────────────────────────────────
   useEffect(() => {
     if (userData?.data) {
       const data = userData.data as any;
