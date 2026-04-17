@@ -1,11 +1,10 @@
 import { Progress } from "@/components/ui/progress";
 import { useMemo } from "react";
-import { useFormContext } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import type { ProfileFormData } from "../../profileSchema";
 
 export default function ProfileProgress() {
-  const { watch } = useFormContext<ProfileFormData>();
-  const values = watch();
+  const values = useWatch<ProfileFormData>();
 
   const completion = useMemo(() => {
     const fields: (keyof ProfileFormData)[] = [
@@ -13,15 +12,19 @@ export default function ProfileProgress() {
       "email",
       "phone",
       "location",
-      "aboutMe",
-      "gender",
       "dob",
+      "gender",
+      "maritalStatus",
+      "language",
       "skills",
-      "educationList",
-      "experienceList",
+      "aboutMe",
+      "careerFinding",
       "facebook",
       "linkedin",
+      "twitter",
       "avatar",
+      "educationList",
+      "experienceList",
     ];
 
     let filledCount = 0;
@@ -29,8 +32,14 @@ export default function ProfileProgress() {
       const val = values[field];
       if (Array.isArray(val)) {
         if (val.length > 0) filledCount++;
-      } else if (val && val !== "") {
-        filledCount++;
+      } else if (val) {
+        // Check for empty string or other falsy values, but allow boolean true/false (though not relevant here)
+        if (typeof val === "string" && val.trim() !== "") {
+          filledCount++;
+        } else if (typeof val === "object" && val !== null) {
+          // Handles Files (avatar) or other objects
+          filledCount++;
+        }
       }
     });
 

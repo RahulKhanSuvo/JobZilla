@@ -21,8 +21,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera } from "lucide-react";
 import { useState } from "react";
 import type { ProfileFormData } from "../../profileSchema";
+import type { User } from "@/redux/features/auth/auth.type";
 
-export default function PersonalDetails() {
+export default function PersonalDetails({ user }: { user: User | null }) {
   const { control, watch, setValue } = useFormContext<ProfileFormData>();
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -37,13 +38,16 @@ export default function PersonalDetails() {
       setValue("avatar", file as any);
     }
   };
+  console.log(user);
 
   return (
     <CommonWrapper className="p-8 space-y-8">
       <div className="flex flex-col md:flex-row gap-8 items-start">
         <div className="relative group mx-auto md:mx-0">
           <Avatar className="size-32 border-4 border-white shadow-xl">
-            <AvatarImage src={preview || ""} />
+            <AvatarImage
+              src={user?.candidate?.profilePicture || preview || ""}
+            />
             <AvatarFallback className="text-2xl font-black bg-primary/10 text-primary">
               {watch("fullName")?.charAt(0) || "U"}
             </AvatarFallback>

@@ -171,7 +171,7 @@ export default function ProfileEdit() {
           </div>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-            <PersonalDetails />
+            <PersonalDetails user={user} />
             <ProfessionalInfo />
             <EducationSection />
             <ExperienceSection />
