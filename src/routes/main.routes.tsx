@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import MainLayout from "@/layouts/MainLayout";
 import { type RouteObject } from "react-router";
+import GlobalErrorBoundary from "@/pages/errors/GlobalErrorBoundary";
 import JobzillaLoading from "@/components/common/JobzillaLoading";
 
 const Home = lazy(() => import("@/pages/Home/Home"));
@@ -18,6 +19,7 @@ const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 
 export const mainRoutes: RouteObject = {
   path: "/",
+  errorElement: <GlobalErrorBoundary />,
   element: (
     <Suspense fallback={<JobzillaLoading />}>
       <MainLayout />

@@ -47,6 +47,7 @@ export const profileSchema = z.object({
   facebook: z.string().url("Invalid URL").or(z.literal("")).optional(),
   linkedin: z.string().url("Invalid URL").or(z.literal("")).optional(),
   twitter: z.string().url("Invalid URL").or(z.literal("")).optional(),
+  avatar: z.any().optional(),
 });
 
 export type ProfileFormData = z.infer<typeof profileSchema>;

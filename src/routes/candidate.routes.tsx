@@ -3,6 +3,7 @@ import { Navigate, type RouteObject } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import { lazy, Suspense } from "react";
 import JobzillaLoading from "@/components/common/JobzillaLoading";
+import GlobalErrorBoundary from "@/pages/errors/GlobalErrorBoundary";
 const JobDetails = lazy(() => import("@/pages/JobDetails/JobDetails"));
 const CandidateDashboard = lazy(
   () => import("@/pages/Candidate/Dashbaord/CandidateDashboard"),
@@ -32,6 +33,7 @@ const Notification = lazy(
 );
 export const candidateRoutes: RouteObject = {
   path: "/candidate",
+  errorElement: <GlobalErrorBoundary />,
   element: (
     <ProtectedRoute allowRole={["CANDIDATE"]}>
       <Suspense fallback={<JobzillaLoading />}>

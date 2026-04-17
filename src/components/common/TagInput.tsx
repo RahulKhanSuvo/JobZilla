@@ -51,7 +51,7 @@ export default function TagInput({
             key={index}
             className="flex items-center gap-1 bg-[#EBF5FF] text-[#004A80] px-3 py-1.5 rounded-lg  font-bold border border-[#D1E9FF]"
           >
-            {tag}
+            {typeof tag === "string" ? tag : JSON.stringify(tag)}
             {!disabled && (
               <button
                 type="button"
