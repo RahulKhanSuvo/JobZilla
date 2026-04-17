@@ -45,9 +45,7 @@ export default function PersonalDetails({ user }: { user: User | null }) {
       <div className="flex flex-col md:flex-row gap-8 items-start">
         <div className="relative group mx-auto md:mx-0">
           <Avatar className="size-32 border-4 border-white shadow-xl">
-            <AvatarImage
-              src={user?.candidate?.profilePicture || preview || ""}
-            />
+            <AvatarImage src={user?.candidate?.avatar || preview || ""} />
             <AvatarFallback className="text-2xl font-black bg-primary/10 text-primary">
               {watch("fullName")?.charAt(0) || "U"}
             </AvatarFallback>
