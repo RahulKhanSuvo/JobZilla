@@ -78,7 +78,6 @@ export interface Education {
   institution: string;
   major: string;
   field: string;
-  gap: number | null;
   startData: string | null;
   endData: string | null;
   isStudying: boolean;

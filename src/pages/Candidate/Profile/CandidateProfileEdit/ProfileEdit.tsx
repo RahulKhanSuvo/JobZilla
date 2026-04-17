@@ -90,7 +90,6 @@ export default function ProfileEdit() {
               institution: e.institution,
               major: e.major,
               field: e.field,
-              gap: e.gap || 0,
               startData: e.startData || "",
               endData: e.endData || "",
               isStudying: e.isStudying || false,

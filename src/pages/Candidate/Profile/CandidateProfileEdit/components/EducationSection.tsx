@@ -34,7 +34,6 @@ export default function EducationSection() {
               institution: "",
               major: "",
               field: "",
-              gap: 0,
               startData: "",
               endData: "",
               isStudying: false,
@@ -51,7 +50,7 @@ export default function EducationSection() {
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="p-6 border rounded-xl bg-neutral-100 dark:bg-slate-900/50 relative group"
+            className="p-6 border rounded bg-neutral-100 dark:bg-slate-900/50 relative group"
           >
             <Button
               type="button"
@@ -179,7 +178,6 @@ export default function EducationSection() {
                   institution: "",
                   major: "",
                   field: "",
-                  gap: 0,
                   startData: "",
                   endData: "",
                   isStudying: false,

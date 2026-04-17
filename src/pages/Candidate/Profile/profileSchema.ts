@@ -21,7 +21,6 @@ export const profileSchema = z.object({
         institution: z.string().min(1, "Institution is required"),
         major: z.string().min(1, "Major is required"),
         field: z.string().min(1, "Field of study is required"),
-        gap: z.number().min(0, "Gap must be 0 or more").optional(),
         startData: z.string().min(1, "Start date is required"),
         endData: z.string().optional(),
         isStudying: z.boolean().optional(),
