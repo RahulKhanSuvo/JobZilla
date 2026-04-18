@@ -21,9 +21,11 @@ import {
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
-import { useGetMyJobsQuery } from "@/redux/features/job/job.api";
+import { useDeleteJobMutation, useGetMyJobsQuery } from "@/redux/features/job/job.api";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { IJob } from "@/types/job";
+import { toast } from "sonner";
+import { errorToast } from "@/utils/errorToast";
 
 const stats = [
   {
@@ -59,6 +61,7 @@ export default function MyJobs() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [deleteJob, { isLoading: isDeleting }] = useDeleteJobMutation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -99,6 +102,15 @@ export default function MyJobs() {
     },
     ...stats.slice(1),
   ];
+
+  const handleDeleteJob = async (jobId: string) => {
+    try {
+      await deleteJob(jobId).unwrap();
+      toast.success("Job deleted successfully");
+    } catch (error) {
+      errorToast(error);
+    }
+  };
 
   return (
     <div className="space-y-8 pb-12">
@@ -258,8 +270,10 @@ export default function MyJobs() {
                           </Button>
                         </Link>
                         <Button
+                          onClick={() => handleDeleteJob(job.id)}
+                          disabled={isDeleting}
                           variant="outline"
-                          className="h-10 px-6 border-none text-red-600 font-bold hover:bg-red-50 rounded-lg"
+                          className="h-10 px-6 border-none text-red-600 font-bold hover:bg-red-50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           <Trash2 className="size-4" />
                         </Button>
