@@ -40,8 +40,8 @@ export default function JobForm({
       category: initialValues?.category || "",
       gender: initialValues?.gender || "ANY",
       salaryType: initialValues?.salaryType || "MONTHLY",
-      salaryMin: initialValues?.salaryMin || 0,
-      salaryMax: initialValues?.salaryMax || 0,
+      salaryMin: initialValues?.salaryMin || "",
+      salaryMax: initialValues?.salaryMax || "",
       experience: initialValues?.experience || "Fresher",
       careerLevel: initialValues?.careerLevel || "ENTRY_LEVEL",
       qualification: initialValues?.qualification || "High School",
@@ -217,7 +217,11 @@ export default function JobForm({
                   <Input
                     type="number"
                     value={field.state.value}
-                    onChange={(e) => field.handleChange(Number(e.target.value))}
+                    onChange={(e) =>
+                      field.handleChange(
+                        e.target.value === "" ? undefined : Number(e.target.value)
+                      )
+                    }
                     onBlur={field.handleBlur}
                     placeholder="e.g. 1000"
                     variant="withBg"
@@ -238,7 +242,11 @@ export default function JobForm({
                   <Input
                     type="number"
                     value={field.state.value}
-                    onChange={(e) => field.handleChange(Number(e.target.value))}
+                    onChange={(e) =>
+                      field.handleChange(
+                        e.target.value === "" ? undefined : Number(e.target.value)
+                      )
+                    }
                     onBlur={field.handleBlur}
                     placeholder="e.g. 5000"
                     variant="withBg"
