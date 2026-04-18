@@ -47,7 +47,6 @@ export default function JobForm({
       qualification: initialValues?.qualification || "High School",
       deadline: initialValues?.deadline || new Date(),
       jobType: initialValues?.jobType || "FULL_TIME",
-      skills: initialValues?.skills || "",
     } as PostJobFormData,
     validators: {
       onChange: postJobSchema,
