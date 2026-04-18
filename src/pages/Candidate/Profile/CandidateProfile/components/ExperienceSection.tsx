@@ -70,7 +70,7 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({
                       </span>
                     </p>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      {exp.Description}
+                      <div className="prose" dangerouslySetInnerHTML={{ __html: exp.Description || "" }} />
                     </p>
                   </div>
                 </div>
