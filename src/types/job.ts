@@ -17,9 +17,8 @@ export interface IJob {
   description: string;
   category: string;
   tags: string[];
+  views: number;
   gender?: string | null;
-  externalUrl?: string | null;
-  applyEmail?: string | null;
   salaryType?: string | null;
   salaryMin?: number | null;
   salaryMax?: number | null;

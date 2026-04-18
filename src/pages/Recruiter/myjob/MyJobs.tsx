@@ -198,6 +198,9 @@ export default function MyJobs() {
                   Created & Expiry
                 </th>
                 <th className="px-8 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                  Views
+                </th>
+                <th className="px-8 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
                   Status
                 </th>
                 <th className="px-8 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest text-right">
@@ -253,6 +256,11 @@ export default function MyJobs() {
                           </span>
                         </p>
                       </div>
+                    </td>
+                    <td className="px-8 py-6">
+                      <span className="text-sm text-slate-600 font-semibold">
+                        {job.views}
+                      </span>
                     </td>
                     <td className="px-8 py-6">
                       <span className={`inline-flex items-center px-4 py-2 rounded-full text-xs font-bold ${job.status === "OPEN" ? "bg-emerald-50 text-emerald-600" : job.status === "CLOSED" ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}>
