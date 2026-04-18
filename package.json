@@ -11,6 +11,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@base-ui/react": "^1.4.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-switch": "^1.2.6",
     "@reduxjs/toolkit": "^2.11.2",
