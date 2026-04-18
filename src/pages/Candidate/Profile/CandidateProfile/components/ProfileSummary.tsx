@@ -27,7 +27,7 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
         {/* Avatar */}
         <div className="flex justify-between items-end -mt-12 mb-4">
           <Avatar className="size-24 border-4 border-white dark:border-slate-900 shadow-md bg-white">
-            <AvatarImage src={data.profileImage || ""} alt={data.fullName} />
+            <AvatarImage src={data.avatar || ""} alt={data.fullName} />
             <AvatarFallback className="text-3xl font-bold bg-primary/10 text-primary">
               {data.fullName?.charAt(0) || "U"}
             </AvatarFallback>

@@ -43,7 +43,7 @@ export interface CandidateProfile {
   maritalStatus: string | null;
   language: string | null;
   aboutMe: string | null;
-  profileImage: string | null;
+  avatar: string | null;
   facebook: string | null;
   linkedin: string | null;
   github: string | null;
