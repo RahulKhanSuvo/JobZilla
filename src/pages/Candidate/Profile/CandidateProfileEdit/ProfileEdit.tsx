@@ -83,7 +83,7 @@ export default function ProfileEdit() {
             )
           : [],
         language: Array.isArray(candidate?.language)
-          ? (candidate.language as (string | Language)[]).map((l) =>
+          ? candidate.language.map((l: Language) =>
               typeof l === "string" ? l : l.language || l.name || "",
             )
           : [],
