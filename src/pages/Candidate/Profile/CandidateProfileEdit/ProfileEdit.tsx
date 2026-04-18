@@ -176,7 +176,6 @@ export default function ProfileEdit() {
             <EducationSection />
             <ExperienceSection />
             <SocialLinks />
-
             <div className="flex justify-end pt-6">
               <Button
                 type="submit"
