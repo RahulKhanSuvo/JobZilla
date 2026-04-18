@@ -69,8 +69,8 @@ export default function JobCard({
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-            <div className="flex flex-wrap gap-2">
-              {job.tags.slice(0, 2).map((tag, idx) => (
+            {/* <div className="flex flex-wrap gap-2">
+              {job.tags.slice(0, 2).map((tag: string, idx: number) => (
                 <span
                   key={idx}
                   className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-tight border border-slate-100 dark:border-slate-800 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 hover:text-emerald-600 transition-colors cursor-pointer"
@@ -78,7 +78,7 @@ export default function JobCard({
                   {tag}
                 </span>
               ))}
-            </div>
+            </div> */}
             <div className="flex items-center gap-0.5 sm:justify-end">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star

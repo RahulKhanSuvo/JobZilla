@@ -4,14 +4,17 @@ import { useCreateJobMutation } from "@/redux/features/job/job.api";
 import { errorToast } from "@/utils/errorToast";
 import JobForm from "./components/JobForm";
 import type { PostJobFormData } from "./postJobSchema";
+import { useNavigate } from "react-router";
 
 export default function PostJob() {
   const [createJob, { isLoading }] = useCreateJobMutation();
+  const navigate = useNavigate();
 
   const handleSubmit = async (values: PostJobFormData) => {
     try {
       await createJob(values).unwrap();
       toast.success("Job posted successfully!");
+      navigate("/recruiter/jobs");
     } catch (error) {
       errorToast(error);
     }
