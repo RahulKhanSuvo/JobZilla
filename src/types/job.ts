@@ -6,6 +6,11 @@ export type JobType =
   | "INTERN"
   | "REMOTE";
 
+export type JobStatus =
+  | "OPEN"
+  | "CLOSED"
+  | "PUBLISHED";
+
 export interface IJob {
   id: string;
   title: string;
@@ -29,7 +34,9 @@ export interface IJob {
   companyId: string;
   applyType?: string | null;
   totalApplications?: number | null;
+  status?: JobStatus | null;
 }
+
 
 export interface IJobMeta {
   page: number;
