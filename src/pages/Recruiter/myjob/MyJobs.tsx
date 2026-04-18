@@ -26,6 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { IJob } from "@/types/job";
 import { toast } from "sonner";
 import { errorToast } from "@/utils/errorToast";
+import ConfirmDialog from "@/components/common/ConfirmDialog";
 
 const stats = [
   {
@@ -62,6 +63,8 @@ export default function MyJobs() {
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [deleteJob, { isLoading: isDeleting }] = useDeleteJobMutation();
+  const [open, setOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -102,15 +105,6 @@ export default function MyJobs() {
     },
     ...stats.slice(1),
   ];
-
-  const handleDeleteJob = async (jobId: string) => {
-    try {
-      await deleteJob(jobId).unwrap();
-      toast.success("Job deleted successfully");
-    } catch (error) {
-      errorToast(error);
-    }
-  };
 
   return (
     <div className="space-y-8 pb-12">
@@ -270,14 +264,15 @@ export default function MyJobs() {
                           </Button>
                         </Link>
                         <Button
-                          onClick={() => handleDeleteJob(job.id)}
-                          disabled={isDeleting}
+                          onClick={() => {
+                            setSelectedJobId(job.id);
+                            setOpen(true);
+                          }}
                           variant="outline"
-                          className="h-10 px-6 border-none text-red-600 font-bold hover:bg-red-50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="h-10 px-6 border-none text-red-600 font-bold hover:bg-red-50 rounded-lg"
                         >
                           <Trash2 className="size-4" />
                         </Button>
-
                       </div>
                     </td>
                   </tr>
@@ -293,6 +288,29 @@ export default function MyJobs() {
           </table>
         </div>
       </CommonWrapper>
+      <ConfirmDialog
+        open={open}
+        title="Delete Job?"
+        description="This job will be permanently deleted."
+        loading={isDeleting}
+        onCancel={() => {
+          setOpen(false);
+          setSelectedJobId(null);
+        }}
+        onConfirm={async () => {
+          if (!selectedJobId) return;
+
+          try {
+            await deleteJob(selectedJobId).unwrap();
+            toast.success("Job deleted successfully");
+          } catch (error) {
+            errorToast(error);
+          } finally {
+            setOpen(false);
+            setSelectedJobId(null);
+          }
+        }}
+      />
     </div>
   );
 }
