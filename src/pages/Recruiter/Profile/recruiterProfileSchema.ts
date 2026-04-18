@@ -4,7 +4,7 @@ export const recruiterProfileSchema = z.object({
   name: z.string().min(2, "Employer name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 characters"),
-  website: z.string().url("Invalid website URL").optional().or(z.literal("")),
+  website: z.string().url("Invalid website URL"),
   foundedDate: z.string(),
   companySize: z.string(),
   showProfile: z.boolean(),
