@@ -11,10 +11,32 @@ import SectionTitle from "@/components/common/SectionTitle";
 import RichTextEditor from "@/components/common/RichTextEditor";
 import TagInput from "@/components/common/TagInput";
 import type { ProfileFormData } from "../../profileSchema";
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+  useComboboxAnchor,
+} from "@/components/ui/combobox";
 
 export default function ProfessionalInfo() {
   const { control } = useFormContext<ProfileFormData>();
-
+  const anchor = useComboboxAnchor();
+  const languages = [
+    "English",
+    "Bengali",
+    "Hindi",
+    "Arabic",
+    "French",
+    "Spanish",
+    "German",
+    "Chinese",
+  ] as const;
   return (
     <CommonWrapper className="p-8 space-y-8">
       <SectionTitle size="sm">Professional Info</SectionTitle>
@@ -58,19 +80,49 @@ export default function ProfessionalInfo() {
         <FormField
           control={control}
           name="language"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <TagInput
-                  label="Languages"
-                  value={field.value || []}
-                  onChange={field.onChange}
-                  placeholder="Type a language and press Enter (e.g. English, French)"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Languages</FormLabel>
+                <FormControl>
+                  <Combobox
+                    multiple
+                    autoHighlight
+                    items={languages}
+                    value={field.value || []}
+                    onValueChange={field.onChange}
+                  >
+                    {/* Input + Chips */}
+                    <ComboboxChips ref={anchor} className="w-full">
+                      <ComboboxValue>
+                        {(values) => (
+                          <>
+                            {values.map((value: string) => (
+                              <ComboboxChip key={value}>{value}</ComboboxChip>
+                            ))}
+                            <ComboboxChipsInput placeholder="Select languages..." />
+                          </>
+                        )}
+                      </ComboboxValue>
+                    </ComboboxChips>
+
+                    {/* Dropdown */}
+                    <ComboboxContent anchor={anchor}>
+                      <ComboboxEmpty>No language found.</ComboboxEmpty>
+                      <ComboboxList>
+                        {(item) => (
+                          <ComboboxItem key={item} value={item}>
+                            {item}
+                          </ComboboxItem>
+                        )}
+                      </ComboboxList>
+                    </ComboboxContent>
+                  </Combobox>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
       </div>
     </CommonWrapper>
