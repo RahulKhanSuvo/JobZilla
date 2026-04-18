@@ -27,16 +27,7 @@ import {
 export default function ProfessionalInfo() {
   const { control } = useFormContext<ProfileFormData>();
   const anchor = useComboboxAnchor();
-  const languages = [
-    "English",
-    "Bengali",
-    "Hindi",
-    "Arabic",
-    "French",
-    "Spanish",
-    "German",
-    "Chinese",
-  ] as const;
+  const languages = ["English", "Bengali", "Spanish"] as const;
   return (
     <CommonWrapper className="p-8 space-y-8">
       <SectionTitle size="sm">Professional Info</SectionTitle>
