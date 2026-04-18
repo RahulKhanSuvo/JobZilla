@@ -17,16 +17,18 @@ import {
   Edit2,
   Lock,
   Trash2,
+  Unlock,
 } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
-import { useDeleteJobMutation, useGetMyJobsQuery } from "@/redux/features/job/job.api";
+import { useDeleteJobMutation, useGetMyJobsQuery, useUpdateJobStatusMutation } from "@/redux/features/job/job.api";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { IJob } from "@/types/job";
 import { toast } from "sonner";
 import { errorToast } from "@/utils/errorToast";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
+import AppTooltip from "@/components/common/AppTooltip";
 
 const stats = [
   {
@@ -63,6 +65,7 @@ export default function MyJobs() {
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [deleteJob, { isLoading: isDeleting }] = useDeleteJobMutation();
+  const [updateJobStatus, { isLoading: isUpdatingStatus }] = useUpdateJobStatusMutation();
   const [open, setOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
@@ -105,6 +108,17 @@ export default function MyJobs() {
     },
     ...stats.slice(1),
   ];
+
+  const handleStatusChange = async (id: string, status: string) => {
+    try {
+      const result = await updateJobStatus({ id, status });
+      if (result.data) {
+        toast.success("Job status updated successfully");
+      }
+    } catch (error) {
+      errorToast(error);
+    }
+  };
 
   return (
     <div className="space-y-8 pb-12">
@@ -247,13 +261,17 @@ export default function MyJobs() {
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex items-center justify-end gap-3">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
-                        >
-                          <Lock className="size-4" />
-                        </Button>
+                        <AppTooltip content={job.status === "OPEN" ? "Close Job" : "Open Job"}>
+                          <Button
+                            variant="ghost"
+                            disabled={isUpdatingStatus}
+                            size="icon"
+                            className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                            onClick={() => handleStatusChange(job.id, job.status === "OPEN" ? "CLOSED" : "OPEN")}
+                          >
+                            {job.status === "OPEN" ? <Lock className="size-4" /> : <Unlock className="size-4" />}
+                          </Button>
+                        </AppTooltip>
                         <Link to={`edit-job/${job.id}`}>
                           <Button
                             variant="ghost"

@@ -98,7 +98,16 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Jobs"],
     }),
+    updateJobStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/jobs/status/${id}`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: ["Jobs"],
+    }),
   }),
+  overrideExisting: true,
 });
 
 export const {
@@ -112,4 +121,5 @@ export const {
   useGetCompanyJobsQuery,
   useUpdateJobMutation,
   useDeleteJobMutation,
+  useUpdateJobStatusMutation,
 } = jobApi;
