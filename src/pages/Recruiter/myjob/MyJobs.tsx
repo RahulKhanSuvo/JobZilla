@@ -235,7 +235,7 @@ export default function MyJobs() {
                       </div>
                     </td>
                     <td className="px-8 py-6">
-                      <span className="inline-flex items-center px-4 py-2 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">
+                      <span className={`inline-flex items-center px-4 py-2 rounded-full text-xs font-bold ${job.status === "OPEN" ? "bg-emerald-50 text-emerald-600" : job.status === "CLOSED" ? "bg-red-50 text-red-600" : "bg-blue-50 text-blue-600"}`}>
                         {job.status?.replace("_", " ")}
                       </span>
                     </td>
