@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./features/counter/counterSlice";
 import authReducer from "./features/auth/authSlice";
 import sidebarReducer from "./features/layout/sidebarSlice";
 import basApi from "./features/hook/baseApi";
 export const store = configureStore({
   reducer: {
     [basApi.reducerPath]: basApi.reducer,
-    counter: counterReducer,
     auth: authReducer,
     sidebar: sidebarReducer,
   },
