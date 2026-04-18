@@ -91,7 +91,7 @@ export interface WorkExperience {
   startData: string | null;
   endData: string | null;
   isWorking: boolean;
-  description: string | null;
+  Description: string | null;
 }
 
 export type CurrentUserResponse = {

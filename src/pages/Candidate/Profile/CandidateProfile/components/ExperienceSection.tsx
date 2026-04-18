@@ -10,7 +10,7 @@ interface Experience {
   industry: string;
   startData: string | null;
   endData: string | null;
-  description: string | null;
+  Description: string | null;
   isWorking: boolean;
 }
 
@@ -70,7 +70,7 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({
                       </span>
                     </p>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      {exp.description || "No description provided."}
+                      {exp.Description}
                     </p>
                   </div>
                 </div>
