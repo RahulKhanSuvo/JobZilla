@@ -27,7 +27,6 @@ export interface IJob {
   careerLevel?: string | null;
   qualification?: string | null;
   deadline?: string | null;
-  skills?: string | null;
   createdAt: string;
   updatedAt: string;
   companyId: string;
