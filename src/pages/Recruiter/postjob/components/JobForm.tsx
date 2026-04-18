@@ -35,20 +35,19 @@ export default function JobForm({
 }: JobFormProps) {
   const form = useForm<PostJobFormData, ZodValidator>({
     defaultValues: {
-      title: "",
-      description: "",
-      category: "",
-      gender: "ANY",
-      salaryType: "MONTHLY",
-      salaryMin: "",
-      salaryMax: "",
-      experience: "Fresher",
-      careerLevel: "ENTRY_LEVEL",
-      qualification: "High School",
-      deadline: new Date(),
-      jobType: "FULL_TIME",
-      skills: "",
-      ...initialValues,
+      title: initialValues?.title || "",
+      description: initialValues?.description || "",
+      category: initialValues?.category || "",
+      gender: initialValues?.gender || "ANY",
+      salaryType: initialValues?.salaryType || "MONTHLY",
+      salaryMin: initialValues?.salaryMin || 0,
+      salaryMax: initialValues?.salaryMax || 0,
+      experience: initialValues?.experience || "Fresher",
+      careerLevel: initialValues?.careerLevel || "ENTRY_LEVEL",
+      qualification: initialValues?.qualification || "High School",
+      deadline: initialValues?.deadline || new Date(),
+      jobType: initialValues?.jobType || "FULL_TIME",
+      skills: initialValues?.skills || "",
     } as PostJobFormData,
     validators: {
       onChange: postJobSchema,
@@ -219,8 +218,8 @@ export default function JobForm({
                   <Input
                     type="number"
                     value={field.state.value}
+                    onChange={(e) => field.handleChange(Number(e.target.value))}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="e.g. 1000"
                     variant="withBg"
                     aria-invalid={!!field.state.meta.errors.length}
@@ -240,8 +239,8 @@ export default function JobForm({
                   <Input
                     type="number"
                     value={field.state.value}
+                    onChange={(e) => field.handleChange(Number(e.target.value))}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="e.g. 5000"
                     variant="withBg"
                     aria-invalid={!!field.state.meta.errors.length}
@@ -355,13 +354,15 @@ export default function JobForm({
                     type="date"
                     min={new Date().toISOString().split("T")[0]}
                     value={
-                      field.state.value instanceof Date
-                        ? field.state.value.toISOString().split("T")[0]
-                        : field.state.value
+                      field.state.value
+                        ? new Date(field.state.value).toISOString().split("T")[0]
+                        : ""
                     }
                     onBlur={field.handleBlur}
                     onChange={(e) =>
-                      field.handleChange(new Date(e.target.value))
+                      field.handleChange(
+                        e.target.value ? new Date(e.target.value) : undefined
+                      )
                     }
                     variant="withBg"
                     className="cursor-pointer"
