@@ -71,7 +71,9 @@ export default function ProfileEdit() {
         email: user.email || "",
         phone: user.phone || candidate?.phone || "",
         location: candidate?.location || "",
-        dob: candidate?.dob || "",
+        dob: candidate?.dob
+          ? new Date(candidate.dob).toISOString().split("T")[0]
+          : "",
         gender: (candidate?.gender as "Male" | "Female" | "Other") || "Male",
         maritalStatus: candidate?.maritalStatus || "Single",
         aboutMe: candidate?.aboutMe || "",
@@ -90,8 +92,12 @@ export default function ProfileEdit() {
               institution: e.institution,
               major: e.major,
               field: e.field,
-              startData: e.startData || "",
-              endData: e.endData || "",
+              startData: e.startData
+                ? new Date(e.startData).toISOString().split("T")[0]
+                : "",
+              endData: e.endData
+                ? new Date(e.endData).toISOString().split("T")[0]
+                : "",
               isStudying: e.isStudying || false,
             }))
           : [],
@@ -100,8 +106,12 @@ export default function ProfileEdit() {
               jobTitle: ex.jobTitle,
               companyName: ex.companyName,
               industry: ex.industry,
-              startData: ex.startData || "",
-              endData: ex.endData || "",
+              startData: ex.startData
+                ? new Date(ex.startData).toISOString().split("T")[0]
+                : "",
+              endData: ex.endData
+                ? new Date(ex.endData).toISOString().split("T")[0]
+                : "",
               isWorking: ex.isWorking || false,
               Description: ex.description || "",
             }))
