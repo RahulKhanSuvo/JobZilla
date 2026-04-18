@@ -16,6 +16,7 @@ import {
   Clock,
   Edit2,
   Lock,
+  Trash2,
 } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { Link } from "react-router";
@@ -258,10 +259,11 @@ export default function MyJobs() {
                         </Link>
                         <Button
                           variant="outline"
-                          className="h-10 px-6 border-emerald-500 text-emerald-600 font-bold hover:bg-emerald-50 rounded-lg"
+                          className="h-10 px-6 border-none text-red-600 font-bold hover:bg-red-50 rounded-lg"
                         >
-                          Cancel
+                          <Trash2 className="size-4" />
                         </Button>
+
                       </div>
                     </td>
                   </tr>
