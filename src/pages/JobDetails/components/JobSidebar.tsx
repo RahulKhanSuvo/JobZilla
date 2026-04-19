@@ -15,8 +15,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import {
   useFollowACompanyMutation,
   useUnFollowACompanyMutation,
@@ -52,10 +50,10 @@ export default function JobSidebar({ job }: JobSidebarProps) {
       label: "Application Deadline",
       value: job.deadline
         ? new Date(job.deadline).toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          })
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        })
         : "N/A",
       icon: Calendar,
     },
@@ -82,7 +80,6 @@ export default function JobSidebar({ job }: JobSidebarProps) {
     },
   ];
 
-  const user = useSelector(selectCurrentUser);
   const [followCompany, { isLoading: isFollowing }] =
     useFollowACompanyMutation();
   const [unFollowCompany, { isLoading: isUnFollowing }] =
@@ -90,12 +87,10 @@ export default function JobSidebar({ job }: JobSidebarProps) {
   const handleFollowClick = () => {
     if (job?.isFollowed) {
       unFollowCompany({
-        userId: user?.id || "",
         companyId: job.company?.user?.id || "",
       });
     } else {
       followCompany({
-        userId: user?.id || "",
         companyId: job.company?.user?.id || "",
       });
     }
