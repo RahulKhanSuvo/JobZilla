@@ -89,7 +89,7 @@ export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
                 View Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2">
+            <DropdownMenuItem onClick={() => { }} className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2">
               <UserMinus className="size-4" />
               Unfollow
             </DropdownMenuItem>
