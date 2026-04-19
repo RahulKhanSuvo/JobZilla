@@ -5,10 +5,13 @@ import RecommendedJobs from "./components/RecommendedJobs";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
+import { useGetCandidateDashboardStatsQuery } from "@/redux/features/allStats/stats.api";
 
 export default function CandidateDashboard() {
   const { data: user } = useCurrentUserQuery();
+  const { data: stats } = useGetCandidateDashboardStatsQuery();
   const userName = user?.data?.name || "Candidate";
+  console.log(stats)
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -41,7 +44,7 @@ export default function CandidateDashboard() {
       </div>
 
       {/* Stats Cards */}
-      <StatsOverview />
+      <StatsOverview stats={stats?.data} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Column */}

@@ -1,41 +1,42 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Briefcase, Eye, Bookmark, CheckCircle } from "lucide-react";
 
-const stats = [
-  {
-    title: "Total Applied",
-    value: "145",
-    icon: Briefcase,
-    color: "text-blue-600",
-    bg: "bg-blue-100 dark:bg-blue-900/30",
-  },
-  {
-    title: "Interviews",
-    value: "12",
-    icon: CheckCircle,
-    color: "text-green-600",
-    bg: "bg-green-100 dark:bg-green-900/30",
-  },
-  {
-    title: "Profile Views",
-    value: "1,240",
-    icon: Eye,
-    color: "text-purple-600",
-    bg: "bg-purple-100 dark:bg-purple-900/30",
-  },
-  {
-    title: "Saved Jobs",
-    value: "28",
-    icon: Bookmark,
-    color: "text-orange-600",
-    bg: "bg-orange-100 dark:bg-orange-900/30",
-  },
-];
 
-export default function StatsOverview() {
+
+export default function StatsOverview({ stats }: { stats: any }) {
+  const statsData = [
+    {
+      title: "Total Applied",
+      value: stats?.totalApplications,
+      icon: Briefcase,
+      color: "text-blue-600",
+      bg: "bg-blue-100 dark:bg-blue-900/30",
+    },
+    {
+      title: "Shortlisted",
+      value: stats?.totlaShortListedJobs,
+      icon: CheckCircle,
+      color: "text-green-600",
+      bg: "bg-green-100 dark:bg-green-900/30",
+    },
+    {
+      title: "Profile Views",
+      value: stats?.totalViews,
+      icon: Eye,
+      color: "text-purple-600",
+      bg: "bg-purple-100 dark:bg-purple-900/30",
+    },
+    {
+      title: "Saved Jobs",
+      value: stats?.totalSavedJobs,
+      icon: Bookmark,
+      color: "text-orange-600",
+      bg: "bg-orange-100 dark:bg-orange-900/30",
+    },
+  ];
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-      {stats.map((stat, index) => (
+      {statsData.map((stat, index) => (
         <Card key={index} className="border-none shadow-sm dark:bg-slate-900">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">

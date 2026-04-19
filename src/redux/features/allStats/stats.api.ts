@@ -1,3 +1,4 @@
+import type { IApiResponse } from "@/types/job";
 import baseApi from "../hook/baseApi";
 
 const statsApi = baseApi.injectEndpoints({
@@ -5,7 +6,7 @@ const statsApi = baseApi.injectEndpoints({
         getJobStats: builder.query({
             query: () => "/stats/employer/job-stats",
         }),
-        getCandidateDashboardStats: builder.query({
+        getCandidateDashboardStats: builder.query<IApiResponse<any>, void>({
             query: () => "/stats/candidate/dashboard-stats",
         }),
     }),
