@@ -9,7 +9,7 @@ import { useGetCandidateDashboardStatsQuery } from "@/redux/features/allStats/st
 
 export default function CandidateDashboard() {
   const { data: user } = useCurrentUserQuery();
-  const { data: stats } = useGetCandidateDashboardStatsQuery();
+  const { data: stats, isLoading } = useGetCandidateDashboardStatsQuery();
   const userName = user?.data?.name || "Candidate";
   console.log(stats)
 
@@ -44,7 +44,16 @@ export default function CandidateDashboard() {
       </div>
 
       {/* Stats Cards */}
-      <StatsOverview stats={stats?.data} />
+
+      {
+        isLoading ? <p>Loading...</p> : <StatsOverview stats={stats?.data ?? {
+          totalApplications: 0,
+          totalSavedJobs: 0,
+          totalViews: 0,
+          totlaShortListedJobs: 0,
+        }} />
+      }
+
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Column */}
