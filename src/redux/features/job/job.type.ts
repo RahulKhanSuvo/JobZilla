@@ -11,3 +11,12 @@ export interface GetJobsResponse {
     totalPage: number;
   };
 }
+export interface JobStats {
+  totalJobs: number;
+  openJobs: number;
+  closedJobs: number;
+  totalViews: number;
+  totalApplicants: number;
+  publishedJobs?: number;
+  conversionRate?: number;
+}

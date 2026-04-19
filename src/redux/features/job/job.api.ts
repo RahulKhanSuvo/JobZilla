@@ -6,7 +6,7 @@ import type {
   IJobResponse,
   ISavedJob,
 } from "@/types/job";
-import type { GetJobsResponse } from "./job.type";
+import type { GetJobsResponse, JobStats } from "./job.type";
 
 const jobApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -106,8 +106,11 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Jobs"],
     }),
+    getJobStats: builder.query<IApiResponse<JobStats>, void>({
+      query: () => "/stats/employer/job-stats",
+      providesTags: ["Jobs"],
+    }),
   }),
-  overrideExisting: true,
 });
 
 export const {
@@ -122,4 +125,5 @@ export const {
   useUpdateJobMutation,
   useDeleteJobMutation,
   useUpdateJobStatusMutation,
+  useGetJobStatsQuery,
 } = jobApi;

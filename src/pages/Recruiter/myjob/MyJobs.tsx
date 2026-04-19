@@ -13,7 +13,6 @@ import {
   Plus,
   Briefcase,
   Users,
-  Clock,
   Edit2,
   Lock,
   Trash2,
@@ -22,34 +21,16 @@ import {
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
-import { useDeleteJobMutation, useGetMyJobsQuery, useUpdateJobStatusMutation } from "@/redux/features/job/job.api";
+import { useDeleteJobMutation, useGetJobStatsQuery, useGetMyJobsQuery, useUpdateJobStatusMutation } from "@/redux/features/job/job.api";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { IJob } from "@/types/job";
 import { toast } from "sonner";
 import { errorToast } from "@/utils/errorToast";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import AppTooltip from "@/components/common/AppTooltip";
+import StatsCardSkeleton from "@/components/common/StatsCardSkeleton";
 
-const stats = [
-  {
-    label: "Job Published",
-    value: "0",
-    icon: Briefcase,
-    color: "bg-blue-50 text-blue-600",
-  },
-  {
-    label: "Total Applicants",
-    value: "0",
-    icon: Users,
-    color: "bg-emerald-50 text-emerald-600",
-  },
-  {
-    label: "Pending Review",
-    value: "0",
-    icon: Clock,
-    color: "bg-amber-50 text-amber-600",
-  },
-];
+
 
 const formatDate = (dateString: string) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -68,7 +49,34 @@ export default function MyJobs() {
   const [updateJobStatus, { isLoading: isUpdatingStatus }] = useUpdateJobStatusMutation();
   const [open, setOpen] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
-
+  const { data: jobStats, isLoading: isJobStatsLoading } = useGetJobStatsQuery();
+  console.log("jobstats", jobStats)
+  const stats = [
+    {
+      label: "Job Published",
+      value: jobStats?.data.totalJobs?.toString() || "0",
+      icon: Briefcase,
+      color: "bg-blue-50 text-blue-600",
+    },
+    {
+      label: "Total Applicants",
+      value: jobStats?.data.totalApplicants?.toString() || "0",
+      icon: Users,
+      color: "bg-emerald-50 text-emerald-600",
+    },
+    {
+      label: "Open Jobs",
+      value: jobStats?.data.openJobs?.toString() || "0",
+      icon: Unlock,
+      color: "bg-amber-50 text-amber-600",
+    },
+    {
+      label: "Closed Jobs",
+      value: jobStats?.data.closedJobs?.toString() || "0",
+      icon: Lock,
+      color: "bg-amber-50 text-amber-600",
+    },
+  ];
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
@@ -134,26 +142,30 @@ export default function MyJobs() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {updatedStats.map((stat, index) => (
-          <CommonWrapper
-            key={index}
-            className="px-6 py-6 flex items-center gap-5"
-          >
-            <div
-              className={`size-14 rounded-2xl flex items-center justify-center ${stat.color}`}
+      {isJobStatsLoading ? (
+        <StatsCardSkeleton count={4} />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {updatedStats.map((stat, index) => (
+            <CommonWrapper
+              key={index}
+              className="px-6 py-6 flex items-center gap-5"
             >
-              <stat.icon className="size-7" />
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-slate-900">{stat.value}</p>
-              <p className="text-sm text-slate-500 font-medium mt-1">
-                {stat.label}
-              </p>
-            </div>
-          </CommonWrapper>
-        ))}
-      </div>
+              <div
+                className={`size-14 rounded-2xl flex items-center justify-center ${stat.color}`}
+              >
+                <stat.icon className="size-7" />
+              </div>
+              <div>
+                <p className="text-3xl font-bold text-slate-900">{stat.value}</p>
+                <p className="text-sm text-slate-500 font-medium mt-1">
+                  {stat.label}
+                </p>
+              </div>
+            </CommonWrapper>
+          ))}
+        </div>
+      )}
 
       {/* Search and Sort */}
       <CommonWrapper className="p-4 flex flex-col md:flex-row gap-4 justify-between items-center">
