@@ -4,46 +4,29 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MoreVertical, ExternalLink, Mail, Clock } from "lucide-react";
+import type { RecentApplicant } from "@/redux/features/allStats/stats.type";
+import { formatDistanceToNow } from "date-fns";
 
-const applicants = [
-  {
-    name: "Jane Doe",
-    role: "Senior React Developer",
-    status: "Pending",
-    date: "2 hours ago",
-    avatar: "https://i.pravatar.cc/150?u=jane",
-    color:
-      "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
-  },
-  {
-    name: "John Smith",
-    role: "Product Designer",
-    status: "Interviewed",
-    date: "Yesterday",
-    avatar: "https://i.pravatar.cc/150?u=john",
-    color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  },
-  {
-    name: "Alice Johnson",
-    role: "Backend Engineer",
-    status: "Shortlisted",
-    date: "2 days ago",
-    avatar: "https://i.pravatar.cc/150?u=alice",
-    color:
-      "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
-  },
-  {
-    name: "Robert Wilson",
-    role: "Marketing Specialist",
-    status: "Offer Sent",
-    date: "3 days ago",
-    avatar: "https://i.pravatar.cc/150?u=robert",
-    color:
-      "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-  },
-];
+interface RecentApplicantsProps {
+  applicants?: RecentApplicant[];
+}
 
-export function RecentApplicants() {
+const getStatusColor = (status: string) => {
+  switch (status.toUpperCase()) {
+    case "PENDING":
+      return "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400";
+    case "SHORTLISTED":
+      return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400";
+    case "HIRED":
+      return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400";
+    case "REJECTED":
+      return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
+    default:
+      return "bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400";
+  }
+};
+
+export function RecentApplicants({ applicants = [] }: RecentApplicantsProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -73,27 +56,33 @@ export function RecentApplicants() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                {applicants.map((applicant, i) => (
+                {applicants.map((applicant) => (
                   <motion.tr
-                    key={i}
+                    key={applicant.id}
                     whileHover={{ backgroundColor: "rgba(0,0,0,0.01)" }}
                     className="group"
                   >
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-3">
                         <Avatar className="size-10 border-2 border-white dark:border-slate-800 shadow-sm">
-                          <AvatarImage src={applicant.avatar} />
-                          <AvatarFallback>{applicant.name[0]}</AvatarFallback>
+                          <AvatarImage
+                            src={
+                              applicant.user.candidate?.avatar ||
+                              `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant.user.name}`
+                            }
+                          />
+                          <AvatarFallback>
+                            {applicant.user.name[0]}
+                          </AvatarFallback>
                         </Avatar>
                         <div>
                           <p className="text-sm font-bold text-slate-900 dark:text-white">
-                            {applicant.name}
+                            {applicant.user.name}
                           </p>
                           <div className="flex items-center gap-1.5 text-xs text-slate-500">
                             <Mail className="size-3" />
                             <span className="truncate max-w-[120px]">
-                              {applicant.name.toLowerCase().replace(" ", ".")}
-                              @example.com
+                              {applicant.user.email}
                             </span>
                           </div>
                         </div>
@@ -101,12 +90,14 @@ export function RecentApplicants() {
                     </td>
                     <td className="px-6 py-5">
                       <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        {applicant.role}
+                        {applicant.job.title}
                       </p>
                     </td>
                     <td className="px-6 py-5">
                       <Badge
-                        className={`rounded-full px-3 py-1 text-[10px] font-bold border-none ${applicant.color}`}
+                        className={`rounded-full px-3 py-1 text-[10px] font-bold border-none ${getStatusColor(
+                          applicant.status,
+                        )}`}
                       >
                         {applicant.status}
                       </Badge>
@@ -114,7 +105,9 @@ export function RecentApplicants() {
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-1.5 text-xs text-slate-500">
                         <Clock className="size-3" />
-                        {applicant.date}
+                        {formatDistanceToNow(new Date(applicant.createdAt), {
+                          addSuffix: true,
+                        })}
                       </div>
                     </td>
                     <td className="px-8 py-5 text-right">
@@ -137,6 +130,16 @@ export function RecentApplicants() {
                     </td>
                   </motion.tr>
                 ))}
+                {applicants.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan={5}
+                      className="px-8 py-10 text-center text-slate-500 text-sm italic"
+                    >
+                      No applicants found
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

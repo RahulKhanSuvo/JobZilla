@@ -1,53 +1,12 @@
-import {
-  Briefcase,
-  Users,
-  UserCheck,
-  CheckCircle,
-  TrendingUp,
-  TrendingDown,
-} from "lucide-react";
+import { Briefcase, Users, UserCheck, CheckCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import type { EmployerStats } from "@/redux/features/allStats/stats.type";
 
-const stats = [
-  {
-    title: "Active Jobs",
-    value: "24",
-    trend: "+12%",
-    isUp: true,
-    icon: Briefcase,
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-  },
-  {
-    title: "Total Applicants",
-    value: "1,240",
-    trend: "+15%",
-    isUp: true,
-    icon: Users,
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-  },
-  {
-    title: "Shortlisted",
-    value: "85",
-    trend: "+8%",
-    isUp: true,
-    icon: UserCheck,
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-  },
-  {
-    title: "Total Hired",
-    value: "12",
-    trend: "-2%",
-    isUp: false,
-    icon: CheckCircle,
-    color: "text-emerald-600",
-    bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
-  },
-];
+interface StatsGridProps {
+  stats?: EmployerStats;
+}
 
 const container = {
   hidden: { opacity: 0 },
@@ -64,7 +23,38 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
-export function StatsGrid() {
+export function StatsGrid({ stats }: StatsGridProps) {
+  const displayStats = [
+    {
+      title: "Active Jobs",
+      value: stats?.openJobs.toString() || "0",
+      icon: Briefcase,
+      color: "text-primary",
+      bgColor: "bg-primary/10",
+    },
+    {
+      title: "Total Applicants",
+      value: stats?.totalApplicants.toLocaleString() || "0",
+      icon: Users,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50 dark:bg-blue-900/20",
+    },
+    {
+      title: "Shortlisted",
+      value: stats?.shortlistedApplicants.toString() || "0",
+      icon: UserCheck,
+      color: "text-amber-600",
+      bgColor: "bg-amber-50 dark:bg-amber-900/20",
+    },
+    {
+      title: "Total Hired",
+      value: stats?.hiredApplicants.toString() || "0",
+      icon: CheckCircle,
+      color: "text-emerald-600",
+      bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
+    },
+  ];
+
   return (
     <motion.div
       variants={container}
@@ -72,28 +62,13 @@ export function StatsGrid() {
       animate="show"
       className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
     >
-      {stats.map((stat, index) => (
+      {displayStats.map((stat, index) => (
         <motion.div key={index} variants={item}>
           <Card className="border-none shadow hover:shadow-sm transition-shadow duration-300 rounded overflow-hidden bg-white dark:bg-slate-900">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className={cn("p-3 rounded", stat.bgColor)}>
                   <stat.icon className={cn("size-6", stat.color)} />
-                </div>
-                <div
-                  className={cn(
-                    "flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full",
-                    stat.isUp
-                      ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20"
-                      : "text-red-600 bg-red-50 dark:bg-red-900/20",
-                  )}
-                >
-                  {stat.isUp ? (
-                    <TrendingUp className="size-3" />
-                  ) : (
-                    <TrendingDown className="size-3" />
-                  )}
-                  {stat.trend}
                 </div>
               </div>
               <div>

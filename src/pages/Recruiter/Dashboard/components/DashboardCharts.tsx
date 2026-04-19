@@ -15,26 +15,26 @@ import {
   Cell,
 } from "recharts";
 
-// Dummy data for application trend
-const trendData = [
-  { day: "Mon", value: 35 },
-  { day: "Tue", value: 48 },
-  { day: "Wed", value: 42 },
-  { day: "Thu", value: 65 },
-  { day: "Fri", value: 58 },
-  { day: "Sat", value: 75 },
-  { day: "Sun", value: 68 },
-];
+interface ITrendData {
+  day: string;
+  value: number;
+}
 
-// Dummy data for pipeline
-const pipelineData = [
-  { stage: "Applied", value: 1240, color: "var(--primary)" },
-  { stage: "Screened", value: 450, color: "var(--primary)" },
-  { stage: "Interview", value: 120, color: "var(--primary)" },
-  { stage: "Offer", value: 24, color: "var(--primary)" },
-];
+interface IPipelineData {
+  stage: string;
+  value: number;
+  color: string;
+}
 
-export function DashboardCharts() {
+interface DashboardChartsProps {
+  trendData?: ITrendData[];
+  pipelineData?: IPipelineData[];
+}
+
+export function DashboardCharts({
+  trendData = [],
+  pipelineData = [],
+}: DashboardChartsProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 font-sans">
       {/* Application Trend Chart */}
@@ -42,6 +42,7 @@ export function DashboardCharts() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2 }}
+        className="h-full"
       >
         <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 h-full">
           <CardHeader className="flex flex-row items-center justify-between pb-8 border-b border-slate-50 dark:border-slate-800">
@@ -127,6 +128,7 @@ export function DashboardCharts() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
+        className="h-full"
       >
         <Card className="border-none shadow rounded overflow-hidden bg-white dark:bg-slate-900 border-l-4 border-l-primary h-full">
           <CardHeader className="pb-8 border-b border-slate-50 dark:border-slate-800">
@@ -185,10 +187,10 @@ export function DashboardCharts() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-500 uppercase">
-                      Growth Rate
+                      Engagement
                     </p>
                     <p className="text-sm font-bold text-slate-900 dark:text-white">
-                      +8.2% this week
+                      Active candidates
                     </p>
                   </div>
                 </div>
