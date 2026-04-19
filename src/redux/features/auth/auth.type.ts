@@ -53,9 +53,10 @@ export interface CandidateProfile {
   workExperiences: WorkExperience[];
 }
 
-export type CandidateProfileData = CandidateProfile & {
+export type CandidateProfileData = {
   fullName: string;
   email: string;
+  candidate?: CandidateProfile | null;
 };
 
 export type AuthUser = {

@@ -1,18 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Circle } from "lucide-react";
+import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import { calculateProfileCompletion } from "@/utils/profileCompletion";
+import { Link } from "react-router";
+interface ProfileCompletenessProps {
+  data: CandidateProfileData;
+}
 
-const steps = [
-  { title: "Basic Information", completed: true },
-  { title: "Educational background", completed: true },
-  { title: "Work Experience", completed: true },
-  { title: "Upload Portfolio", completed: false },
-  { title: "Skill Assessment", completed: false },
-];
 
-export default function ProfileCompleteness() {
-  const completedCount = steps.filter((s) => s.completed).length;
-  const percentage = Math.round((completedCount / steps.length) * 100);
+export default function ProfileCompleteness({ data }: ProfileCompletenessProps) {
+
+  const { percentage, checks } = calculateProfileCompletion(data);
 
   return (
     <Card className="border-none shadow-sm dark:bg-slate-900 overflow-hidden relative">
@@ -35,29 +34,29 @@ export default function ProfileCompleteness() {
         </p>
 
         <ul className="space-y-3">
-          {steps.map((step, index) => (
+          {checks.map((check, index) => (
             <li key={index} className="flex items-center gap-3 text-sm">
-              {step.completed ? (
+              {check.completed ? (
                 <CheckCircle2 className="size-4 text-green-500 shrink-0" />
               ) : (
                 <Circle className="size-4 text-slate-300 dark:text-slate-700 shrink-0" />
               )}
               <span
                 className={
-                  step.completed ? "text-foreground" : "text-muted-foreground"
+                  check.completed ? "text-foreground" : "text-muted-foreground"
                 }
               >
-                {step.title}
+                {check.label}
               </span>
             </li>
           ))}
         </ul>
 
-        <Button className="w-full mt-2 group">
-          Improve Profile
-          <span className="ml-2 group-hover:translate-x-1 transition-transform">
-            →
-          </span>
+        <Button asChild className="w-full mt-2 group">
+          <Link to={"/candidate/profile"}>Improve Profile
+            <span className="ml-2 group-hover:translate-x-1 transition-transform">
+              →
+            </span></Link>
         </Button>
       </CardContent>
     </Card>

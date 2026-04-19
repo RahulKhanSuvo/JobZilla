@@ -16,20 +16,20 @@ export const calculateProfileCompletion = (
   const checks: CompletionCheck[] = [
     {
       label: "Basic Details",
-      completed: !!(data.fullName && data.email && data.phone && data.location),
+      completed: !!(data.fullName && data.email && data.candidate?.phone && data.candidate?.location),
     },
-    { label: "About Me", completed: !!data.aboutMe },
+    { label: "About Me", completed: !!data.candidate?.aboutMe },
     {
       label: "Experience",
-      completed: (data.workExperiences?.length ?? 0) > 0,
+      completed: (data.candidate?.workExperiences?.length ?? 0) > 0,
     },
     {
       label: "Education",
-      completed: (data.eductions?.length ?? 0) > 0,
+      completed: (data.candidate?.eductions?.length ?? 0) > 0,
     },
     {
       label: "Skills",
-      completed: (data.skills?.length ?? 0) > 0,
+      completed: (data.candidate?.skills?.length ?? 0) > 0,
     },
   ];
 
