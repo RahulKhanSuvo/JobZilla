@@ -32,7 +32,6 @@ export default function RecruiterDashboard() {
 
   const stats = statsResponse.data;
 
-  // Transform status counts for the Hiring Pipeline chart
   const pipelineData = [
     { stage: "Applied", value: stats.totalApplicants, color: "var(--primary)" },
     {
