@@ -48,7 +48,7 @@ export default function RecruiterDashboard() {
   ];
 
   return (
-    <div className="p-6">
+    <>
       <div className="max-w-[1600px] mx-auto">
         {/* Top Header Section */}
         <DashboardHeader />
@@ -65,6 +65,6 @@ export default function RecruiterDashboard() {
         {/* Tables and List Sections */}
         <RecentApplicants applicants={stats.recentApplicants} />
       </div>
-    </div>
+    </>
   );
 }
