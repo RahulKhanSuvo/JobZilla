@@ -22,8 +22,8 @@ export default function RecentApplications() {
     <Card className="border-none shadow-sm dark:bg-slate-900">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-xl font-bold">Recent Applications</CardTitle>
-        <Button variant="ghost" size="sm" className="text-primary">
-          View All
+        <Button asChild variant="ghost" size="sm" className="text-primary">
+          <Link to="/candidate/my-applied-jobs">View All</Link>
         </Button>
       </CardHeader>
       <CardContent>
