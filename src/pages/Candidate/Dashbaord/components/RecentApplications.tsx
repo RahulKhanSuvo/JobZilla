@@ -13,6 +13,7 @@ import { ExternalLink, MapPin } from "lucide-react";
 import { useGetCandidateAppliedJobsQuery } from "@/redux/features/candidate/candidate.api";
 import TableSkeleton from "@/components/common/TableSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link } from "react-router";
 
 export default function RecentApplications() {
   const { data: response, isLoading } = useGetCandidateAppliedJobsQuery()
@@ -86,7 +87,7 @@ export default function RecentApplications() {
                         size="icon"
                         className="size-8 hover:text-primary transition-colors"
                       >
-                        <ExternalLink className="size-4" />
+                        <Link to={`/job/${app.jobId}`}><ExternalLink className="size-4" /></Link>
                       </Button>
                     </TableCell>
                   </TableRow>
