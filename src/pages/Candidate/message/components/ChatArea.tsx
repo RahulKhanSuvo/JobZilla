@@ -7,6 +7,8 @@ interface ChatAreaProps {
   messages: ChatMessage[];
   onSendMessage: (text: string) => void;
   onBack: () => void;
+  isTyping?: boolean;
+  onTyping?: () => void;
 }
 
 export default function ChatArea({
@@ -14,6 +16,8 @@ export default function ChatArea({
   messages,
   onSendMessage,
   onBack,
+  isTyping = false,
+  onTyping,
 }: ChatAreaProps) {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -123,6 +127,25 @@ export default function ChatArea({
             </div>
           );
         })}
+        {/* Typing indicator */}
+        {isTyping && (
+          <div className="flex self-start">
+            <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex items-center gap-1">
+              <span
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "0ms" }}
+              />
+              <span
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "150ms" }}
+              />
+              <span
+                className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                style={{ animationDelay: "300ms" }}
+              />
+            </div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -147,7 +170,10 @@ export default function ChatArea({
           <input
             type="text"
             value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
+            onChange={(e) => {
+              setInputText(e.target.value);
+              onTyping?.();
+            }}
             placeholder="Type your message..."
             className="flex-1 bg-transparent border-none focus:outline-none py-3 px-2 text-sm text-gray-800"
           />

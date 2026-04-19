@@ -18,7 +18,10 @@ import {
   MapPin,
   X,
   Loader2,
+  MessageSquareText,
 } from "lucide-react";
+import { useNavigate } from "react-router";
+import { useStartConversationMutation } from "@/redux/features/chat/chat.api";
 import {
   useGetAllApplicationsQuery,
   useUpdateApplicationStatusMutation,
@@ -48,7 +51,18 @@ export default function AllApplicants() {
   const { data: response, isLoading } = useGetAllApplicationsQuery();
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
+  const [startConversation] = useStartConversationMutation();
+  const navigate = useNavigate();
   const applicationList: Application[] = response?.data ?? [];
+
+  const handleOpenChat = async (targetUserId: string) => {
+    try {
+      const res = await startConversation({ targetUserId }).unwrap();
+      navigate(`/recruiter/messages/${res.data.id}`);
+    } catch (error) {
+      errorToast(error);
+    }
+  };
 
   const totalCount = applicationList.length;
   const shortlistedCount = applicationList.filter(
@@ -269,6 +283,15 @@ export default function AllApplicants() {
                             ) : (
                               <X className="size-4" />
                             )}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            title="Message Candidate"
+                            className="size-10 bg-slate-50 text-slate-500 hover:bg-primary/10 hover:text-primary rounded-lg"
+                            onClick={() => handleOpenChat(applicant.userId)}
+                          >
+                            <MessageSquareText className="size-4" />
                           </Button>
                           <Button
                             variant="ghost"
