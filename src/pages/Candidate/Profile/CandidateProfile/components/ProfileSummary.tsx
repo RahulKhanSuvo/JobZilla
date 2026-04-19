@@ -15,6 +15,7 @@ interface ProfileSummaryProps {
 
 const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
   const { percentage } = calculateProfileCompletion(data);
+  const candidate = data.candidate;
 
   return (
     <Card className="overflow-hidden border-none shadow-sm dark:bg-slate-900">
@@ -27,7 +28,7 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
         {/* Avatar */}
         <div className="flex justify-between items-end -mt-12 mb-4">
           <Avatar className="size-24 border-4 border-white dark:border-slate-900 shadow-md bg-white">
-            <AvatarImage src={data.avatar || ""} alt={data.fullName} />
+            <AvatarImage src={candidate?.avatar || ""} alt={data.fullName} />
             <AvatarFallback className="text-3xl font-bold bg-primary/10 text-primary">
               {data.fullName?.charAt(0) || "U"}
             </AvatarFallback>
@@ -64,13 +65,13 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
           </div>
 
           <div className="flex flex-wrap gap-2 pt-2">
-            {data.location && (
+            {candidate?.location && (
               <Badge
                 variant="secondary"
                 className="font-normal gap-1.5 px-3 py-1 bg-primary/5 text-primary border-transparent hover:bg-primary/10 transition-colors"
               >
                 <MapPin className="size-3.5" />
-                {data.location}
+                {candidate?.location}
               </Badge>
             )}
             {data.email && (
@@ -82,21 +83,21 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
                 {data.email}
               </Badge>
             )}
-            {data.phone && (
+            {candidate?.phone && (
               <Badge
                 variant="secondary"
                 className="font-normal gap-1.5 px-3 py-1 bg-primary/5 text-primary border-transparent hover:bg-primary/10 transition-colors"
               >
                 <Phone className="size-3.5" />
-                {data.phone}
+                {candidate?.phone}
               </Badge>
             )}
           </div>
 
           <div className="flex gap-3 pt-2">
-            {data.linkedin && (
+            {candidate?.linkedin && (
               <a
-                href={data.linkedin}
+                href={candidate?.linkedin}
                 target="_blank"
                 rel="noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -104,9 +105,9 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
                 <Linkedin className="size-5" />
               </a>
             )}
-            {data.twitter && (
+            {candidate?.twitter && (
               <a
-                href={data.twitter}
+                href={candidate?.twitter}
                 target="_blank"
                 rel="noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -114,9 +115,9 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
                 <Twitter className="size-5" />
               </a>
             )}
-            {data.facebook && (
+            {candidate?.facebook && (
               <a
-                href={data.facebook}
+                href={candidate?.facebook}
                 target="_blank"
                 rel="noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
