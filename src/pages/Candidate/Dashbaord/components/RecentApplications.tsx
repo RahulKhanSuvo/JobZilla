@@ -9,9 +9,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, MapPin } from "lucide-react";
 import { useGetCandidateAppliedJobsQuery } from "@/redux/features/candidate/candidate.api";
 import TableSkeleton from "@/components/common/TableSkeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function RecentApplications() {
   const { data: response, isLoading } = useGetCandidateAppliedJobsQuery()
@@ -53,7 +54,20 @@ export default function RecentApplications() {
                     key={index}
                     className="border-b border-border/50 last:border-0 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
                   >
-                    <TableCell className="font-medium">{app.job.company.user.name}</TableCell>
+                    <TableCell className="font-medium">
+                      <div className="flex items-center gap-2">
+                        <Avatar>
+                          <AvatarImage src={app.job.company.logo || ""} />
+                          <AvatarFallback>{app.job.company.user.name.charAt(0).toUpperCase()}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{app.job.company.user.name}</span>
+                          <span className="text-muted-foreground text-sm flex items-center gap-1">
+                            <MapPin className="size-3" />
+                            {app.job.company.location}</span>
+                        </div>
+                      </div>
+                    </TableCell>
                     <TableCell>{app.job.title}</TableCell>
                     <TableCell className="text-muted-foreground">
                       {app.createdAt}
