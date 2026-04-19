@@ -6,7 +6,6 @@ import ExperienceSection from "./components/ExperienceSection";
 import EducationSection from "./components/EducationSection";
 import SkillsSection from "./components/SkillsSection";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
 import ProfileSkeleton from "./components/ProfileSkeleton";
 import ProfileErrorState from "./components/ProfileErrorState";
 import ProfileEmptyState from "./components/ProfileEmptyState";
@@ -29,8 +28,8 @@ const CandidateProfilePage: FC = () => {
     return <ProfileEmptyState />;
   }
 
-  const profileData: CandidateProfileData = {
-    ...candidate,
+  const profileData = {
+    candidate: candidate,
     fullName: user.name || "",
     email: user.email,
   };

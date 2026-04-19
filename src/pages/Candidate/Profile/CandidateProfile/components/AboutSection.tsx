@@ -11,11 +11,11 @@ const AboutSection: FC<AboutSectionProps> = ({ data }) => {
   const basicInfoItems = [
     {
       label: "Date of Birth",
-      value: data.dob ? format(new Date(data.dob), "dd MMM, yyyy") : "N/A",
+      value: data.candidate?.dob ? format(new Date(data.candidate?.dob), "dd MMM, yyyy") : "N/A",
     },
-    { label: "Gender", value: data.gender || "N/A" },
-    { label: "Marital Status", value: data.maritalStatus || "N/A" },
-    { label: "Language", value: data.language || "N/A" },
+    { label: "Gender", value: data.candidate?.gender || "N/A" },
+    { label: "Marital Status", value: data.candidate?.maritalStatus || "N/A" },
+    { label: "Language", value: data.candidate?.language || "N/A" },
   ];
 
   return (
@@ -27,10 +27,10 @@ const AboutSection: FC<AboutSectionProps> = ({ data }) => {
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="text-muted-foreground leading-relaxed">
-          {data.aboutMe ? (
+          {data.candidate?.aboutMe ? (
             <div
               className="prose prose-slate dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: data.aboutMe }}
+              dangerouslySetInnerHTML={{ __html: data.candidate?.aboutMe }}
             />
           ) : (
             <p className="italic">No about information provided yet.</p>
