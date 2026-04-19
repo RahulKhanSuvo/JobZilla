@@ -41,7 +41,7 @@ export interface CandidateProfile {
   dob: string | null;
   gender: string | null;
   maritalStatus: string | null;
-  language: string | null;
+  languages: languages[] | null;
   aboutMe: string | null;
   avatar: string | null;
   facebook: string | null;
@@ -52,7 +52,9 @@ export interface CandidateProfile {
   eductions: Education[];
   workExperiences: WorkExperience[];
 }
-
+type languages = {
+  language: string;
+}
 export type CandidateProfileData = {
   fullName: string;
   email: string;

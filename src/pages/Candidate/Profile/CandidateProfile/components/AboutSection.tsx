@@ -15,9 +15,8 @@ const AboutSection: FC<AboutSectionProps> = ({ data }) => {
     },
     { label: "Gender", value: data.candidate?.gender || "N/A" },
     { label: "Marital Status", value: data.candidate?.maritalStatus || "N/A" },
-    { label: "Language", value: data.candidate?.language || "N/A" },
+    { label: "Language", value: data.candidate?.languages?.map((lang: { language: string }) => lang.language).join(", ") || "N/A" },
   ];
-
   return (
     <Card className="border-none shadow-sm dark:bg-slate-900">
       <CardHeader>
