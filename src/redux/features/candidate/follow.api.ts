@@ -8,10 +8,10 @@ const followApi = baseApi.injectEndpoints({
       }: {
         companyId: string;
       }) => ({
-        url: `/follow-company/${companyId}`,
+        url: `/follow-company/follow/${companyId}`,
         method: "POST",
       }),
-      invalidatesTags: ["followCompany"],
+      invalidatesTags: ["followCompany", "Jobs"],
     }),
     unFollowACompany: builder.mutation({
       query: ({
@@ -19,10 +19,10 @@ const followApi = baseApi.injectEndpoints({
       }: {
         companyId: string;
       }) => ({
-        url: `/follow-company/${companyId}`,
+        url: `/follow-company/unfollow/${companyId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["followCompany"],
+      invalidatesTags: ["followCompany", "Jobs"],
     }),
     getAllFollwedCompany: builder.query({
       query: ({ userId }: { userId: string }) => ({
