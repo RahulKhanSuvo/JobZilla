@@ -2,8 +2,10 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 
 export function DashboardHeader() {
+  const { data: user } = useCurrentUserQuery();
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-8 px-6 bg-linear-to-r from-primary to-primary/80 rounded text-white shadow shadow-primary/10 mb-8">
       <motion.div
@@ -15,7 +17,7 @@ export function DashboardHeader() {
           Recruiter Dashboard
         </h1>
         <p className="text-white/80 font-medium font-lato">
-          Welcome back, Sarah! Here's what's happening today.
+          Welcome back, {user?.data?.name}! Here's what's happening today.
         </p>
       </motion.div>
 
