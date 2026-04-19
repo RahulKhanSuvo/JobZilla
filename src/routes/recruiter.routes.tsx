@@ -8,7 +8,7 @@ import EditJob from "@/pages/Recruiter/postjob/EditJob";
 import AllApplicants from "@/pages/Recruiter/Applicants/AllApplicants";
 import RecruiterProfilePage from "@/pages/Recruiter/Profile/ProfileView/RecruiterProfilePage";
 import RecruiterProfileEdit from "@/pages/Recruiter/Profile/EditProfile/RecruiterProfileEdit";
-import RecruiterSettings from "@/pages/Recruiter/RecruiterSettings";
+import RecruiterSettings from "@/pages/Recruiter/setting/RecruiterSettings";
 import ApplicantDetailPage from "@/pages/Recruiter/applicantDetailPage/ApilicantDetailPage";
 import Message from "@/pages/Candidate/message/Message";
 import Notification from "@/pages/Candidate/Notification/Notification";
