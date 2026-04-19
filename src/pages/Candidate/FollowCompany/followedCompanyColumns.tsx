@@ -7,31 +7,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { FollowCompanyItem } from "@/redux/features/candidate/Follow.type";
 
-export interface FollowedCompany {
-  id: string;
-  name: string;
-  logo: string;
-  location: string;
-  industry: string;
-  openJobs: number;
-}
 
-export const followedCompanyColumns: ColumnDef<FollowedCompany>[] = [
+export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
   {
     header: "COMPANY",
     className: "w-[45%]",
     cell: (item) => (
       <div className="flex items-center gap-4">
-        {item.logo ? (
+        {item.company.logo ? (
           <img
-            src={item.logo}
-            alt={item.name}
+            src={item.company.logo}
+            alt={item.company.user.name}
             className="size-12 rounded-full object-cover border border-slate-100 bg-white"
           />
         ) : (
           <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-            {item.name.charAt(0).toUpperCase()}
+            {item.company.user.name.charAt(0).toUpperCase()}
           </div>
         )}
         <div className="space-y-1">
@@ -40,13 +33,13 @@ export const followedCompanyColumns: ColumnDef<FollowedCompany>[] = [
             className="hover:text-primary transition-colors"
           >
             <h4 className="text-[16px] font-bold text-slate-900 dark:text-slate-50">
-              {item.name}
+              {item.company.user.name}
             </h4>
           </Link>
           <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
             <span className="flex items-center gap-1">
               <MapPin className="size-3.5" />
-              {item.location}
+              {item.company.location}
             </span>
           </div>
         </div>
@@ -57,7 +50,7 @@ export const followedCompanyColumns: ColumnDef<FollowedCompany>[] = [
     header: "INDUSTRY",
     cell: (item) => (
       <div className="text-slate-600 dark:text-slate-400 font-medium text-sm">
-        {item.industry}
+        {item.company.industry}
       </div>
     ),
   },
@@ -66,7 +59,7 @@ export const followedCompanyColumns: ColumnDef<FollowedCompany>[] = [
     cell: (item) => (
       <div className="text-slate-600 dark:text-slate-400 font-medium text-sm">
         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500">
-          {item.openJobs} Jobs
+          {item.company._count.applications} Jobs
         </span>
       </div>
     ),

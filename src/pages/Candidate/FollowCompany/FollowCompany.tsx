@@ -3,38 +3,12 @@ import DashboardTitle from "@/components/common/DashboardTitle";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import {
   followedCompanyColumns,
-  type FollowedCompany,
 } from "./followedCompanyColumns";
-
-// Dummy data for now
-const dummyCompanies: FollowedCompany[] = [
-  {
-    id: "1",
-    name: "Stripe",
-    logo: "https://logo.clearbit.com/stripe.com",
-    location: "San Francisco, CA",
-    industry: "Financial Services",
-    openJobs: 12,
-  },
-  {
-    id: "2",
-    name: "Vercel",
-    logo: "https://logo.clearbit.com/vercel.com",
-    location: "Remote",
-    industry: "Software Development",
-    openJobs: 5,
-  },
-  {
-    id: "3",
-    name: "Linear",
-    logo: "https://logo.clearbit.com/linear.app",
-    location: "San Francisco, CA",
-    industry: "Productivity",
-    openJobs: 3,
-  },
-];
+import { useGetAllFollwedCompanyQuery } from "@/redux/features/candidate/follow.api";
 
 export default function FollowCompany() {
+  const { data: response, isLoading } = useGetAllFollwedCompanyQuery(undefined);
+  console.log(response?.data);
   return (
     <div className="space-y-6">
       <div className="mb-2">
@@ -45,10 +19,10 @@ export default function FollowCompany() {
       </div>
 
       <CommonWrapper className="overflow-hidden">
-        <ReusableTable<FollowedCompany>
+        <ReusableTable
           columns={followedCompanyColumns}
-          data={dummyCompanies}
-          isLoading={false}
+          data={response?.data || []}
+          isLoading={isLoading}
           emptyMessage="You are not following any companies yet."
           className="border-none"
         />

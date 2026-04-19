@@ -1,4 +1,6 @@
+import type { IApiResponse } from "@/types/job";
 import baseApi from "../hook/baseApi";
+import type { FollowCompanyItem } from "./Follow.type";
 
 const followApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,9 +26,9 @@ const followApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["followCompany", "Jobs"],
     }),
-    getAllFollwedCompany: builder.query({
-      query: ({ userId }: { userId: string }) => ({
-        url: `/follow-company/${userId}`,
+    getAllFollwedCompany: builder.query<IApiResponse<FollowCompanyItem[]>, void>({
+      query: () => ({
+        url: `/follow-company`,
         method: "GET",
       }),
       providesTags: ["followCompany"],
