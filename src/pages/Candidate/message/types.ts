@@ -4,6 +4,9 @@ export interface User {
   avatar: string;
   role: string;
   status: "online" | "offline";
+  location?: string;
+  about?: string;
+  companyName?: string;
 }
 
 export interface Conversation {

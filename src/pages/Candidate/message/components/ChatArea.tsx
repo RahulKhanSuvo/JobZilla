@@ -9,6 +9,8 @@ interface ChatAreaProps {
   onBack: () => void;
   isTyping?: boolean;
   onTyping?: () => void;
+  onToggleProfile?: () => void;
+  showProfile?: boolean;
 }
 
 export default function ChatArea({
@@ -18,6 +20,8 @@ export default function ChatArea({
   onBack,
   isTyping = false,
   onTyping,
+  onToggleProfile,
+  showProfile = false,
 }: ChatAreaProps) {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -63,19 +67,22 @@ export default function ChatArea({
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <div className="flex items-center cursor-pointer">
+          <div
+            className="flex items-center cursor-pointer group"
+            onClick={onToggleProfile}
+          >
             <div className="relative">
               <img
                 src={conversation.participant.avatar}
                 alt={conversation.participant.name}
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-primary/20 transition-all"
               />
               {conversation.participant.status === "online" && (
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
               )}
             </div>
-            <div className="ml-3">
-              <h3 className="font-semibold text-gray-900 leading-tight">
+            <div className="ml-3 text-left">
+              <h3 className="font-semibold text-gray-900 leading-tight group-hover:text-primary transition-colors">
                 {conversation.participant.name}
               </h3>
               <p className="text-xs text-gray-500">
@@ -85,8 +92,12 @@ export default function ChatArea({
             </div>
           </div>
         </div>
-        <div className="flex items-center">
-          <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full">
+        <div className="flex items-center gap-1">
+          <button
+            onClick={onToggleProfile}
+            className={`p-2 rounded-full transition-colors ${showProfile ? "bg-primary/10 text-primary" : "text-gray-500 hover:bg-gray-100"}`}
+            title="View Profile"
+          >
             <MoreVertical className="w-5 h-5" />
           </button>
         </div>
@@ -105,7 +116,7 @@ export default function ChatArea({
                 <img
                   src={conversation.participant.avatar}
                   alt="avatar"
-                  className="w-8 h-8 rounded-full object-cover mr-2 self-end mb-1 md:hidden"
+                  className="w-8 h-8 rounded-full object-cover mr-2 self-end mb-1"
                 />
               )}
               <div

@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import MessageSidebar from "./components/MessageSidebar";
 import ChatArea from "./components/ChatArea";
+import ProfileDetails from "./components/ProfileDetails";
 import {
   useGetConversationsQuery,
   useGetMessagesQuery,
@@ -18,6 +19,17 @@ import type { RootState } from "@/redux/store";
 interface DbParticipant {
   id: string;
   name: string;
+  role: string;
+  candidate?: {
+    avatar: string | null;
+    aboutMe: string | null;
+    location: string | null;
+  };
+  company?: {
+    logo: string | null;
+    description: string | null;
+    location: string | null;
+  };
 }
 
 interface DbConversation {
@@ -42,6 +54,7 @@ export default function Message() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showProfile, setShowProfile] = useState(false);
 
   const { isConnected, isTyping } = useSelector(
     (state: RootState) => state.chat,
@@ -71,6 +84,16 @@ export default function Message() {
     const isUserA = conv.participantA === user?.id;
     const participantData = isUserA ? conv.userB : conv.userA;
 
+    const avatar =
+      participantData.candidate?.avatar ||
+      participantData.company?.logo ||
+      `https://api.dicebear.com/7.x/avataaars/svg?seed=${participantData.name}`;
+    const location =
+      participantData.candidate?.location || participantData.company?.location;
+    const about =
+      participantData.candidate?.aboutMe ||
+      participantData.company?.description;
+
     return {
       id: conv.id,
       timestamp: new Date(conv.updatedAt).toLocaleTimeString([], {
@@ -82,9 +105,11 @@ export default function Message() {
       participant: {
         id: participantData.id,
         name: participantData.name,
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${participantData.name}`,
+        avatar: avatar,
         status: "offline" as const,
-        role: "User",
+        role: participantData.role === "EMPLOYER" ? "Recruiter" : "Candidate",
+        location: location || undefined,
+        about: about || undefined,
       },
     };
   });
@@ -154,8 +179,30 @@ export default function Message() {
           onBack={handleBack}
           isTyping={isTyping}
           onTyping={handleTyping}
+          onToggleProfile={() => setShowProfile(!showProfile)}
+          showProfile={showProfile}
         />
       </div>
+
+      {/* Profile Sidebar - hidden if not active or on mobile */}
+      {showProfile && activeConversation && (
+        <div className="hidden lg:block h-full">
+          <ProfileDetails
+            user={activeConversation.participant}
+            onClose={() => setShowProfile(false)}
+          />
+        </div>
+      )}
+
+      {/* Mobile Profile Overlay */}
+      {showProfile && activeConversation && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/50 flex justify-end">
+          <ProfileDetails
+            user={activeConversation.participant}
+            onClose={() => setShowProfile(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }
