@@ -58,7 +58,7 @@ export default function RecentApplications() {
                   >
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-2">
-                        <Avatar>
+                        <Avatar className="size-10 border">
                           <AvatarImage src={app.job.company.logo || ""} />
                           <AvatarFallback>{app.job.company.user.name.charAt(0).toUpperCase()}</AvatarFallback>
                         </Avatar>
