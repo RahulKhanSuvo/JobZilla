@@ -53,7 +53,7 @@ const jobApi = baseApi.injectEndpoints({
       providesTags: ["Jobs"],
     }),
     getJobById: builder.query({
-      query: (jobId: string) => `jobs/${jobId}`,
+      query: (jobId: string) => `jobs/public/${jobId}`,
       providesTags: ["Jobs", "SavedJobs"],
     }),
     saveJob: builder.mutation({
