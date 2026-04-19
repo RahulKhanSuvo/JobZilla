@@ -6,7 +6,7 @@ export default function StatsCardSkeleton({ count = 4 }: { count?: number }) {
             {Array.from({ length: count }).map((_, i) => (
                 <div
                     key={i}
-                    className="px-6 py-6 flex items-center gap-5 rounded-xl border bg-white dark:bg-[#222]"
+                    className="px-6 py-6 flex items-center gap-5 rounded border bg-white dark:bg-[#222]"
                 >
                     {/* Icon skeleton */}
                     <Skeleton className="size-14 rounded-2xl" />

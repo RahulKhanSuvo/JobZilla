@@ -6,6 +6,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { useGetCandidateDashboardStatsQuery } from "@/redux/features/allStats/stats.api";
+import StatsCardSkeleton from "@/components/common/StatsCardSkeleton";
 
 export default function CandidateDashboard() {
   const { data: user } = useCurrentUserQuery();
@@ -46,7 +47,7 @@ export default function CandidateDashboard() {
       {/* Stats Cards */}
 
       {
-        isLoading ? <p>Loading...</p> : <StatsOverview stats={stats?.data ?? {
+        isLoading ? <StatsCardSkeleton count={4} /> : <StatsOverview stats={stats?.data ?? {
           totalApplications: 0,
           totalSavedJobs: 0,
           totalViews: 0,
