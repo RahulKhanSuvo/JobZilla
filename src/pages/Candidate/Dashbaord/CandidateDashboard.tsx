@@ -74,7 +74,7 @@ export default function CandidateDashboard() {
           <ProfileCompleteness data={profileData} />
 
           {/* Quick Tip / CTA Card */}
-          <div className="bg-primary rounded-2xl p-6 text-primary-foreground space-y-4 shadow-lg shadow-primary/20 relative overflow-hidden">
+          <div className="bg-primary rounded p-6 text-primary-foreground space-y-4 shadow-lg shadow-primary/20 relative overflow-hidden">
             <div className="absolute -right-8 -bottom-8 size-32 bg-white/10 rounded-full blur-2xl" />
             <div className="absolute -right-4 -top-4 size-24 bg-white/10 rounded-full blur-xl" />
 
