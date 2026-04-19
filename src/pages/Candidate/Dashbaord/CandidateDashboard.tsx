@@ -28,7 +28,7 @@ export default function CandidateDashboard() {
           <h1 className="text-3xl font-bold tracking-tight">
             Welcome back, <span className="text-primary">{userName}!</span> 👋
           </h1>
-          <p className="text-muted-foreground">
+          {/* <p className="text-muted-foreground">
             You have{" "}
             <span className="text-foreground font-semibold">
               2 new messages
@@ -38,7 +38,7 @@ export default function CandidateDashboard() {
               4 new job matches
             </span>{" "}
             today.
-          </p>
+          </p> */}
         </div>
 
         <div className="relative max-w-sm w-full">
