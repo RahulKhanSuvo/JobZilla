@@ -1,9 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
+import type { CandidateDashboardStats } from "@/redux/features/allStats/stats.type";
 import { Briefcase, Eye, Bookmark, CheckCircle } from "lucide-react";
 
 
 
-export default function StatsOverview({ stats }: { stats: any }) {
+export default function StatsOverview({ stats }: { stats: CandidateDashboardStats }) {
   const statsData = [
     {
       title: "Total Applied",
