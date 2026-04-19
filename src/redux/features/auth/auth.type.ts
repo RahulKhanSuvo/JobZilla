@@ -61,8 +61,6 @@ export type CandidateProfileData = CandidateProfile & {
 export type AuthUser = {
   id: string;
   name?: string;
-  firstName?: string;
-  lastName?: string;
   email: string;
   role: "CANDIDATE" | "RECRUITER" | "ADMIN";
   phone?: string;

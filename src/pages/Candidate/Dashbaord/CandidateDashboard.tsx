@@ -4,9 +4,11 @@ import ProfileCompleteness from "./components/ProfileCompleteness";
 import RecommendedJobs from "./components/RecommendedJobs";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 
 export default function CandidateDashboard() {
-  const userName = "Rahul";
+  const { data: user } = useCurrentUserQuery();
+  const userName = user?.data?.name || "Candidate";
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
