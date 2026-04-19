@@ -14,6 +14,7 @@ import { useGetCandidateAppliedJobsQuery } from "@/redux/features/candidate/cand
 import TableSkeleton from "@/components/common/TableSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router";
+import { formatDate } from "date-fns";
 
 export default function RecentApplications() {
   const { data: response, isLoading } = useGetCandidateAppliedJobsQuery()
@@ -71,7 +72,7 @@ export default function RecentApplications() {
                     </TableCell>
                     <TableCell>{app.job.title}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {app.createdAt}
+                      {formatDate(app.createdAt, "MMM dd, yyyy")}
                     </TableCell>
                     <TableCell>
                       <Badge
