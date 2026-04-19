@@ -6,7 +6,7 @@ import { useGetCandidateAppliedJobsQuery } from "@/redux/features/candidate/cand
 import { appliedJobColumns } from "./appliedJobColumns";
 
 function AppliedJob() {
-  const { data: response, isLoading } = useGetCandidateAppliedJobsQuery({});
+  const { data: response, isLoading } = useGetCandidateAppliedJobsQuery();
 
   const applications = response?.data || [];
 

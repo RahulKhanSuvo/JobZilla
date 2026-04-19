@@ -1,4 +1,6 @@
+import type { IApiResponse } from "@/types/job";
 import baseApi from "../hook/baseApi";
+import type { Application } from "@/types/application";
 
 const candidateApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,7 +12,7 @@ const candidateApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
-    getCandidateAppliedJobs: builder.query({
+    getCandidateAppliedJobs: builder.query<IApiResponse<Application[]>, void>({
       query: () => ({
         url: "/applications/candidate/applied",
         method: "GET",
