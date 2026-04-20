@@ -72,7 +72,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
       };
 
       const { percentage, checks } = calculateProfileCompletion(profileData);
-      if (percentage < 100) {
+      if (percentage < 80) {
         setProfileChecks(checks);
         setIsIncompleteModalOpen(true);
         return;
