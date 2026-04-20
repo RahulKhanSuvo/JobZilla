@@ -15,6 +15,7 @@ import { Link } from "react-router";
 import type { RootState } from "@/redux/store";
 import { useEffect } from "react";
 import { startConnecting } from "@/redux/features/chat/chatSlice";
+import { ModeToggle } from "./ModeToggle";
 
 export default function DashboardNavbar() {
   const { pathname } = useLocation();
@@ -77,6 +78,7 @@ export default function DashboardNavbar() {
               <Search className="size-5 text-slate-500" />
             </Button>
           </div>
+          <ModeToggle />
           <Notifications />
           <Separator orientation="vertical" className="h-6 mx-1" />
           <AvatarDropdown user={user} menu={dropdownMenu} />
