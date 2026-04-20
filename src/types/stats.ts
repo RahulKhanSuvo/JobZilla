@@ -2,7 +2,8 @@ import type { Application } from "./application";
 
 export interface IApplicationTrend {
   day: string;
-  value: number;
+  applications: number;
+  views: number;
 }
 
 export interface ITopJobStats {

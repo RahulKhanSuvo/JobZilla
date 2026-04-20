@@ -21,7 +21,7 @@ interface ApplicationTrendData {
 
 interface ApplicationTrendChartProps {
   data: ApplicationTrendData[];
-  variants: any; // Keep any for variants if motion types are not easily accessible, or use 'Variants' from framer-motion
+  variants: any;
 }
 
 export default function ApplicationTrendChart({
