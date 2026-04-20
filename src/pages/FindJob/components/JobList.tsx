@@ -55,19 +55,31 @@ export default function JobList({ layout, jobs, isLoading }: JobListProps) {
           : "flex flex-col gap-6"
       }
     >
-      {isLoading
-        ? Array.from({ length: 10 }).map((_, idx) => (
-            <JobCardSkeleton key={idx} />
-          ))
-        : jobs.map((job) => (
-            <motion.div key={job.id} variants={item}>
-              <JobCard
-                job={job}
-                onSave={handelSave}
-                isSaving={savingJobId === job.id}
-              />
-            </motion.div>
-          ))}
+      {isLoading ? (
+        Array.from({ length: 10 }).map((_, idx) => (
+          <JobCardSkeleton key={idx} />
+        ))
+      ) : jobs.length === 0 ? (
+        <div className="col-span-full flex h-screen flex-col items-center justify-center py-20 w-full bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+          <h3 className="text-xl font-bold text-slate-700 dark:text-slate-300">
+            No jobs found
+          </h3>
+          <p className="text-slate-500 dark:text-slate-400 mt-2 text-center max-w-md">
+            We couldn't find any jobs matching your current filters. Try
+            adjusting your search criteria or checking back later.
+          </p>
+        </div>
+      ) : (
+        jobs.map((job) => (
+          <motion.div key={job.id} variants={item}>
+            <JobCard
+              job={job}
+              onSave={handelSave}
+              isSaving={savingJobId === job.id}
+            />
+          </motion.div>
+        ))
+      )}
     </motion.div>
   );
 }
