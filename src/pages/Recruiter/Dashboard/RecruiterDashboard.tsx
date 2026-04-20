@@ -2,11 +2,16 @@ import { DashboardHeader } from "./components/DashboardHeader";
 import { StatsGrid } from "./components/StatsGrid";
 import { DashboardCharts } from "./components/DashboardCharts";
 import { RecentApplicants } from "./components/RecentApplicants";
-import { useGetJobStatsQuery } from "@/redux/features/allStats/stats.api";
 import JobzillaLoading from "@/components/common/JobzillaLoading";
+import { useGetRecruiterDashboardStatsQuery } from "@/redux/features/recruiter/recruiterStats.api";
 
 export default function RecruiterDashboard() {
-  const { data: statsResponse, isLoading, isError } = useGetJobStatsQuery();
+  const {
+    data: statsResponse,
+    isLoading,
+    isError,
+  } = useGetRecruiterDashboardStatsQuery();
+  console.log(statsResponse);
 
   if (isLoading) {
     return (
