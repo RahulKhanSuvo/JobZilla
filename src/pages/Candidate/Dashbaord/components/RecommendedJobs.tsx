@@ -1,7 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, DollarSign, ArrowRight, Loader2 } from "lucide-react";
+import {
+  MapPin,
+  Clock,
+  DollarSign,
+  ArrowRight,
+  Loader2,
+  FileX2,
+} from "lucide-react";
 import { useGetRecommendedJobsQuery } from "@/redux/features/job/job.api";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router";
@@ -44,9 +51,12 @@ export default function RecommendedJobs() {
       </CardHeader>
       <CardContent className="space-y-4">
         {jobs.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground">
-            No specific recommendations found. Try adding more skills to your
-            profile!
+          <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+            <FileX2 className="w-10 h-10 mb-3 opacity-70" />
+            <p className="text-lg font-medium">No recommended jobs yet</p>
+            <p className="text-sm">
+              Once you apply, your recommended jobs will appear here.
+            </p>
           </div>
         ) : (
           jobs.map((job) => (
