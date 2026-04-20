@@ -54,7 +54,7 @@ export default function MyCV() {
   return (
     <div className="space-y-6">
       <DashboardTitle>My CV</DashboardTitle>
-      <CommonWrapper className="p-7">
+      <CommonWrapper className="p-6 bg-white dark:bg-slate-900">
         <div className="space-y-8">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
