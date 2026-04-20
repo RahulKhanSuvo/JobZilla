@@ -35,7 +35,7 @@ export default function ProfileHader({
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div className="flex items-end gap-5">
             <div className="-mt-12 md:-mt-14 shrink-0">
-              <div className="size-24 md:size-28 overflow-hidden">
+              <div className="size-24 md:size-28 overflow-hidden bg-white rounded border border-gray-200">
                 {user?.company?.logo ? (
                   <img
                     src={user?.company?.logo}
