@@ -2,8 +2,8 @@ import StatsOverview from "./components/StatsOverview";
 import RecentApplications from "./components/RecentApplications";
 import ProfileCompleteness from "./components/ProfileCompleteness";
 import RecommendedJobs from "./components/RecommendedJobs";
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+// import { Search } from "lucide-react";
+// import { Input } from "@/components/ui/input";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import { useGetCandidateDashboardStatsQuery } from "@/redux/features/allStats/stats.api";
 import StatsCardSkeleton from "@/components/common/StatsCardSkeleton";
@@ -18,7 +18,6 @@ export default function CandidateDashboard() {
     fullName: user?.data?.name || "",
     email: user?.data?.email || "",
   };
-
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -41,26 +40,31 @@ export default function CandidateDashboard() {
           </p> */}
         </div>
 
-        <div className="relative max-w-sm w-full">
+        {/* <div className="relative max-w-sm w-full">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <Input
             placeholder="Search jobs, companies..."
             className="pl-9 bg-white dark:bg-slate-900 border-none shadow-sm h-11"
           />
-        </div>
+        </div> */}
       </div>
 
       {/* Stats Cards */}
 
-      {
-        isLoading ? <StatsCardSkeleton count={4} /> : <StatsOverview stats={stats?.data ?? {
-          totalApplications: 0,
-          totalSavedJobs: 0,
-          totalViews: 0,
-          totlaShortListedJobs: 0,
-        }} />
-      }
-
+      {isLoading ? (
+        <StatsCardSkeleton count={4} />
+      ) : (
+        <StatsOverview
+          stats={
+            stats?.data ?? {
+              totalApplications: 0,
+              totalSavedJobs: 0,
+              totalViews: 0,
+              totlaShortListedJobs: 0,
+            }
+          }
+        />
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Column */}
