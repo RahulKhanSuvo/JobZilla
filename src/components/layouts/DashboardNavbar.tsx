@@ -22,8 +22,6 @@ export default function DashboardNavbar() {
   const user = useSelector((state: RootState) => state.auth.user);
   const isConnected = useSelector((state: RootState) => state.chat.isConnected);
   const isRecruiter = pathname.startsWith("/recruiter");
-
-  // Connect socket for all logged-in users so they can receive real-time notifications
   useEffect(() => {
     if (user && !isConnected) {
       dispatch(startConnecting());
