@@ -9,9 +9,9 @@ export default function ProfileHader({
   user: User | null | undefined;
 }) {
   return (
-    <div className="overflow-hidden bg-white">
+    <div className="overflow-hidden bg-white rounded">
       {/* Cover Photo */}
-      <div className="relative h-48 md:h-60 w-full overflow-hidden">
+      <div className="relative h-48 md:h-60 w-full rounded overflow-hidden">
         {user?.company?.coverImage ? (
           <img
             src={user?.company?.coverImage}
@@ -19,7 +19,7 @@ export default function ProfileHader({
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-primary flex items-center justify-center">
+          <div className="w-full h-full bg-linear-to-r from-primary to-primary/80 flex items-center justify-center">
             <span className="text-white/50">
               <MdPhoto className="size-12" />
             </span>
