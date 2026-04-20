@@ -327,6 +327,18 @@ export default function MyJobs() {
                               </Link>
                             </Button>
                           </AppTooltip>
+                          <AppTooltip content="Applicants">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              asChild
+                              className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                            >
+                              <Link to={`/recruiter/applicants/${job.id}`}>
+                                <Users className="size-4" />
+                              </Link>
+                            </Button>
+                          </AppTooltip>
                           <Button
                             onClick={() => {
                               setSelectedJobId(job.id);
