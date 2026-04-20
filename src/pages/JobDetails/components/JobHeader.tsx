@@ -38,7 +38,11 @@ export default function JobHeader({ job }: JobHeaderProps) {
       : 0;
   const handelSave = async (jobId: string) => {
     try {
-      await saveJob(jobId).unwrap();
+      if (!user) {
+        navigate("/auth/login");
+      } else {
+        await saveJob(jobId).unwrap();
+      }
     } catch (error) {
       errorToast(error);
     }
