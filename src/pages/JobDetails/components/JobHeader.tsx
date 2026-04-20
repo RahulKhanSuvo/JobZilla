@@ -15,6 +15,9 @@ import { IoHeart } from "react-icons/io5";
 import { errorToast } from "@/utils/errorToast";
 import ApplyModal from "./ApplyModal";
 import { useSaveJobMutation } from "@/redux/features/job/job.api";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 interface JobHeaderProps {
   job: PostJobFormData;
@@ -23,6 +26,8 @@ interface JobHeaderProps {
 export default function JobHeader({ job }: JobHeaderProps) {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [saveJob] = useSaveJobMutation();
+  const navigate = useNavigate();
+  const user = useSelector(selectCurrentUser);
   const deadlineDate = job.deadline ? new Date(job.deadline) : null;
   const daysLeft =
     deadlineDate && deadlineDate > new Date()
@@ -36,6 +41,13 @@ export default function JobHeader({ job }: JobHeaderProps) {
       await saveJob(jobId).unwrap();
     } catch (error) {
       errorToast(error);
+    }
+  };
+  const hadnelApply = () => {
+    if (!user) {
+      navigate("/auth/login");
+    } else {
+      setIsApplyModalOpen(true);
     }
   };
 
@@ -102,8 +114,8 @@ export default function JobHeader({ job }: JobHeaderProps) {
               <IoHeart className="size-5" />
             </Button>
             <Button
-              onClick={() => setIsApplyModalOpen(true)}
-              disabled={job.isApplied || true}
+              onClick={hadnelApply}
+              disabled={job.isApplied || false}
               className="h-12 px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               <Send className="size-5 rotate-[-20deg]" />
