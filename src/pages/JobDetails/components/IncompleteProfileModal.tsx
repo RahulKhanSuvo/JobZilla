@@ -58,7 +58,7 @@ export default function IncompleteProfileModal({
           </ul>
         </div>
 
-        <DialogFooter className="mt-2 flex flex-col sm:flex-row gap-3 sm:gap-0">
+        <DialogFooter className="mt-2 flex flex-col sm:flex-row gap-3 sm:gap-2">
           <Button
             variant="outline"
             onClick={onClose}
