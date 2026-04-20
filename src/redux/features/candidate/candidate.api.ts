@@ -17,7 +17,7 @@ const candidateApi = baseApi.injectEndpoints({
         url: "/applications/candidate/applied",
         method: "GET",
       }),
-      providesTags: ["User"],
+      providesTags: ["Stats", "Applications", "Jobs"],
     }),
   }),
 });
