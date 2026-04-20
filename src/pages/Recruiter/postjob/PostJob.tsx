@@ -25,8 +25,8 @@ export default function PostJob() {
   return (
     <div className="space-y-6 pb-12">
       {/* back button */}
-      <Button variant={"outline"} onClick={() => navigate(-1)} className="">
-        <ArrowLeft className="size-4 mr-2" />
+      <Button variant={"link"} onClick={() => navigate(-1)} className="">
+        <ArrowLeft className="size-4" />
         Back
       </Button>
       <DashboardTitle>Post A New Job</DashboardTitle>
