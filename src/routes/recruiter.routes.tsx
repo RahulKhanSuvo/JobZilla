@@ -24,10 +24,16 @@ export const recruiterRoutes: RouteObject = {
   children: [
     { index: true, element: <Navigate to={"dashboard"} /> },
     { path: "dashboard", element: <RecruiterDashboard /> },
-    { path: "my-jobs", element: <MyJobs /> },
+    {
+      path: "my-jobs",
+      element: <MyJobs />,
+      children: [
+        { index: true, element: <Navigate to={"post-job"} /> },
+        { path: "post-job", element: <PostJob /> },
+        { path: "edit-job/:id", element: <EditJob /> },
+      ],
+    },
 
-    { path: "my-jobs/post-job", element: <PostJob /> },
-    { path: "my-jobs/edit-job/:id", element: <EditJob /> },
     {
       path: "plans",
       element: <RectutierPlansPage />,
