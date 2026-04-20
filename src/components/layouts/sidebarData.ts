@@ -87,9 +87,9 @@ export const recruiterSidebarData = [
     icon: BiSolidMessageDetail,
   },
   {
-    title: "Saved Candidates",
-    href: "saved-candidates",
-    icon: FaUser,
+    title: "Plans",
+    href: "plans",
+    icon: FaRegCreditCard,
   },
   {
     title: "Notifications",

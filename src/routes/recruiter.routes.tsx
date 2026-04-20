@@ -12,6 +12,7 @@ import RecruiterSettings from "@/pages/Recruiter/setting/RecruiterSettings";
 import ApplicantDetailPage from "@/pages/Recruiter/applicantDetailPage/ApilicantDetailPage";
 import Message from "@/pages/Candidate/message/Message";
 import Notification from "@/pages/Candidate/Notification/Notification";
+import RectutierPlansPage from "@/pages/Recruiter/plans/RectutierPlansPage";
 
 export const recruiterRoutes: RouteObject = {
   path: "/recruiter",
@@ -28,8 +29,8 @@ export const recruiterRoutes: RouteObject = {
     { path: "my-jobs/post-job", element: <PostJob /> },
     { path: "my-jobs/edit-job/:id", element: <EditJob /> },
     {
-      path: "manage-jobs",
-      element: <div className="p-6">Manage Jobs Page</div>,
+      path: "plans",
+      element: <RectutierPlansPage />,
     },
     { path: "applicants", element: <AllApplicants /> },
     { path: "applicants/:id", element: <ApplicantDetailPage /> },
