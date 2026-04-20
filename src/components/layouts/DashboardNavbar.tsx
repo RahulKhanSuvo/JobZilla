@@ -13,12 +13,22 @@ import { Button } from "../ui/button";
 import JobzillaLogo from "../common/JobzillaLogo";
 import { Link } from "react-router";
 import type { RootState } from "@/redux/store";
+import { useEffect } from "react";
+import { startConnecting } from "@/redux/features/chat/chatSlice";
 
 export default function DashboardNavbar() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
+  const isConnected = useSelector((state: RootState) => state.chat.isConnected);
   const isRecruiter = pathname.startsWith("/recruiter");
+
+  // Connect socket for all logged-in users so they can receive real-time notifications
+  useEffect(() => {
+    if (user && !isConnected) {
+      dispatch(startConnecting());
+    }
+  }, [user, isConnected, dispatch]);
 
   const dropdownMenu = [
     {
