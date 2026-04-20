@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { NotificationItem } from "../types";
 import { formatDistanceToNow } from "date-fns";
+import { Link } from "react-router";
 
 interface NotificationItemCardProps {
   notification: NotificationItem;
@@ -94,9 +95,12 @@ export default function NotificationItemCard({
 
         {notification.link && (
           <div className="mt-2.5">
-            <span className="text-xs font-semibold text-primary inline-flex items-center hover:underline cursor-pointer">
-              View details
-            </span>
+            <Link
+              to={notification.link}
+              className="text-xs font-semibold text-primary inline-flex items-center hover:underline cursor-pointer"
+            >
+              View Details{" "}
+            </Link>
           </div>
         )}
       </div>
