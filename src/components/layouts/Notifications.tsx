@@ -111,7 +111,7 @@ export function Notifications() {
 
         {notifications.length > 0 && (
           <Link
-            to="/dashboard/candidate/notifications"
+            to="/recruiter/notifications"
             className="block p-3 text-center text-xs font-bold text-primary hover:bg-gray-50 border-t border-gray-50 transition-colors"
           >
             View All Notifications
