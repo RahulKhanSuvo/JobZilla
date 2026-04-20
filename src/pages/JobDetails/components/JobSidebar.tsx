@@ -50,10 +50,10 @@ export default function JobSidebar({ job }: JobSidebarProps) {
       label: "Application Deadline",
       value: job.deadline
         ? new Date(job.deadline).toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        })
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })
         : "N/A",
       icon: Calendar,
     },
@@ -102,7 +102,7 @@ export default function JobSidebar({ job }: JobSidebarProps) {
         <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
           Job Overview
         </h3>
-        <div className="space-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5">
           {overviewItems.map((item, idx) => (
             <div key={idx} className="flex gap-4">
               <div className="size-10 rounded-lg bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex items-center justify-center shrink-0">
@@ -138,7 +138,7 @@ export default function JobSidebar({ job }: JobSidebarProps) {
                   {item.label}
                 </span>
               </div>
-              <span className="text-sm font-medium text-slate-900 dark:text-white truncate max-w-[150px]">
+              <span className="text-sm font-medium text-slate-900 dark:text-white truncate max-w-[50%] sm:max-w-[55%]">
                 {item.value}
               </span>
             </div>

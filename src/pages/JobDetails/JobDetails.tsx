@@ -46,7 +46,7 @@ export default function JobDetails() {
     <div className="bg-white dark:bg-slate-950 min-h-screen transition-colors duration-300">
       <JobHeader job={jobData} />
       <Container className="space-y-6">
-        <div className="grid grid-cols-1 pb-20 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 pb-16 lg:pb-24 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
           <div className="lg:col-span-8 space-y-6">
             <JobTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -58,7 +58,7 @@ export default function JobDetails() {
           </div>
 
           {/* Right Sidebar Column */}
-          <aside className="lg:col-span-4 space-y-8">
+          <aside className="lg:col-span-4 space-y-8 order-first lg:order-last">
             <JobSidebar job={jobData} />
           </aside>
         </div>

@@ -56,11 +56,11 @@ export default function JobHeader({ job }: JobHeaderProps) {
   };
 
   return (
-    <div className="bg-white  dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-      <Container className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10 transition-colors py-8">
+    <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+      <Container className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10 transition-colors py-6 lg:py-8">
         {/* Left: Company Logo & Job Title */}
-        <div className="flex flex-col md:flex-row items-start gap-6">
-          <div className="size-24 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 transition-all border border-slate-100 dark:border-slate-700 rounded p-2">
+        <div className="flex flex-row items-start gap-4 sm:gap-6">
+          <div className="size-16 sm:size-20 lg:size-24 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 transition-all border border-slate-100 dark:border-slate-700 rounded p-2">
             <img
               src={job.company?.logo}
               alt={job.company?.user?.name || "Company Logo"}
@@ -71,11 +71,11 @@ export default function JobHeader({ job }: JobHeaderProps) {
             <p className="text-[#059669] text-sm font-semibold tracking-wide capitalize">
               {job.company?.user?.name || "Anonymous Company"}
             </p>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white leading-tight flex flex-wrap items-center gap-3">
+            <h1 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white leading-tight flex flex-wrap items-center gap-2">
               {job.title}
               <CircleCheck className="size-7 text-[#4F46E5] fill-[#4F46E5]/10 shrink-0" />
             </h1>
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-slate-500 dark:text-slate-400  text-[15px] pt-1">
+            <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-8 gap-y-2 text-slate-500 dark:text-slate-400 text-sm sm:text-[15px] pt-1">
               <span className="flex items-center gap-2 capitalize">
                 <MapPin className="size-5 text-slate-300 dark:text-slate-600" />
                 {job.company?.location || "Location not specified"}
@@ -100,8 +100,8 @@ export default function JobHeader({ job }: JobHeaderProps) {
         </div>
 
         {/* Right: Actions, Rating & Salary */}
-        <div className="flex flex-col items-start lg:items-end gap-4 w-full lg:w-auto mt-4 lg:mt-0">
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
+        <div className="flex flex-col items-start lg:items-end gap-4 w-full lg:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3 w-full lg:w-auto">
             <Button
               variant="outline"
               size="icon"
@@ -120,14 +120,14 @@ export default function JobHeader({ job }: JobHeaderProps) {
             <Button
               onClick={hadnelApply}
               disabled={job.isApplied || true}
-              className="flex-1 sm:flex-none h-12 px-4 sm:px-12 md:px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
+              className="flex-1 lg:flex-none h-11 sm:h-12 px-4 sm:px-8 lg:px-12 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-2 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
-              <Send className="size-5 rotate-[-20deg]" />
+              <Send className="size-4 sm:size-5 rotate-[-20deg]" />
               {job.isApplied ? "Applied" : "Apply Now"}
             </Button>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <p className="text-slate-400 dark:text-slate-500 text-sm font-semibold tracking-tight">
               {daysLeft > 0
                 ? `${daysLeft} days left to apply`
@@ -144,10 +144,10 @@ export default function JobHeader({ job }: JobHeaderProps) {
           </div>
 
           <div className="flex items-center gap-3 mt-1">
-            <div className="size-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+            <div className="size-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
               <CircleDollarSign className="size-5 text-[#10b981]" />
             </div>
-            <p className="text-lg font-black text-slate-900 dark:text-white tracking-tight">
+            <p className="text-base sm:text-lg font-black text-slate-900 dark:text-white tracking-tight">
               ${job.salaryMin?.toLocaleString()} - $
               {job.salaryMax?.toLocaleString()}
               <span className="text-sm text-slate-400 dark:text-slate-500 font-bold tracking-normal ml-1">
