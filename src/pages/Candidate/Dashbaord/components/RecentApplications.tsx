@@ -9,7 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, MapPin } from "lucide-react";
+import { ExternalLink, FileX2, MapPin } from "lucide-react";
 import { useGetCandidateAppliedJobsQuery } from "@/redux/features/candidate/candidate.api";
 import TableSkeleton from "@/components/common/TableSkeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -17,7 +17,7 @@ import { Link } from "react-router";
 import { formatDate } from "date-fns";
 
 export default function RecentApplications() {
-  const { data: response, isLoading } = useGetCandidateAppliedJobsQuery()
+  const { data: response, isLoading } = useGetCandidateAppliedJobsQuery();
   const applications = response?.data || [];
   return (
     <Card className="border-none shadow-sm dark:bg-slate-900">
@@ -50,7 +50,21 @@ export default function RecentApplications() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {isLoading ? <TableSkeleton /> :
+              {applications.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+                      <FileX2 className="w-10 h-10 mb-3 opacity-70" />
+                      <p className="text-lg font-medium">No applications yet</p>
+                      <p className="text-sm">
+                        Once you apply, your applications will appear here.
+                      </p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ) : isLoading ? (
+                <TableSkeleton />
+              ) : (
                 applications.map((app, index) => (
                   <TableRow
                     key={index}
@@ -60,13 +74,18 @@ export default function RecentApplications() {
                       <div className="flex items-center gap-2">
                         <Avatar className="size-10 border">
                           <AvatarImage src={app.job.company.logo || ""} />
-                          <AvatarFallback>{app.job.company.user.name.charAt(0).toUpperCase()}</AvatarFallback>
+                          <AvatarFallback>
+                            {app.job.company.user.name.charAt(0).toUpperCase()}
+                          </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
-                          <span className="font-medium">{app.job.company.user.name}</span>
+                          <span className="font-medium">
+                            {app.job.company.user.name}
+                          </span>
                           <span className="text-muted-foreground text-sm flex items-center gap-1">
                             <MapPin className="size-3" />
-                            {app.job.company.location}</span>
+                            {app.job.company.location}
+                          </span>
                         </div>
                       </div>
                     </TableCell>
@@ -88,12 +107,14 @@ export default function RecentApplications() {
                         size="icon"
                         className="size-8 hover:text-primary transition-colors"
                       >
-                        <Link to={`/job/${app.jobId}`}><ExternalLink className="size-4" /></Link>
+                        <Link to={`/job/${app.jobId}`}>
+                          <ExternalLink className="size-4" />
+                        </Link>
                       </Button>
                     </TableCell>
                   </TableRow>
                 ))
-              }
+              )}
             </TableBody>
           </Table>
         </div>
