@@ -22,12 +22,7 @@ export function DashboardCharts({ stats }: DashboardChartsProps) {
 
   // 1. Application Trend
   // API returns { day, value }. Component expects { day, applications, views }
-  const trendData = stats.applicationTrend.map((item) => ({
-    day: item.day,
-    applications: item.value,
-    views: 0, // Views trend not currently available in backend
-  }));
-
+  const trendData = stats.applicationTrend;
   // 2. Status Breakdown
   const statusBreakdown = [
     { name: "Pending", value: stats.pendingApplicants, fill: "#f59e0b" },
