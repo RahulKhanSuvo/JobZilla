@@ -53,7 +53,7 @@ const CURRENT_PLAN = {
 
 export default function RectutierPlansPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div>
       <PlanHeader />
 
       <ActivePlanInfo plan={CURRENT_PLAN} />
@@ -89,7 +89,7 @@ export default function RectutierPlansPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="mt-16 p-8 bg-slate-900 rounded-3xl text-white flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden relative"
+          className="mt-16 p-8 bg-slate-900 rounded text-white flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden relative"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
           <div className="relative z-10 space-y-2">

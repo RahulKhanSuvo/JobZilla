@@ -31,7 +31,7 @@ export function PlanCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
       className={cn(
-        "relative flex flex-col p-8 rounded-2xl border transition-all duration-300",
+        "relative flex flex-col p-8 rounded border transition-all duration-300",
         isPopular
           ? "bg-white border-primary shadow-xl shadow-primary/10 scale-105 z-10"
           : "bg-slate-50/50 border-slate-200 hover:border-primary/30 hover:bg-white",

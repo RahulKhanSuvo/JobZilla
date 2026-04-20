@@ -20,7 +20,7 @@ export function ActivePlanInfo({ plan }: ActivePlanInfoProps) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white border border-slate-200 rounded-2xl p-8 mb-12 shadow-sm"
+      className="bg-white border border-slate-200 rounded p-8 mb-12 shadow-sm"
     >
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
         <div className="space-y-4 max-w-md">
