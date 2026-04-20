@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 import baseApi from "../hook/baseApi";
 import type {
   IApiResponse,
   IJobQueryParams,
   IJobResponse,
+  IRecommendedJob,
   ISavedJob,
 } from "@/types/job";
 import type { GetJobsResponse, JobStats } from "./job.type";
@@ -52,7 +53,7 @@ const jobApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Jobs"],
     }),
-    getJobById: builder.query({
+    getJobById: builder.query<IApiResponse<PostJobFormData>, string>({
       query: (jobId: string) => `jobs/public/${jobId}`,
       providesTags: ["Jobs", "SavedJobs"],
     }),
@@ -79,7 +80,7 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SavedJobs"],
     }),
-    getCompanyJobs: builder.query<IApiResponse<any[]>, string>({
+    getCompanyJobs: builder.query<IApiResponse<PostJobFormData[]>, string>({
       query: (companyId: string) => `jobs/company/${companyId}`,
       providesTags: ["Jobs"],
     }),
@@ -110,6 +111,10 @@ const jobApi = baseApi.injectEndpoints({
       query: () => "/stats/employer/job-stats",
       providesTags: ["Jobs"],
     }),
+    getRecommendedJobs: builder.query<IApiResponse<IRecommendedJob[]>, void>({
+      query: () => "/jobs/recommended",
+      providesTags: ["Jobs"],
+    }),
   }),
 });
 
@@ -126,4 +131,5 @@ export const {
   useDeleteJobMutation,
   useUpdateJobStatusMutation,
   useGetJobStatsQuery,
+  useGetRecommendedJobsQuery,
 } = jobApi;
