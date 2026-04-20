@@ -30,6 +30,7 @@ export const postJobSchema = z.object({
   isFollowed: z.boolean().nullish(),
   company: z
     .object({
+      id: z.string(),
       location: z.string(),
       user: z.object({
         id: z.string(),

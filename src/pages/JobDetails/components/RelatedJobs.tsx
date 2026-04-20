@@ -1,8 +1,13 @@
 import JobCard from "@/pages/Home/Featured/components/JobCard";
 import { useGetCompanyJobsQuery } from "@/redux/features/job/job.api";
+import { skipToken } from "@reduxjs/toolkit/query";
 
-export default function RelatedJobs({ companyId }: { companyId: string }) {
-  const { data: companyJobs } = useGetCompanyJobsQuery(companyId);
+export default function RelatedJobs({
+  companyId,
+}: {
+  companyId: string | undefined;
+}) {
+  const { data: companyJobs } = useGetCompanyJobsQuery(companyId || skipToken);
   return (
     <div className="space-y-6">
       <h3 className="text-xl font-bold text-slate-900 dark:text-white">
