@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "@/redux/features/auth/authSlice";
 import { LogOut, User as UserIcon, Mail, ShieldCheck } from "lucide-react";
 interface AvatarDropdownProps {
-  user?: User;
+  user?: User | null;
   menu: MenuItem[];
 }
 
