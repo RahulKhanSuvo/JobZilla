@@ -11,7 +11,6 @@ export default function RecruiterDashboard() {
     isLoading,
     isError,
   } = useGetRecruiterDashboardStatsQuery();
-  console.log(statsResponse);
 
   if (isLoading) {
     return (
@@ -46,7 +45,7 @@ export default function RecruiterDashboard() {
       <StatsGrid stats={stats} />
 
       {/* Charts and Data Visualizations */}
-      <DashboardCharts />
+      <DashboardCharts stats={stats} />
 
       {/* Tables and List Sections */}
       <RecentApplicants applicants={stats.recentApplicants} />

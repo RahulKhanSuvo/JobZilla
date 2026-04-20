@@ -4,11 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MoreVertical, ExternalLink, Mail, Clock } from "lucide-react";
-import type { RecentApplicant } from "@/redux/features/allStats/stats.type";
+import type { Application } from "@/types/application";
 import { formatDistanceToNow } from "date-fns";
 
 interface RecentApplicantsProps {
-  applicants?: RecentApplicant[];
+  applicants?: Application[];
 }
 
 const getStatusColor = (status: string) => {

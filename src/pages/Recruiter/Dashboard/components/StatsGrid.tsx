@@ -2,10 +2,10 @@ import { Briefcase, Users, UserCheck, CheckCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import type { EmployerStats } from "@/redux/features/allStats/stats.type";
+import type { IRecruiterDashboardStats } from "@/types/stats";
 
 interface StatsGridProps {
-  stats?: EmployerStats;
+  stats?: IRecruiterDashboardStats;
 }
 
 const container = {
