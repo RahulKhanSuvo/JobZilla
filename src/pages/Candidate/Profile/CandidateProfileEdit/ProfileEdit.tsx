@@ -27,13 +27,6 @@ import type {
 } from "@/redux/features/auth/auth.type";
 import { errorToast } from "@/utils/errorToast";
 
-interface Language {
-  id: string;
-  language: string;
-  candideId: string;
-  name?: string;
-}
-
 export default function ProfileEdit() {
   const navigate = useNavigate();
   const user = useSelector(selectCurrentUser);
@@ -79,42 +72,42 @@ export default function ProfileEdit() {
         aboutMe: candidate?.aboutMe || "",
         skills: Array.isArray(candidate?.skills)
           ? (candidate.skills as (string | Skill)[]).map((s) =>
-            typeof s === "string" ? s : s.skill || s.id || "",
-          )
+              typeof s === "string" ? s : s.skill || s.id || "",
+            )
           : [],
-        language: Array.isArray(candidate?.language)
-          ? candidate.language.map((l: Language) =>
-            typeof l === "string" ? l : l.language || l.name || "",
-          )
+        language: Array.isArray(candidate?.languages)
+          ? candidate.languages.map((l) =>
+              typeof l === "string" ? l : l.language || "",
+            )
           : [],
         educationList: Array.isArray(candidate?.eductions)
           ? candidate.eductions.map((e: Education) => ({
-            institution: e.institution,
-            major: e.major,
-            field: e.field,
-            startData: e.startData
-              ? new Date(e.startData).toISOString().split("T")[0]
-              : "",
-            endData: e.endData
-              ? new Date(e.endData).toISOString().split("T")[0]
-              : "",
-            isStudying: e.isStudying || false,
-          }))
+              institution: e.institution,
+              major: e.major,
+              field: e.field,
+              startData: e.startData
+                ? new Date(e.startData).toISOString().split("T")[0]
+                : "",
+              endData: e.endData
+                ? new Date(e.endData).toISOString().split("T")[0]
+                : "",
+              isStudying: e.isStudying || false,
+            }))
           : [],
         experienceList: Array.isArray(candidate?.workExperiences)
           ? candidate.workExperiences.map((ex: WorkExperience) => ({
-            jobTitle: ex.jobTitle,
-            companyName: ex.companyName,
-            industry: ex.industry,
-            startData: ex.startData
-              ? new Date(ex.startData).toISOString().split("T")[0]
-              : "",
-            endData: ex.endData
-              ? new Date(ex.endData).toISOString().split("T")[0]
-              : "",
-            isWorking: ex.isWorking || false,
-            Description: ex.Description || "",
-          }))
+              jobTitle: ex.jobTitle,
+              companyName: ex.companyName,
+              industry: ex.industry,
+              startData: ex.startData
+                ? new Date(ex.startData).toISOString().split("T")[0]
+                : "",
+              endData: ex.endData
+                ? new Date(ex.endData).toISOString().split("T")[0]
+                : "",
+              isWorking: ex.isWorking || false,
+              Description: ex.Description || "",
+            }))
           : [],
         facebook: candidate?.facebook || "",
         linkedin: candidate?.linkedin || "",
