@@ -103,7 +103,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
             </Button>
             <Button
               onClick={() => setIsApplyModalOpen(true)}
-              disabled={job.isApplied}
+              disabled={job.isApplied || true}
               className="h-12 px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               <Send className="size-5 rotate-[-20deg]" />
