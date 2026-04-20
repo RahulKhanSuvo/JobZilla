@@ -1,10 +1,7 @@
-// Modular Components
 import ApplicationTrendChart from "./charts/ApplicationTrendChart";
 import ApplicantStatusChart from "./charts/ApplicantStatusChart";
 import HiringFunnelChart from "./charts/HiringFunnelChart";
 import TopJobsChart from "./charts/TopJobsChart";
-
-// ─── Dummy Data ──────────────────────────────────────────────────
 const applicationTrend = [
   { day: "Mon", applications: 14, views: 52 },
   { day: "Tue", applications: 22, views: 78 },
