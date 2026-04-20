@@ -34,19 +34,17 @@ export default function RecruiterDashboard() {
 
   return (
     <>
-      <div className="max-w-[1600px] mx-auto">
-        {/* Top Header Section */}
-        <DashboardHeader />
+      {/* Top Header Section */}
+      <DashboardHeader />
 
-        {/* Statistics Grid */}
-        <StatsGrid stats={stats} />
+      {/* Statistics Grid */}
+      <StatsGrid stats={stats} />
 
-        {/* Charts and Data Visualizations */}
-        <DashboardCharts />
+      {/* Charts and Data Visualizations */}
+      <DashboardCharts />
 
-        {/* Tables and List Sections */}
-        <RecentApplicants applicants={stats.recentApplicants} />
-      </div>
+      {/* Tables and List Sections */}
+      <RecentApplicants applicants={stats.recentApplicants} />
     </>
   );
 }
