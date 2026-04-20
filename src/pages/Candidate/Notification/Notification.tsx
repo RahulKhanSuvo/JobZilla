@@ -1,35 +1,45 @@
-import React, { useState } from "react";
-import { Bell } from "lucide-react";
-import { mockNotifications } from "./dummyData";
+import React from "react";
+import { Bell, Loader2 } from "lucide-react";
 import type { NotificationItem } from "./types";
 import NotificationItemCard from "./components/NotificationItemCard";
+import {
+  useDeleteNotificationMutation,
+  useGetNotificationsQuery,
+  useMarkAllAsReadMutation,
+  useMarkAsReadMutation,
+} from "@/redux/features/notification/notification.api";
 
 export default function Notification() {
-  const [notifications, setNotifications] =
-    useState<NotificationItem[]>(mockNotifications);
+  const { data: response, isLoading } = useGetNotificationsQuery();
+  const [markAsRead] = useMarkAsReadMutation();
+  const [markAllAsRead] = useMarkAllAsReadMutation();
+  const [deleteNotificationMutation] = useDeleteNotificationMutation();
 
-  const markAllAsRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, isRead: true })));
+  const notifications = response?.data || [];
+  const unreadCount = response?.meta?.unreadCount || 0;
+
+  const handleMarkAllAsRead = async () => {
+    await markAllAsRead();
   };
 
-  const deleteNotification = (id: string, e: React.MouseEvent) => {
+  const deleteNotification = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setNotifications(notifications.filter((n) => n.id !== id));
+    await deleteNotificationMutation(id);
   };
 
-  const handleNotificationClick = (notification: NotificationItem) => {
-    // Mark as read specifically if clicked
-    setNotifications(
-      notifications.map((n) =>
-        n.id === notification.id ? { ...n, isRead: true } : n,
-      ),
+  const handleNotificationClick = async (notification: NotificationItem) => {
+    if (!notification.isRead) {
+      await markAsRead(notification.id);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
     );
-
-    // In a real app, you would navigate to the link here if it exists
-    // if (notification.link) navigate(notification.link);
-  };
-
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  }
 
   return (
     <div>
@@ -43,14 +53,14 @@ export default function Notification() {
             <div>
               <h1 className="text-xl font-bold text-gray-900">Notifications</h1>
               <p className="text-sm text-gray-500">
-                You have {unreadCount} unread message
+                You have {unreadCount} unread notification
                 {unreadCount !== 1 ? "s" : ""}
               </p>
             </div>
           </div>
           {unreadCount > 0 && (
             <button
-              onClick={markAllAsRead}
+              onClick={handleMarkAllAsRead}
               className="text-sm font-medium text-primary hover:text-primary/80 transition-colors bg-primary/5 px-4 py-2 rounded-lg"
             >
               Mark all as read

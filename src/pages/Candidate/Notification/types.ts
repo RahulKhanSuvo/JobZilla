@@ -1,9 +1,19 @@
 export interface NotificationItem {
   id: string;
-  type: "application" | "message" | "alert" | "interview" | "success";
+  type:
+    | "APPLICATION"
+    | "MESSAGE"
+    | "ALERT"
+    | "INTERVIEW"
+    | "SUCCESS"
+    | "application"
+    | "message"
+    | "alert"
+    | "interview"
+    | "success";
   title: string;
   message: string;
-  timestamp: string;
+  createdAt: string;
   isRead: boolean;
   link?: string;
 }

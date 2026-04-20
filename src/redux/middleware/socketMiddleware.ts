@@ -14,6 +14,8 @@ import {
 } from "../features/chat/chatSlice";
 import type { ChatMessage } from "../features/chat/chatSlice";
 import { chatApi } from "../features/chat/chat.api";
+import { notificationApi } from "../features/notification/notification.api";
+import type { NotificationItem } from "@/pages/Candidate/Notification/types";
 
 let socket: Socket | null = null;
 
@@ -30,6 +32,12 @@ const socketMiddleware: Middleware = (store) => (next) => (action) => {
 
     socket.on("connect", () => {
       store.dispatch(connectionEstablished());
+      // Join notification room for the current user
+      const state = store.getState();
+      const userId = state.auth?.user?.id;
+      if (userId && socket) {
+        socket.emit("join_notifications", userId);
+      }
     });
 
     socket.on("disconnect", () => {
@@ -46,6 +54,21 @@ const socketMiddleware: Middleware = (store) => (next) => (action) => {
             const data = draft as { data?: ChatMessage[] };
             if (data && data.data) {
               data.data.push(message);
+            }
+          },
+        ),
+      );
+    });
+
+    socket.on("new_notification", (notification: NotificationItem) => {
+      (store.dispatch as AppDispatch)(
+        notificationApi.util.updateQueryData(
+          "getNotifications",
+          undefined,
+          (draft) => {
+            if (draft && draft.data) {
+              draft.data.unshift(notification);
+              draft.meta.unreadCount += 1;
             }
           },
         ),

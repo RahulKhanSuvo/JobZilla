@@ -8,6 +8,7 @@ import {
   Trash2,
 } from "lucide-react";
 import type { NotificationItem } from "../types";
+import { formatDistanceToNow } from "date-fns";
 
 interface NotificationItemCardProps {
   notification: NotificationItem;
@@ -21,7 +22,7 @@ export default function NotificationItemCard({
   onDelete,
 }: NotificationItemCardProps) {
   const getIcon = (type: NotificationItem["type"]) => {
-    switch (type) {
+    switch (type?.toLowerCase()) {
       case "application":
         return <Briefcase className="w-5 h-5 text-blue-500" />;
       case "message":
@@ -38,7 +39,7 @@ export default function NotificationItemCard({
   };
 
   const getBgColor = (type: NotificationItem["type"]) => {
-    switch (type) {
+    switch (type?.toLowerCase()) {
       case "application":
         return "bg-blue-100";
       case "message":
@@ -79,7 +80,10 @@ export default function NotificationItemCard({
             {notification.title}
           </h3>
           <span className="text-xs text-gray-400 shrink-0 whitespace-nowrap">
-            {notification.timestamp}
+            {formatDistanceToNow(new Date(notification.createdAt), {
+              addSuffix: true,
+            })}
+            w{" "}
           </span>
         </div>
         <p
