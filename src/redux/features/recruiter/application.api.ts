@@ -1,11 +1,31 @@
-import type { Application, ApplicationStatus } from "@/types/application";
+import type {
+  Application,
+  ApplicationStatus,
+  IApplicationResponse,
+} from "@/types/application";
 import baseApi from "../hook/baseApi";
 import type { IApiResponse } from "@/types/job";
 
 const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllApplications: builder.query<IApiResponse<Application[]>, void>({
-      query: () => "applications",
+    getAllApplications: builder.query<
+      IApplicationResponse,
+      Record<string, unknown> | void
+    >({
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        if (params) {
+          Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined && value !== null && value !== "") {
+              queryParams.append(key, value.toString());
+            }
+          });
+        }
+        return {
+          url: "applications",
+          params: queryParams,
+        };
+      },
       providesTags: ["Applications"],
     }),
     getApplicationById: builder.query<IApiResponse<Application>, string>({

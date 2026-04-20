@@ -2,7 +2,29 @@ export type ApplicationStatus =
   | "PENDING"
   | "ACCEPTED"
   | "REJECTED"
-  | "SHORTLISTED";
+  | "SHORTLISTED"
+  | "HIRED";
+
+export interface IApplicationMeta {
+  total: number;
+  skip: number;
+  limit: number;
+  stats: {
+    ALL: number;
+    PENDING: number;
+    SHORTLISTED: number;
+    HIRED: number;
+    REJECTED: number;
+  };
+  uniqueJobs: string[];
+}
+
+export interface IApplicationResponse {
+  success: boolean;
+  message: string;
+  data: Application[];
+  meta: IApplicationMeta;
+}
 
 export interface ApplicationCompanyUser {
   id: string;
@@ -69,7 +91,7 @@ export interface Education {
 
 export interface ApplicationCandidate {
   location: string | null;
-  profileImage: string | null;
+  avatar: string | null;
   aboutMe?: string | null;
   language?: string | null;
   skills?: Skill[];
