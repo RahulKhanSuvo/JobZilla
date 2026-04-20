@@ -5,6 +5,8 @@ import { errorToast } from "@/utils/errorToast";
 import JobForm from "./components/JobForm";
 import type { PostJobFormData } from "./postJobSchema";
 import { useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function PostJob() {
   const [createJob, { isLoading }] = useCreateJobMutation();
@@ -22,6 +24,11 @@ export default function PostJob() {
 
   return (
     <div className="space-y-6 pb-12">
+      {/* back button */}
+      <Button variant={"outline"} onClick={() => navigate(-1)} className="">
+        <ArrowLeft className="size-4 mr-2" />
+        Back
+      </Button>
       <DashboardTitle>Post A New Job</DashboardTitle>
       <JobForm
         onSubmit={handleSubmit}
