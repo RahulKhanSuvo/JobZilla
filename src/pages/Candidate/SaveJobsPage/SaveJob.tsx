@@ -145,11 +145,6 @@ export default function SaveJob() {
         onRemove={handleRemove}
         isLoading={isLoading}
       />
-
-      {/* Footer / Pagination Placeholder */}
-      <div className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
-        ©2026 Jobtex. All Rights Reserved.
-      </div>
     </div>
   );
 }
