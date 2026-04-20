@@ -45,7 +45,7 @@ const jobApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Jobs"],
     }),
-    getMyJobs: builder.query<IApiResponse<IJobResponse>, IJobQueryParams>({
+    getMyJobs: builder.query<IJobResponse, IJobQueryParams>({
       query: (params) => ({
         url: "/jobs/my-jobs",
         method: "GET",

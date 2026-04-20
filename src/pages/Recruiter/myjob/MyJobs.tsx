@@ -97,8 +97,8 @@ export default function MyJobs() {
     limit: 10,
   });
 
-  const jobs = jobResponse?.data?.data || [];
-  const meta = jobResponse?.data?.meta;
+  const jobs = jobResponse?.data || [];
+  const meta = jobResponse?.meta;
 
   const handleSortChange = (value: string) => {
     if (value === "newest") {
