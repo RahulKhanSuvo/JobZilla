@@ -43,8 +43,8 @@ const applicationApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Applications"],
     }),
-    applyJob: builder.mutation({
-      query: (data: { jobId: string; resumeId: string; file: File }) => ({
+    applyJob: builder.mutation<IApiResponse<Application>, FormData>({
+      query: (data) => ({
         url: "applications",
         method: "POST",
         body: data,

@@ -53,13 +53,16 @@ export default function ApplyModal({
     }
 
     try {
-      const payload = {
-        jobId,
-        resumeId: selectedResumeId,
-        ...(file && { file }),
-      };
+      const formData = new FormData();
+      formData.append("jobId", jobId);
 
-      await applyJob(payload as any).unwrap();
+      if (file) {
+        formData.append("file", file);
+      } else if (selectedResumeId) {
+        formData.append("resumeId", selectedResumeId);
+      }
+
+      await applyJob(formData).unwrap();
       toast.success("Application submitted successfully!");
       onClose();
     } catch (error) {
