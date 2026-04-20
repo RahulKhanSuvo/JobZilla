@@ -58,7 +58,7 @@ export default function JobDetails() {
           </div>
 
           {/* Right Sidebar Column */}
-          <aside className="lg:col-span-4 sticky top-64 space-y-8">
+          <aside className="lg:col-span-4 space-y-8">
             <JobSidebar job={jobData} />
           </aside>
         </div>
