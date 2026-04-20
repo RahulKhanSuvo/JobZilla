@@ -50,7 +50,7 @@ const applicationApi = baseApi.injectEndpoints({
         body: data,
         formData: true,
       }),
-      invalidatesTags: ["Jobs", "Applications"],
+      invalidatesTags: ["Jobs", "Applications", "Stats"],
     }),
   }),
 });

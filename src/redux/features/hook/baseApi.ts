@@ -56,6 +56,7 @@ const baseApi = createApi({
     "followCompany",
     "Chat",
     "Notifications",
+    "Stats",
   ],
 });
 export default baseApi;
