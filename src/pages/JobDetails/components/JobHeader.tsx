@@ -57,7 +57,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
 
   return (
     <div className="bg-white  dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
-      <Container className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 transition-colors py-8">
+      <Container className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10 transition-colors py-8">
         {/* Left: Company Logo & Job Title */}
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="size-24 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 transition-all border border-slate-100 dark:border-slate-700 rounded p-2">
@@ -100,12 +100,12 @@ export default function JobHeader({ job }: JobHeaderProps) {
         </div>
 
         {/* Right: Actions, Rating & Salary */}
-        <div className="flex flex-col items-start lg:items-end gap-2 min-w-max">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col items-start lg:items-end gap-4 w-full lg:w-auto mt-4 lg:mt-0">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
             <Button
               variant="outline"
               size="icon"
-              className="size-10 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-500 transition-all active:scale-95"
+              className="size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-500 transition-all active:scale-95"
             >
               <Share2 className="size-5" />
             </Button>
@@ -113,14 +113,14 @@ export default function JobHeader({ job }: JobHeaderProps) {
               variant="outline"
               size="icon"
               onClick={() => handelSave(job.id ?? "")}
-              className={`size-10 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
+              className={`size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
             >
               <IoHeart className="size-5" />
             </Button>
             <Button
               onClick={hadnelApply}
-              disabled={job.isApplied || false}
-              className="h-12 px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
+              disabled={job.isApplied || true}
+              className="flex-1 sm:flex-none h-12 px-4 sm:px-12 md:px-20 py-4 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-3 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               <Send className="size-5 rotate-[-20deg]" />
               {job.isApplied ? "Applied" : "Apply Now"}
