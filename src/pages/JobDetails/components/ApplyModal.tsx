@@ -72,10 +72,11 @@ export default function ApplyModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden border-none shadow-2xl">
+      <DialogContent className="w-[calc(100vw-2rem)] sm:max-w-[500px] p-0 overflow-hidden border-none shadow-2xl">
         <DialogHeader className="p-6 pb-0">
-          <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-white">
-            Apply for <span className="text-[#10b981]">{jobTitle}</span>
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            Apply for{" "}
+            <span className="text-[#10b981] wrap-break-word">{jobTitle}</span>
           </DialogTitle>
           <DialogDescription className="text-slate-500 dark:text-slate-400 mt-1">
             Choose how you want to submit your application.
