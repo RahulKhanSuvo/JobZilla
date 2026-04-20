@@ -26,9 +26,8 @@ export const recruiterRoutes: RouteObject = {
     { path: "dashboard", element: <RecruiterDashboard /> },
     {
       path: "my-jobs",
-      element: <MyJobs />,
       children: [
-        { index: true, element: <Navigate to={"post-job"} /> },
+        { index: true, element: <MyJobs /> },
         { path: "post-job", element: <PostJob /> },
         { path: "edit-job/:id", element: <EditJob /> },
       ],
@@ -40,11 +39,20 @@ export const recruiterRoutes: RouteObject = {
     },
     { path: "applicants", element: <AllApplicants /> },
     { path: "applicants/:id", element: <ApplicantDetailPage /> },
-    { path: "profile", element: <RecruiterProfilePage /> },
+    {
+      path: "profile",
+      children: [
+        {
+          index: true,
+          element: <RecruiterProfilePage />,
+        },
+        { path: "edit", element: <RecruiterProfileEdit /> },
+      ],
+    },
+
     { path: "messages", element: <Message /> },
     { path: "messages/:id", element: <Message /> },
     { path: "notifications", element: <Notification /> },
-    { path: "profile/edit", element: <RecruiterProfileEdit /> },
     { path: "setting", element: <RecruiterSettings /> },
   ],
 };
