@@ -314,15 +314,19 @@ export default function MyJobs() {
                               )}
                             </Button>
                           </AppTooltip>
-                          <Link to={`edit-job/${job.id}`}>
+
+                          <AppTooltip content="Edit Job">
                             <Button
                               variant="ghost"
                               size="icon"
+                              asChild
                               className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
                             >
-                              <Edit2 className="size-4" />
+                              <Link to={`edit-job/${job.id}`}>
+                                <Edit2 className="size-4" />
+                              </Link>
                             </Button>
-                          </Link>
+                          </AppTooltip>
                           <Button
                             onClick={() => {
                               setSelectedJobId(job.id);
