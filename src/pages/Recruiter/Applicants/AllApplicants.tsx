@@ -105,38 +105,26 @@ export default function AllApplicants() {
 
       {/* Stats Cards */}
       <ApplicantsStats statsData={statsData} />
+      <div>
+        {/* Filters Bar */}
+        <ApplicantsFilters
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+          jobFilter={jobFilter}
+          setJobFilter={setJobFilter}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          uniqueJobs={meta?.uniqueJobs || []}
+          statsData={statsData}
+          hasActiveFilters={hasActiveFilters}
+          onClearFilters={clearAllFilters}
+          onFilterChange={handleFilterChange}
+        />
 
-      {/* Filters Bar */}
-      <ApplicantsFilters
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        statusFilter={statusFilter}
-        setStatusFilter={setStatusFilter}
-        jobFilter={jobFilter}
-        setJobFilter={setJobFilter}
-        sortBy={sortBy}
-        setSortBy={setSortBy}
-        uniqueJobs={meta?.uniqueJobs || []}
-        statsData={statsData}
-        hasActiveFilters={hasActiveFilters}
-        onClearFilters={clearAllFilters}
-        onFilterChange={handleFilterChange}
-      />
-
-      {/* Applicants Table & Count */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <p className="text-sm text-slate-500 font-medium">
-            Project Applicants
-          </p>
-          {hasActiveFilters && (
-            <p className="text-xs text-primary font-semibold bg-primary/5 px-3 py-1 rounded-full">
-              Filters active
-            </p>
-          )}
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+        {/* Applicants Table & Count */}
+        <div className="bg-white rounded shadow-sm border border-slate-100 overflow-hidden">
           <ApplicantsTable
             isLoading={isLoading}
             applicationList={applicationList}
