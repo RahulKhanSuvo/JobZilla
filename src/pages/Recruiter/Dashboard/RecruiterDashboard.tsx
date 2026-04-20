@@ -32,21 +32,6 @@ export default function RecruiterDashboard() {
 
   const stats = statsResponse.data;
 
-  const pipelineData = [
-    { stage: "Applied", value: stats.totalApplicants, color: "var(--primary)" },
-    {
-      stage: "Shortlisted",
-      value: stats.shortlistedApplicants,
-      color: "var(--primary)",
-    },
-    { stage: "Hired", value: stats.hiredApplicants, color: "var(--primary)" },
-    {
-      stage: "Rejected",
-      value: stats.rejectedApplicants,
-      color: "var(--primary)",
-    },
-  ];
-
   return (
     <>
       <div className="max-w-[1600px] mx-auto">
@@ -57,10 +42,7 @@ export default function RecruiterDashboard() {
         <StatsGrid stats={stats} />
 
         {/* Charts and Data Visualizations */}
-        <DashboardCharts
-          trendData={stats.applicationTrend}
-          pipelineData={pipelineData}
-        />
+        <DashboardCharts />
 
         {/* Tables and List Sections */}
         <RecentApplicants applicants={stats.recentApplicants} />
