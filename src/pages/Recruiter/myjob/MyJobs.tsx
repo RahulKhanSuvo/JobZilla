@@ -73,7 +73,7 @@ export default function MyJobs() {
       label: "Open Jobs",
       value: jobStats?.data.openJobs?.toString() || "0",
       icon: Unlock,
-      color: "bg-amber-50 text-amber-600",
+      color: "bg-green-50 text-green-600",
     },
     {
       label: "Closed Jobs",
