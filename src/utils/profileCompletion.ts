@@ -14,10 +14,10 @@ export const calculateProfileCompletion = (
   data: CandidateProfileData,
 ): ProfileCompletionResult => {
   const checks: CompletionCheck[] = [
-    {
-      label: "Basic Details",
-      completed: !!(data.fullName && data.email && data.candidate?.phone && data.candidate?.location),
-    },
+    { label: "Full Name", completed: !!data.fullName },
+    { label: "Email", completed: !!data.email },
+    { label: "Phone", completed: !!data.candidate?.phone },
+    { label: "Location", completed: !!data.candidate?.location },
     { label: "About Me", completed: !!data.candidate?.aboutMe },
     {
       label: "Experience",

@@ -2,48 +2,28 @@ import { Progress } from "@/components/ui/progress";
 import { useMemo } from "react";
 import { useWatch } from "react-hook-form";
 import type { ProfileFormData } from "../../profileSchema";
+import { calculateProfileCompletion } from "@/utils/profileCompletion";
+import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
 
 export default function ProfileProgress() {
   const values = useWatch<ProfileFormData>();
 
   const completion = useMemo(() => {
-    const fields: (keyof ProfileFormData)[] = [
-      "fullName",
-      "email",
-      "phone",
-      "location",
-      "dob",
-      "gender",
-      "maritalStatus",
-      "language",
-      "skills",
-      "aboutMe",
-      "careerFinding",
-      "facebook",
-      "linkedin",
-      "twitter",
-      "avatar",
-      "educationList",
-      "experienceList",
-    ];
+    const mappedData = {
+      fullName: values.fullName,
+      email: values.email,
+      candidate: {
+        phone: values.phone,
+        location: values.location,
+        aboutMe: values.aboutMe,
+        workExperiences: values.experienceList,
+        eductions: values.educationList,
+        skills: values.skills,
+      },
+    } as unknown as CandidateProfileData;
 
-    let filledCount = 0;
-    fields.forEach((field) => {
-      const val = values[field];
-      if (Array.isArray(val)) {
-        if (val.length > 0) filledCount++;
-      } else if (val) {
-        // Check for empty string or other falsy values, but allow boolean true/false (though not relevant here)
-        if (typeof val === "string" && val.trim() !== "") {
-          filledCount++;
-        } else if (typeof val === "object" && val !== null) {
-          // Handles Files (avatar) or other objects
-          filledCount++;
-        }
-      }
-    });
-
-    return Math.round((filledCount / fields.length) * 100);
+    const { percentage } = calculateProfileCompletion(mappedData);
+    return percentage;
   }, [values]);
 
   const getStatusMessage = (percent: number) => {
@@ -56,7 +36,7 @@ export default function ProfileProgress() {
 
   return (
     <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-md border-b py-4 mb-8">
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-4 ">
         <div className="flex justify-between items-end mb-2">
           <div>
             <h3 className="text-lg font-bold text-primary">
