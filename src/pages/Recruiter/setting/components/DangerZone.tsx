@@ -47,7 +47,7 @@ export default function DangerZone() {
                 recruiter account and remove all your data from our servers.
               </DialogDescription>
             </DialogHeader>
-            <DialogFooter className="mt-6 flex gap-3 sm:gap-0">
+            <DialogFooter className="mt-6 flex gap-3 sm:gap-2">
               <Button variant="outline" className="flex-1 font-bold">
                 Cancel
               </Button>
