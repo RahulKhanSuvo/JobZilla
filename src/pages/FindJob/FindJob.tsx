@@ -58,35 +58,37 @@ export default function FindJob() {
           {/* Main Content */}
           <main className="flex-1 space-y-4">
             {/* Mobile Filter Trigger */}
-            <div className="lg:hidden flex items-center justify-between mb-2">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex items-center gap-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 h-10 px-4 rounded-none shadow-none"
+            <div className="flex justify-between">
+              <div className="lg:hidden flex items-center justify-between mb-2">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="flex items-center gap-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 h-10 px-4 rounded-none shadow-none"
+                    >
+                      <Filter className="w-4 h-4" />
+                      Filters
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent
+                    side="left"
+                    className="w-full sm:max-w-md overflow-y-auto p-0 border-r-0 dark:bg-slate-950"
                   >
-                    <Filter className="w-4 h-4" />
-                    Filters
-                  </Button>
-                </SheetTrigger>
-                <SheetContent
-                  side="left"
-                  className="w-full sm:max-w-md overflow-y-auto p-0 border-r-0 dark:bg-slate-950"
-                >
-                  <SheetHeader className="p-4 border-b border-slate-100 dark:border-slate-800 text-left">
-                    <SheetTitle>Filters</SheetTitle>
-                  </SheetHeader>
-                  <div className="p-4">
-                    <JobFilters form={form} />
-                  </div>
-                </SheetContent>
-              </Sheet>
+                    <SheetHeader className="p-4 border-b border-slate-100 dark:border-slate-800 text-left">
+                      <SheetTitle>Filters</SheetTitle>
+                    </SheetHeader>
+                    <div className="p-4">
+                      <JobFilters form={form} />
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
+              <JobHeader
+                layout={layout}
+                setLayout={setLayout}
+                total={data?.meta?.total || 0}
+              />
             </div>
-            <JobHeader
-              layout={layout}
-              setLayout={setLayout}
-              total={data?.meta?.total || 0}
-            />
             <JobList layout={layout} jobs={jobs} isLoading={isLoading} />
             {(data?.meta?.totalPage ?? 0) > 1 && (
               <Pagination

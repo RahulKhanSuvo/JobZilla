@@ -23,7 +23,7 @@ export default function JobHeader({
 }: JobHeaderProps) {
   return (
     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div className="flex items-center gap-4">
+      <div className=" hidden md:flex items-center  gap-4">
         <div className="flex items-center bg-white dark:bg-slate-900 overflow-hidden p-1 ">
           <Button
             variant="ghost"
@@ -60,9 +60,9 @@ export default function JobHeader({
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex justify-between md:items-center gap-3">
         <Select defaultValue="12">
-          <SelectTrigger className="h-10 bg-[#F1F1F1] dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-none  w-32.5  font-bold text-slate-600 dark:text-slate-400 shadow-none">
+          <SelectTrigger className="h-10 hidden md:flex bg-[#F1F1F1] dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-none  w-32.5  font-bold text-slate-600 dark:text-slate-400 shadow-none">
             <SelectValue placeholder="12 Per Page" />
           </SelectTrigger>
           <SelectContent
