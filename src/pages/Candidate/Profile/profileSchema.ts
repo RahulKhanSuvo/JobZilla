@@ -7,12 +7,12 @@ export const profileSchema = z.object({
   location: z.string().min(2, "Location must be at least 2 characters"),
   dob: z.string().optional(),
   gender: z.enum(["Male", "Female", "Other"]).nullable().optional(),
-  maritalStatus: z.string().nullable().optional(),
-  language: z.array(z.string()).optional(),
+  maritalStatus: z.string().nullable(),
+  language: z.array(z.string()),
   aboutMe: z.string().optional(),
   careerFinding: z.string().optional(),
   // Skills — array of skill strings
-  skills: z.array(z.string()).optional(),
+  skills: z.array(z.string()),
 
   // Education — mirrors Prisma `eduction` model
   educationList: z
