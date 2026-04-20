@@ -12,6 +12,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["User"],
     }),
     signUp: builder.mutation({
       query: (payload) => ({
