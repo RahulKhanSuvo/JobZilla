@@ -25,6 +25,10 @@ interface AvatarDropdownProps {
 export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
   const [logout, { isLoading }] = useUserLogoutMutation();
   const dispatch = useDispatch();
+
+  const userImage = user?.candidate?.avatar || user?.company?.logo;
+  const userInitial = user?.name?.[0]?.toUpperCase() || "U";
+
   const handelLogout = async () => {
     try {
       await logout().unwrap();
@@ -34,14 +38,19 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
       errorToast(error);
     }
   };
+
   return (
     <DropdownMenu>
       <div className="flex items-center gap-2">
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full overflow-hidden"
+          >
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
-              <AvatarFallback>{user?.name ?? "Rak"}</AvatarFallback>
+              <AvatarImage src={userImage} alt={user?.name} />
+              <AvatarFallback>{userInitial}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -55,12 +64,9 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
         <div className="flex flex-col space-y-1 p-3 mb-2 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-3">
             <Avatar className="size-10 border-2 border-primary/10">
-              <AvatarImage
-                src="https://github.com/shadcn.png"
-                alt={user?.name}
-              />
+              <AvatarImage src={userImage} alt={user?.name} />
               <AvatarFallback className="bg-primary/10 text-primary font-bold">
-                {user?.name?.[0]?.toUpperCase() || "U"}
+                {userInitial}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">

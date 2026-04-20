@@ -3,7 +3,7 @@ import { Separator } from "../ui/separator";
 import DashboardSearch from "./DashboardSearch";
 import { Notifications } from "./Notifications";
 import { useLocation } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   toggleCollapsed,
   toggleMobileOpen,
@@ -12,10 +12,12 @@ import { PanelLeft, Search } from "lucide-react";
 import { Button } from "../ui/button";
 import JobzillaLogo from "../common/JobzillaLogo";
 import { Link } from "react-router";
+import type { RootState } from "@/redux/store";
 
 export default function DashboardNavbar() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
   const isRecruiter = pathname.startsWith("/recruiter");
 
   const dropdownMenu = [
@@ -69,7 +71,7 @@ export default function DashboardNavbar() {
           </div>
           <Notifications />
           <Separator orientation="vertical" className="h-6 mx-1" />
-          <AvatarDropdown menu={dropdownMenu} />
+          <AvatarDropdown user={user} menu={dropdownMenu} />
         </div>
       </header>
     </nav>
