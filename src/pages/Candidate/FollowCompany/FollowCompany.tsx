@@ -1,9 +1,7 @@
 import { ReusableTable } from "@/components/common/ReusableTable";
 import DashboardTitle from "@/components/common/DashboardTitle";
 import CommonWrapper from "@/components/common/CommonWrapper";
-import {
-  followedCompanyColumns,
-} from "./followedCompanyColumns";
+import { followedCompanyColumns } from "./followedCompanyColumns";
 import { useGetAllFollwedCompanyQuery } from "@/redux/features/candidate/follow.api";
 
 export default function FollowCompany() {
@@ -18,7 +16,7 @@ export default function FollowCompany() {
         </p>
       </div>
 
-      <CommonWrapper className="overflow-hidden">
+      <CommonWrapper className="overflow-hidden bg-white dark:bg-slate-900">
         <ReusableTable
           columns={followedCompanyColumns}
           data={response?.data || []}

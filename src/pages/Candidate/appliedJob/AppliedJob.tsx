@@ -19,7 +19,7 @@ function AppliedJob() {
         </p>
       </div>
 
-      <CommonWrapper className="overflow-hidden">
+      <CommonWrapper className="overflow-hidden bg-white dark:bg-slate-900">
         <ReusableTable<Application>
           columns={appliedJobColumns}
           data={applications}

@@ -34,7 +34,7 @@ export function ReusableTable<T>({
   if (isLoading) {
     return (
       <div className={`overflow-x-auto ${className || ""}`}>
-        <Table className="w-full text-left border-collapse min-w-[1000px]">
+        <Table className="w-full bg-white dark:bg-slate-900 text-left border-collapse min-w-[1000px]">
           <TableHeader>
             <TableRow className="border-b border-slate-100 hover:bg-transparent">
               {columns.map((col, index) => (

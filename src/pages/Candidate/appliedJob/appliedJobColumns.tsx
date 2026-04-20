@@ -13,7 +13,7 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
           <img
             src={item.job.company.logo}
             alt={item.job?.company?.user?.name}
-            className="size-12 rounded-full object-cover border border-slate-100 bg-white"
+            className="size-12 rounded-full object-cover border border-slate-100 bg-white dark:bg-slate-800"
           />
         ) : (
           <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
