@@ -14,10 +14,16 @@ import type { PostJobFormData } from "@/pages/Recruiter/postjob/postJobSchema";
 import { IoHeart } from "react-icons/io5";
 import { errorToast } from "@/utils/errorToast";
 import ApplyModal from "./ApplyModal";
+import IncompleteProfileModal from "./IncompleteProfileModal";
 import { useSaveJobMutation } from "@/redux/features/job/job.api";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
+import {
+  calculateProfileCompletion,
+  type CompletionCheck,
+} from "@/utils/profileCompletion";
 
 interface JobHeaderProps {
   job: PostJobFormData;
@@ -25,9 +31,14 @@ interface JobHeaderProps {
 
 export default function JobHeader({ job }: JobHeaderProps) {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isIncompleteModalOpen, setIsIncompleteModalOpen] = useState(false);
+  const [profileChecks, setProfileChecks] = useState<CompletionCheck[]>([]);
   const [saveJob] = useSaveJobMutation();
   const navigate = useNavigate();
   const user = useSelector(selectCurrentUser);
+  const { data: currentUserResponse } = useCurrentUserQuery(undefined, {
+    skip: !user,
+  });
   const deadlineDate = job.deadline ? new Date(job.deadline) : null;
   const daysLeft =
     deadlineDate && deadlineDate > new Date()
@@ -50,9 +61,25 @@ export default function JobHeader({ job }: JobHeaderProps) {
   const hadnelApply = () => {
     if (!user) {
       navigate("/auth/login");
-    } else {
-      setIsApplyModalOpen(true);
+      return;
     }
+
+    if (user.role === "CANDIDATE" && currentUserResponse?.data) {
+      const profileData = {
+        candidate: currentUserResponse.data.candidate,
+        fullName: currentUserResponse.data.name || "",
+        email: currentUserResponse.data.email || "",
+      };
+
+      const { percentage, checks } = calculateProfileCompletion(profileData);
+      if (percentage < 100) {
+        setProfileChecks(checks);
+        setIsIncompleteModalOpen(true);
+        return;
+      }
+    }
+
+    setIsApplyModalOpen(true);
   };
 
   return (
@@ -119,7 +146,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
             </Button>
             <Button
               onClick={hadnelApply}
-              disabled={job.isApplied || true}
+              disabled={job.isApplied || false}
               className="flex-1 lg:flex-none h-11 sm:h-12 px-4 sm:px-8 lg:px-12 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-2 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               <Send className="size-4 sm:size-5 rotate-[-20deg]" />
@@ -162,6 +189,12 @@ export default function JobHeader({ job }: JobHeaderProps) {
         onClose={() => setIsApplyModalOpen(false)}
         jobId={job.id ?? ""}
         jobTitle={job.title}
+      />
+
+      <IncompleteProfileModal
+        isOpen={isIncompleteModalOpen}
+        onClose={() => setIsIncompleteModalOpen(false)}
+        checks={profileChecks}
       />
     </div>
   );
