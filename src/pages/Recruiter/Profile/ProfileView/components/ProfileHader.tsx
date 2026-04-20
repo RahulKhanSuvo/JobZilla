@@ -19,14 +19,16 @@ export default function ProfileHader({
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-white flex items-center justify-center">
-            <span className="text-primary/50">
+          <div className="w-full h-full bg-primary flex items-center justify-center">
+            <span className="text-white/50">
               <MdPhoto className="size-12" />
             </span>
           </div>
         )}
         {/* Subtle dark gradient overlay at bottom for contrast */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+        {user?.company?.coverImage && (
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+        )}
       </div>
 
       {/* Profile Info Row */}
