@@ -12,15 +12,10 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-
-interface ApplicationTrendData {
-  day: string;
-  applications: number;
-  views: number;
-}
+import type { IApplicationTrend } from "@/types/stats";
 
 interface ApplicationTrendChartProps {
-  data: ApplicationTrendData[];
+  data: IApplicationTrend[];
   variants: any;
 }
 
