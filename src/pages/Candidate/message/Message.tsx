@@ -63,10 +63,10 @@ export default function Message() {
 
   // Initialize socket natively on page load
   useEffect(() => {
-    if (!isConnected) {
+    if (user && !isConnected) {
       dispatch(startConnecting());
     }
-  }, [isConnected, dispatch]);
+  }, [user, isConnected, dispatch]);
 
   useEffect(() => {
     if (id) {

@@ -38,6 +38,9 @@ const socketMiddleware: Middleware = (store) => (next) => (action) => {
       if (userId && socket) {
         socket.emit("join_notifications", userId);
       }
+      if (state.chat.activeConversation && socket) {
+        socket.emit("join_conversation", state.chat.activeConversation);
+      }
     });
 
     socket.on("disconnect", () => {
