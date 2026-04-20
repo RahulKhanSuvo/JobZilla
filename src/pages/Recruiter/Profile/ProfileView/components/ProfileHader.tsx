@@ -2,6 +2,7 @@ import { MapPin, Briefcase, Globe, User as UserIcon } from "lucide-react";
 import { Link } from "react-router";
 import type { User } from "@/redux/features/auth/auth.type";
 import { MdPhoto } from "react-icons/md";
+import { Button } from "@/components/ui/button";
 
 export default function ProfileHader({
   user,
@@ -78,12 +79,14 @@ export default function ProfileHader({
 
           {/* Edit Button */}
           <div className="md:pb-1">
-            <Link
-              to={"edit"}
-              className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow active:scale-95 rounded-lg text-sm"
-            >
-              Edit Profile
-            </Link>
+            <Button asChild>
+              <Link
+                to={"edit"}
+                className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow active:scale-95 rounded text-sm"
+              >
+                Edit Profile
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
