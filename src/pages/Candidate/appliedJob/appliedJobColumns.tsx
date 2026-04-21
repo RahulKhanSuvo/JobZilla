@@ -22,7 +22,7 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
         )}
         <div className="space-y-1">
           <Link
-            to={`/jobs/${item.job.id}`}
+            to={`/jobs/${item.job?.id}`}
             className="hover:text-primary transition-colors"
           >
             <h4 className="text-[16px] font-bold text-slate-900 dark:text-slate-50">
@@ -89,7 +89,7 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
     className: "text-right",
     cell: (item) => (
       <div className="flex justify-end">
-        <Link to={`/job/${item.job.id}`}>
+        <Link to={`/job/${item.job?.id}`}>
           <button
             type="button"
             className="text-slate-400 cursor-pointer hover:text-primary transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800"

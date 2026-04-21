@@ -118,24 +118,24 @@ export default function ApplicantsTable({
                       <div className="flex items-center gap-4">
                         <img
                           src={
-                            applicant.user.candidate.avatar ??
-                            `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant.user.name}`
+                            applicant?.user?.candidate?.avatar ??
+                            `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant?.user?.name}`
                           }
-                          alt={applicant.user.name}
+                          alt={applicant?.user?.name}
                           className="size-12 rounded-full bg-slate-100 object-cover flex-shrink-0 ring-2 ring-white shadow-sm"
                         />
                         <div className="space-y-0.5 min-w-0">
                           <p className="text-[11px] font-bold text-primary uppercase tracking-tight">
-                            {applicant.job.title}
+                            {applicant?.job?.title}
                           </p>
                           <h4 className="text-base font-bold text-slate-900 leading-tight truncate">
-                            {applicant.user.name}
+                            {applicant?.user?.name}
                           </h4>
-                          {applicant.user.candidate.location && (
+                          {applicant?.user?.candidate?.location && (
                             <div className="flex items-center gap-1 text-slate-400">
                               <MapPin className="size-3" />
                               <span className="text-xs font-medium truncate">
-                                {applicant.user.candidate.location}
+                                {applicant?.user?.candidate?.location}
                               </span>
                             </div>
                           )}
@@ -241,7 +241,7 @@ export default function ApplicantsTable({
                           asChild
                         >
                           <a
-                            href={applicant.resume.fileUrl}
+                            href={applicant?.resume?.fileUrl}
                             target="_blank"
                             rel="noreferrer"
                           >

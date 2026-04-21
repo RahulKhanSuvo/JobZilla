@@ -4,12 +4,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MoreVertical, ExternalLink, Mail, Clock } from "lucide-react";
-import type { Application } from "@/types/application";
 import { formatDistanceToNow } from "date-fns";
-
-interface RecentApplicantsProps {
-  applicants?: Application[];
-}
+import { useGetAllApplicationsQuery } from "@/redux/features/recruiter/application.api";
 
 const getStatusColor = (status: string) => {
   switch (status.toUpperCase()) {
@@ -26,7 +22,12 @@ const getStatusColor = (status: string) => {
   }
 };
 
-export function RecentApplicants({ applicants = [] }: RecentApplicantsProps) {
+export function RecentApplicants() {
+  const { data } = useGetAllApplicationsQuery({
+    limit: 5,
+    page: 1,
+  });
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -56,7 +57,7 @@ export function RecentApplicants({ applicants = [] }: RecentApplicantsProps) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
-                {applicants.map((applicant) => (
+                {data?.data?.map((applicant) => (
                   <motion.tr
                     key={applicant.id}
                     whileHover={{ backgroundColor: "rgba(0,0,0,0.01)" }}
@@ -67,22 +68,22 @@ export function RecentApplicants({ applicants = [] }: RecentApplicantsProps) {
                         <Avatar className="size-10 border-2 border-white dark:border-slate-800 shadow-sm">
                           <AvatarImage
                             src={
-                              applicant.user.candidate?.avatar ||
-                              `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant.user.name}`
+                              applicant?.user?.candidate?.avatar ||
+                              `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant?.user?.name}`
                             }
                           />
                           <AvatarFallback>
-                            {applicant.user.name[0]}
+                            {applicant?.user?.name?.[0] || "U"}
                           </AvatarFallback>
                         </Avatar>
                         <div>
                           <p className="text-sm font-bold text-slate-900 dark:text-white">
-                            {applicant.user.name}
+                            {applicant?.user?.name}
                           </p>
                           <div className="flex items-center gap-1.5 text-xs text-slate-500">
                             <Mail className="size-3" />
                             <span className="truncate max-w-[120px]">
-                              {applicant.user.email}
+                              {applicant?.user?.email || "N/A"}
                             </span>
                           </div>
                         </div>
@@ -90,7 +91,7 @@ export function RecentApplicants({ applicants = [] }: RecentApplicantsProps) {
                     </td>
                     <td className="px-6 py-5">
                       <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        {applicant.job.title}
+                        {applicant?.job?.title}
                       </p>
                     </td>
                     <td className="px-6 py-5">
@@ -130,7 +131,7 @@ export function RecentApplicants({ applicants = [] }: RecentApplicantsProps) {
                     </td>
                   </motion.tr>
                 ))}
-                {applicants.length === 0 && (
+                {(!data?.data || data?.data?.length === 0) && (
                   <tr>
                     <td
                       colSpan={5}

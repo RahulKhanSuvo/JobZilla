@@ -73,18 +73,18 @@ export default function RecentApplications() {
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-2">
                         <Avatar className="size-10 border">
-                          <AvatarImage src={app.job.company.logo || ""} />
+                          <AvatarImage
+                            src={app.job?.user?.company.logo || ""}
+                          />
                           <AvatarFallback>
-                            {app.job.company.user.name.charAt(0).toUpperCase()}
+                            {app.job?.title?.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
-                          <span className="font-medium">
-                            {app.job.company.user.name}
-                          </span>
+                          <span className="font-medium">{app.job?.title}</span>
                           <span className="text-muted-foreground text-sm flex items-center gap-1">
                             <MapPin className="size-3" />
-                            {app.job.company.location}
+                            {app.job?.user?.company?.location}
                           </span>
                         </div>
                       </div>
@@ -107,7 +107,7 @@ export default function RecentApplications() {
                         size="icon"
                         className="size-8 hover:text-primary transition-colors"
                       >
-                        <Link to={`/job/${app.jobId}`}>
+                        <Link to={`/job/${app.job?.id}`}>
                           <ExternalLink className="size-4" />
                         </Link>
                       </Button>
