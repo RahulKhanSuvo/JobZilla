@@ -37,14 +37,14 @@ export default function JobCard({
           <div className="flex items-start gap-3 sm:gap-4">
             <div className="size-12 sm:size-15 shrink-0 dark:bg-slate-950 flex items-center justify-center overflow-hidden dark:border-slate-800 transition-transform duration-500">
               <img
-                src={job.company?.logo}
-                alt={job.company?.user?.name}
+                src={job.user?.company?.logo}
+                alt={job.user?.name}
                 className="size-full object-contain"
               />
             </div>
             <div className="overflow-hidden">
               <p className="font-medium text-primary dark:text-primary  cursor-pointer transition-all">
-                {job.company?.user?.name}
+                {job.user?.name}
               </p>
               <div className="flex items-center group/title">
                 <h4 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-tight group-hover/title:text-primary dark:group-hover/title:text-primary transition-colors line-clamp-1">
@@ -54,7 +54,7 @@ export default function JobCard({
               <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 font-bold mt-1.5">
                 <div className="flex items-center gap-0.5">
                   <MapPin className="size-3.5 text-slate-400/80" />
-                  <span className="text-xs">{job.company?.location}</span>
+                  <span className="text-xs">{job.user?.company?.location}</span>
                 </div>
                 <div className="flex items-center gap-0.5">
                   <Clock className="size-3.5 text-slate-400/80" />
