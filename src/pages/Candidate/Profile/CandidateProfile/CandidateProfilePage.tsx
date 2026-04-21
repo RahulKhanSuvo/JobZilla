@@ -5,6 +5,7 @@ import AboutSection from "./components/AboutSection";
 import ExperienceSection from "./components/ExperienceSection";
 import EducationSection from "./components/EducationSection";
 import SkillsSection from "./components/SkillsSection";
+import PreferencesSection from "./components/PreferencesSection";
 import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 import ProfileSkeleton from "./components/ProfileSkeleton";
 import ProfileErrorState from "./components/ProfileErrorState";
@@ -29,21 +30,24 @@ const CandidateProfilePage: FC = () => {
   }
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <h1 className="text-3xl font-bold tracking-tight mb-6">My Profile</h1>
+    <div className="space-y-8">
+      {/* Profile Header Block */}
+      <ProfileSummary data={user} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Sidebar */}
-        <div className="space-y-6 lg:col-span-1">
-          <ProfileSummary data={user} />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Left Column: Sidebar Details */}
+        <div className="lg:col-span-4 space-y-8">
           <ProfileCompleteness data={user} />
+          <PreferencesSection data={user} />
         </div>
 
-        {/* Main Content Area */}
-        <div className="space-y-6 lg:col-span-2">
+        {/* Right Column: Main Resume Content */}
+        <div className="lg:col-span-8 space-y-8">
           <AboutSection data={user} />
           <ExperienceSection workExperiences={user.workExperiences || []} />
           <EducationSection eductions={user.eductions || []} />
+        </div>
+        <div className="lg:col-span-12">
           <SkillsSection skills={user.skills || []} />
         </div>
       </div>

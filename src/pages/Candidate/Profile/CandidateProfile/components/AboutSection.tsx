@@ -1,6 +1,6 @@
 import type { FC } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { format } from "date-fns";
-import { User2, Calendar, Heart, Globe } from "lucide-react";
 import type { AuthUser } from "@/redux/features/auth/auth.type";
 
 interface AboutSectionProps {
@@ -8,76 +8,66 @@ interface AboutSectionProps {
 }
 
 const AboutSection: FC<AboutSectionProps> = ({ data }) => {
-  const languages =
-    data?.languages?.map((l: { language: string }) => l.language).join(", ") ||
-    null;
-
-  const basicInfo = [
+  const basicInfoItems = [
     {
-      icon: Calendar,
       label: "Date of Birth",
       value: data.candidate?.dob
-        ? format(new Date(data.candidate.dob), "dd MMM yyyy")
-        : null,
+        ? format(new Date(data.candidate?.dob), "dd MMM, yyyy")
+        : "N/A",
     },
+    { label: "Gender", value: data.candidate?.gender || "N/A" },
+    { label: "Marital Status", value: data.candidate?.maritalStatus || "N/A" },
     {
-      icon: User2,
-      label: "Gender",
-      value: data.candidate?.gender || null,
+      label: "Language",
+      value:
+        data?.languages
+          ?.map((lang: { language: string }) => lang.language)
+          .join(", ") || "N/A",
     },
-    {
-      icon: Heart,
-      label: "Marital Status",
-      value: data.candidate?.maritalStatus || null,
-    },
-    {
-      icon: Globe,
-      label: "Languages",
-      value: languages,
-    },
-  ].filter((item) => item.value);
-
+  ];
   return (
-    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-border/30 overflow-hidden">
-      <div className="px-6 md:px-8 py-6">
-        <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-          <span className="w-1 h-5 bg-primary rounded-full inline-block" />
-          About Me
-        </h2>
+    <Card className="border-none shadow bg-white dark:bg-slate-900 overflow-hidden">
+      <CardHeader className="pb-4 pt-6">
+        <CardTitle className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+          <span className="size-2 bg-primary rounded-full" />
+          Professional Summary
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-10 pb-10">
+        <div className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg italic">
+          {data.candidate?.aboutMe ? (
+            <div
+              className="prose prose-slate dark:prose-invert max-w-none first-letter:text-4xl first-letter:font-black first-letter:text-primary first-letter:mr-1"
+              dangerouslySetInnerHTML={{ __html: data.candidate?.aboutMe }}
+            />
+          ) : (
+            <p className="italic text-slate-400">
+              "Experienced professional with a proven track record. Seeking new
+              opportunities to leverage skills and contribute to organizational
+              goals." (Sample summary)
+            </p>
+          )}
+        </div>
 
-        {data.candidate?.aboutMe ? (
-          <div
-            className="prose prose-slate dark:prose-invert max-w-none text-muted-foreground leading-relaxed text-sm"
-            dangerouslySetInnerHTML={{ __html: data.candidate.aboutMe }}
-          />
-        ) : (
-          <p className="text-muted-foreground italic text-sm">
-            No about information provided yet.
-          </p>
-        )}
-
-        {basicInfo.length > 0 && (
-          <div className="mt-6 pt-5 border-t border-border/50 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {basicInfo.map((item) => (
-              <div
-                key={item.label}
-                className="flex flex-col gap-1.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60"
-              >
-                <div className="flex items-center gap-1.5 text-primary">
-                  <item.icon className="size-3.5" />
-                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    {item.label}
-                  </span>
-                </div>
-                <span className="text-sm font-semibold text-foreground">
+        <div className="pt-8 border-t border-slate-100 dark:border-slate-800">
+          <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">
+            Personal Dossier
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {basicInfoItems.map((item, idx) => (
+              <div key={idx} className="space-y-1 group">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter group-hover:text-primary transition-colors">
+                  {item.label}
+                </p>
+                <p className="font-bold text-slate-700 dark:text-slate-200">
                   {item.value}
-                </span>
+                </p>
               </div>
             ))}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

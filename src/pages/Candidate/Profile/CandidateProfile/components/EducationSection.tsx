@@ -1,7 +1,6 @@
 import type { FC } from "react";
-import { GraduationCap, CalendarRange } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Badge } from "@/components/ui/badge";
 
 interface Education {
   id: string;
@@ -19,28 +18,25 @@ interface EducationSectionProps {
 
 const EducationSection: FC<EducationSectionProps> = ({ eductions = [] }) => {
   return (
-    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-border/30">
-      <div className="px-6 md:px-8 py-6">
-        <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
-          <span className="w-1 h-5 bg-indigo-500 rounded-full inline-block" />
+    <Card className="border-none shadow bg-white dark:bg-slate-900 overflow-hidden">
+      <CardHeader className="pb-4 pt-6">
+        <CardTitle className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+          <span className="size-2 bg-primary rounded-full" />
           Education
-        </h2>
-
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="pb-10">
         {eductions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="size-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-3">
-              <GraduationCap className="size-7 text-indigo-400" />
-            </div>
-            <p className="text-muted-foreground font-medium">
-              No education details added yet.
-            </p>
-            <p className="text-sm text-muted-foreground/70 mt-1">
-              Add your academic background to complete your profile.
-            </p>
-          </div>
+          <p className="text-slate-400 italic text-center py-8">
+            "Educational background not added yet. Share your academic
+            achievements to complete your professional profile."
+          </p>
         ) : (
-          <div className="space-y-0">
-            {eductions.map((edu, index) => {
+          <div className="space-y-10 relative">
+            {/* Elegant vertical line */}
+            <div className="absolute left-6 top-2 bottom-2 w-px bg-slate-100 dark:bg-slate-800" />
+
+            {eductions.map((edu) => {
               const startDate = edu.startData
                 ? format(new Date(edu.startData), "yyyy")
                 : "N/A";
@@ -50,54 +46,39 @@ const EducationSection: FC<EducationSectionProps> = ({ eductions = [] }) => {
                   ? format(new Date(edu.endData), "yyyy")
                   : "N/A";
 
-              const isLast = index === eductions.length - 1;
-
               return (
-                <div key={edu.id} className="flex gap-4">
-                  {/* Timeline spine */}
-                  <div className="flex flex-col items-center">
-                    <div className="size-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center shrink-0 border border-indigo-200/50 dark:border-indigo-700/50">
-                      <GraduationCap className="size-4 text-indigo-500" />
-                    </div>
-                    {!isLast && (
-                      <div className="w-px flex-1 bg-border/60 mt-2 mb-2 min-h-6" />
-                    )}
-                  </div>
+                <div key={edu.id} className="relative pl-14 group">
+                  {/* Timeline Node */}
+                  <div className="absolute left-4 top-1.5 size-4 rounded-full border-4 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700 shadow-sm z-10 transition-all group-hover:bg-primary group-hover:scale-125 duration-300" />
 
-                  {/* Content */}
-                  <div className="flex-1 pb-6">
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-1">
-                      <div>
-                        <h3 className="font-bold text-base text-foreground leading-tight">
-                          {edu.major}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mt-0.5 font-medium">
-                          {edu.institution}
-                        </p>
-                        <p className="text-xs text-muted-foreground/70 mt-0.5">
-                          Field of Study: {edu.field}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <CalendarRange className="size-3.5 text-muted-foreground" />
-                        <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">
-                          {startDate} – {endDate}
-                        </span>
-                        {edu.isStudying && (
-                          <Badge className="text-[10px] px-2 py-0.5 bg-indigo-500/10 text-indigo-600 border-indigo-200 dark:border-indigo-800 font-bold">
-                            Studying
-                          </Badge>
-                        )}
-                      </div>
+                  <div className="space-y-2">
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                      <h3 className="font-black text-xl text-slate-800 dark:text-white uppercase italic tracking-tight group-hover:text-primary transition-colors">
+                        {edu.major}
+                      </h3>
+                      <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest border border-slate-100 dark:border-slate-800 px-3 py-1 rounded-full">
+                        {startDate} — {endDate}
+                      </span>
                     </div>
+
+                    <div className="flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-[11px]">
+                      <span>{edu.institution}</span>
+                    </div>
+
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium pt-1">
+                      Field of Study:{" "}
+                      <span className="text-slate-700 dark:text-slate-300 font-bold uppercase tracking-tighter">
+                        {edu.field}
+                      </span>
+                    </p>
                   </div>
                 </div>
               );
             })}
           </div>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
