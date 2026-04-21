@@ -21,9 +21,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera } from "lucide-react";
 import { useState } from "react";
 import type { ProfileFormData } from "../../profileSchema";
-import type { User } from "@/redux/features/auth/auth.type";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 
-export default function PersonalDetails({ user }: { user: User | null }) {
+export default function PersonalDetails({ user }: { user: AuthUser | null }) {
   const { control, watch, setValue } = useFormContext<ProfileFormData>();
   const [preview, setPreview] = useState<string | null>(null);
 

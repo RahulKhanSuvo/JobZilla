@@ -52,11 +52,6 @@ export interface CandidateProfile {
 type languages = {
   language: string;
 };
-export type CandidateProfileData = {
-  fullName: string;
-  email: string;
-  candidate?: CandidateProfile | null;
-};
 
 export type AuthUser = {
   id: string;

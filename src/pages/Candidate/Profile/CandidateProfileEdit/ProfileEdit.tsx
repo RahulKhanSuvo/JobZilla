@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { profileSchema, type ProfileFormData } from "../profileSchema";
 import { Form } from "@/components/ui/form";
 import { useUpdataCandidateMutation } from "@/redux/features/candidate/candidate.api";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
@@ -24,14 +22,17 @@ import type {
   Education,
   WorkExperience,
   CandidateProfile,
+  AuthUser,
 } from "@/redux/features/auth/auth.type";
 import { errorToast } from "@/utils/errorToast";
+import { useCurrentUserQuery } from "@/redux/features/auth/auth.api";
 
 export default function ProfileEdit() {
   const navigate = useNavigate();
-  const user = useSelector(selectCurrentUser);
-  const [updateCandidate, { isLoading }] = useUpdataCandidateMutation();
-
+  const { data, isLoading } = useCurrentUserQuery();
+  const [updateCandidate, { isLoading: isUpdating }] =
+    useUpdataCandidateMutation();
+  const user = data?.data;
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -70,18 +71,18 @@ export default function ProfileEdit() {
         gender: (candidate?.gender as "Male" | "Female" | "Other") || "Male",
         maritalStatus: candidate?.maritalStatus || "Single",
         aboutMe: candidate?.aboutMe || "",
-        skills: Array.isArray(candidate?.skills)
-          ? (candidate.skills as (string | Skill)[]).map((s) =>
+        skills: Array.isArray(user?.skills)
+          ? (user.skills as (string | Skill)[]).map((s) =>
               typeof s === "string" ? s : s.skill || s.id || "",
             )
           : [],
-        language: Array.isArray(candidate?.languages)
-          ? candidate.languages.map((l) =>
+        language: Array.isArray(user?.languages)
+          ? user.languages.map((l) =>
               typeof l === "string" ? l : l.language || "",
             )
           : [],
-        educationList: Array.isArray(candidate?.eductions)
-          ? candidate.eductions.map((e: Education) => ({
+        educationList: Array.isArray(user?.eductions)
+          ? user.eductions.map((e: Education) => ({
               institution: e.institution,
               major: e.major,
               field: e.field,
@@ -94,8 +95,8 @@ export default function ProfileEdit() {
               isStudying: e.isStudying || false,
             }))
           : [],
-        experienceList: Array.isArray(candidate?.workExperiences)
-          ? candidate.workExperiences.map((ex: WorkExperience) => ({
+        experienceList: Array.isArray(user?.workExperiences)
+          ? user.workExperiences.map((ex: WorkExperience) => ({
               jobTitle: ex.jobTitle,
               companyName: ex.companyName,
               industry: ex.industry,
@@ -174,7 +175,7 @@ export default function ProfileEdit() {
           </div>
 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-            <PersonalDetails user={user} />
+            <PersonalDetails user={user as AuthUser} />
             <ProfessionalInfo />
             <EducationSection />
             <ExperienceSection />
@@ -182,10 +183,10 @@ export default function ProfileEdit() {
             <div className="flex justify-end pt-6">
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isUpdating}
                 className="w-full md:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-black text-lg px-12 py-6 rounded-xl shadow-xl shadow-primary/20 transition-all active:scale-95"
               >
-                {isLoading ? (
+                {isUpdating ? (
                   "Updating Profile..."
                 ) : (
                   <>
