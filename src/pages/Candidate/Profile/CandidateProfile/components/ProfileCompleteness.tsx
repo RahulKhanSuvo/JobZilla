@@ -10,7 +10,6 @@ interface ProfileCompletenessProps {
 
 const ProfileCompleteness: FC<ProfileCompletenessProps> = ({ data }) => {
   const { percentage, checks } = calculateProfileCompletion(data);
-
   return (
     <Card className="border-none shadow-sm dark:bg-slate-900 overflow-hidden relative group">
       <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100 dark:bg-slate-800">

@@ -65,13 +65,9 @@ export default function JobHeader({ job }: JobHeaderProps) {
     }
 
     if (user.role === "CANDIDATE" && currentUserResponse?.data) {
-      const profileData = {
-        candidate: currentUserResponse.data.candidate,
-        fullName: currentUserResponse.data.name || "",
-        email: currentUserResponse.data.email || "",
-      };
-
-      const { percentage, checks } = calculateProfileCompletion(profileData);
+      const { percentage, checks } = calculateProfileCompletion(
+        currentUserResponse.data,
+      );
       if (percentage < 80) {
         setProfileChecks(checks);
         setIsIncompleteModalOpen(true);
