@@ -89,14 +89,14 @@ export default function JobHeader({ job }: JobHeaderProps) {
         <div className="flex flex-row items-start gap-4 sm:gap-6">
           <div className="size-16 sm:size-20 lg:size-24 bg-white dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 transition-all border border-slate-100 dark:border-slate-700 rounded p-2">
             <img
-              src={job.company?.logo}
-              alt={job.company?.user?.name || "Company Logo"}
+              src={job.user?.company?.logo}
+              alt={job.user?.name || "Company Logo"}
               className="w-full h-full object-contain"
             />
           </div>
           <div className="space-y-1">
             <p className="text-[#059669] text-sm font-semibold tracking-wide capitalize">
-              {job.company?.user?.name || "Anonymous Company"}
+              {job.user?.name || "Anonymous Company"}
             </p>
             <h1 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white leading-tight flex flex-wrap items-center gap-2">
               {job.title}
@@ -105,7 +105,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
             <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-8 gap-y-2 text-slate-500 dark:text-slate-400 text-sm sm:text-[15px] pt-1">
               <span className="flex items-center gap-2 capitalize">
                 <MapPin className="size-5 text-slate-300 dark:text-slate-600" />
-                {job.company?.location || "Location not specified"}
+                {job.user?.company?.location || "Location not specified"}
               </span>
               <span className="flex items-center gap-2">
                 <Calendar className="size-5 text-slate-300 dark:text-slate-600" />
