@@ -91,7 +91,7 @@ export const followedCompanyColumns = (
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => onUnfollow(item.following.company.id)}
+              onClick={() => onUnfollow(item.following.id)}
               className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2"
             >
               <UserMinus className="size-4" />

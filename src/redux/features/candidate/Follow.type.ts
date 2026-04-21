@@ -1,6 +1,7 @@
 export type FollowCompanyItem = {
   id: string;
   following: {
+    id: string;
     name: string;
     _count: {
       jobs: number;
