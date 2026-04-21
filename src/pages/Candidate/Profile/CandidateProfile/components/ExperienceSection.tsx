@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Briefcase } from "lucide-react";
+import { Briefcase, MapPin, Building2, CalendarRange } from "lucide-react";
 import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 
 interface Experience {
   id: string;
@@ -22,20 +22,28 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({
   workExperiences = [],
 }) => {
   return (
-    <Card className="border-none shadow-sm dark:bg-slate-900">
-      <CardHeader>
-        <CardTitle className="text-xl font-bold border-b border-border/50 pb-4">
+    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-border/30">
+      <div className="px-6 md:px-8 py-6">
+        <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+          <span className="w-1 h-5 bg-primary rounded-full inline-block" />
           Work Experience
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+        </h2>
+
         {workExperiences.length === 0 ? (
-          <p className="text-muted-foreground italic">
-            No work experience added yet.
-          </p>
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="size-14 rounded-2xl bg-primary/5 flex items-center justify-center mb-3">
+              <Briefcase className="size-7 text-primary/50" />
+            </div>
+            <p className="text-muted-foreground font-medium">
+              No work experience added yet.
+            </p>
+            <p className="text-sm text-muted-foreground/70 mt-1">
+              Add your work history to stand out.
+            </p>
+          </div>
         ) : (
-          <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-slate-200 dark:before:via-slate-800 before:to-transparent">
-            {workExperiences.map((exp) => {
+          <div className="space-y-0">
+            {workExperiences.map((exp, index) => {
               const startDate = exp.startData
                 ? format(new Date(exp.startData), "MMM yyyy")
                 : "N/A";
@@ -45,41 +53,65 @@ const ExperienceSection: FC<ExperienceSectionProps> = ({
                   ? format(new Date(exp.endData), "MMM yyyy")
                   : "N/A";
 
+              const isLast = index === workExperiences.length - 1;
+
               return (
-                <div
-                  key={exp.id}
-                  className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
-                >
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-900 bg-primary/20 text-primary shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                    <Briefcase className="size-4" />
+                <div key={exp.id} className="flex gap-4">
+                  {/* Timeline spine */}
+                  <div className="flex flex-col items-center">
+                    <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
+                      <Briefcase className="size-4 text-primary" />
+                    </div>
+                    {!isLast && (
+                      <div className="w-px flex-1 bg-border/60 mt-2 mb-2 min-h-6" />
+                    )}
                   </div>
 
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5 rounded-xl border border-border/50 shadow-sm transition-all hover:shadow-md bg-white dark:bg-slate-900/50">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
-                      <h3 className="font-bold text-lg text-foreground">
-                        {exp.jobTitle}
-                      </h3>
-                      <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full whitespace-nowrap">
-                        {startDate} - {endDate}
-                      </span>
+                  {/* Content */}
+                  <div className={`flex-1 pb-6 ${isLast ? "" : ""}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+                      <div>
+                        <h3 className="font-bold text-base text-foreground leading-tight">
+                          {exp.jobTitle}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1">
+                          <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <Building2 className="size-3.5 text-primary/60" />
+                            {exp.companyName}
+                          </span>
+                          <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <MapPin className="size-3.5 text-primary/60" />
+                            {exp.industry}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <CalendarRange className="size-3.5 text-muted-foreground" />
+                        <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">
+                          {startDate} – {endDate}
+                        </span>
+                        {exp.isWorking && (
+                          <Badge className="text-[10px] px-2 py-0.5 bg-green-500/10 text-green-600 border-green-200 dark:border-green-800 font-bold">
+                            Current
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <p className="font-medium text-sm text-foreground mb-3">
-                      {exp.companyName} &bull;{" "}
-                      <span className="text-muted-foreground font-normal">
-                        {exp.industry}
-                      </span>
-                    </p>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      <div className="prose" dangerouslySetInnerHTML={{ __html: exp.Description || "" }} />
-                    </p>
+
+                    {exp.Description && (
+                      <div
+                        className="text-sm text-muted-foreground leading-relaxed prose prose-sm prose-slate dark:prose-invert max-w-none mt-2"
+                        dangerouslySetInnerHTML={{ __html: exp.Description }}
+                      />
+                    )}
                   </div>
                 </div>
               );
             })}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

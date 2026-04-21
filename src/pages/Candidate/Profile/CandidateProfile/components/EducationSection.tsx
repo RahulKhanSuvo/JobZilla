@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, CalendarRange } from "lucide-react";
 import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 
 interface Education {
   id: string;
@@ -19,20 +19,28 @@ interface EducationSectionProps {
 
 const EducationSection: FC<EducationSectionProps> = ({ eductions = [] }) => {
   return (
-    <Card className="border-none shadow-sm dark:bg-slate-900">
-      <CardHeader>
-        <CardTitle className="text-xl font-bold border-b border-border/50 pb-4">
+    <div className="rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-border/30">
+      <div className="px-6 md:px-8 py-6">
+        <h2 className="text-lg font-bold text-foreground mb-6 flex items-center gap-2">
+          <span className="w-1 h-5 bg-indigo-500 rounded-full inline-block" />
           Education
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+        </h2>
+
         {eductions.length === 0 ? (
-          <p className="text-muted-foreground italic">
-            No education details added yet.
-          </p>
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="size-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center mb-3">
+              <GraduationCap className="size-7 text-indigo-400" />
+            </div>
+            <p className="text-muted-foreground font-medium">
+              No education details added yet.
+            </p>
+            <p className="text-sm text-muted-foreground/70 mt-1">
+              Add your academic background to complete your profile.
+            </p>
+          </div>
         ) : (
-          <div className="space-y-6">
-            {eductions.map((edu) => {
+          <div className="space-y-0">
+            {eductions.map((edu, index) => {
               const startDate = edu.startData
                 ? format(new Date(edu.startData), "yyyy")
                 : "N/A";
@@ -42,40 +50,54 @@ const EducationSection: FC<EducationSectionProps> = ({ eductions = [] }) => {
                   ? format(new Date(edu.endData), "yyyy")
                   : "N/A";
 
-              return (
-                <div
-                  key={edu.id}
-                  className="group relative flex gap-6 pb-6 last:pb-0"
-                >
-                  <div className="before:absolute before:left-[19px] before:top-10 before:bottom-0 before:w-px before:bg-border/60 group-last:before:hidden" />
+              const isLast = index === eductions.length - 1;
 
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-muted-foreground border-2 border-white dark:border-slate-900 shadow-sm shrink-0 relative z-10 transition-colors group-hover:bg-primary/10 group-hover:text-primary">
-                    <GraduationCap className="size-5" />
+              return (
+                <div key={edu.id} className="flex gap-4">
+                  {/* Timeline spine */}
+                  <div className="flex flex-col items-center">
+                    <div className="size-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center shrink-0 border border-indigo-200/50 dark:border-indigo-700/50">
+                      <GraduationCap className="size-4 text-indigo-500" />
+                    </div>
+                    {!isLast && (
+                      <div className="w-px flex-1 bg-border/60 mt-2 mb-2 min-h-6" />
+                    )}
                   </div>
 
-                  <div className="flex-1 space-y-1 pt-1.5">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                      <h3 className="font-bold text-foreground text-lg">
-                        {edu.major}
-                      </h3>
-                      <span className="text-sm font-medium text-muted-foreground">
-                        {startDate} - {endDate}
-                      </span>
+                  {/* Content */}
+                  <div className="flex-1 pb-6">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-1">
+                      <div>
+                        <h3 className="font-bold text-base text-foreground leading-tight">
+                          {edu.major}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-0.5 font-medium">
+                          {edu.institution}
+                        </p>
+                        <p className="text-xs text-muted-foreground/70 mt-0.5">
+                          Field of Study: {edu.field}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <CalendarRange className="size-3.5 text-muted-foreground" />
+                        <span className="text-xs font-semibold text-muted-foreground whitespace-nowrap">
+                          {startDate} – {endDate}
+                        </span>
+                        {edu.isStudying && (
+                          <Badge className="text-[10px] px-2 py-0.5 bg-indigo-500/10 text-indigo-600 border-indigo-200 dark:border-indigo-800 font-bold">
+                            Studying
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <p className="font-medium text-muted-foreground">
-                      {edu.institution}
-                    </p>
-                    <p className="text-sm text-muted-foreground/80 pt-1">
-                      Field of Study: {edu.field}
-                    </p>
                   </div>
                 </div>
               );
             })}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
