@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -85,11 +86,14 @@ export default function ApplicantsFilters({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="ALL">All Jobs</SelectItem>
-            {uniqueJobs.map((title) => (
-              <SelectItem key={title} value={title}>
-                {title}
-              </SelectItem>
-            ))}
+            {uniqueJobs.map((job) => {
+              const title = typeof job === "string" ? job : (job as any).title;
+              return (
+                <SelectItem key={title} value={title}>
+                  {title}
+                </SelectItem>
+              );
+            })}
           </SelectContent>
         </Select>
 

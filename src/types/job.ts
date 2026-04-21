@@ -36,6 +36,15 @@ export interface IJobMeta {
   page: number;
   limit: number;
   total: number;
+  totalPages: number;
+  uniqueJobs: string[];
+  stats: {
+    totalApplications: number;
+    pending: number;
+    shortlisted: number;
+    hired: number;
+    rejected: number;
+  };
 }
 
 export interface IJobResponse {

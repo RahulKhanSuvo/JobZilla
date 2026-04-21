@@ -122,7 +122,7 @@ export default function ApplicantsTable({
                             `https://api.dicebear.com/7.x/avataaars/svg?seed=${applicant?.user?.name}`
                           }
                           alt={applicant?.user?.name}
-                          className="size-12 rounded-full bg-slate-100 object-cover flex-shrink-0 ring-2 ring-white shadow-sm"
+                          className="size-12 rounded-full bg-slate-100 object-cover shrink-0 ring-2 ring-white shadow-sm"
                         />
                         <div className="space-y-0.5 min-w-0">
                           <p className="text-[11px] font-bold text-primary uppercase tracking-tight">
@@ -227,7 +227,9 @@ export default function ApplicantsTable({
                           size="icon"
                           title="Message Candidate"
                           className="size-9 bg-slate-50 text-slate-400 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors"
-                          onClick={() => onOpenChat(applicant.userId)}
+                          onClick={() =>
+                            applicant?.user?.id && onOpenChat(applicant.user.id)
+                          }
                         >
                           <MessageSquareText className="size-3.5" />
                         </Button>
