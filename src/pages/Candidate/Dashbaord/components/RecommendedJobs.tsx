@@ -68,14 +68,14 @@ export default function RecommendedJobs() {
                 <div
                   className={`flex items-center justify-center size-12 rounded overflow-hidden text-xl font-bold shrink-0 bg-slate-100 dark:bg-slate-800 text-slate-400`}
                 >
-                  {job.company?.logo ? (
+                  {job.user?.company?.logo ? (
                     <img
-                      src={job.company.logo}
-                      alt={job.company.user.name}
+                      src={job.user.company.logo}
+                      alt={job.user.name}
                       className="size-full object-cover"
                     />
                   ) : (
-                    job.company?.user.name?.[0]?.toUpperCase() || "J"
+                    job.user?.name?.[0]?.toUpperCase() || "J"
                   )}
                 </div>
                 <div className="space-y-1">
@@ -85,7 +85,7 @@ export default function RecommendedJobs() {
                   <div className="flex items-center gap-3 text-sm text-muted-foreground flex-wrap">
                     <span className="flex items-center gap-2">
                       <MapPin className="size-3" />{" "}
-                      {job.company?.location || "Remote"}
+                      {job.user?.company?.location || "Remote"}
                     </span>
                     <span className="flex items-center gap-2">
                       <DollarSign className="size-3" />

@@ -79,23 +79,24 @@ export interface ISavedJob {
   createdAt: string;
   updatedAt: string;
   job: IJob & {
-    company: {
-      user: {
-        name: string;
-        email: string;
+    user: {
+      name: string;
+      email: string;
+      company: {
+        location: string;
+        logo: string;
       };
-      location: string;
-      logo: string;
     };
   };
 }
 
 export interface IRecommendedJob extends IJob {
-  company: {
-    user: {
-      name: string;
+  user: {
+    name: string;
+    email: string;
+    company: {
+      location: string;
+      logo: string;
     };
-    location: string;
-    logo: string;
   };
 }

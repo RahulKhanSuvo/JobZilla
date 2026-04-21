@@ -56,8 +56,8 @@ export default function SaveJob() {
     return {
       id: saved.jobId,
       title: saved.job.title,
-      company: saved.job.company.user.name,
-      logo: saved.job.company.logo || "",
+      company: saved.job.user.name,
+      logo: saved.job.user.company.logo || "",
       postedAt: "Recently",
       category: (jobTypeMap[saved.job.jobType as string] ||
         "Full-time") as Job["category"],
