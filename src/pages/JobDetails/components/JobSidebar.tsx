@@ -19,12 +19,17 @@ import {
   useFollowACompanyMutation,
   useUnFollowACompanyMutation,
 } from "@/redux/features/candidate/follow.api";
+import { errorToast } from "@/utils/errorToast";
+import { toast } from "sonner";
+import { selectCurrentUser } from "@/redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 interface JobSidebarProps {
   job: PostJobFormData;
 }
 
 export default function JobSidebar({ job }: JobSidebarProps) {
+  const user = useSelector(selectCurrentUser);
   const overviewItems = [
     {
       label: "Job Category",
@@ -62,19 +67,19 @@ export default function JobSidebar({ job }: JobSidebarProps) {
   const companyInfo = [
     {
       label: "Company",
-      value: job.company?.user?.name || "Anonymous",
+      value: job?.user?.name || "Anonymous",
       icon: Globe,
       color: "text-emerald-500",
     },
     {
       label: "Email",
-      value: job.company?.user?.email || "Not specified",
+      value: job?.user?.email || "Not specified",
       icon: Mail,
       color: "text-blue-500",
     },
     {
       label: "Location",
-      value: job.company?.location || "Not specified",
+      value: job?.user?.company?.location || "Not specified",
       icon: Users,
       color: "text-amber-500",
     },
@@ -84,15 +89,21 @@ export default function JobSidebar({ job }: JobSidebarProps) {
     useFollowACompanyMutation();
   const [unFollowCompany, { isLoading: isUnFollowing }] =
     useUnFollowACompanyMutation();
-  const handleFollowClick = () => {
-    if (job?.isFollowed) {
-      unFollowCompany({
-        companyId: job.company?.user?.id || "",
-      });
-    } else {
-      followCompany({
-        companyId: job.company?.user?.id || "",
-      });
+  const handleFollowClick = async () => {
+    try {
+      if (job?.isFollowed) {
+        await unFollowCompany({
+          companyId: job?.user?.id || "",
+        }).unwrap();
+        toast.success("Unfollowed company successfully");
+      } else {
+        await followCompany({
+          companyId: job?.user?.id || "",
+        }).unwrap();
+        toast.success("Followed company successfully");
+      }
+    } catch (error) {
+      errorToast(error);
     }
   };
   return (
@@ -147,8 +158,9 @@ export default function JobSidebar({ job }: JobSidebarProps) {
 
         <Button
           onClick={handleFollowClick}
-          disabled={isFollowing || isUnFollowing}
-          className="w-full h-12 bg-white hover:bg-slate-100 text-emerald-600 border border-emerald-100 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded shadow-sm transition-all active:scale-[0.98]"
+          variant={job?.isFollowed ? "outline" : "default"}
+          disabled={isFollowing || isUnFollowing || job?.user?.id === user?.id}
+          className="w-full h-12 bg-white hover:bg-slate-100 text-emerald-600 border border-emerald-100 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700/50 font-bold rounded shadow-sm transition-all active:scale-[0.98]"
         >
           <Plus className="size-4 mr-2" />
           {isFollowing || isUnFollowing
