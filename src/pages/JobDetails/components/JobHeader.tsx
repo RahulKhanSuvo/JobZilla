@@ -138,9 +138,10 @@ export default function JobHeader({ job }: JobHeaderProps) {
             </Button>
             <Button
               variant="outline"
+              disabled={user?.id === job.user?.id}
               size="icon"
               onClick={() => handelSave(job.id ?? "")}
-              className={`size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
+              className={`size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all disabled:cursor-not-allowed active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
             >
               <IoHeart className="size-5" />
             </Button>
