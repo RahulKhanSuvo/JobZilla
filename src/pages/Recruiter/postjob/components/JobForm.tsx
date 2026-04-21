@@ -37,7 +37,7 @@ export default function JobForm({
     defaultValues: {
       title: initialValues?.title || "",
       description: initialValues?.description || "",
-      category: initialValues?.category || "",
+      category: initialValues?.category || "IT",
       gender: initialValues?.gender || "ANY",
       salaryType: initialValues?.salaryType || "MONTHLY",
       salaryMin: initialValues?.salaryMin || "",
