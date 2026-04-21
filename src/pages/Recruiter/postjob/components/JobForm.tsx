@@ -47,6 +47,8 @@ export default function JobForm({
       qualification: initialValues?.qualification || "High School",
       deadline: initialValues?.deadline || new Date(),
       jobType: initialValues?.jobType || "FULL_TIME",
+      locationType: initialValues?.locationType || "ON_SITE",
+      location: initialValues?.location || "",
     } as PostJobFormData,
     validators: {
       onChange: postJobSchema,
@@ -177,6 +179,53 @@ export default function JobForm({
                       <SelectItem value="ANY">Any</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            />
+
+            <form.Field
+              name="locationType"
+              children={(field) => (
+                <Field data-invalid={!!field.state.meta.errors.length}>
+                  <FieldLabel className="font-semibold">
+                    Location Type
+                  </FieldLabel>
+                  <Select
+                    onValueChange={(val) =>
+                      field.handleChange(val as typeof field.state.value)
+                    }
+                    value={field.state.value || "ON_SITE"}
+                  >
+                    <SelectTrigger className="bg-[#F5F5F5] dark:bg-[#222222] border-none h-12 shadow-none w-full">
+                      <SelectValue placeholder="On-site" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ON_SITE">On-site</SelectItem>
+                      <SelectItem value="REMOTE">Remote</SelectItem>
+                      <SelectItem value="HYBRID">Hybrid</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FieldError errors={field.state.meta.errors} />
+                </Field>
+              )}
+            />
+
+            <form.Field
+              name="location"
+              children={(field) => (
+                <Field data-invalid={!!field.state.meta.errors.length}>
+                  <FieldLabel className="font-semibold">
+                    Location <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Input
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="London, UK"
+                    variant="withBg"
+                    aria-invalid={!!field.state.meta.errors.length}
+                  />
                   <FieldError errors={field.state.meta.errors} />
                 </Field>
               )}
