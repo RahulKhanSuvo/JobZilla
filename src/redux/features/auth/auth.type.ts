@@ -36,18 +36,21 @@ export interface Skill {
 export interface CandidateProfile {
   id: string;
   userId: string;
-  phone: string | null;
-  location: string | null;
-  dob: string | null;
-  gender: string | null;
-  maritalStatus: string | null;
+  phone: string;
+  location: string;
+  dob: string;
+  gender: string;
+  preferredJobType: string;
+  preferredCareerLevel: string;
+  preferredCategory: string;
+  maritalStatus: string;
   languages: languages[] | null;
-  aboutMe: string | null;
-  avatar: string | null;
-  facebook: string | null;
-  linkedin: string | null;
-  github: string | null;
-  twitter: string | null;
+  aboutMe: string;
+  avatar: string;
+  facebook: string;
+  linkedin: string;
+  github: string;
+  twitter: string;
 }
 type languages = {
   language: string;
