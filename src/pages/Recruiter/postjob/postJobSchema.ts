@@ -28,16 +28,14 @@ export const postJobSchema = z.object({
   isSaved: z.boolean().nullish(),
   isApplied: z.boolean().nullish(),
   isFollowed: z.boolean().nullish(),
-  company: z
+  user: z
     .object({
-      id: z.string(),
-      location: z.string(),
-      user: z.object({
-        id: z.string(),
-        name: z.string(),
-        email: z.string().email(),
+      name: z.string(),
+      email: z.string().email(),
+      company: z.object({
+        location: z.string(),
+        logo: z.string(),
       }),
-      logo: z.string(),
     })
     .optional(),
 });

@@ -7,7 +7,7 @@ import type {
   IRecommendedJob,
   ISavedJob,
 } from "@/types/job";
-import type { GetJobsResponse, JobStats } from "./job.type";
+import type { JobStats } from "./job.type";
 
 const jobApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,32 +19,34 @@ const jobApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Jobs"],
     }),
-    getAllJobs: builder.query<GetJobsResponse, IJobQueryParams>({
-      query: ({
-        page = 1,
-        limit = 10,
-        searchTerm,
-        location,
-        jobType,
-        salary,
-        postedAnytime,
-        seniorityLevel,
-      }) => ({
-        url: "/jobs",
-        method: "GET",
-        params: {
-          page,
-          limit,
+    getAllJobs: builder.query<IApiResponse<PostJobFormData[]>, IJobQueryParams>(
+      {
+        query: ({
+          page = 1,
+          limit = 10,
           searchTerm,
           location,
           jobType,
           salary,
           postedAnytime,
           seniorityLevel,
-        },
-      }),
-      providesTags: ["Jobs"],
-    }),
+        }) => ({
+          url: "/jobs",
+          method: "GET",
+          params: {
+            page,
+            limit,
+            searchTerm,
+            location,
+            jobType,
+            salary,
+            postedAnytime,
+            seniorityLevel,
+          },
+        }),
+        providesTags: ["Jobs"],
+      },
+    ),
     getMyJobs: builder.query<IJobResponse, IJobQueryParams>({
       query: (params) => ({
         url: "/jobs/my-jobs",
