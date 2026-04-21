@@ -20,23 +20,19 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
       <CardContent className="pt-8 pb-10 px-8">
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
           <div className="relative group">
-            <Avatar className="size-32 border-4 border-white dark:border-slate-800 shadow-2xl transition-transform duration-500 group-hover:scale-105">
+            <Avatar className="size-32 border-4 border-white dark:border-slate-800 transition-transform duration-500 group-hover:scale-105">
               <AvatarImage src={candidate?.avatar || ""} alt={data.name} />
-              <AvatarFallback className="text-4xl font-black bg-primary/5 text-primary italic">
+              <AvatarFallback className="text-4xl font-black bg-primary/5 text-primary">
                 {data.name?.charAt(0) || "U"}
               </AvatarFallback>
             </Avatar>
-            <div
-              className="absolute -bottom-1 -right-1 size-8 bg-green-500 border-4 border-white dark:border-slate-900 rounded-full shadow-lg"
-              title="Available for work"
-            />
           </div>
 
           {/* Core Info */}
           <div className="flex-1 space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">
+                <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white uppercase">
                   {data.name}
                 </h1>
                 <p className="text-primary font-bold text-lg tracking-widest uppercase">
