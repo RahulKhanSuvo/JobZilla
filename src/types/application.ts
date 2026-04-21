@@ -1,3 +1,5 @@
+import type { IJob } from "./job";
+
 export type ApplicationStatus =
   | "PENDING"
   | "ACCEPTED"
@@ -59,8 +61,18 @@ export interface ApplicationCompany {
 }
 
 export interface ApplicationJob {
+  id: string;
   title: string;
-  company: ApplicationCompany;
+  category?: string;
+  jobType?: string;
+
+  user: {
+    name: string;
+    company: {
+      logo: string | null;
+      location: string;
+    };
+  };
 }
 
 export interface WorkExperience {
@@ -102,24 +114,15 @@ export interface ApplicationCandidate {
 export interface ApplicationUser {
   name: string;
   email?: string;
-  candidate: ApplicationCandidate;
-}
-
-export interface ApplicationResume {
-  title: string;
-  fileUrl: string;
+  job: IJob;
 }
 
 export interface Application {
   id: string;
   userId: string;
   jobId: string;
-  resumeId: string;
-  companyId: string;
   status: ApplicationStatus;
   createdAt: string;
   updatedAt: string;
   job: ApplicationJob;
-  user: ApplicationUser;
-  resume: ApplicationResume;
 }

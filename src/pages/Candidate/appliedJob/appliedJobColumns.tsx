@@ -9,20 +9,20 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
     className: "w-[45%]",
     cell: (item) => (
       <div className="flex items-center gap-4">
-        {item.job?.company?.logo ? (
+        {item.job?.user?.company?.logo ? (
           <img
-            src={item.job.company.logo}
-            alt={item.job?.company?.user?.name}
+            src={item.job.user.company.logo}
+            alt={item.job?.title}
             className="size-12 rounded-full object-cover border border-slate-100 bg-white dark:bg-slate-800"
           />
         ) : (
           <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-            {item.job?.company?.user?.name?.charAt(0)?.toUpperCase() || "C"}
+            {item.job?.title?.charAt(0)?.toUpperCase() || "C"}
           </div>
         )}
         <div className="space-y-1">
           <Link
-            to={`/jobs/${item.jobId}`}
+            to={`/jobs/${item.job.id}`}
             className="hover:text-primary transition-colors"
           >
             <h4 className="text-[16px] font-bold text-slate-900 dark:text-slate-50">
@@ -32,11 +32,11 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
           <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
             <span className="flex items-center gap-1">
               <MapPin className="size-3.5" />
-              {item.job?.company?.location || "Remote"}
+              {item.job?.user?.company?.location || "Remote"}
             </span>
             <span className="flex items-center gap-1">
               <Building2 className="size-3.5" />
-              {item.job?.company?.user?.name || "N/A"}
+              {item.job?.user?.name || "N/A"}
             </span>
           </div>
         </div>
@@ -89,7 +89,7 @@ export const appliedJobColumns: ColumnDef<Application>[] = [
     className: "text-right",
     cell: (item) => (
       <div className="flex justify-end">
-        <Link to={`${item.jobId}`}>
+        <Link to={`/job/${item.job.id}`}>
           <button
             type="button"
             className="text-slate-400 cursor-pointer hover:text-primary transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800"

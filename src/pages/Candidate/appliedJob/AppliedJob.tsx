@@ -9,6 +9,7 @@ function AppliedJob() {
   const { data: response, isLoading } = useGetCandidateAppliedJobsQuery();
 
   const applications = response?.data || [];
+  console.log(applications);
 
   return (
     <div className="space-y-6">
