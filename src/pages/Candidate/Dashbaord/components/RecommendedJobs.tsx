@@ -113,7 +113,7 @@ export default function RecommendedJobs() {
                   asChild
                   className="size-8 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-primary group-hover:text-white transition-all shadow-sm"
                 >
-                  <Link to={`/jobs/public/${job.id}`}>
+                  <Link to={`/job/${job.id}`}>
                     <ArrowRight className="size-4" />
                   </Link>
                 </Button>
