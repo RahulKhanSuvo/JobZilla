@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { FollowCompanyItem } from "@/redux/features/candidate/Follow.type";
 
-export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
+export const followedCompanyColumns = (
+  onUnfollow: (id: string) => void,
+): ColumnDef<FollowCompanyItem>[] => [
   {
     header: "COMPANY",
     className: "w-[45%]",
@@ -89,7 +91,7 @@ export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={() => onUnfollow(item.following.company.id)}
               className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2"
             >
               <UserMinus className="size-4" />
