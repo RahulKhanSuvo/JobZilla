@@ -22,7 +22,6 @@ export default function ApplicantHeader({ application }: Props) {
   const [isMessaging, setIsMessaging] = useState(false);
 
   const handleOpenChat = async () => {
-    console.log(user);
     if (!user?.id) return;
     try {
       setIsMessaging(true);
