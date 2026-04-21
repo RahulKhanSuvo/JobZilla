@@ -19,7 +19,7 @@ import {
   Unlock,
 } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import {
   useDeleteJobMutation,
@@ -34,6 +34,8 @@ import { errorToast } from "@/utils/errorToast";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import AppTooltip from "@/components/common/AppTooltip";
 import StatsCardSkeleton from "@/components/common/StatsCardSkeleton";
+import { useProfileGuard } from "@/hooks/useProfileGuard";
+import CompleteProfileModal from "@/components/recruiter/CompleteProfileModal";
 
 const formatDate = (dateString: string) => {
   return new Intl.DateTimeFormat("en-US", {
@@ -55,6 +57,10 @@ export default function MyJobs() {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const { data: jobStats, isLoading: isJobStatsLoading } =
     useGetJobStatsQuery();
+
+  const { checkProfile, isModalOpen, setIsModalOpen } = useProfileGuard();
+  const navigate = useNavigate();
+
   console.log("jobstats", jobStats);
   const stats = [
     {
@@ -138,13 +144,16 @@ export default function MyJobs() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <DashboardTitle>My Jobs</DashboardTitle>
-        <Link to={"post-job"}>
-          <Button className="bg-primary text-white font-bold px-8 gap-2 h-12">
-            <Plus className="size-5" />
-            Post Job
-          </Button>
-        </Link>
+        <Button
+          onClick={() => checkProfile(() => navigate("post-job"))}
+          className="bg-primary text-white font-bold px-8 gap-2 h-12"
+        >
+          <Plus className="size-5" />
+          Post Job
+        </Button>
       </div>
+
+      <CompleteProfileModal isOpen={isModalOpen} onClose={setIsModalOpen} />
 
       {/* Stats Cards */}
       {isJobStatsLoading ? (

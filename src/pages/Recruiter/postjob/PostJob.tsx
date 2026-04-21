@@ -6,11 +6,21 @@ import JobForm from "./components/JobForm";
 import type { PostJobFormData } from "./postJobSchema";
 import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useProfileGuard } from "@/hooks/useProfileGuard";
+import { useEffect } from "react";
 
 export default function PostJob() {
   const [createJob, { isLoading }] = useCreateJobMutation();
   const navigate = useNavigate();
+  const { isComplete, isLoading: isGuardLoading } = useProfileGuard();
+
+  useEffect(() => {
+    if (!isGuardLoading && !isComplete) {
+      toast.error("Please complete your profile first");
+      navigate("/recruiter/dashboard");
+    }
+  }, [isComplete, isGuardLoading, navigate]);
 
   const handleSubmit = async (values: PostJobFormData) => {
     try {
@@ -21,6 +31,16 @@ export default function PostJob() {
       errorToast(error);
     }
   };
+
+  if (isGuardLoading) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <Loader2 className="size-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!isComplete) return null;
 
   return (
     <div className="space-y-6 pb-12">
