@@ -16,7 +16,6 @@ export default function EditJob() {
   const [updateJob, { isLoading: isUpdating }] = useUpdateJobMutation();
 
   const handleSubmit = async (values: PostJobFormData) => {
-    console.log(values);
     try {
       await updateJob({ id, ...values }).unwrap();
       toast.success("Job updated successfully!");
