@@ -26,7 +26,7 @@ export default function PostJob() {
     try {
       await createJob(values).unwrap();
       toast.success("Job posted successfully!");
-      navigate("recruiter/my-jobs");
+      navigate("/recruiter/my-jobs");
     } catch (error) {
       errorToast(error);
     }
