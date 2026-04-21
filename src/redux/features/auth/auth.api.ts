@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import baseApi from "../hook/baseApi";
 import type { LoginFormData } from "@/pages/auth/authSchema";
-import type { LoginSuccessResponse, CurrentUserResponse } from "./auth.type";
+import type { LoginSuccessResponse, AuthUser } from "./auth.type";
 import { logOut, setCredentials } from "./authSlice";
+import type { IApiResponse } from "@/types/job";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -21,7 +22,7 @@ const authApi = baseApi.injectEndpoints({
         body: payload,
       }),
     }),
-    currentUser: builder.query<CurrentUserResponse, void>({
+    currentUser: builder.query<IApiResponse<AuthUser>, void>({
       query: () => ({
         url: "/auth/me",
         method: "GET",

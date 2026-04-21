@@ -1,11 +1,11 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Circle } from "lucide-react";
 import type { FC } from "react";
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 import { calculateProfileCompletion } from "@/utils/profileCompletion";
 
 interface ProfileCompletenessProps {
-  data: CandidateProfileData;
+  data: AuthUser;
 }
 
 const ProfileCompleteness: FC<ProfileCompletenessProps> = ({ data }) => {

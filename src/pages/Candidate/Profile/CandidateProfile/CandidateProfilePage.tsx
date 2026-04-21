@@ -28,12 +28,6 @@ const CandidateProfilePage: FC = () => {
     return <ProfileEmptyState />;
   }
 
-  const profileData = {
-    candidate: candidate,
-    fullName: user.name || "",
-    email: user.email,
-  };
-
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
       <h1 className="text-3xl font-bold tracking-tight mb-6">My Profile</h1>
@@ -41,18 +35,16 @@ const CandidateProfilePage: FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Sidebar */}
         <div className="space-y-6 lg:col-span-1">
-          <ProfileSummary data={profileData} />
-          <ProfileCompleteness data={profileData} />
+          <ProfileSummary data={user} />
+          <ProfileCompleteness data={user} />
         </div>
 
         {/* Main Content Area */}
         <div className="space-y-6 lg:col-span-2">
-          <AboutSection data={profileData} />
-          <ExperienceSection
-            workExperiences={candidate.workExperiences || []}
-          />
-          <EducationSection eductions={candidate.eductions || []} />
-          <SkillsSection skills={candidate.skills || []} />
+          <AboutSection data={user} />
+          <ExperienceSection workExperiences={user.workExperiences || []} />
+          <EducationSection eductions={user.eductions || []} />
+          <SkillsSection skills={user.skills || []} />
         </div>
       </div>
     </div>

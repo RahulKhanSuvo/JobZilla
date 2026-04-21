@@ -1,21 +1,29 @@
 import type { FC } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { format } from "date-fns";
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 
 interface AboutSectionProps {
-  data: CandidateProfileData;
+  data: AuthUser;
 }
 
 const AboutSection: FC<AboutSectionProps> = ({ data }) => {
   const basicInfoItems = [
     {
       label: "Date of Birth",
-      value: data.candidate?.dob ? format(new Date(data.candidate?.dob), "dd MMM, yyyy") : "N/A",
+      value: data.candidate?.dob
+        ? format(new Date(data.candidate?.dob), "dd MMM, yyyy")
+        : "N/A",
     },
     { label: "Gender", value: data.candidate?.gender || "N/A" },
     { label: "Marital Status", value: data.candidate?.maritalStatus || "N/A" },
-    { label: "Language", value: data.candidate?.languages?.map((lang: { language: string }) => lang.language).join(", ") || "N/A" },
+    {
+      label: "Language",
+      value:
+        data?.languages
+          ?.map((lang: { language: string }) => lang.language)
+          .join(", ") || "N/A",
+    },
   ];
   return (
     <Card className="border-none shadow-sm dark:bg-slate-900">

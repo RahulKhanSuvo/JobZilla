@@ -4,13 +4,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Mail, Phone, Linkedin, Twitter, Facebook } from "lucide-react";
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 import { Link } from "react-router";
 
 import { calculateProfileCompletion } from "@/utils/profileCompletion";
 
 interface ProfileSummaryProps {
-  data: CandidateProfileData;
+  data: AuthUser;
 }
 
 const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
@@ -28,9 +28,9 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
         {/* Avatar */}
         <div className="flex justify-between items-end -mt-12 mb-4">
           <Avatar className="size-24 border-4 border-white dark:border-slate-900 shadow-md bg-white">
-            <AvatarImage src={candidate?.avatar || ""} alt={data.fullName} />
+            <AvatarImage src={candidate?.avatar || ""} alt={data.name} />
             <AvatarFallback className="text-3xl font-bold bg-primary/10 text-primary">
-              {data.fullName?.charAt(0) || "U"}
+              {data.name?.charAt(0) || "U"}
             </AvatarFallback>
           </Avatar>
           <Button
@@ -47,9 +47,7 @@ const ProfileSummary: FC<ProfileSummaryProps> = ({ data }) => {
         <div className="space-y-4">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
-              <h2 className="text-2xl font-bold tracking-tight">
-                {data.fullName}
-              </h2>
+              <h2 className="text-2xl font-bold tracking-tight">{data.name}</h2>
               <div className="flex items-center gap-2.5">
                 <div className="w-24 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                   <div

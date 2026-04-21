@@ -48,13 +48,10 @@ export interface CandidateProfile {
   linkedin: string | null;
   github: string | null;
   twitter: string | null;
-  skills: Skill[];
-  eductions: Education[];
-  workExperiences: WorkExperience[];
 }
 type languages = {
   language: string;
-}
+};
 export type CandidateProfileData = {
   fullName: string;
   email: string;
@@ -72,6 +69,10 @@ export type AuthUser = {
   updatedAt: string;
   candidate?: CandidateProfile | null;
   company?: RecruiterProfileFormData | null;
+  skills?: Skill[] | null;
+  languages?: languages[] | null;
+  eductions?: Education[] | null;
+  workExperiences?: WorkExperience[] | null;
 };
 
 export interface Education {
@@ -94,9 +95,3 @@ export interface WorkExperience {
   isWorking: boolean;
   Description: string | null;
 }
-
-export type CurrentUserResponse = {
-  success: boolean;
-  message: string;
-  data: AuthUser;
-};

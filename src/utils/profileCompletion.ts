@@ -1,4 +1,4 @@
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 
 export interface CompletionCheck {
   label: string;
@@ -11,25 +11,25 @@ export interface ProfileCompletionResult {
 }
 
 export const calculateProfileCompletion = (
-  data: CandidateProfileData,
+  data: AuthUser,
 ): ProfileCompletionResult => {
   const checks: CompletionCheck[] = [
-    { label: "Full Name", completed: !!data.fullName },
+    { label: "Full Name", completed: !!data.name },
     { label: "Email", completed: !!data.email },
     { label: "Phone", completed: !!data.candidate?.phone },
     { label: "Location", completed: !!data.candidate?.location },
     { label: "About Me", completed: !!data.candidate?.aboutMe },
     {
       label: "Experience",
-      completed: (data.candidate?.workExperiences?.length ?? 0) > 0,
+      completed: (data?.workExperiences?.length ?? 0) > 0,
     },
     {
       label: "Education",
-      completed: (data.candidate?.eductions?.length ?? 0) > 0,
+      completed: (data?.eductions?.length ?? 0) > 0,
     },
     {
       label: "Skills",
-      completed: (data.candidate?.skills?.length ?? 0) > 0,
+      completed: (data?.skills?.length ?? 0) > 0,
     },
   ];
 
