@@ -43,6 +43,9 @@ export default function ProfileEdit() {
       dob: "",
       gender: "Male",
       maritalStatus: "Single",
+      preferredJobType: "FULL_TIME",
+      preferredCareerLevel: "ENTRY_LEVEL",
+      preferredCategory: "TECHNOLOGY",
       aboutMe: "",
       skills: [],
       language: [],
@@ -69,6 +72,19 @@ export default function ProfileEdit() {
           : "",
         gender: (candidate?.gender as "Male" | "Female" | "Other") || "Male",
         maritalStatus: candidate?.maritalStatus || "Single",
+        preferredJobType:
+          (candidate?.preferredJobType as
+            | "FULL_TIME"
+            | "PART_TIME"
+            | "REMOTE"
+            | "HYBRID") || "FULL_TIME",
+        preferredCareerLevel:
+          (candidate?.preferredCareerLevel as
+            | "ENTRY_LEVEL"
+            | "MID_LEVEL"
+            | "SENIOR_LEVEL"
+            | "EXECUTIVE_LEVEL") || "ENTRY_LEVEL",
+        preferredCategory: candidate?.preferredCategory || "TECHNOLOGY",
         aboutMe: candidate?.aboutMe || "",
         skills: Array.isArray(user?.skills)
           ? (user.skills as (string | Skill)[]).map((s) =>

@@ -9,7 +9,7 @@ import { useFormContext } from "react-hook-form";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import SectionTitle from "@/components/common/SectionTitle";
 import { Input } from "@/components/ui/input";
-import { Facebook, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Github, Linkedin } from "lucide-react";
 import type { ProfileFormData } from "../../profileSchema";
 
 export default function SocialLinks() {
@@ -61,16 +61,16 @@ export default function SocialLinks() {
 
         <FormField
           control={control}
-          name="twitter"
+          name="github"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="flex items-center gap-2">
-                <Twitter size={16} className="text-sky-500" />
-                Twitter
+                <Github size={16} className="text-sky-500" />
+                GitHub
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="https://twitter.com/your-handle"
+                  placeholder="https://github.com/your-handle"
                   {...field}
                 />
               </FormControl>

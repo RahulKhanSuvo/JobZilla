@@ -40,9 +40,25 @@ export interface CandidateProfile {
   location: string;
   dob: string;
   gender: string;
-  preferredJobType: string;
-  preferredCareerLevel: string;
-  preferredCategory: string;
+  preferredJobType: "FULL_TIME" | "PART_TIME" | "REMOTE" | "HYBRID";
+  preferredCareerLevel:
+    | "ENTRY_LEVEL"
+    | "MID_LEVEL"
+    | "SENIOR_LEVEL"
+    | "EXECUTIVE_LEVEL";
+  preferredCategory:
+    | "TECHNOLOGY"
+    | "DESIGN"
+    | "MARKETING"
+    | "SALES"
+    | "FINANCE"
+    | "HR"
+    | "OPERATIONS"
+    | "CUSTOMER_SUPPORT"
+    | "EDUCATION"
+    | "HEALTHCARE"
+    | "LEGAL"
+    | "OTHER";
   maritalStatus: string;
   languages: languages[] | null;
   aboutMe: string;

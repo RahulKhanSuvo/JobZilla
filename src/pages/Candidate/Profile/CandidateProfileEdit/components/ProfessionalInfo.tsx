@@ -12,6 +12,13 @@ import RichTextEditor from "@/components/common/RichTextEditor";
 import TagInput from "@/components/common/TagInput";
 import type { ProfileFormData } from "../../profileSchema";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Combobox,
   ComboboxChip,
   ComboboxChips,
@@ -115,6 +122,92 @@ export default function ProfessionalInfo() {
             );
           }}
         />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <FormField
+            control={control}
+            name="preferredJobType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Preferred Job Type</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Job Type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="FULL_TIME">Full Time</SelectItem>
+                    <SelectItem value="PART_TIME">Part Time</SelectItem>
+                    <SelectItem value="REMOTE">Remote</SelectItem>
+                    <SelectItem value="HYBRID">Hybrid</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name="preferredCareerLevel"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Preferred Career Level</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Career Level" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="ENTRY_LEVEL">Entry Level</SelectItem>
+                    <SelectItem value="MID_LEVEL">Mid Level</SelectItem>
+                    <SelectItem value="SENIOR_LEVEL">Senior Level</SelectItem>
+                    <SelectItem value="EXECUTIVE_LEVEL">
+                      Executive Level
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name="preferredCategory"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Preferred Category</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="TECHNOLOGY">Technology</SelectItem>
+                    <SelectItem value="DESIGN">Design</SelectItem>
+                    <SelectItem value="MARKETING">Marketing</SelectItem>
+                    <SelectItem value="SALES">Sales</SelectItem>
+                    <SelectItem value="FINANCE">Finance</SelectItem>
+                    <SelectItem value="HR">HR</SelectItem>
+                    <SelectItem value="OPERATIONS">Operations</SelectItem>
+                    <SelectItem value="CUSTOMER_SUPPORT">
+                      Customer Support
+                    </SelectItem>
+                    <SelectItem value="EDUCATION">Education</SelectItem>
+                    <SelectItem value="HEALTHCARE">Healthcare</SelectItem>
+                    <SelectItem value="LEGAL">Legal</SelectItem>
+                    <SelectItem value="OTHER">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
       </div>
     </CommonWrapper>
   );
