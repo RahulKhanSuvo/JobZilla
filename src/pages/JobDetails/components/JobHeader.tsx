@@ -146,7 +146,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
             </Button>
             <Button
               onClick={hadnelApply}
-              disabled={job.isApplied || false}
+              disabled={job.isApplied || false || user?.id === job.user?.id}
               className="flex-1 lg:flex-none h-11 sm:h-12 px-4 sm:px-8 lg:px-12 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-2 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               <Send className="size-4 sm:size-5 rotate-[-20deg]" />
