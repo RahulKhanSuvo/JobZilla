@@ -44,14 +44,13 @@ export default function ProfileEdit() {
       gender: "Male",
       maritalStatus: "Single",
       aboutMe: "",
-      careerFinding: "",
       skills: [],
       language: [],
       educationList: [],
       experienceList: [],
       facebook: "",
       linkedin: "",
-      twitter: "",
+      github: "",
     },
     mode: "onChange",
   });
@@ -112,7 +111,7 @@ export default function ProfileEdit() {
           : [],
         facebook: candidate?.facebook || "",
         linkedin: candidate?.linkedin || "",
-        twitter: candidate?.twitter || "",
+        github: candidate?.github || "",
       });
     }
   }, [user, form]);

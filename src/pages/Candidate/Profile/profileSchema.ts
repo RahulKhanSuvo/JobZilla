@@ -1,4 +1,18 @@
 import { z } from "zod";
+export const preferredCategory = z.enum([
+  "TECHNOLOGY",
+  "DESIGN",
+  "MARKETING",
+  "SALES",
+  "FINANCE",
+  "HR",
+  "OPERATIONS",
+  "CUSTOMER_SUPPORT",
+  "EDUCATION",
+  "HEALTHCARE",
+  "LEGAL",
+  "OTHER",
+]);
 
 export const profileSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -8,9 +22,16 @@ export const profileSchema = z.object({
   dob: z.string().optional(),
   gender: z.enum(["Male", "Female", "Other"]).nullable().optional(),
   maritalStatus: z.string().nullable(),
+  preferredJobType: z.enum(["FULL_TIME", "PART_TIME", "REMOTE", "HYBRID"]),
+  preferredCareerLevel: z.enum([
+    "ENTRY_LEVEL",
+    "MID_LEVEL",
+    "SENIOR_LEVEL",
+    "EXECUTIVE_LEVEL",
+  ]),
+  preferredCategory: preferredCategory,
   language: z.array(z.string()),
-  aboutMe: z.string().optional(),
-  careerFinding: z.string().optional(),
+  aboutMe: z.string().min(10, "About me must be at least 10 characters"),
   // Skills — array of skill strings
   skills: z.array(z.string()),
 
@@ -45,7 +66,7 @@ export const profileSchema = z.object({
   // Social links
   facebook: z.string().url("Invalid URL").or(z.literal("")).optional(),
   linkedin: z.string().url("Invalid URL").or(z.literal("")).optional(),
-  twitter: z.string().url("Invalid URL").or(z.literal("")).optional(),
+  github: z.string().url("Invalid URL").or(z.literal("")).optional(),
   avatar: z.any().optional(),
 });
 
