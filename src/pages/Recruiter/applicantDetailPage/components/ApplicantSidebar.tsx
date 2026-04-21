@@ -27,7 +27,7 @@ export default function ApplicantSidebar({ application }: Props) {
   return (
     <div className="space-y-4">
       {/* Quick Info Card */}
-      <CommonWrapper className="px-6 py-2 divide-y divide-slate-100 dark:divide-slate-800">
+      <CommonWrapper className="px-6 py-2 divide-y divide-slate-100 dark:divide-slate-800 shadow">
         <InfoRow label="Applied For" value={job?.title || "—"} />
         <InfoRow label="Location" value={candidate?.location ?? "Remote"} />
         <InfoRow label="Email" value={user?.email ?? "—"} />
@@ -70,7 +70,7 @@ export default function ApplicantSidebar({ application }: Props) {
       </CommonWrapper>
 
       {/* Social Profiles */}
-      <CommonWrapper className="px-6 py-5">
+      <CommonWrapper className="px-6 py-5 shadow">
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">
           Professional Links
         </p>
@@ -97,7 +97,7 @@ export default function ApplicantSidebar({ application }: Props) {
       </CommonWrapper>
 
       {/* Target Job Info */}
-      <CommonWrapper className="px-6 py-1 divide-y divide-slate-100 dark:divide-slate-800">
+      <CommonWrapper className="px-6 py-1 divide-y divide-slate-100 dark:divide-slate-800 shadow">
         <div className="py-4">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">
             Target Job Info

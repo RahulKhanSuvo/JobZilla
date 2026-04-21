@@ -56,7 +56,7 @@ export default function ApplicantDetailPage() {
       <ApplicantHeader application={application} />
 
       {/* Body */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 items-start">
         {/* Left — tabbed content */}
         <ApplicantContent application={application} />
 

@@ -23,7 +23,7 @@ export default function ApplicantContent({ application }: Props) {
     !user.languages?.length;
 
   return (
-    <CommonWrapper className="p-10 space-y-12">
+    <CommonWrapper className="p-10 space-y-12 shadow">
       {isEmpty ? (
         <div className="flex flex-col items-center justify-center py-12 gap-3">
           <div className="size-16 rounded-full bg-slate-50 flex items-center justify-center">
