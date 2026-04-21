@@ -37,7 +37,7 @@ export default function JobForm({
     defaultValues: {
       title: initialValues?.title || "",
       description: initialValues?.description || "",
-      category: initialValues?.category || "IT",
+      category: initialValues?.category || "TECHNOLOGY",
       gender: initialValues?.gender || "ANY",
       salaryType: initialValues?.salaryType || "MONTHLY",
       salaryMin: initialValues?.salaryMin || "",
@@ -45,7 +45,11 @@ export default function JobForm({
       experience: initialValues?.experience || "Fresher",
       careerLevel: initialValues?.careerLevel || "ENTRY_LEVEL",
       qualification: initialValues?.qualification || "High School",
-      deadline: initialValues?.deadline || new Date(),
+      deadline:
+        initialValues?.deadline ||
+        new Date(new Date().setDate(new Date().getDate() + 1))
+          .toISOString()
+          .split("T")[0],
       jobType: initialValues?.jobType || "FULL_TIME",
       locationType: initialValues?.locationType || "ON_SITE",
       location: initialValues?.location || "",
@@ -106,21 +110,24 @@ export default function JobForm({
                     </SelectTrigger>
                     <SelectContent>
                       {[
-                        "Sales",
-                        "Marketing",
-                        "Finance",
-                        "Development",
-                        "IT",
+                        "TECHNOLOGY",
+                        "DESIGN",
+                        "MARKETING",
+                        "SALES",
+                        "FINANCE",
                         "HR",
-                        "Education",
-                        "Healthcare",
-                        "Customer Service",
-                        "Engineering",
-                        "Design",
-                        "Food and Beverage",
-                        "Other",
+                        "OPERATIONS",
+                        "CUSTOMER_SUPPORT",
+                        "EDUCATION",
+                        "HEALTHCARE",
+                        "LEGAL",
+                        "OTHER",
                       ].map((category) => (
-                        <SelectItem key={category} value={category}>
+                        <SelectItem
+                          className="capitalize"
+                          key={category}
+                          value={category}
+                        >
                           {category}
                         </SelectItem>
                       ))}
