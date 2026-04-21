@@ -9,37 +9,36 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { FollowCompanyItem } from "@/redux/features/candidate/Follow.type";
 
-
 export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
   {
     header: "COMPANY",
     className: "w-[45%]",
     cell: (item) => (
       <div className="flex items-center gap-4">
-        {item.company.logo ? (
+        {item.following.company.logo ? (
           <img
-            src={item.company.logo}
-            alt={item.company.user.name}
+            src={item.following.company.logo}
+            alt={item.following.name}
             className="size-12 rounded-full object-cover border border-slate-100 bg-white"
           />
         ) : (
           <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-            {item.company.user.name.charAt(0).toUpperCase()}
+            {item.following.name.charAt(0).toUpperCase()}
           </div>
         )}
         <div className="space-y-1">
           <Link
-            to={`/company/${item.id}`}
+            to={`/company/${item.following.company.id}`}
             className="hover:text-primary transition-colors"
           >
             <h4 className="text-[16px] font-bold text-slate-900 dark:text-slate-50">
-              {item.company.user.name}
+              {item.following.name}
             </h4>
           </Link>
           <div className="flex items-center gap-3 text-sm text-slate-500 font-medium">
             <span className="flex items-center gap-1">
               <MapPin className="size-3.5" />
-              {item.company.location}
+              {item.following.company.location}
             </span>
           </div>
         </div>
@@ -50,7 +49,7 @@ export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
     header: "INDUSTRY",
     cell: (item) => (
       <div className="text-slate-600 dark:text-slate-400 font-medium text-sm">
-        {item.company.industry}
+        {item.following.company.industry}
       </div>
     ),
   },
@@ -59,7 +58,7 @@ export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
     cell: (item) => (
       <div className="text-slate-600 dark:text-slate-400 font-medium text-sm">
         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-500">
-          {item.company._count.applications} Jobs
+          {item.following._count.jobs} Jobs
         </span>
       </div>
     ),
@@ -82,14 +81,17 @@ export const followedCompanyColumns: ColumnDef<FollowCompanyItem>[] = [
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem asChild>
               <Link
-                to={`/company/${item.id}`}
+                to={`/company/${item.following.company.id}`}
                 className="cursor-pointer flex items-center gap-2"
               >
                 <ExternalLink className="size-4" />
                 View Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => { }} className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2">
+            <DropdownMenuItem
+              onClick={() => {}}
+              className="cursor-pointer text-red-600 focus:text-red-600 flex items-center gap-2"
+            >
               <UserMinus className="size-4" />
               Unfollow
             </DropdownMenuItem>
