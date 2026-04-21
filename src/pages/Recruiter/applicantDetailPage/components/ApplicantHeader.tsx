@@ -1,7 +1,11 @@
 import type { Application } from "@/types/application";
-import { Download, MessageSquare } from "lucide-react";
+import { Download, Loader2, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useStartConversationMutation } from "@/redux/features/chat/chat.api";
+import { useNavigate } from "react-router";
+import { errorToast } from "@/utils/errorToast";
+import { useState } from "react";
 
 interface Props {
   application: Application;
@@ -12,6 +16,24 @@ export default function ApplicantHeader({ application }: Props) {
   const resume = application?.resume;
   const job = application?.job;
   const candidate = user?.candidate;
+
+  const [startConversation] = useStartConversationMutation();
+  const navigate = useNavigate();
+  const [isMessaging, setIsMessaging] = useState(false);
+
+  const handleOpenChat = async () => {
+    console.log(user);
+    if (!user?.id) return;
+    try {
+      setIsMessaging(true);
+      const res = await startConversation({ targetUserId: user.id }).unwrap();
+      navigate(`/recruiter/messages/${res.data.id}`);
+    } catch (error) {
+      errorToast(error);
+    } finally {
+      setIsMessaging(false);
+    }
+  };
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded border border-slate-100 dark:border-slate-800 shadow px-8 py-8 flex flex-col md:flex-row items-start md:items-center gap-8 group">
@@ -65,7 +87,8 @@ export default function ApplicantHeader({ application }: Props) {
       {/* Action Column */}
       <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 w-full md:w-auto">
         <Button
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 h-12 gap-2 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
+          variant={"default"}
+          className="font-bold px-8 h-12 gap-2 active:scale-95 transition-all"
           asChild
         >
           <a href={resume?.fileUrl} target="_blank" rel="noreferrer">
@@ -75,9 +98,15 @@ export default function ApplicantHeader({ application }: Props) {
         </Button>
         <Button
           variant="outline"
+          disabled={isMessaging}
+          onClick={handleOpenChat}
           className="font-bold px-8 h-12 gap-2 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-95 transition-all"
         >
-          <MessageSquare className="size-4" />
+          {isMessaging ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            <MessageSquare className="size-4" />
+          )}
           Message
         </Button>
       </div>
