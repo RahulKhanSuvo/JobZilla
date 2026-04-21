@@ -53,9 +53,17 @@ export const postJobSchema = z
       })
       .optional(),
   })
-  .refine((data) => data.salaryMin <= data.salaryMax, {
-    message: "Minimum salary cannot be greater than maximum salary",
-    path: ["salaryMin"],
-  });
+  .refine(
+    (data) => {
+      if (data.salaryMin && data.salaryMax) {
+        return data.salaryMin <= data.salaryMax;
+      }
+      return true;
+    },
+    {
+      message: "Minimum salary cannot be greater than maximum salary",
+      path: ["salaryMin"],
+    },
+  );
 
 export type PostJobFormData = z.infer<typeof postJobSchema>;
