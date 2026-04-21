@@ -13,12 +13,6 @@ export default function CandidateDashboard() {
   const { data: stats, isLoading } = useGetCandidateDashboardStatsQuery();
   const userName = user?.data?.name || "Candidate";
 
-  const profileData = {
-    candidate: user?.data?.candidate,
-    fullName: user?.data?.name || "",
-    email: user?.data?.email || "",
-  };
-
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Welcome Header */}
@@ -75,7 +69,7 @@ export default function CandidateDashboard() {
 
         {/* Sidebar Column */}
         <div className="space-y-8">
-          <ProfileCompleteness data={profileData} />
+          <ProfileCompleteness data={user?.data} />
 
           {/* Quick Tip / CTA Card */}
           <div className="bg-primary rounded p-6 text-primary-foreground space-y-4 shadow-lg shadow-primary/20 relative overflow-hidden">

@@ -11,8 +11,24 @@ export interface ProfileCompletionResult {
 }
 
 export const calculateProfileCompletion = (
-  data: AuthUser,
+  data: AuthUser | undefined | null,
 ): ProfileCompletionResult => {
+  if (!data) {
+    return {
+      percentage: 0,
+      checks: [
+        { label: "Full Name", completed: false },
+        { label: "Email", completed: false },
+        { label: "Phone", completed: false },
+        { label: "Location", completed: false },
+        { label: "About Me", completed: false },
+        { label: "Experience", completed: false },
+        { label: "Education", completed: false },
+        { label: "Skills", completed: false },
+      ],
+    };
+  }
+
   const checks: CompletionCheck[] = [
     { label: "Full Name", completed: !!data.name },
     { label: "Email", completed: !!data.email },

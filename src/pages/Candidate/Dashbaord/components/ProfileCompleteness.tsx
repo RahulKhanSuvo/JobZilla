@@ -5,7 +5,7 @@ import { calculateProfileCompletion } from "@/utils/profileCompletion";
 import { Link } from "react-router";
 import type { AuthUser } from "@/redux/features/auth/auth.type";
 interface ProfileCompletenessProps {
-  data: AuthUser;
+  data: AuthUser | undefined;
 }
 
 export default function ProfileCompleteness({
