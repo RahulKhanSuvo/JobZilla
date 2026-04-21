@@ -1,16 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Circle } from "lucide-react";
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
 import { calculateProfileCompletion } from "@/utils/profileCompletion";
 import { Link } from "react-router";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 interface ProfileCompletenessProps {
-  data: CandidateProfileData;
+  data: AuthUser;
 }
 
-
-export default function ProfileCompleteness({ data }: ProfileCompletenessProps) {
-
+export default function ProfileCompleteness({
+  data,
+}: ProfileCompletenessProps) {
   const { percentage, checks } = calculateProfileCompletion(data);
 
   return (
@@ -53,10 +53,12 @@ export default function ProfileCompleteness({ data }: ProfileCompletenessProps) 
         </ul>
 
         <Button asChild className="w-full mt-2 group">
-          <Link to={"/candidate/profile"}>Improve Profile
+          <Link to={"/candidate/profile"}>
+            Improve Profile
             <span className="ml-2 group-hover:translate-x-1 transition-transform">
               →
-            </span></Link>
+            </span>
+          </Link>
         </Button>
       </CardContent>
     </Card>
