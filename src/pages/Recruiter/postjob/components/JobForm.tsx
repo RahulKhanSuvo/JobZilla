@@ -217,11 +217,7 @@ export default function JobForm({
                   <Input
                     type="number"
                     value={field.state.value}
-                    onChange={(e) =>
-                      field.handleChange(
-                        e.target.value === "" ? undefined : Number(e.target.value)
-                      )
-                    }
+                    onChange={(e) => field.handleChange(Number(e.target.value))}
                     onBlur={field.handleBlur}
                     placeholder="e.g. 1000"
                     variant="withBg"
@@ -242,11 +238,7 @@ export default function JobForm({
                   <Input
                     type="number"
                     value={field.state.value}
-                    onChange={(e) =>
-                      field.handleChange(
-                        e.target.value === "" ? undefined : Number(e.target.value)
-                      )
-                    }
+                    onChange={(e) => field.handleChange(Number(e.target.value))}
                     onBlur={field.handleBlur}
                     placeholder="e.g. 5000"
                     variant="withBg"
@@ -362,14 +354,14 @@ export default function JobForm({
                     min={new Date().toISOString().split("T")[0]}
                     value={
                       field.state.value
-                        ? new Date(field.state.value).toISOString().split("T")[0]
+                        ? new Date(field.state.value)
+                            .toISOString()
+                            .split("T")[0]
                         : ""
                     }
                     onBlur={field.handleBlur}
                     onChange={(e) =>
-                      field.handleChange(
-                        e.target.value ? new Date(e.target.value) : undefined
-                      )
+                      field.handleChange(new Date(e.target.value))
                     }
                     variant="withBg"
                     className="cursor-pointer"
