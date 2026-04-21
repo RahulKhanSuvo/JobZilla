@@ -2,6 +2,7 @@ import type {
   Application,
   ApplicationStatus,
   IApplicationResponse,
+  ISingleApplicationResponse,
 } from "@/types/application";
 import baseApi from "../hook/baseApi";
 import type { IApiResponse } from "@/types/job";
@@ -28,7 +29,7 @@ const applicationApi = baseApi.injectEndpoints({
       },
       providesTags: ["Applications"],
     }),
-    getApplicationById: builder.query<IApiResponse<Application>, string>({
+    getApplicationById: builder.query<ISingleApplicationResponse, string>({
       query: (id) => `applications/${id}`,
       providesTags: ["Applications"],
     }),

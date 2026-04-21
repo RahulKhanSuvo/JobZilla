@@ -26,6 +26,12 @@ export interface IApplicationResponse {
   meta: IApplicationMeta;
 }
 
+export interface ISingleApplicationResponse {
+  success: boolean;
+  message: string;
+  data: Application;
+}
+
 export interface ApplicationCompanyUser {
   id: string;
   name: string;
@@ -63,6 +69,13 @@ export interface ApplicationJob {
   title: string;
   category?: string;
   jobType?: string;
+  experience?: string;
+  careerLevel?: string;
+  qualification?: string;
+  deadline: string;
+  salaryMin: number;
+  salaryMax: number;
+  salaryType?: string;
 
   user?: {
     name: string;
@@ -109,20 +122,23 @@ export interface ApplicationCandidate {
   location: string | null;
   avatar: string | null;
   aboutMe?: string | null;
-  language?: string | null;
-  skills?: Skill[];
-  eductions?: Education[];
-  workExperiences?: WorkExperience[];
+}
+
+export interface Language {
+  id: string;
+  language: string;
+  userId: string;
 }
 
 export interface ApplicationUser {
   id: string;
   name: string;
   email?: string;
-  candidate?: {
-    location: string | null;
-    avatar: string | null;
-  };
+  candidate?: ApplicationCandidate;
+  languages?: Language[];
+  skills?: Skill[];
+  eductions?: Education[];
+  workExperiences?: WorkExperience[];
 }
 
 export interface Application {
