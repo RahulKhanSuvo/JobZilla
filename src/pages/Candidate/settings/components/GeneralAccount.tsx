@@ -11,6 +11,8 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { useChangePasswordMutation } from "@/redux/features/auth/auth.api";
 import { errorToast } from "@/utils/errorToast";
 import { toast } from "sonner";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 const passwordShema = z.object({
   email: z.string().email("Invalid email"),
   phone: z.string().min(1, "Phone number is required"),
@@ -46,6 +48,7 @@ const fields = [
 export default function GeneralAccount() {
   const user = useSelector(selectCurrentUser);
   const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof passwordShema>>({
     resolver: zodResolver(passwordShema),
     defaultValues: {
@@ -79,17 +82,41 @@ export default function GeneralAccount() {
                   <FieldLabel htmlFor={field.name}>
                     {inputField.label}
                   </FieldLabel>
-                  <Input
-                    disabled={
-                      inputField.name === "email" || inputField.name === "phone"
-                    }
-                    id={field.name}
-                    type={inputField.type}
-                    placeholder={inputField.placeholder}
-                    aria-invalid={fieldState.invalid}
-                    {...field}
-                    className="w-full h-10 px-3 border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  />
+                  <div className="relative">
+                    <Input
+                      disabled={
+                        inputField.name === "email" ||
+                        inputField.name === "phone"
+                      }
+                      id={field.name}
+                      type={
+                        inputField.name === "currentPassword" ||
+                        inputField.name === "newPassword"
+                          ? showPassword
+                            ? "text"
+                            : "password"
+                          : inputField.type
+                      }
+                      placeholder={inputField.placeholder}
+                      aria-invalid={fieldState.invalid}
+                      {...field}
+                      className="w-full  h-10 px-3 border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    />
+                    {inputField.name === "currentPassword" ||
+                      (inputField.name === "newPassword" && (
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2"
+                        >
+                          {showPassword ? (
+                            <EyeOff className="w-5 h-5" />
+                          ) : (
+                            <Eye className="w-5 h-5" />
+                          )}
+                        </button>
+                      ))}
+                  </div>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
