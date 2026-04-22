@@ -8,6 +8,9 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { useChangePasswordMutation } from "@/redux/features/auth/auth.api";
+import { errorToast } from "@/utils/errorToast";
+import { toast } from "sonner";
 const passwordShema = z.object({
   email: z.string().email("Invalid email"),
   phone: z.string().min(1, "Phone number is required"),
@@ -42,7 +45,7 @@ const fields = [
 ] as const;
 export default function GeneralAccount() {
   const user = useSelector(selectCurrentUser);
-  console.log(user);
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
   const form = useForm<z.infer<typeof passwordShema>>({
     resolver: zodResolver(passwordShema),
     defaultValues: {
@@ -52,8 +55,14 @@ export default function GeneralAccount() {
       newPassword: "",
     },
   });
-  const onSubmit = (data: z.infer<typeof passwordShema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof passwordShema>) => {
+    try {
+      await changePassword(data).unwrap();
+      form.reset();
+      toast.success("Password changed successfully");
+    } catch (error) {
+      errorToast(error);
+    }
   };
   return (
     <Section icon={<ShieldAlert className="w-5 h-5" />} title="General Account">
@@ -92,8 +101,8 @@ export default function GeneralAccount() {
 
         {/* Save button */}
         <div className="flex justify-end mt-6 pt-5 border-t border-gray-100">
-          <Button className="" type="submit">
-            Update Account
+          <Button disabled={isLoading} className="" type="submit">
+            {isLoading ? "Updating..." : "Update Account"}
           </Button>
         </div>
       </form>
