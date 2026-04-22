@@ -77,7 +77,7 @@ export default function GeneralAccount() {
                     placeholder={inputField.placeholder}
                     aria-invalid={fieldState.invalid}
                     {...field}
-                    className="w-full h-10 px-3 rounded-lg border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full h-10 px-3 border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
