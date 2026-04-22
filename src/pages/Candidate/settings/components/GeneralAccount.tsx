@@ -15,10 +15,30 @@ const passwordShema = z.object({
   newPassword: z.string().min(1, "New password is required"),
 });
 const fields = [
-  { name: "email", label: "Email Address", type: "email" },
-  { name: "phone", label: "Phone Number", type: "text" },
-  { name: "currentPassword", label: "Current Password", type: "password" },
-  { name: "newPassword", label: "New Password", type: "password" },
+  {
+    name: "email",
+    label: "Email Address",
+    type: "email",
+    placeholder: "Enter your email",
+  },
+  {
+    name: "phone",
+    label: "Phone Number",
+    type: "text",
+    placeholder: "Enter your phone number",
+  },
+  {
+    name: "currentPassword",
+    label: "Current Password",
+    type: "password",
+    placeholder: "Enter your current password",
+  },
+  {
+    name: "newPassword",
+    label: "New Password",
+    type: "password",
+    placeholder: "Enter your new password",
+  },
 ] as const;
 export default function GeneralAccount() {
   const user = useSelector(selectCurrentUser);
@@ -54,6 +74,7 @@ export default function GeneralAccount() {
                     disabled={inputField.name === "email"}
                     id={field.name}
                     type={inputField.type}
+                    placeholder={inputField.placeholder}
                     aria-invalid={fieldState.invalid}
                     {...field}
                     className="w-full h-10 px-3 rounded-lg border border-gray-200 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30"
