@@ -17,35 +17,62 @@ export const calculateProfileCompletion = (
     return {
       percentage: 0,
       checks: [
-        { label: "Full Name", completed: false },
-        { label: "Email", completed: false },
-        { label: "Phone", completed: false },
-        { label: "Location", completed: false },
-        { label: "About Me", completed: false },
-        { label: "Experience", completed: false },
-        { label: "Education", completed: false },
-        { label: "Skills", completed: false },
+        { label: "Personal Info", completed: false },
+        { label: "Phone & Location", completed: false },
+        { label: "Professional Bio", completed: false },
+        { label: "Career Preferences", completed: false },
+        { label: "Work Experience", completed: false },
+        { label: "Education Details", completed: false },
+        { label: "Technical Skills", completed: false },
+        { label: "Languages", completed: false },
       ],
     };
   }
 
   const checks: CompletionCheck[] = [
-    { label: "Full Name", completed: !!data.name },
-    { label: "Email", completed: !!data.email },
-    { label: "Phone", completed: !!data.candidate?.phone },
-    { label: "Location", completed: !!data.candidate?.location },
-    { label: "About Me", completed: !!data.candidate?.aboutMe },
     {
-      label: "Experience",
+      label: "Personal Info",
+      completed: !!data.name && !!data.email && !!data.candidate?.gender,
+    },
+    {
+      label: "Phone & Location",
+      completed: !!data.candidate?.phone && !!data.candidate?.location,
+    },
+    {
+      label: "Professional Bio",
+      completed:
+        !!data.candidate?.aboutMe && data.candidate.aboutMe.length > 20,
+    },
+    {
+      label: "Career Preferences",
+      completed:
+        !!data.candidate?.preferredJobType &&
+        !!data.candidate?.preferredCareerLevel &&
+        !!data.candidate?.preferredCategory,
+    },
+    {
+      label: "Work Experience",
       completed: (data?.workExperiences?.length ?? 0) > 0,
     },
     {
-      label: "Education",
+      label: "Education Details",
       completed: (data?.eductions?.length ?? 0) > 0,
     },
     {
-      label: "Skills",
+      label: "Technical Skills",
       completed: (data?.skills?.length ?? 0) > 0,
+    },
+    {
+      label: "Languages",
+      completed: (data?.languages?.length ?? 0) > 0,
+    },
+    {
+      label: "Social Presence",
+      completed:
+        !!data.candidate?.linkedin ||
+        !!data.candidate?.github ||
+        !!data.candidate?.facebook ||
+        !!data.candidate?.twitter,
     },
   ];
 
