@@ -55,6 +55,21 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    deleteAccount: builder.mutation<IApiResponse<null>, void>({
+      query: () => ({
+        url: "/auth/delete-account",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["User"],
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(logOut());
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
   }),
 });
 export const {
@@ -63,4 +78,5 @@ export const {
   useCurrentUserQuery,
   useUserLogoutMutation,
   useChangePasswordMutation,
+  useDeleteAccountMutation,
 } = authApi;
