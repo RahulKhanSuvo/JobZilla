@@ -71,7 +71,9 @@ export default function GeneralAccount() {
                     {inputField.label}
                   </FieldLabel>
                   <Input
-                    disabled={inputField.name === "email"}
+                    disabled={
+                      inputField.name === "email" || inputField.name === "phone"
+                    }
                     id={field.name}
                     type={inputField.type}
                     placeholder={inputField.placeholder}
