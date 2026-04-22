@@ -11,7 +11,7 @@ createRoot(document.getElementById("root")!).render(
     <ReduxProvider>
       <ThemeProvider>
         <RouterProvider router={router} />
-        <Toaster />
+        <Toaster richColors />
       </ThemeProvider>
     </ReduxProvider>
   </StrictMode>,
