@@ -11,8 +11,8 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 const passwordShema = z.object({
   email: z.string().email("Invalid email"),
   phone: z.string().min(1, "Phone number is required"),
-  currentPassword: z.string().min(1, "Current password is required"),
-  newPassword: z.string().min(1, "New password is required"),
+  currentPassword: z.string().min(6, "Current password is required"),
+  newPassword: z.string().min(6, "New password is required"),
 });
 const fields = [
   {
@@ -46,8 +46,8 @@ export default function GeneralAccount() {
   const form = useForm<z.infer<typeof passwordShema>>({
     resolver: zodResolver(passwordShema),
     defaultValues: {
-      email: user?.email,
-      phone: user?.candidate?.phone,
+      email: user?.email || "",
+      phone: user?.candidate?.phone || "",
       currentPassword: "",
       newPassword: "",
     },
