@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import baseApi from "../hook/baseApi";
 import type { LoginFormData } from "@/pages/auth/authSchema";
 import type { LoginSuccessResponse, AuthUser } from "./auth.type";
@@ -39,14 +38,14 @@ const authApi = baseApi.injectEndpoints({
       },
     }),
 
-    userLogout: builder.mutation<any, void>({
+    userLogout: builder.mutation<IApiResponse<null>, void>({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
     }),
     changePassword: builder.mutation<
-      any,
+      IApiResponse<null>,
       { currentPassword: string; newPassword: string }
     >({
       query: (payload) => ({
