@@ -1,7 +1,7 @@
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { IJob } from "@/types/job";
-import { Briefcase, Lock, Unlock, Edit2, Users, Trash2 } from "lucide-react";
+import { Briefcase, Lock, Unlock, Edit2, Trash2, Eye } from "lucide-react";
 import { Link } from "react-router"; // Fixed react-router to standard routing
 import { Button } from "@/components/ui/button";
 import AppTooltip from "@/components/common/AppTooltip";
@@ -50,7 +50,7 @@ export default function MyJobsTable({
   return (
     <CommonWrapper className="overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse min-w-[1000px]">
+        <table className="w-full text-left border-collapse ">
           <thead>
             <tr className="border-b border-slate-100">
               <th className="px-8 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
@@ -179,7 +179,7 @@ export default function MyJobsTable({
                           </Link>
                         </Button>
                       </AppTooltip>
-                      <AppTooltip content="Applicants">
+                      {/* <AppTooltip content="Applicants">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -188,6 +188,17 @@ export default function MyJobsTable({
                         >
                           <Link to={`/recruiter/applicants/${job.id}`}>
                             <Users className="size-4" />
+                          </Link>
+                        </Button>
+                      </AppTooltip> */}
+                      <AppTooltip content={"view job"}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-10 bg-slate-50 text-slate-500 hover:bg-slate-100 rounded-lg"
+                        >
+                          <Link to={`/job/${job.id}`}>
+                            <Eye />
                           </Link>
                         </Button>
                       </AppTooltip>

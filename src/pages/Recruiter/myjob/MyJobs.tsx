@@ -137,7 +137,11 @@ export default function MyJobs() {
       <MyJobsStats stats={updatedStats} isLoading={isJobStatsLoading} />
 
       {/* Search and Sort */}
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
         <MyJobsControls
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -175,7 +179,7 @@ export default function MyJobs() {
             }
           }}
         />{" "}
-      </div>
+      </motion.div>
     </div>
   );
 }
