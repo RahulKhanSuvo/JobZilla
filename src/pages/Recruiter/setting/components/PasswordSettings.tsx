@@ -4,8 +4,6 @@ import { Section } from "./ui/Section";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
 
 import { useChangePasswordMutation } from "@/redux/features/auth/auth.api";
 import { errorToast } from "@/utils/errorToast";
@@ -15,7 +13,6 @@ export default function PasswordSettings() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { user } = useSelector((state: RootState) => state.auth);
   const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const handlePasswordChange = async (e: React.FormEvent) => {
