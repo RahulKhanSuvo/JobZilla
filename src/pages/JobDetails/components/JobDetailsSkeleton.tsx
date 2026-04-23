@@ -52,7 +52,7 @@ export default function JobDetailsSkeleton() {
             </div>
           </div>
           <aside className="lg:col-span-4 space-y-8 order-first lg:order-last">
-            <div className="border border-slate-200 dark:border-slate-800 rounded-lg p-6 space-y-6 shadow-sm">
+            <div className="border-slate-200 dark:border-slate-800 rounded-lg p-6 space-y-6">
               <Skeleton className="h-6 w-1/2" />
               <div className="space-y-6 mt-6">
                 {[1, 2, 3, 4, 5].map((i) => (
