@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import type { User } from "@/redux/features/auth/auth.type";
 import { MdPhoto } from "react-icons/md";
 import { Button } from "@/components/ui/button";
-
+import { motion } from "motion/react";
 export default function ProfileHader({
   user,
 }: {
@@ -12,7 +12,11 @@ export default function ProfileHader({
   return (
     <div className="overflow-hidden bg-white rounded">
       {/* Cover Photo */}
-      <div className="relative h-48 md:h-60 w-full rounded overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="relative h-48 md:h-60 w-full rounded overflow-hidden"
+      >
         {user?.company?.coverImage ? (
           <img
             src={user?.company?.coverImage}
@@ -30,7 +34,7 @@ export default function ProfileHader({
         {user?.company?.coverImage && (
           <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
         )}
-      </div>
+      </motion.div>
 
       {/* Profile Info Row */}
       <div className="px-6 py-5 relative z-50 bg-white">
