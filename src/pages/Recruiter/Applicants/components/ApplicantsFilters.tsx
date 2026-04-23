@@ -131,10 +131,10 @@ export default function ApplicantsFilters({
           const count = statsData[tab.value as keyof typeof statsData] || 0;
 
           return (
-            <button
+            <Button
               key={tab.value}
               onClick={() => onFilterChange(() => setStatusFilter(tab.value))}
-              className={`h-8 px-3.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-1.5 ${
+              className={`h-8 px-3.5 rounded text-xs font-bold transition-all duration-200 flex items-center gap-1.5 ${
                 statusFilter === tab.value
                   ? "bg-primary text-white shadow-sm shadow-primary/30"
                   : "bg-slate-100 text-slate-500 hover:bg-slate-200"
@@ -150,7 +150,7 @@ export default function ApplicantsFilters({
               >
                 {count}
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "@tanstack/react-form";
 import { type ZodValidator } from "@tanstack/zod-form-adapter";
 import { postJobSchema, type PostJobFormData } from "../postJobSchema";
+import { motion } from "motion/react";
 import {
   Select,
   SelectContent,
@@ -63,7 +64,9 @@ export default function JobForm({
   });
 
   return (
-    <form
+    <motion.form
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -461,6 +464,6 @@ export default function JobForm({
           </Button>
         </div>
       </CommonWrapper>
-    </form>
+    </motion.form>
   );
 }

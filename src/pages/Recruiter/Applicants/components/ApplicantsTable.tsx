@@ -13,6 +13,7 @@ import { Link } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import type { Application, ApplicationStatus } from "@/types/application";
+import ApplicantsTableSkeleton from "./ApplicantsTableSkeleton";
 
 interface ApplicantsTableProps {
   isLoading: boolean;
@@ -71,22 +72,13 @@ export default function ApplicantsTable({
           </thead>
           <tbody className="divide-y divide-slate-50">
             {isLoading ? (
-              <tr>
-                <td colSpan={4} className="px-6 py-20 text-center">
-                  <div className="flex flex-col items-center gap-3 text-slate-400">
-                    <Loader2 className="size-8 animate-spin text-primary/40" />
-                    <span className="text-sm font-medium">
-                      Loading applicants...
-                    </span>
-                  </div>
-                </td>
-              </tr>
+              <ApplicantsTableSkeleton />
             ) : applicationList.length === 0 ? (
               <tr>
                 <td colSpan={4} className="px-6 py-20 text-center">
                   <div className="flex flex-col items-center gap-3 text-slate-400">
                     <Users className="size-10 text-slate-200" />
-                    <p className="text-base font-bold text-slate-500">
+                    <p className="text-base font-semibold text-slate-500">
                       {hasActiveFilters
                         ? "No applicants match your filters"
                         : "No applicants yet"}
