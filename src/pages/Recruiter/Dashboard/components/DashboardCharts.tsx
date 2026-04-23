@@ -1,4 +1,5 @@
 import type { IRecruiterDashboardStats } from "@/types/stats";
+import { ChartSkeleton } from "./charts/ChartSkeleton";
 import ApplicationTrendChart from "./charts/ApplicationTrendChart";
 import ApplicantStatusChart from "./charts/ApplicantStatusChart";
 import HiringFunnelChart from "./charts/HiringFunnelChart";
@@ -17,8 +18,6 @@ const cardVariants = {
     transition: { delay: i * 0.1 + 0.15 },
   }),
 };
-
-import { ChartSkeleton } from "./charts/ChartSkeleton";
 
 export function DashboardCharts({ stats, isLoading }: DashboardChartsProps) {
   if (isLoading) {

@@ -1,7 +1,6 @@
 import { Navigate, type RouteObject } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import RecruiterLayout from "@/layouts/RecruiterLayout";
-import RecruiterDashboard from "@/pages/Recruiter/Dashboard/RecruiterDashboard";
 import MyJobs from "@/pages/Recruiter/myjob/MyJobs";
 import PostJob from "@/pages/Recruiter/postjob/PostJob";
 import EditJob from "@/pages/Recruiter/postjob/EditJob";
@@ -13,6 +12,7 @@ import ApplicantDetailPage from "@/pages/Recruiter/applicantDetailPage/Apilicant
 import Message from "@/pages/Candidate/message/Message";
 import Notification from "@/pages/Candidate/Notification/Notification";
 import RectutierPlansPage from "@/pages/Recruiter/plans/RectutierPlansPage";
+import RecruiterDashboard from "@/pages/Recruiter/Dashboard/RecruiterDashboard";
 
 export const recruiterRoutes: RouteObject = {
   path: "/recruiter",
