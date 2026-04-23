@@ -5,6 +5,7 @@ import JobTabs from "./components/JobTabs";
 import JobDescription from "./components/JobDescription";
 import RelatedJobs from "./components/RelatedJobs";
 import JobSidebar from "./components/JobSidebar";
+import JobDetailsSkeleton from "./components/JobDetailsSkeleton";
 // import StickyJobBar from "./components/StickyJobBar";
 import { useParams } from "react-router";
 import { useGetJobByIdQuery } from "@/redux/features/job/job.api";
@@ -17,14 +18,7 @@ export default function JobDetails() {
   const jobData = data?.data;
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-950">
-        <div className="flex flex-col items-center gap-4">
-          <div className="size-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-500 font-medium">Loading job details...</p>
-        </div>
-      </div>
-    );
+    return <JobDetailsSkeleton />;
   }
 
   if (isError || !jobData) {
