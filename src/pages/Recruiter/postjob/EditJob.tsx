@@ -6,8 +6,11 @@ import {
 } from "@/redux/features/job/job.api";
 import { errorToast } from "@/utils/errorToast";
 import JobForm from "./components/JobForm";
+import JobFormSkeleton from "./components/JobFormSkeleton";
 import type { PostJobFormData } from "./postJobSchema";
 import { useParams, useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 export default function EditJob() {
   const { id } = useParams<{ id: string }>();
@@ -27,8 +30,9 @@ export default function EditJob() {
 
   if (isFetching) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <p>Loading job data...</p>
+      <div className="space-y-6 pb-12">
+        <DashboardTitle>Edit Job</DashboardTitle>
+        <JobFormSkeleton />
       </div>
     );
   }
@@ -43,6 +47,14 @@ export default function EditJob() {
 
   return (
     <div className="space-y-6 pb-12">
+      <Button
+        variant={"link"}
+        onClick={() => navigate("/recruiter/my-jobs")}
+        className=""
+      >
+        <ArrowLeft className="size-4 mr-2 stroke-[3px]" />
+        Back
+      </Button>
       <DashboardTitle>Edit Job</DashboardTitle>
       <JobForm
         initialValues={jobData.data}
