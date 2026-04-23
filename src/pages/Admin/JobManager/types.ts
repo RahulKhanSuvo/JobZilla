@@ -27,6 +27,7 @@ export const DUMMY_JOBS: AdminJob[] = [
     createdAt: "2024-03-10T10:00:00Z",
     updatedAt: "2024-03-10T10:00:00Z",
     deadline: "2024-05-10T10:00:00Z",
+    views: 100,
   },
   {
     id: "j2",
@@ -45,6 +46,7 @@ export const DUMMY_JOBS: AdminJob[] = [
     createdAt: "2024-04-12T14:30:00Z",
     updatedAt: "2024-04-12T14:30:00Z",
     deadline: "2024-06-12T14:30:00Z",
+    views: 100,
   },
   {
     id: "j3",
@@ -63,6 +65,7 @@ export const DUMMY_JOBS: AdminJob[] = [
     createdAt: "2024-02-15T09:00:00Z",
     updatedAt: "2024-02-15T09:00:00Z",
     deadline: "2024-04-15T09:00:00Z",
+    views: 100,
   },
   {
     id: "j4",
@@ -81,6 +84,7 @@ export const DUMMY_JOBS: AdminJob[] = [
     createdAt: "2024-01-20T11:00:00Z",
     updatedAt: "2024-01-20T11:00:00Z",
     deadline: "2024-03-20T11:00:00Z",
+    views: 100,
   },
   {
     id: "j5",
@@ -99,5 +103,6 @@ export const DUMMY_JOBS: AdminJob[] = [
     createdAt: "2024-04-10T16:00:00Z",
     updatedAt: "2024-04-10T16:00:00Z",
     deadline: "2024-05-10T16:00:00Z",
+    views: 100,
   },
 ];

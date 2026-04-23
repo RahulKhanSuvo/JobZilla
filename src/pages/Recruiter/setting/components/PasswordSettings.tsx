@@ -27,9 +27,8 @@ export default function PasswordSettings() {
 
     try {
       const response = await changePassword({
-        oldPassword: currentPassword,
-        newPassword: newPassword,
-        role: user?.role,
+        currentPassword,
+        newPassword,
       }).unwrap();
 
       if (response.success) {

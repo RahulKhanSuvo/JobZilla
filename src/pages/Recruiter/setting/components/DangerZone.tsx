@@ -10,8 +10,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useDeleteAccountMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
+import { errorToast } from "@/utils/errorToast";
+import { useNavigate } from "react-router";
 
 export default function DangerZone() {
+  const [deleteAccount] = useDeleteAccountMutation();
+  const navigate = useNavigate();
+  const handelDeleteAccount = async () => {
+    try {
+      await deleteAccount().unwrap();
+      toast.success("Account deleted successfully");
+      navigate("/");
+    } catch (error) {
+      errorToast(error);
+    }
+  };
   return (
     <Section icon={<Trash2 className="w-5 h-5" />} title="Danger Zone" danger>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-red-50/50 rounded-xl border border-red-100">
@@ -51,7 +66,11 @@ export default function DangerZone() {
               <Button variant="outline" className="flex-1 font-bold">
                 Cancel
               </Button>
-              <Button variant="destructive" className="flex-1 font-bold">
+              <Button
+                onClick={handelDeleteAccount}
+                variant="destructive"
+                className="flex-1 font-bold"
+              >
                 Confirm Delete
               </Button>
             </DialogFooter>

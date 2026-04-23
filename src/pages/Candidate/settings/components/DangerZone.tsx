@@ -1,10 +1,23 @@
 import { useState } from "react";
 import { ShieldAlert } from "lucide-react";
 import { Section } from "./ui/Section";
+import { useDeleteAccountMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
+import { errorToast } from "@/utils/errorToast";
+import ConfirmDialog from "@/components/common/ConfirmDialog";
+import { Button } from "@/components/ui/button";
 
 export default function DangerZone() {
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
+  const [deleteAccount, { isLoading }] = useDeleteAccountMutation();
+  const [open, setOpen] = useState(false);
+  const handelDeleteAccount = async () => {
+    try {
+      await deleteAccount().unwrap();
+      toast.success("Account deleted successfully");
+    } catch (error) {
+      errorToast(error);
+    }
+  };
   return (
     <Section
       icon={<ShieldAlert className="w-5 h-5" />}
@@ -19,40 +32,20 @@ export default function DangerZone() {
             certain.
           </p>
         </div>
-        <button
-          onClick={() => setShowDeleteConfirm(true)}
+        <Button
+          onClick={() => setOpen(true)}
           className="shrink-0 bg-red-50 text-red-600 hover:bg-red-500 hover:text-white border border-red-200 text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
         >
           Delete Account
-        </button>
+        </Button>
       </div>
 
-      {/* Inline confirm */}
-      {showDeleteConfirm && (
-        <div className="mt-5 p-5 bg-red-50/50 border border-red-200 rounded animate-in fade-in slide-in-from-top-2 duration-300">
-          <p className="text-sm font-bold text-red-700">
-            Are you absolutely sure?
-          </p>
-          <p className="text-xs text-red-600/80 mt-1.5">
-            This action cannot be undone. All your data will be permanently
-            removed.
-          </p>
-          <div className="flex gap-3 mt-4">
-            <button
-              className="text-sm font-semibold bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 shadow-sm transition-colors"
-              onClick={() => setShowDeleteConfirm(false)}
-            >
-              Yes, delete my account
-            </button>
-            <button
-              className="text-sm font-semibold bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-50 shadow-sm transition-colors"
-              onClick={() => setShowDeleteConfirm(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={open}
+        onCancel={() => setOpen(false)}
+        loading={isLoading}
+        onConfirm={handelDeleteAccount}
+      />
     </Section>
   );
 }

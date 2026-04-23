@@ -48,7 +48,7 @@ export default function RecruiterDashboard() {
       <DashboardCharts stats={stats} />
 
       {/* Tables and List Sections */}
-      <RecentApplicants applicants={stats.recentApplicants} />
+      <RecentApplicants />
     </>
   );
 }
