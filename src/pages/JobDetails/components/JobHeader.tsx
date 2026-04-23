@@ -134,8 +134,9 @@ export default function JobHeader({ job }: JobHeaderProps) {
             </Button>
             <Button
               variant="outline"
-              disabled={user?.id === job.user?.id}
+              disabled={user?.role === "EMPLOYER"}
               size="icon"
+              type="button"
               onClick={() => handelSave(job.id ?? "")}
               className={`size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all disabled:cursor-not-allowed active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
             >
@@ -143,7 +144,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
             </Button>
             <Button
               onClick={hadnelApply}
-              disabled={job.isApplied || false || user?.id === job.user?.id}
+              disabled={job.isApplied || false || user?.role === "EMPLOYER"}
               className="flex-1 lg:flex-none h-11 sm:h-12 px-4 sm:px-8 lg:px-12 rounded bg-[#10b981] hover:bg-[#059669] text-white font-bold gap-2 disabled:bg-slate-500 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               <Send className="size-4 sm:size-5 rotate-[-20deg]" />
