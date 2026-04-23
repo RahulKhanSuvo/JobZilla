@@ -18,7 +18,7 @@ interface HiringFunnelData {
 }
 
 interface HiringFunnelChartProps {
-  data: HiringFunnelData[];
+  data: HiringFunnelData[] | undefined;
   variants: any;
 }
 
@@ -27,8 +27,8 @@ export default function HiringFunnelChart({
   variants,
 }: HiringFunnelChartProps) {
   // Simple conversion calculation (Stage 1 to Last Stage)
-  const views = data[0]?.value || 0;
-  const hires = data[data.length - 1]?.value || 0;
+  const views = data?.[0]?.value || 0;
+  const hires = data?.[data.length - 1]?.value || 0;
   const conversionRate = views > 0 ? ((hires / views) * 100).toFixed(1) : "0.0";
 
   return (
@@ -85,7 +85,7 @@ export default function HiringFunnelChart({
                   radius={[0, 6, 6, 0]}
                   barSize={28}
                 >
-                  {data.map((_entry, index) => (
+                  {data?.map((_entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill="var(--primary)"

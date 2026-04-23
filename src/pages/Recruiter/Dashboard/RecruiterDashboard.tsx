@@ -2,7 +2,6 @@ import { DashboardHeader } from "./components/DashboardHeader";
 import { StatsGrid } from "./components/StatsGrid";
 import { DashboardCharts } from "./components/DashboardCharts";
 import { RecentApplicants } from "./components/RecentApplicants";
-import JobzillaLoading from "@/components/common/JobzillaLoading";
 import { useGetRecruiterDashboardStatsQuery } from "@/redux/features/recruiter/recruiterStats.api";
 
 export default function RecruiterDashboard() {
@@ -12,15 +11,7 @@ export default function RecruiterDashboard() {
     isError,
   } = useGetRecruiterDashboardStatsQuery();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <JobzillaLoading />
-      </div>
-    );
-  }
-
-  if (isError || !statsResponse) {
+  if (isError) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-center p-6">
         <h2 className="text-xl font-bold text-slate-900 mb-2">
@@ -34,7 +25,7 @@ export default function RecruiterDashboard() {
     );
   }
 
-  const stats = statsResponse.data;
+  const stats = statsResponse?.data;
 
   return (
     <>
@@ -42,10 +33,10 @@ export default function RecruiterDashboard() {
       <DashboardHeader />
 
       {/* Statistics Grid */}
-      <StatsGrid stats={stats} />
+      <StatsGrid stats={stats} isLoading={isLoading} />
 
       {/* Charts and Data Visualizations */}
-      <DashboardCharts stats={stats} />
+      <DashboardCharts stats={stats} isLoading={isLoading} />
 
       {/* Tables and List Sections */}
       <RecentApplicants />

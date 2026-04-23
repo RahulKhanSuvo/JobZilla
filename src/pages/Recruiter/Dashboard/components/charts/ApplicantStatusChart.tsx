@@ -11,7 +11,7 @@ interface ApplicantStatusData {
 }
 
 interface ApplicantStatusChartProps {
-  data: ApplicantStatusData[];
+  data: ApplicantStatusData[] | undefined;
   variants: any;
 }
 
@@ -88,7 +88,7 @@ export default function ApplicantStatusChart({
                   animationBegin={0}
                   animationDuration={1200}
                 >
-                  {data.map((entry, index) => (
+                  {data?.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={entry.fill}
@@ -109,7 +109,7 @@ export default function ApplicantStatusChart({
           </div>
           {/* Legend */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-2 w-full mt-2">
-            {data.map((item) => (
+            {data?.map((item) => (
               <div key={item.name} className="flex items-center gap-2">
                 <span
                   className="size-2.5 rounded-full shrink-0"
