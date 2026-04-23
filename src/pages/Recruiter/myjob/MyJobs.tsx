@@ -17,7 +17,7 @@ import { errorToast } from "@/utils/errorToast";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { useProfileGuard } from "@/hooks/useProfileGuard";
 import CompleteProfileModal from "@/components/recruiter/CompleteProfileModal";
-
+import { motion } from "motion/react";
 export default function MyJobs() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -117,13 +117,18 @@ export default function MyJobs() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <DashboardTitle>My Jobs</DashboardTitle>
-        <Button
-          onClick={() => checkProfile(() => navigate("post-job"))}
-          className="bg-primary text-white font-bold px-8 gap-2 h-12"
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
         >
-          <Plus className="size-5" />
-          Post Job
-        </Button>
+          <Button
+            onClick={() => checkProfile(() => navigate("post-job"))}
+            className="bg-primary text-white font-bold px-8 gap-2 h-12"
+          >
+            <Plus className="size-5" />
+            Post Job
+          </Button>
+        </motion.div>
       </div>
 
       <CompleteProfileModal isOpen={isModalOpen} onClose={setIsModalOpen} />
