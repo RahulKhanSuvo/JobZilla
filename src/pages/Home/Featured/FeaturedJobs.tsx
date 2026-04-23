@@ -12,7 +12,9 @@ import { errorToast } from "@/utils/errorToast";
 import { JobCardSkeleton } from "@/components/Skeleton/JobCardSkeleton";
 
 export default function FeaturedJobs() {
-  const { data: jobs, isLoading } = useGetAllJobsQuery({});
+  const { data: jobs, isLoading } = useGetAllJobsQuery({
+    limit: 6,
+  });
   const [savingJobId, setSavingJobId] = useState<string | null>(null);
   const [saveJob] = useSaveJobMutation();
   const handelSave = async (jobId: string) => {
@@ -31,7 +33,7 @@ export default function FeaturedJobs() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
         {isLoading
-          ? Array.from({ length: 4 }).map((_, idx) => (
+          ? Array.from({ length: 6 }).map((_, idx) => (
               <JobCardSkeleton key={idx} />
             ))
           : jobs?.data.map((job) => (

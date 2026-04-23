@@ -31,10 +31,13 @@ export function AvatarDropdown({ user, menu }: AvatarDropdownProps) {
 
   const handelLogout = async () => {
     try {
+      toast.loading("Logging out...");
       await logout().unwrap();
+      toast.dismiss();
       toast.success("Logout successful");
       dispatch(logOut());
     } catch (error) {
+      toast.dismiss();
       errorToast(error);
     }
   };
