@@ -186,12 +186,23 @@ export default function InformationSection({ form }: InformationSectionProps) {
               <SelectValue placeholder="Select industry" />
             </SelectTrigger>
             <SelectContent position="popper">
-              <SelectItem value="IT">IT</SelectItem>
-              <SelectItem value="Education">Education</SelectItem>
-              <SelectItem value="Healthcare">Healthcare</SelectItem>
-              <SelectItem value="Finance">Finance</SelectItem>
-              <SelectItem value="Manufacturing">Manufacturing</SelectItem>
-              <SelectItem value="Other">Other</SelectItem>
+              {[
+                "IT",
+                "HR",
+                "MARKETING",
+                "FINANCE",
+                "EDUCATION",
+                "HEALTHCARE",
+                "HOSPITALITY",
+                "CONSTRUCTION",
+                "MANUFACTURING",
+                "TRANSPORTATION",
+                "OTHER",
+              ].map((industry) => (
+                <SelectItem key={industry} value={industry}>
+                  {industry}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           <FieldError errors={industryField.state.meta.errors} />
