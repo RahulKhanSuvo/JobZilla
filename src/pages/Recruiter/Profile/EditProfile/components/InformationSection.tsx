@@ -52,6 +52,7 @@ export default function InformationSection({ form }: InformationSectionProps) {
           <FieldLabel>Email</FieldLabel>
           <Input
             value={emailField.state.value}
+            disabled
             onBlur={emailField.handleBlur}
             onChange={(e) => emailField.handleChange(e.target.value)}
             placeholder="hi.avitex@gmail.com"
