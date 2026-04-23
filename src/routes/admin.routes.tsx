@@ -41,7 +41,7 @@ export const adminRoutes: RouteObject = {
   children: [
     { index: true, element: <Navigate to={"dashboard"} /> },
     { path: "dashboard", element: <AdminDashboard /> },
-    { path: "users", element: <AdminAllUserPage /> },
+    { path: "candidates", element: <AdminAllUserPage /> },
     { path: "jobs", element: <JobManagePage /> },
     { path: "companies", element: <AdminCompanyPage /> },
     { path: "payments", element: <AdminPaymentPage /> },

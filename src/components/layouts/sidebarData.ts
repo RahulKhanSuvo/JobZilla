@@ -109,8 +109,8 @@ export const adminSidebarData = [
     icon: MdDashboard,
   },
   {
-    title: "Users",
-    href: "users",
+    title: "Candidates",
+    href: "candidates",
     icon: FaUser,
   },
   {
