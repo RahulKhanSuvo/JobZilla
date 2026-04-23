@@ -75,7 +75,7 @@ export default function PlanFormModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden border-none shadow-2xl rounded-2xl">
+      <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden border-none shadow-2xl rounded">
         <DialogHeader className="p-6 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
           <DialogTitle className="text-xl font-black uppercase tracking-tighter">
             {plan ? "Edit Plan" : "Create New Plan"}
