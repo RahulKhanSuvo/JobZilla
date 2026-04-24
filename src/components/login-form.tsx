@@ -31,6 +31,8 @@ export function LoginForm({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [activeRole, setActiveRole] = useState("");
+
   const form = useForm<LoginFormData, ZodValidator>({
     defaultValues: {
       email: "",
@@ -68,19 +70,38 @@ export function LoginForm({
       <Card className="bg-transparent shadow-none border-none w-full ">
         <CardHeader className="text-center pb-2">
           <CardTitle className="text-3xl font-extrabold mb-4">Log In</CardTitle>
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-md text-[13px] text-left border border-slate-100 dark:border-slate-800 space-y-1">
-            <p className="text-slate-500 dark:text-slate-400">
-              <span className="font-medium text-slate-700 dark:text-slate-300">
-                Username:
-              </span>{" "}
-              candidate or employer or admin
-            </p>
-            <p className="text-slate-500 dark:text-slate-400">
-              <span className="font-medium text-slate-700 dark:text-slate-300">
-                Password:
-              </span>{" "}
-              123456
-            </p>
+          <div className="flex p-1 bg-slate-100 dark:bg-slate-900 rounded-xl mb-6 border border-slate-200 dark:border-slate-800">
+            {[
+              {
+                id: "CANDIDATE",
+                label: "Candidate",
+                email: "candidate@gmail.com",
+              },
+              {
+                id: "EMPLOYER",
+                label: "Recruiter",
+                email: "employer@gmail.com",
+              },
+              { id: "ADMIN", label: "Admin", email: "admin@gmail.com" },
+            ].map((role) => (
+              <button
+                key={role.id}
+                type="button"
+                onClick={() => {
+                  setActiveRole(role.id);
+                  form.setFieldValue("email", role.email);
+                  form.setFieldValue("password", "123456");
+                }}
+                className={cn(
+                  "flex-1 py-3 text-xs font-black uppercase tracking-widest rounded-lg transition-all duration-300",
+                  activeRole === role.id
+                    ? "bg-white dark:bg-slate-800 text-primary shadow-sm scale-100"
+                    : "text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 scale-95 opacity-70",
+                )}
+              >
+                {role.label}
+              </button>
+            ))}
           </div>
         </CardHeader>
         <CardContent className="w-full">
