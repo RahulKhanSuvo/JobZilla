@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IPlan } from "@/pages/Admin/plans/planSchema";
 import baseApi from "../hook/baseApi";
+import type { IApiResponse } from "@/types/job";
 
 const planApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,14 +13,14 @@ const planApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["plans"],
     }),
-    getAllPlans: builder.query({
+    getAllPlans: builder.query<IApiResponse<IPlan[]>, void>({
       query: () => ({
         url: "/plans/admin/all-plans",
         method: "GET",
       }),
       providesTags: ["plans"],
     }),
-    getSinglePlan: builder.query({
+    getSinglePlan: builder.query<IApiResponse<IPlan>, string>({
       query: (id) => ({
         url: `/plans/${id}`,
         method: "GET",
