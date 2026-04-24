@@ -8,7 +8,7 @@ import {
   toggleCollapsed,
   toggleMobileOpen,
 } from "@/redux/features/layout/sidebarSlice";
-import { PanelLeft, Search } from "lucide-react";
+import { PanelLeft } from "lucide-react";
 import { Button } from "../ui/button";
 import JobzillaLogo from "../common/JobzillaLogo";
 import { Link } from "react-router";
@@ -37,14 +37,14 @@ export default function DashboardNavbar() {
   ];
 
   return (
-    <nav className="border-b bg-white dark:bg-slate-900 sticky top-0 z-50 transition-all">
-      <header className="flex justify-between h-16 shrink-0 items-center gap-4 px-4">
+    <nav className="border-b bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 transition-all">
+      <header className="flex justify-between h-16 shrink-0 items-center gap-4 px-4 sm:px-6">
         {/* Left Side: Toggle + Logo */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:flex text-slate-500 hover:text-primary"
+            className="hidden md:flex text-slate-500 hover:text-primary hover:bg-primary/5 transition-colors"
             onClick={() => dispatch(toggleCollapsed())}
           >
             <PanelLeft className="size-5" />
@@ -52,35 +52,32 @@ export default function DashboardNavbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-slate-500 hover:text-primary"
+            className="md:hidden text-slate-500 hover:text-primary hover:bg-primary/5 transition-colors"
             onClick={() => dispatch(toggleMobileOpen())}
           >
             <PanelLeft className="size-5" />
           </Button>
-          <Separator
-            orientation="vertical"
-            className="hidden md:block h-6 mx-1"
-          />
-          <Link to="/" className="flex items-center">
-            <JobzillaLogo className="scale-75 origin-left" />
+          <Separator orientation="vertical" className="hidden md:block h-6" />
+          <Link
+            to="/"
+            className="flex items-center transition-opacity hover:opacity-80"
+          >
+            <JobzillaLogo className="scale-[0.85] origin-left" />
           </Link>
         </div>
 
-        {/* Center: Search */}
-        <div className="flex-1 max-w-xl hidden sm:block">
+        {/* Center: Search (Desktop only) */}
+        <div className="flex-1 max-w-xl hidden lg:block px-4">
           <DashboardSearch />
         </div>
 
         {/* Right Side: Actions */}
-        <div className="flex gap-2 items-center">
-          <div className="sm:hidden">
-            <Button variant="ghost" size="icon">
-              <Search className="size-5 text-slate-500" />
-            </Button>
-          </div>
+        <div className="flex gap-1.5 sm:gap-3 items-center">
           <ModeToggle />
           <Notifications />
-          <Separator orientation="vertical" className="h-6 mx-1" />
+          <div className="hidden sm:block">
+            <Separator orientation="vertical" className="h-6" />
+          </div>
           <AvatarDropdown user={user} menu={dropdownMenu} />
         </div>
       </header>
