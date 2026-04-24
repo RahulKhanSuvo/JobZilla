@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import Container from "@/components/common/Container";
 import JobFilters from "./components/JobFilters";
 import JobHeader from "./components/JobHeader";
@@ -21,31 +21,101 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useSearchParams } from "react-router";
 
 export default function FindJob() {
-  const [params, setParams] = useState({ page: 1, limit: 10 });
+  const [searchParams, setSearchParams] = useSearchParams();
   const [layout, setLayout] = useState<"grid" | "list">("list");
+
+  // Initial values from URL or defaults
+  const initialValues = useMemo(() => {
+    const salaryParam = searchParams.get("salary");
+    return {
+      searchTerm: searchParams.get("searchTerm") || "",
+      location: searchParams.get("location") || "all",
+      jobType: searchParams.get("jobType") || "all",
+      salary: salaryParam ? salaryParam.split(",") : [],
+      postedAnytime: searchParams.get("postedAnytime") || "anytime",
+      seniorityLevel: searchParams.get("seniorityLevel") || "all",
+      category: searchParams.get("category") || "all",
+      locationType: searchParams.get("locationType") || "all",
+    };
+  }, [searchParams]);
+
   const form = useForm<JobFilterValues>({
     resolver: zodResolver(jobFilterSchema),
-    defaultValues: {
-      searchTerm: "",
-      location: "all",
-      jobType: "all",
-      salary: [],
-      postedAnytime: "anytime",
-      seniorityLevel: "all",
-      category: "all",
-      locationType: "all",
-    },
-  });
-  const { control } = form;
-
-  // Use useWatch instead of watch() to satisfy the React Compiler
-  const filters = useWatch({
-    control,
+    defaultValues: initialValues,
   });
 
-  const { data, isLoading } = useGetAllJobsQuery({ ...params, ...filters });
+  const { control, reset, getValues } = form;
+  const filters = useWatch({ control });
+  const lastFiltersRef = useRef(filters);
+
+  // Sync form to URL params (Debounced for searchTerm)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const newParams = new URLSearchParams(searchParams);
+      let hasChanges = false;
+
+      Object.entries(filters).forEach(([key, value]) => {
+        const prevValue = searchParams.get(key);
+        const isDefault =
+          value === "all" ||
+          value === "anytime" ||
+          (Array.isArray(value) && value.length === 0) ||
+          !value;
+
+        if (isDefault) {
+          if (prevValue !== null) {
+            newParams.delete(key);
+            hasChanges = true;
+          }
+        } else {
+          const stringValue = Array.isArray(value)
+            ? value.join(",")
+            : String(value);
+          if (prevValue !== stringValue) {
+            newParams.set(key, stringValue);
+            hasChanges = true;
+            newParams.delete("page");
+          }
+        }
+      });
+
+      if (hasChanges) {
+        setSearchParams(newParams, { replace: true });
+      }
+      lastFiltersRef.current = filters;
+    }, 200); // Debounce to allow smooth typing
+
+    return () => clearTimeout(timer);
+  }, [filters, searchParams, setSearchParams]);
+
+  // Sync URL params back to form only if they differ (handles browser back/forward)
+  useEffect(() => {
+    const currentValues = getValues();
+    const isDifferent = Object.keys(initialValues).some((key) => {
+      const k = key as keyof JobFilterValues;
+      const urlValue = initialValues[k];
+      const formValue = currentValues[k];
+
+      if (Array.isArray(urlValue) && Array.isArray(formValue)) {
+        return urlValue.join(",") !== formValue.join(",");
+      }
+      return urlValue !== formValue;
+    });
+
+    if (isDifferent) {
+      reset(initialValues);
+    }
+  }, [initialValues, reset, getValues]);
+
+  const page = Number(searchParams.get("page")) || 1;
+  const { data, isLoading } = useGetAllJobsQuery({
+    ...filters,
+    page,
+    limit: 10,
+  });
   const jobs: PostJobFormData[] = data?.data ?? [];
 
   return (
@@ -94,9 +164,14 @@ export default function FindJob() {
             <JobList layout={layout} jobs={jobs} isLoading={isLoading} />
             {(data?.meta?.totalPages ?? 0) > 1 && (
               <Pagination
-                page={params.page}
+                page={page}
                 totalPage={data?.meta?.totalPages ?? 0}
-                onPageChange={(page) => setParams({ ...params, page })}
+                onPageChange={(newPage) => {
+                  const newParams = new URLSearchParams(searchParams);
+                  if (newPage === 1) newParams.delete("page");
+                  else newParams.set("page", String(newPage));
+                  setSearchParams(newParams);
+                }}
               />
             )}
           </main>
