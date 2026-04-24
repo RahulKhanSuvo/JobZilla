@@ -111,10 +111,23 @@ export default function FindJob() {
   }, [initialValues, reset, getValues]);
 
   const page = Number(searchParams.get("page")) || 1;
+  const sortBy = searchParams.get("sortBy") || "default";
+  const limit = Number(searchParams.get("limit")) || 10;
+
+  // Map UI sort labels to API sort parameters
+  const sortParams = useMemo(() => {
+    if (sortBy === "newest")
+      return { sortBy: "createdAt" as const, sortOrder: "desc" as const };
+    if (sortBy === "salary")
+      return { sortBy: "salaryMax" as const, sortOrder: "desc" as const };
+    return { sortBy: undefined, sortOrder: undefined };
+  }, [sortBy]);
+
   const { data, isLoading } = useGetAllJobsQuery({
     ...filters,
+    ...sortParams,
     page,
-    limit: 10,
+    limit,
   });
   const jobs: PostJobFormData[] = data?.data ?? [];
 
@@ -159,6 +172,20 @@ export default function FindJob() {
                 layout={layout}
                 setLayout={setLayout}
                 total={data?.meta?.total || 0}
+                sortBy={sortBy}
+                setSortBy={(val) => {
+                  const newParams = new URLSearchParams(searchParams);
+                  if (val === "default") newParams.delete("sortBy");
+                  else newParams.set("sortBy", val);
+                  setSearchParams(newParams);
+                }}
+                limit={limit}
+                setLimit={(val) => {
+                  const newParams = new URLSearchParams(searchParams);
+                  if (val === 10) newParams.delete("limit");
+                  else newParams.set("limit", String(val));
+                  setSearchParams(newParams);
+                }}
               />
             </div>
             <JobList layout={layout} jobs={jobs} isLoading={isLoading} />

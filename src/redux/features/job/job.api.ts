@@ -24,6 +24,8 @@ const jobApi = baseApi.injectEndpoints({
         query: ({
           page = 1,
           limit = 10,
+          sortBy,
+          sortOrder,
           searchTerm,
           location,
           jobType,
@@ -38,6 +40,8 @@ const jobApi = baseApi.injectEndpoints({
           params: {
             page,
             limit,
+            sortBy,
+            sortOrder,
             searchTerm,
             location,
             jobType,
