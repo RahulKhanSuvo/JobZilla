@@ -3,24 +3,28 @@ import { useMemo } from "react";
 import { useWatch } from "react-hook-form";
 import type { ProfileFormData } from "../../profileSchema";
 import { calculateProfileCompletion } from "@/utils/profileCompletion";
-import type { CandidateProfileData } from "@/redux/features/auth/auth.type";
+import type { AuthUser } from "@/redux/features/auth/auth.type";
 
 export default function ProfileProgress() {
   const values = useWatch<ProfileFormData>();
 
   const completion = useMemo(() => {
     const mappedData = {
-      fullName: values.fullName,
+      name: values.fullName,
       email: values.email,
       candidate: {
         phone: values.phone,
         location: values.location,
         aboutMe: values.aboutMe,
-        workExperiences: values.experienceList,
-        eductions: values.educationList,
-        skills: values.skills,
+        gender: values.gender,
+        preferredJobType: values.preferredJobType,
+        preferredCareerLevel: values.preferredCareerLevel,
+        preferredCategory: values.preferredCategory,
       },
-    } as unknown as CandidateProfileData;
+      workExperiences: values.experienceList,
+      eductions: values.educationList,
+      skills: values.skills,
+    } as unknown as AuthUser;
 
     const { percentage } = calculateProfileCompletion(mappedData);
     return percentage;

@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useMemo } from "react";
-import { DUMMY_JOBS, type AdminJob, type AdminJobStatus } from "./types";
+import { DUMMY_JOBS, type AdminJob } from "./types";
 import JobStats from "./components/JobStats";
 import JobFilters from "./components/JobFilters";
 import JobTable from "./components/JobTable";
@@ -25,16 +24,11 @@ export default function JobManagePage() {
     });
   }, [jobs, searchQuery, typeFilter, statusFilter]);
 
-  const handleUpdateStatus = (id: string, status: AdminJobStatus) => {
-    setJobs((prev) => prev.map((j) => (j.id === id ? { ...j, status } : j)));
+  const clearFilters = () => {
+    setSearchQuery("");
+    setTypeFilter("all");
+    setStatusFilter("all");
   };
-
-  // Wait, I noticed a typo in my mental draft (should be 'j' not 'u').
-  const handleUpdateStatusCorrected = (id: string, status: AdminJobStatus) => {
-    setJobs((prev) => prev.map((j) => (j.id === id ? { ...j, status } : j)));
-  };
-
-  // Let me rewrite the whole component with correct handlers.
 
   return (
     <div className="space-y-6">
@@ -57,11 +51,7 @@ export default function JobManagePage() {
         setTypeFilter={setTypeFilter}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
-        onClearFilters={() => {
-          setSearchQuery("");
-          setTypeFilter("all");
-          setStatusFilter("all");
-        }}
+        onClearFilters={clearFilters}
       />
 
       <JobTable

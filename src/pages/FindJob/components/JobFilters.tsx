@@ -8,7 +8,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Search, MapPin } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Briefcase,
+  BriefcaseBusiness,
+  Tags,
+} from "lucide-react";
 import { Field } from "@/components/ui/field";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -26,13 +32,13 @@ export default function JobFilters({ form }: JobFiltersProps) {
       {/* Search Company */}
       <Field className="space-y-2">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
-          Search Company
+          Search Jobs
         </label>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
           <Input
             {...register("searchTerm")}
-            placeholder="Job title, key words or company"
+            placeholder="Job title, keywords..."
             className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm focus-visible:ring-emerald-500/20 focus-visible:border-emerald-500 transition-all dark:text-slate-200 border-2"
           />
         </div>
@@ -70,61 +76,105 @@ export default function JobFilters({ form }: JobFiltersProps) {
       </Field>
 
       {/* Job Category */}
-      {/* <Field className="space-y-2">
+      <Field className="space-y-2">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
           Job Category
         </label>
-        <Controller
-          name="category"
-          control={control}
-          render={({ field }) => (
-            <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
-                <SelectValue placeholder="All Categories" />
-              </SelectTrigger>
-              <SelectContent
-                position="popper"
-                className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
-              >
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="design">Design</SelectItem>
-                <SelectItem value="dev">Development</SelectItem>
-                <SelectItem value="marketing">Marketing</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        />
-      </Field> */}
+        <div className="relative">
+          <BriefcaseBusiness className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 z-10" />
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
+                  <SelectValue placeholder="All Categories" />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
+                >
+                  <SelectItem value="all">All Categories</SelectItem>
+                  <SelectItem value="TECHNOLOGY">Technology</SelectItem>
+                  <SelectItem value="DESIGN">Design</SelectItem>
+                  <SelectItem value="MARKETING">Marketing</SelectItem>
+                  <SelectItem value="SALES">Sales</SelectItem>
+                  <SelectItem value="FINANCE">Finance</SelectItem>
+                  <SelectItem value="HR">HR</SelectItem>
+                  <SelectItem value="OPERATIONS">Operations</SelectItem>
+                  <SelectItem value="CUSTOMER_SUPPORT">
+                    Customer Support
+                  </SelectItem>
+                  <SelectItem value="EDUCATION">Education</SelectItem>
+                  <SelectItem value="HEALTHCARE">Healthcare</SelectItem>
+                  <SelectItem value="LEGAL">Legal</SelectItem>
+                  <SelectItem value="OTHER">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+      </Field>
+
+      {/* Job Type */}
+      <Field className="space-y-2">
+        <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
+          Job Type
+        </label>
+        <div className="relative">
+          <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 z-10" />
+          <Controller
+            name="jobType"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
+                  <SelectValue placeholder="All Job Types" />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
+                >
+                  <SelectItem value="all">All Job Types</SelectItem>
+                  <SelectItem value="FULL_TIME">Full Time</SelectItem>
+                  <SelectItem value="PART_TIME">Part Time</SelectItem>
+                  <SelectItem value="CONTRACT">Contract</SelectItem>
+                  <SelectItem value="INTERN">Intern</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+      </Field>
 
       {/* On-Site/Remote */}
       <Field className="space-y-2">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
-          On-Site/Remote
+          Job Location Type
         </label>
-        <Controller
-          name="jobType"
-          control={control}
-          render={({ field }) => (
-            <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger className="h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
-                <SelectValue placeholder="All Types" />
-              </SelectTrigger>
-              <SelectContent
-                position="popper"
-                className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
-              >
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="REMOTE">Remote</SelectItem>
-                <SelectItem value="ON_SITE">On-Site</SelectItem>
-                <SelectItem value="HYBRID">Hybrid</SelectItem>
-                <SelectItem value="FULL_TIME">Full Time</SelectItem>
-                <SelectItem value="PART_TIME">Part Time</SelectItem>
-                <SelectItem value="CONTRACT">Contract</SelectItem>
-                <SelectItem value="INTERN">Intern</SelectItem>
-              </SelectContent>
-            </Select>
-          )}
-        />
+        <div className="relative">
+          <Tags className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 z-10" />
+          <Controller
+            name="locationType"
+            control={control}
+            render={({ field }) => (
+              <Select onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
+                  <SelectValue placeholder="All Location Types" />
+                </SelectTrigger>
+                <SelectContent
+                  position="popper"
+                  className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
+                >
+                  <SelectItem value="all">All Location Types</SelectItem>
+                  <SelectItem value="REMOTE">Remote</SelectItem>
+                  <SelectItem value="ON_SITE">On-Site</SelectItem>
+                  <SelectItem value="HYBRID">Hybrid</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
       </Field>
 
       {/* Salary Range */}
@@ -225,9 +275,10 @@ export default function JobFilters({ form }: JobFiltersProps) {
                 className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
               >
                 <SelectItem value="all">All Levels</SelectItem>
-                <SelectItem value="junior">Junior</SelectItem>
-                <SelectItem value="mid">Mid-Level</SelectItem>
-                <SelectItem value="senior">Senior</SelectItem>
+                <SelectItem value="ENTRY_LEVEL">Entry Level</SelectItem>
+                <SelectItem value="MID_LEVEL">Mid Level</SelectItem>
+                <SelectItem value="SENIOR_LEVEL">Senior Level</SelectItem>
+                <SelectItem value="EXECUTIVE_LEVEL">Executive Level</SelectItem>
               </SelectContent>
             </Select>
           )}

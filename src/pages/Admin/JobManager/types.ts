@@ -2,7 +2,7 @@ import type { IJob } from "@/types/job";
 
 export type AdminJobStatus = "APPROVED" | "PENDING" | "REJECTED" | "EXPIRED";
 
-export interface AdminJob extends IJob {
+export interface AdminJob extends Omit<IJob, "status"> {
   status: AdminJobStatus;
   isFeatured: boolean;
   companyName: string;

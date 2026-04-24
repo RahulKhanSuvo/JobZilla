@@ -34,6 +34,8 @@ export default function FindJob() {
       salary: [],
       postedAnytime: "anytime",
       seniorityLevel: "all",
+      category: "all",
+      locationType: "all",
     },
   });
   const { control } = form;
