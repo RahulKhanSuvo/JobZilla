@@ -26,18 +26,20 @@ const planApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
-    updatePlan: builder.mutation({
+    updatePlan: builder.mutation<any, { id: string; data: Partial<IPlan> }>({
       query: ({ id, data }) => ({
         url: `/plans/${id}`,
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags: ["plans"],
     }),
-    deletePlan: builder.mutation({
+    deletePlan: builder.mutation<any, string>({
       query: (id) => ({
         url: `/plans/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["plans"],
     }),
   }),
 });

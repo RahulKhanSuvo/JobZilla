@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { type Plan, DUMMY_PLANS } from "./types";
 import PlanStats from "./components/PlanStats";
 import PlanTable from "./components/PlanTable";
 import PlanFormModal from "./components/PlanFormModal";
@@ -17,64 +16,78 @@ import { toast } from "sonner";
 import {
   useCreatePlanMutation,
   useGetAllPlansQuery,
+  useUpdatePlanMutation,
+  useDeletePlanMutation,
 } from "@/redux/features/admin/plan.api";
 import type { IPlan } from "./planSchema";
 import { errorToast } from "@/utils/errorToast";
 
 export default function PlansPage() {
-  const [plans, setPlans] = useState<Plan[]>(DUMMY_PLANS);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
-  const { data } = useGetAllPlansQuery(undefined);
-  const [createPlan, { isLoading: cratting }] = useCreatePlanMutation();
-  console.log(data);
+  const [editingPlan, setEditingPlan] = useState<IPlan | null>(null);
+
+  const { data, isLoading: isFetching } = useGetAllPlansQuery(undefined);
+  const [createPlan, { isLoading: isCreating }] = useCreatePlanMutation();
+  const [updatePlan, { isLoading: isUpdating }] = useUpdatePlanMutation();
+  const [deletePlan] = useDeletePlanMutation();
+
   const filteredPlans = useMemo(() => {
-    return plans.filter((plan) => {
+    const allPlans = data?.data || [];
+    return allPlans.filter((plan) => {
       const matchesSearch =
         plan.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        plan.description.toLowerCase().includes(searchQuery.toLowerCase());
+        plan.description?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus =
-        statusFilter === "all" || plan.status === statusFilter;
+        statusFilter === "all" ||
+        (statusFilter === "active" ? plan.isActive : !plan.isActive);
       return matchesSearch && matchesStatus;
     });
-  }, [plans, searchQuery, statusFilter]);
+  }, [data?.data, searchQuery, statusFilter]);
 
-  const handleCreatePlan = async (planData: IPlan) => {
-    console.log(planData);
+  const handleSubmitPlan = async (planData: IPlan) => {
     try {
-      await createPlan(planData).unwrap();
-      toast.success("Plan created successfully");
+      if (editingPlan?.id) {
+        await updatePlan({ id: editingPlan.id, data: planData }).unwrap();
+        toast.success("Plan updated successfully");
+      } else {
+        await createPlan(planData).unwrap();
+        toast.success("Plan created successfully");
+      }
+      setIsModalOpen(false);
+      setEditingPlan(null);
     } catch (error) {
       errorToast(error);
     }
   };
 
-  // const handleUpdatePlan = (planData: Partial<Plan>) => {
-  //   if (!editingPlan) return;
-  //   setPlans((prev) =>
-  //     prev.map((p) => (p.id === editingPlan.id ? { ...p, ...planData } : p)),
-  //   );
-  //   toast.success("Plan updated successfully");
-  // };
-
-  const handleDeletePlan = (id: string) => {
-    if (window.confirm("Are you sure you want to delete this plan?")) {
-      setPlans((prev) => prev.filter((p) => p.id !== id));
-      toast.success("Plan deleted successfully");
+  const handleDeletePlan = async (id: string) => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this plan? This action cannot be undone.",
+      )
+    ) {
+      try {
+        await deletePlan(id).unwrap();
+        toast.success("Plan deleted successfully");
+      } catch (error) {
+        errorToast(error);
+      }
     }
   };
 
-  const handleToggleStatus = (id: string, currentStatus: Plan["status"]) => {
-    const nextStatus = currentStatus === "active" ? "inactive" : "active";
-    setPlans((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, status: nextStatus } : p)),
-    );
-    toast.info(`Plan ${nextStatus === "active" ? "activated" : "deactivated"}`);
+  const handleToggleStatus = async (id: string, currentStatus: boolean) => {
+    try {
+      const nextStatus = !currentStatus;
+      await updatePlan({ id, data: { isActive: nextStatus } }).unwrap();
+      toast.info(`Plan ${nextStatus ? "activated" : "deactivated"}`);
+    } catch (error) {
+      errorToast(error);
+    }
   };
 
-  const handleEditClick = (plan: Plan) => {
+  const handleEditClick = (plan: IPlan) => {
     setEditingPlan(plan);
     setIsModalOpen(true);
   };
@@ -88,6 +101,14 @@ export default function PlansPage() {
     setSearchQuery("");
     setStatusFilter("all");
   };
+
+  if (isFetching) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -110,7 +131,7 @@ export default function PlansPage() {
         </Button>
       </div>
 
-      <PlanStats plans={plans} />
+      <PlanStats plans={data?.data || []} />
 
       <div className="space-y-4">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
@@ -169,9 +190,13 @@ export default function PlansPage() {
       <PlanFormModal
         key={editingPlan?.id || (isModalOpen ? "new" : "closed")}
         isOpen={isModalOpen}
-        isLoading={cratting}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleCreatePlan}
+        isLoading={isCreating || isUpdating}
+        initialData={editingPlan}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingPlan(null);
+        }}
+        onSubmit={handleSubmitPlan}
       />
     </div>
   );

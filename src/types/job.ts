@@ -63,6 +63,8 @@ export interface IJobQueryParams {
   salary?: string[];
   postedAnytime?: string;
   seniorityLevel?: string;
+  category?: string;
+  locationType?: string;
 }
 
 export interface IApiResponse<T> {

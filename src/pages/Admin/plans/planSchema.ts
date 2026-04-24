@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const createPlanSchema = z.object({
+  id: z.string().optional(),
   name: z
     .string()
     .min(1, "Plan name is required")
@@ -64,6 +65,8 @@ const createPlanSchema = z.object({
     .refine((val) => !val || val.startsWith("price_"), {
       message: "Invalid Stripe price ID",
     }),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
 });
 
 export const PlanSchema = {

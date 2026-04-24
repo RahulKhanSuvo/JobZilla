@@ -90,10 +90,10 @@ export default function FindJob() {
               />
             </div>
             <JobList layout={layout} jobs={jobs} isLoading={isLoading} />
-            {(data?.meta?.totalPage ?? 0) > 1 && (
+            {(data?.meta?.totalPages ?? 0) > 1 && (
               <Pagination
                 page={params.page}
-                totalPage={data?.meta?.totalPage ?? 0}
+                totalPage={data?.meta?.totalPages ?? 0}
                 onPageChange={(page) => setParams({ ...params, page })}
               />
             )}

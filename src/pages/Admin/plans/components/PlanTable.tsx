@@ -8,15 +8,15 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Star, Clock, Calendar } from "lucide-react";
-import type { Plan } from "../types";
 import PlanActions from "./PlanActions";
 import { format } from "date-fns";
+import type { IPlan } from "../planSchema";
 
 interface PlanTableProps {
-  plans: Plan[];
-  onEdit: (plan: Plan) => void;
+  plans: IPlan[];
+  onEdit: (plan: IPlan) => void;
   onDelete: (id: string) => void;
-  onToggleStatus: (id: string, currentStatus: Plan["status"]) => void;
+  onToggleStatus: (id: string, currentStatus: boolean) => void;
 }
 
 export default function PlanTable({
@@ -25,9 +25,9 @@ export default function PlanTable({
   onDelete,
   onToggleStatus,
 }: PlanTableProps) {
-  const getStatusBadge = (status: Plan["status"]) => {
+  const getStatusBadge = (status: boolean) => {
     switch (status) {
-      case "active":
+      case true:
         return (
           <Badge
             variant="outline"
@@ -36,7 +36,7 @@ export default function PlanTable({
             Active
           </Badge>
         );
-      case "inactive":
+      case false:
         return (
           <Badge
             variant="outline"
@@ -100,7 +100,7 @@ export default function PlanTable({
                       <span className="font-bold text-slate-900 dark:text-slate-100 leading-tight">
                         {plan.name}
                       </span>
-                      {plan.popular && (
+                      {plan.isHighlight && (
                         <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-950/20 px-1.5 py-0.5 rounded text-[8px] font-black text-amber-600 uppercase border border-amber-100 dark:border-amber-900/30">
                           <Star className="h-2 w-2 fill-amber-600" />
                           Popular
@@ -119,12 +119,12 @@ export default function PlanTable({
                 </TableCell>
                 <TableCell className="py-5 text-center">
                   <div className="flex items-center justify-center gap-1.5 capitalize text-xs font-bold text-slate-600 dark:text-slate-400">
-                    {plan.interval === "monthly" ? (
+                    {plan.billingInterval === "MONTHLY" ? (
                       <Clock className="h-3 w-3" />
                     ) : (
                       <Calendar className="h-3 w-3" />
                     )}
-                    {plan.interval}
+                    {plan.billingInterval}
                   </div>
                 </TableCell>
                 <TableCell className="py-5 text-center">
@@ -133,10 +133,12 @@ export default function PlanTable({
                   </span>
                 </TableCell>
                 <TableCell className="py-5 text-center">
-                  {getStatusBadge(plan.status)}
+                  {getStatusBadge(plan.isActive)}
                 </TableCell>
                 <TableCell className="py-5 text-center text-[11px] font-black text-slate-500">
-                  {format(new Date(plan.createdAt), "MMM dd, yyyy")}
+                  {plan.createdAt
+                    ? format(new Date(plan.createdAt), "MMM dd, yyyy")
+                    : "N/A"}
                 </TableCell>
                 <TableCell className="text-right py-5">
                   <PlanActions

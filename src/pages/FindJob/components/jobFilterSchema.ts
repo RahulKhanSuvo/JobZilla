@@ -7,6 +7,8 @@ export const jobFilterSchema = z.object({
   salary: z.array(z.string()).default([]),
   postedAnytime: z.string().default("anytime"),
   seniorityLevel: z.string().default("all"),
+  category: z.string().default("all"),
+  locationType: z.string().default("all"),
 });
 
 export type JobFilterValues = z.infer<typeof jobFilterSchema>;

@@ -30,6 +30,8 @@ const jobApi = baseApi.injectEndpoints({
           salary,
           postedAnytime,
           seniorityLevel,
+          category,
+          locationType,
         }) => ({
           url: "/jobs",
           method: "GET",
@@ -42,6 +44,8 @@ const jobApi = baseApi.injectEndpoints({
             salary,
             postedAnytime,
             seniorityLevel,
+            category,
+            locationType,
           },
         }),
         providesTags: ["Jobs"],

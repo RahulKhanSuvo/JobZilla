@@ -30,6 +30,7 @@ interface PlanFormModalProps {
   onClose: () => void;
   onSubmit: (plan: IPlan) => void;
   isLoading: boolean;
+  initialData?: IPlan | null;
 }
 
 export default function PlanFormModal({
@@ -37,12 +38,13 @@ export default function PlanFormModal({
   onClose,
   onSubmit,
   isLoading,
+  initialData,
 }: PlanFormModalProps) {
   const [featureInput, setFeatureInput] = useState("");
 
   const form = useForm<IPlan>({
     resolver: zodResolver(PlanSchema.createPlanSchema),
-    defaultValues: {
+    defaultValues: initialData || {
       name: "",
       price: 0,
       billingInterval: "MONTHLY",
@@ -93,7 +95,7 @@ export default function PlanFormModal({
       <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden border-none shadow-2xl rounded-2xl">
         <DialogHeader className="p-6 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
           <DialogTitle className="text-xl font-black uppercase tracking-tighter">
-            Create New Plan
+            {initialData ? "Update Plan" : "Create New Plan"}
           </DialogTitle>
           <DialogDescription className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
             Define a new subscription offering for users.
@@ -448,6 +450,8 @@ export default function PlanFormModal({
           >
             {isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
+            ) : initialData ? (
+              "Update Plan"
             ) : (
               "Create Plan"
             )}

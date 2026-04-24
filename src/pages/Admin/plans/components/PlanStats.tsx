@@ -1,14 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Layers, CheckCircle2, XCircle, TrendingUp } from "lucide-react";
-import type { Plan } from "../types";
+import type { IPlan } from "../planSchema";
 
 interface PlanStatsProps {
-  plans: Plan[];
+  plans: IPlan[];
 }
 
 export default function PlanStats({ plans }: PlanStatsProps) {
   const totalPlans = plans.length;
-  const activePlans = plans.filter((p) => p.status === "active").length;
+  const activePlans = plans.filter((p) => p.isActive).length;
   const inactivePlans = totalPlans - activePlans;
   const mostExpensive = plans.reduce(
     (max, p) => (p.price > max ? p.price : max),
