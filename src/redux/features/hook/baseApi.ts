@@ -57,6 +57,7 @@ const baseApi = createApi({
     "Chat",
     "Notifications",
     "Stats",
+    "plans",
   ],
 });
 export default baseApi;

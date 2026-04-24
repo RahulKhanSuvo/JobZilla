@@ -14,6 +14,12 @@ import PlanStats from "./components/PlanStats";
 import PlanTable from "./components/PlanTable";
 import PlanFormModal from "./components/PlanFormModal";
 import { toast } from "sonner";
+import {
+  useCreatePlanMutation,
+  useGetAllPlansQuery,
+} from "@/redux/features/admin/plan.api";
+import type { IPlan } from "./planSchema";
+import { errorToast } from "@/utils/errorToast";
 
 export default function PlansPage() {
   const [plans, setPlans] = useState<Plan[]>(DUMMY_PLANS);
@@ -21,7 +27,9 @@ export default function PlansPage() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
-
+  const { data } = useGetAllPlansQuery(undefined);
+  const [createPlan, { isLoading: cratting }] = useCreatePlanMutation();
+  console.log(data);
   const filteredPlans = useMemo(() => {
     return plans.filter((plan) => {
       const matchesSearch =
@@ -33,24 +41,23 @@ export default function PlansPage() {
     });
   }, [plans, searchQuery, statusFilter]);
 
-  const handleCreatePlan = (planData: Partial<Plan>) => {
-    const newPlan: Plan = {
-      ...planData,
-      id: `plan_${Date.now()}`,
-      createdAt: new Date().toISOString(),
-    } as Plan;
-
-    setPlans((prev) => [newPlan, ...prev]);
-    toast.success("Plan created successfully");
+  const handleCreatePlan = async (planData: IPlan) => {
+    console.log(planData);
+    try {
+      await createPlan(planData).unwrap();
+      toast.success("Plan created successfully");
+    } catch (error) {
+      errorToast(error);
+    }
   };
 
-  const handleUpdatePlan = (planData: Partial<Plan>) => {
-    if (!editingPlan) return;
-    setPlans((prev) =>
-      prev.map((p) => (p.id === editingPlan.id ? { ...p, ...planData } : p)),
-    );
-    toast.success("Plan updated successfully");
-  };
+  // const handleUpdatePlan = (planData: Partial<Plan>) => {
+  //   if (!editingPlan) return;
+  //   setPlans((prev) =>
+  //     prev.map((p) => (p.id === editingPlan.id ? { ...p, ...planData } : p)),
+  //   );
+  //   toast.success("Plan updated successfully");
+  // };
 
   const handleDeletePlan = (id: string) => {
     if (window.confirm("Are you sure you want to delete this plan?")) {
@@ -162,9 +169,9 @@ export default function PlansPage() {
       <PlanFormModal
         key={editingPlan?.id || (isModalOpen ? "new" : "closed")}
         isOpen={isModalOpen}
+        isLoading={cratting}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={editingPlan ? handleUpdatePlan : handleCreatePlan}
-        plan={editingPlan}
+        onSubmit={handleCreatePlan}
       />
     </div>
   );
