@@ -31,7 +31,7 @@ export function LoginForm({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [activeRole, setActiveRole] = useState("");
+  const [activeRole, setActiveRole] = useState("CANDIDATE");
 
   const form = useForm<LoginFormData, ZodValidator>({
     defaultValues: {
