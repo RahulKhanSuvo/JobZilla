@@ -39,7 +39,7 @@ export default function ResetPassword() {
     try {
       await resetPassword({ token, password: data.password }).unwrap();
       toast.success("Password reset successfully! Please log in.");
-      navigate("/login");
+      navigate("/auth/login");
     } catch (error) {
       errorToast(error);
     }

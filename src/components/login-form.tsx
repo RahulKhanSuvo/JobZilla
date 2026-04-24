@@ -168,9 +168,9 @@ export function LoginForm({
                 </div>
                 <Link
                   className="text-primary font-medium hover:underline"
-                  to={"/forget"}
+                  to={"/auth/forgot-password"}
                 >
-                  Fogot password?
+                  Forgot password?
                 </Link>
               </div>
               <Field className="pt-2">
