@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Menu,
   LayoutDashboard,
@@ -157,6 +158,7 @@ const Navbar = ({
 }: Navbar1Props) => {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const [isOpen, setIsOpen] = useState(false);
   const [logout, { isLoading }] = useUserLogoutMutation();
 
   const handleLogout = async () => {
@@ -166,6 +168,7 @@ const Navbar = ({
       toast.dismiss();
       toast.success("Logout successful");
       dispatch(logOut());
+      setIsOpen(false);
     } catch (error) {
       toast.dismiss();
       errorToast(error);
@@ -256,7 +259,7 @@ const Navbar = ({
                   </Avatar>
                 </Link>
               )}
-              <Sheet>
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <Button variant="outline" size="icon" className="size-9">
                     <Menu className="size-5" />
@@ -268,7 +271,7 @@ const Navbar = ({
                 >
                   <SheetHeader className="p-6 border-b text-left">
                     <SheetTitle className="flex items-center justify-between font-bold">
-                      <Link to={logo.url}>
+                      <Link to={logo.url} onClick={() => setIsOpen(false)}>
                         <JobzillaLogo />
                       </Link>
                     </SheetTitle>
@@ -278,22 +281,30 @@ const Navbar = ({
                     {/* User Profile Section at Top (if logged in) */}
                     {user && (
                       <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800">
-                        <div className="flex items-center gap-4">
-                          <Avatar className="size-12 border-2 border-white dark:border-slate-800 shadow-sm">
+                        <Link
+                          to={
+                            user.role === "EMPLOYER"
+                              ? "/recruiter"
+                              : "/candidate"
+                          }
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-4 group"
+                        >
+                          <Avatar className="size-12 border-2 border-white dark:border-slate-800 shadow-sm group-hover:border-primary transition-all">
                             <AvatarImage src={userImage} alt={user?.name} />
                             <AvatarFallback className="bg-primary text-white font-bold">
                               {userInitial}
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex flex-col min-w-0">
-                            <p className="text-base font-bold text-slate-900 dark:text-white truncate">
+                            <p className="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">
                               {user.name}
                             </p>
                             <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                               {user.email}
                             </p>
                           </div>
-                        </div>
+                        </Link>
                       </div>
                     )}
 
@@ -305,7 +316,9 @@ const Navbar = ({
                           collapsible
                           className="flex w-full flex-col gap-4"
                         >
-                          {menu.map((item) => renderMobileMenuItem(item))}
+                          {menu.map((item) =>
+                            renderMobileMenuItem(item, () => setIsOpen(false)),
+                          )}
                         </Accordion>
 
                         {/* User Specific links (if logged in) */}
@@ -320,6 +333,7 @@ const Navbar = ({
                               <NavLink
                                 key={item.url}
                                 to={item.url}
+                                onClick={() => setIsOpen(false)}
                                 className={({ isActive }) =>
                                   cn(
                                     "text-md font-bold transition-colors hover:text-primary",
@@ -343,12 +357,14 @@ const Navbar = ({
                             asChild
                             variant="outline"
                             className="w-full justify-center h-11"
+                            onClick={() => setIsOpen(false)}
                           >
                             <Link to={auth.login.url}>{auth.login.title}</Link>
                           </Button>
                           <Button
                             asChild
                             className="w-full justify-center h-11"
+                            onClick={() => setIsOpen(false)}
                           >
                             <Link to={auth.signup.url}>
                               {auth.signup.title}
@@ -420,7 +436,7 @@ const renderMenuItem = (item: MenuItem) => {
   );
 };
 
-const renderMobileMenuItem = (item: MenuItem) => {
+const renderMobileMenuItem = (item: MenuItem, onItemClick?: () => void) => {
   if (item.items) {
     return (
       <AccordionItem key={item.title} value={item.title} className="border-b-0">
@@ -432,6 +448,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
             <NavLink
               key={subItem.title}
               to={subItem.url}
+              onClick={onItemClick}
               className={({ isActive }) =>
                 cn(
                   "flex items-center gap-3 p-2 rounded-md transition-colors",
@@ -454,10 +471,11 @@ const renderMobileMenuItem = (item: MenuItem) => {
     <NavLink
       key={item.title}
       to={item.url}
+      onClick={onItemClick}
       className={({ isActive }) =>
         cn(
           "text-md font-bold transition-colors hover:text-primary",
-          isActive ? "text-primary" : "text-slate-900",
+          isActive ? "text-primary" : "text-slate-900 dark:text-white",
         )
       }
     >
