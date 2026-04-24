@@ -51,26 +51,10 @@ export default function JobFilters({ form }: JobFiltersProps) {
         </label>
         <div className="relative">
           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400 z-10 transition-colors" />
-          <Controller
-            name="location"
-            control={control}
-            render={({ field }) => (
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm w-full dark:text-slate-200 border-2">
-                  <SelectValue placeholder="All Location" />
-                </SelectTrigger>
-                <SelectContent
-                  position="popper"
-                  className="dark:bg-slate-900 dark:border-slate-800 dark:text-slate-200"
-                >
-                  <SelectItem value="all">All Location</SelectItem>
-                  <SelectItem value="tokyo">Tokyo, Japan</SelectItem>
-                  <SelectItem value="vegas">Las Vegas, USA</SelectItem>
-                  <SelectItem value="bangladesh">Bangladesh</SelectItem>
-                  <SelectItem value="dhaka">Dhaka, Bangladesh</SelectItem>
-                </SelectContent>
-              </Select>
-            )}
+          <Input
+            {...register("location")}
+            placeholder="City, state, or zip..."
+            className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-none text-sm focus-visible:ring-emerald-500/20 focus-visible:border-emerald-500 transition-all dark:text-slate-200 border-2"
           />
         </div>
       </Field>

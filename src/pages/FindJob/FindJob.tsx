@@ -32,7 +32,7 @@ export default function FindJob() {
     const salaryParam = searchParams.get("salary");
     return {
       searchTerm: searchParams.get("searchTerm") || "",
-      location: searchParams.get("location") || "all",
+      location: searchParams.get("location") || "",
       jobType: searchParams.get("jobType") || "all",
       salary: salaryParam ? salaryParam.split(",") : [],
       postedAnytime: searchParams.get("postedAnytime") || "anytime",
