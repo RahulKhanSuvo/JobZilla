@@ -7,11 +7,20 @@ import { appliedJobColumns } from "./appliedJobColumns";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MapPin, Building2, Eye, FileX2, Calendar } from "lucide-react";
-import { Link } from "react-router";
+import {
+  MapPin,
+  Building2,
+  Eye,
+  FileX2,
+  Calendar,
+  ArrowLeft,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
 
 function AppliedJob() {
   const { data: response, isLoading } = useGetCandidateAppliedJobsQuery();
+  const navigate = useNavigate();
 
   const applications = response?.data || [];
 
@@ -28,8 +37,18 @@ function AppliedJob() {
   return (
     <div className="space-y-6">
       <div className="mb-2">
-        <DashboardTitle>Applied Jobs</DashboardTitle>
-        <p className="text-sm text-muted-foreground mt-1 ml-4">
+        <div className="flex items-center gap-4 mb-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+          </Button>
+          <DashboardTitle>Applied Jobs</DashboardTitle>
+        </div>
+        <p className="text-sm text-muted-foreground ml-14">
           Track and manage your recent job applications
         </p>
       </div>
