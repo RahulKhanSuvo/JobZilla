@@ -14,7 +14,7 @@ export default function ProfileDetails({ user, onClose }: ProfileDetailsProps) {
       : `/recruiter/applicants/${user.id}`;
 
   return (
-    <div className="w-80 h-full bg-white border-l border-gray-200 flex flex-col animate-in slide-in-from-right duration-300">
+    <div className="w-full max-w-xs md:w-80 h-full bg-white border-l border-gray-200 flex flex-col animate-in slide-in-from-right duration-300">
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         <h2 className="font-semibold text-gray-900">Contact Info</h2>
         <button

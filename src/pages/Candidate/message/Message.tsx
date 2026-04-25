@@ -154,10 +154,10 @@ export default function Message() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-150px)] overflow-hidden bg-gray-50 border border-gray-200">
+    <div className="flex h-[calc(100vh-100px)] md:h-[calc(100vh-150px)] overflow-hidden bg-gray-50 border-x border-b border-gray-200 rounded-b-xl relative">
       {/* Sidebar - hidden on mobile if a conversation is active */}
       <div
-        className={`w-full md:w-auto h-full absolute inset-0 md:static transition-transform duration-300 z-10 ${
+        className={`w-full md:w-80 lg:w-96 h-full absolute inset-0 md:static transition-transform duration-300 ease-in-out z-20 md:z-auto bg-white ${
           id ? "-translate-x-full md:translate-x-0" : "translate-x-0"
         }`}
       >
@@ -171,7 +171,7 @@ export default function Message() {
 
       {/* Chat Area - hidden on mobile if NO conversation is active */}
       <div
-        className={`flex-1 h-full w-full absolute inset-0 md:static transition-transform duration-300 z-20 md:z-auto ${
+        className={`flex-1 h-full w-full absolute inset-0 md:static transition-transform duration-300 ease-in-out z-10 md:z-auto ${
           id ? "translate-x-0" : "translate-x-full md:translate-x-0"
         }`}
       >

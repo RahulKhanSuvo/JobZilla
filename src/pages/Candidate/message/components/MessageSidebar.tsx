@@ -15,7 +15,7 @@ export default function MessageSidebar({
   isLoading = false,
 }: MessageSidebarProps) {
   return (
-    <div className="flex flex-col h-full bg-white border-r border-gray-200 w-full md:w-80 lg:w-96 shrink-0">
+    <div className="flex flex-col h-full bg-white border-r border-gray-200 w-full">
       <div className="p-4 border-b border-gray-200">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">Messages</h2>
         <div className="relative">

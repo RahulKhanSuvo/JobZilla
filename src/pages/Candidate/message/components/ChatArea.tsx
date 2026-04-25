@@ -61,33 +61,33 @@ export default function ChatArea({
   return (
     <div className="flex flex-col flex-1 h-full bg-white relative">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
-        <div className="flex items-center">
+      <div className="flex items-center justify-between p-3 md:p-4 border-b border-gray-200 bg-white shrink-0">
+        <div className="flex items-center min-w-0">
           <button
             onClick={onBack}
-            className="md:hidden mr-3 p-2 -ml-2 rounded-full hover:bg-gray-100 text-gray-600 aspect-square"
+            className="md:hidden mr-2 p-2 -ml-1 rounded-full hover:bg-gray-100 text-gray-600 aspect-square"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div
-            className="flex items-center cursor-pointer group"
+            className="flex items-center cursor-pointer group min-w-0"
             onClick={onToggleProfile}
           >
-            <div className="relative">
+            <div className="relative shrink-0">
               <img
                 src={conversation.participant.avatar}
                 alt={conversation.participant.name}
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-primary/20 transition-all"
+                className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-primary/20 transition-all"
               />
               {conversation.participant.status === "online" && (
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
               )}
             </div>
-            <div className="ml-3 text-left">
-              <h3 className="font-semibold text-gray-900 leading-tight group-hover:text-primary transition-colors">
+            <div className="ml-2 md:ml-3 text-left min-w-0">
+              <h3 className="font-semibold text-gray-900 leading-tight group-hover:text-primary transition-colors truncate text-sm md:text-base">
                 {conversation.participant.name}
               </h3>
-              <p className="text-xs text-gray-500">
+              <p className="text-[10px] md:text-xs text-gray-500 truncate">
                 {conversation.participant.role}{" "}
                 {conversation.participant.status === "online" ? "• Online" : ""}
               </p>
@@ -106,18 +106,18 @@ export default function ChatArea({
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 flex flex-col">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-4 bg-gray-50 flex flex-col">
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className={`flex max-w-[70%] animate-pulse ${i % 2 === 0 ? "self-start" : "self-end"}`}
+                className={`flex max-w-[85%] md:max-w-[70%] animate-pulse ${i % 2 === 0 ? "self-start" : "self-end"}`}
               >
                 {i % 2 === 0 && (
                   <div className="w-8 h-8 rounded-full bg-gray-200 mr-2 self-end mb-1"></div>
                 )}
                 <div
-                  className={`h-12 w-48 rounded-2xl ${i % 2 === 0 ? "bg-gray-200 rounded-bl-sm" : "bg-blue-100 rounded-br-sm"}`}
+                  className={`h-10 md:h-12 w-32 md:w-48 rounded-2xl ${i % 2 === 0 ? "bg-gray-200 rounded-bl-sm" : "bg-blue-100 rounded-br-sm"}`}
                 ></div>
               </div>
             ))
@@ -126,17 +126,17 @@ export default function ChatArea({
               return (
                 <div
                   key={msg.id}
-                  className={`flex max-w-[80%] ${isMe ? "self-end" : "self-start"}`}
+                  className={`flex max-w-[90%] md:max-w-[80%] ${isMe ? "self-end" : "self-start"}`}
                 >
                   {!isMe && (
                     <img
                       src={conversation.participant.avatar}
                       alt="avatar"
-                      className="w-8 h-8 rounded-full object-cover mr-2 self-end mb-1"
+                      className="w-7 h-7 md:w-8 md:h-8 rounded-full object-cover mr-2 self-end mb-1"
                     />
                   )}
                   <div
-                    className={`relative px-4 py-2.5 shadow-sm ${
+                    className={`relative px-3 py-2 md:px-4 md:py-2.5 shadow-sm ${
                       isMe
                         ? "bg-primary text-white rounded-2xl rounded-br-sm"
                         : "bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-bl-sm"
@@ -144,7 +144,7 @@ export default function ChatArea({
                   >
                     <p className="text-sm">{msg.text}</p>
                     <div
-                      className={`text-[10px] mt-1 text-right ${
+                      className={`text-[9px] md:text-[10px] mt-1 text-right ${
                         isMe ? "text-blue-100" : "text-gray-400"
                       }`}
                     >
