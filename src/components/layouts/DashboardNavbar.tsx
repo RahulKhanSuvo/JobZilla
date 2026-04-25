@@ -66,10 +66,12 @@ export default function DashboardNavbar() {
           </Link>
         </div>
 
-        {/* Center: Search (Desktop only) */}
-        <div className="flex-1 max-w-xl hidden lg:block px-4">
-          <DashboardSearch />
-        </div>
+        {/* Center: Search (Desktop only, Candidate only) */}
+        {user?.role === "CANDIDATE" && (
+          <div className="flex-1 max-w-xl hidden lg:block px-4">
+            <DashboardSearch />
+          </div>
+        )}
 
         {/* Right Side: Actions */}
         <div className="flex gap-1.5 sm:gap-3 items-center">
