@@ -25,7 +25,11 @@ const socketMiddleware: Middleware = (store) => (next) => (action) => {
   const isSendingMessage = sendMessage.match(action);
 
   if (isStartConnecting && !socket) {
-    socket = io(import.meta.env.VITE_API_URL || "http://localhost:5000", {
+    const apiBaseUrl =
+      import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+    const socketUrl = apiBaseUrl.replace("/api/v1", "");
+
+    socket = io(socketUrl, {
       withCredentials: true,
       autoConnect: true,
     });
