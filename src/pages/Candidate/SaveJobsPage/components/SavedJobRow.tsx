@@ -1,10 +1,4 @@
-import { MoreHorizontal, MapPin, Eye, Trash2 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Eye, Trash2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -52,10 +46,10 @@ export default function SavedJobRow({
   onRemove,
 }: SavedJobRowProps) {
   return (
-    <div className="grid grid-cols-[1fr_150px_200px_80px] items-center py-4 border-b border-gray-100 dark:border-slate-800 last:border-0 hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors px-4">
+    <div className="flex flex-col md:grid md:grid-cols-[1fr_150px_200px_80px] md:items-center py-6 md:py-4 border-b border-gray-100 dark:border-slate-800 last:border-0 hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors px-4 gap-4 md:gap-0 relative">
       {/* Job Info */}
       <div className="flex items-center gap-4">
-        <div className="size-12 rounded-lg bg-gray-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 border border-gray-50 dark:border-slate-700">
+        <div className="size-14 md:size-12 rounded-xl md:rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-slate-700 shadow-sm md:shadow-none">
           {job.logo ? (
             <img
               src={job.logo}
@@ -68,62 +62,71 @@ export default function SavedJobRow({
             </div>
           )}
         </div>
-        <div className="flex flex-col">
-          <h4 className="font-semibold text-gray-900 dark:text-white hover:text-primary transition-colors cursor-pointer">
+        <div className="flex flex-col min-w-0">
+          <h4
+            onClick={() => onView(job.id)}
+            className="font-bold text-gray-900 dark:text-white hover:text-primary transition-colors cursor-pointer truncate text-lg md:text-base"
+          >
             {job.title}
           </h4>
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-            <MapPin className="size-3.5" />
-            <span>{job.company}</span>
-            <span className="text-gray-300 dark:text-gray-600">•</span>
-            <span>{job.postedAt}</span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-1.5 font-medium">
+              <MapPin className="size-3.5" />
+              <span className="truncate">{job.company}</span>
+            </div>
+            <span className="hidden md:inline text-gray-300 dark:text-gray-600">
+              •
+            </span>
+            <span className="font-medium">{job.postedAt}</span>
           </div>
         </div>
       </div>
 
-      {/* Category */}
-      <div>
+      {/* Category - and Date - Flex on mobile */}
+      <div className="flex items-center justify-between md:block px-1 md:px-0 mt-2 md:mt-0">
         <span
           className={cn(
-            "px-3 py-1 rounded-full text-xs font-medium",
+            "px-3 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider",
             categoryStyles[job.category],
           )}
         >
           {job.category}
         </span>
+
+        {/* Date Posted (Visible only on mobile inside this flex) */}
+        <div className="md:hidden text-xs font-medium text-gray-400">
+          {job.datePosted}
+        </div>
       </div>
 
-      {/* Date Posted */}
-      <div className="text-sm text-gray-600 dark:text-gray-400">
+      {/* Date Posted (Visible only on Desktop) */}
+      <div className="hidden md:block text-sm font-medium text-gray-600 dark:text-gray-400">
         {job.datePosted}
       </div>
 
       {/* Action */}
-      <div className="flex justify-end">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-8 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-            >
-              <MoreHorizontal className="size-5" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-40">
-            <DropdownMenuItem onClick={() => onView(job.id)} className="gap-2">
-              <Eye className="size-4" />
-              <span>View Job</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => onRemove(job.id)}
-              className="gap-2 text-destructive focus:text-destructive"
-            >
-              <Trash2 className="size-4" />
-              <span>Remove Job</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onView(job.id)}
+          className="h-8 px-2 md:px-3 text-gray-500 hover:text-primary hover:bg-primary/5 transition-all gap-1.5 font-semibold group/view"
+          title="View Job"
+        >
+          <Eye className="size-4 group-hover/view:scale-110 transition-transform" />
+          <span className="hidden lg:inline text-xs">View</span>
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onRemove(job.id)}
+          className="h-8 px-2 md:px-3 text-gray-400 hover:text-destructive hover:bg-destructive/5 transition-all gap-1.5 font-semibold group/remove"
+          title="Remove Job"
+        >
+          <Trash2 className="size-4 group-hover/remove:scale-110 transition-transform" />
+          <span className="hidden lg:inline text-xs">Remove</span>
+        </Button>
       </div>
     </div>
   );
