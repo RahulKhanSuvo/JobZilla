@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { errorToast } from "@/utils/errorToast";
 import { JobCardSkeleton } from "@/components/Skeleton/JobCardSkeleton";
+import { Button } from "@/components/ui/button";
 
 export default function FeaturedJobs() {
   const { data: jobs, isLoading } = useGetAllJobsQuery({
@@ -45,13 +46,17 @@ export default function FeaturedJobs() {
               />
             ))}
       </div>
-      <div className="text-center mt-12">
-        <Link to="/find-job" className="text-center">
-          <button className="inline-flex cursor-pointer items-center gap-2 px-8 py-3.5 bg-white dark:bg-slate-900 border-2 border-emerald-500/20 dark:border-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-black hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-white transition-all duration-300 group active:scale-95">
+      <div className="mt-12 flex justify-center">
+        <Button
+          asChild
+          variant={"outline"}
+          className="group text-primary border-primary hover:bg-primary hover:text-white"
+        >
+          <Link to="/find-job">
             See More Jobs
-            <MoveRight className="size-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </Link>
+            <MoveRight className="size-5 group-hover:translate-x-1 transition-transform group-hover:text-white" />
+          </Link>
+        </Button>
       </div>
     </Container>
   );

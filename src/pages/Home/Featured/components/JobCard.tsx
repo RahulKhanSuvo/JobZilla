@@ -42,7 +42,7 @@ export default function JobCard({
                 className="size-full object-contain rounded-lg"
               />
             </div>
-            <div className="overflow-hidden">
+            <div className="overflow-hidden pr-10 md:pr-0">
               <p className="font-medium text-primary dark:text-primary  cursor-pointer transition-all">
                 {job.user?.name}
               </p>
