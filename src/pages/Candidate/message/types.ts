@@ -1,5 +1,6 @@
 export interface User {
   id: string;
+  profileId: string;
   name: string;
   avatar: string;
   role: string;

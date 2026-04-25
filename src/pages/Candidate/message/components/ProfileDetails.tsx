@@ -10,8 +10,8 @@ interface ProfileDetailsProps {
 export default function ProfileDetails({ user, onClose }: ProfileDetailsProps) {
   const profileLink =
     user.role === "Recruiter"
-      ? `/candidate/followed-companies/${user.id}` // Dynamic link based on role
-      : `/recruiter/applicants/${user.id}`;
+      ? `/candidate/followed-companies/${user.profileId}`
+      : `/recruiter/applicants/${user.profileId}`;
 
   return (
     <div className="w-full max-w-xs md:w-80 h-full bg-white border-l border-gray-200 flex flex-col animate-in slide-in-from-right duration-300">

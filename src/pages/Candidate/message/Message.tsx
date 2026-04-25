@@ -21,11 +21,13 @@ interface DbParticipant {
   name: string;
   role: string;
   candidate?: {
+    id: string;
     avatar: string | null;
     aboutMe: string | null;
     location: string | null;
   };
   company?: {
+    id: string;
     logo: string | null;
     description: string | null;
     location: string | null;
@@ -96,6 +98,11 @@ export default function Message() {
       participantData.candidate?.aboutMe ||
       participantData.company?.description;
 
+    const profileId =
+      participantData.candidate?.id ||
+      participantData.company?.id ||
+      participantData.id;
+
     return {
       id: conv.id,
       timestamp: new Date(conv.updatedAt).toLocaleTimeString([], {
@@ -106,7 +113,12 @@ export default function Message() {
       unreadCount: 0,
       participant: {
         id: participantData.id,
+        profileId: profileId,
         name: participantData.name,
+        companyName:
+          participantData.role === "EMPLOYER"
+            ? participantData.name
+            : undefined, // Or get it from company object if available
         avatar: avatar,
         status: "offline" as const,
         role: participantData.role === "EMPLOYER" ? "Recruiter" : "Candidate",
