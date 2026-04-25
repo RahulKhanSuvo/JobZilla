@@ -86,6 +86,12 @@ export const chatSlice = createSlice({
         ? action.payload.conversationId
         : null;
     },
+    markMessagesAsRead: (
+      _state,
+      _action: PayloadAction<{ conversationId: string }>,
+    ) => {
+      // Caught by middleware to emit socket event
+    },
   },
 });
 
@@ -101,6 +107,7 @@ export const {
   receiveMessage,
   startTyping,
   setTyping,
+  markMessagesAsRead,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

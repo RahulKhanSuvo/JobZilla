@@ -11,6 +11,7 @@ import {
   setActiveConversation,
   setTyping,
   startTyping,
+  markMessagesAsRead,
 } from "../features/chat/chatSlice";
 import type { ChatMessage } from "../features/chat/chatSlice";
 import { chatApi } from "../features/chat/chat.api";
@@ -53,6 +54,23 @@ const socketMiddleware: Middleware = (store) => (next) => (action) => {
 
     socket.on("new_message", (message: ChatMessage) => {
       store.dispatch(receiveMessage(message));
+
+      const state = store.getState();
+      if (
+        state.chat.activeConversation === message.conversationId &&
+        message.senderId !== state.auth?.user?.id
+      ) {
+        socket?.emit("mark_as_read", {
+          conversationId: message.conversationId,
+          userId: state.auth?.user?.id,
+        });
+
+        // Also invalidate the chat list to update badge
+        (store.dispatch as AppDispatch)(
+          chatApi.util.invalidateTags([{ type: "Chat" }]),
+        );
+      }
+
       (store.dispatch as AppDispatch)(
         chatApi.util.updateQueryData(
           "getMessages",
@@ -133,6 +151,15 @@ const socketMiddleware: Middleware = (store) => (next) => (action) => {
     socket.emit("typing", {
       conversationId: action.payload.conversationId,
       senderId,
+    });
+  }
+
+  if (markMessagesAsRead.match(action) && socket) {
+    const state = store.getState();
+    const userId = state.auth?.user?.id;
+    socket.emit("mark_as_read", {
+      conversationId: action.payload.conversationId,
+      userId,
     });
   }
 

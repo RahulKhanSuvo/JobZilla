@@ -29,6 +29,13 @@ export const chatApi = basApi.injectEndpoints({
       }),
       invalidatesTags: ["Chat"],
     }),
+    markAsRead: builder.mutation<IApiResponse<void>, string>({
+      query: (conversationId: string) => ({
+        url: `/chat/conversations/${conversationId}/read`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Chat"],
+    }),
   }),
 });
 
@@ -36,4 +43,5 @@ export const {
   useGetConversationsQuery,
   useGetMessagesQuery,
   useStartConversationMutation,
+  useMarkAsReadMutation,
 } = chatApi;

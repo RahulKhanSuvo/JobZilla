@@ -7,12 +7,14 @@ import ProfileDetails from "./components/ProfileDetails";
 import {
   useGetConversationsQuery,
   useGetMessagesQuery,
+  useMarkAsReadMutation,
 } from "@/redux/features/chat/chat.api";
 import {
   startConnecting,
   sendMessage,
   setActiveConversation,
   startTyping,
+  markMessagesAsRead,
 } from "@/redux/features/chat/chatSlice";
 import type { RootState } from "@/redux/store";
 import type {
@@ -50,8 +52,15 @@ export default function Message() {
     useGetConversationsQuery(undefined);
   const { data: messagesResponse, isLoading: isLoadingMessages } =
     useGetMessagesQuery(id!, { skip: !id });
+  const [markAsRead] = useMarkAsReadMutation();
 
-  // Transform backend conversation schema to what UI expects temporarily
+  // Mark as read when conversation is active
+  useEffect(() => {
+    if (id) {
+      markAsRead(id);
+      dispatch(markMessagesAsRead({ conversationId: id }));
+    }
+  }, [id, markAsRead, dispatch]);
   const dbConversations: ChatConversation[] = conversationsResponse?.data || [];
   const mappedConversations = dbConversations.map((conv) => {
     const isUserA = conv.participantA === user?.id;
@@ -79,7 +88,7 @@ export default function Message() {
         minute: "2-digit",
       }),
       lastMessage: conv.messages?.[0]?.content || "Started conversation",
-      unreadCount: 0,
+      unreadCount: conv._count?.messages || 0,
       participant: {
         id: participantData.id,
         profileId: profileId,
