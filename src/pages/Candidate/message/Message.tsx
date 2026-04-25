@@ -15,42 +15,11 @@ import {
   startTyping,
 } from "@/redux/features/chat/chatSlice";
 import type { RootState } from "@/redux/store";
-
-interface DbParticipant {
-  id: string;
-  name: string;
-  role: string;
-  candidate?: {
-    id: string;
-    avatar: string | null;
-    aboutMe: string | null;
-    location: string | null;
-  };
-  company?: {
-    id: string;
-    logo: string | null;
-    description: string | null;
-    location: string | null;
-  };
-}
-
-interface DbConversation {
-  id: string;
-  participantA: string;
-  participantB: string;
-  userA: DbParticipant;
-  userB: DbParticipant;
-  updatedAt: string;
-  messages?: { content: string }[];
-}
-
-interface DbMessage {
-  id: string;
-  senderId: string;
-  content: string;
-  createdAt: string;
-  isRead: boolean;
-}
+import type {
+  ChatParticipant,
+  ChatConversation,
+  ChatMessage as DbMessage,
+} from "@/types/chat";
 
 export default function Message() {
   const { id } = useParams();
@@ -83,10 +52,10 @@ export default function Message() {
     useGetMessagesQuery(id!, { skip: !id });
 
   // Transform backend conversation schema to what UI expects temporarily
-  const dbConversations: DbConversation[] = conversationsResponse?.data || [];
+  const dbConversations: ChatConversation[] = conversationsResponse?.data || [];
   const mappedConversations = dbConversations.map((conv) => {
     const isUserA = conv.participantA === user?.id;
-    const participantData = isUserA ? conv.userB : conv.userA;
+    const participantData: ChatParticipant = isUserA ? conv.userB : conv.userA;
 
     const avatar =
       participantData.candidate?.avatar ||

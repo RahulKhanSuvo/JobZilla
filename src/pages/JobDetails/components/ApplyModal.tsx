@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import {
   Dialog,
@@ -18,7 +17,10 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useGetResumesQuery } from "@/redux/features/candidate/resume.api";
+import {
+  type IResume,
+  useGetResumesQuery,
+} from "@/redux/features/candidate/resume.api";
 import { toast } from "sonner";
 import { FileText, Upload, Loader2, Send } from "lucide-react";
 import { errorToast } from "@/utils/errorToast";
@@ -106,7 +108,7 @@ export default function ApplyModal({
                 />
               </SelectTrigger>
               <SelectContent>
-                {resumes.map((resume: any) => (
+                {resumes.map((resume: IResume) => (
                   <SelectItem key={resume.id} value={resume.id}>
                     {resume.title} {resume.isPrimary && "(Primary)"}
                   </SelectItem>
