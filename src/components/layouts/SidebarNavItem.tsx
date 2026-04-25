@@ -9,6 +9,7 @@ interface SidebarNavItemProps {
   icon?: LucideIcon | IconType;
   isCollapsed?: boolean;
   onClick?: () => void;
+  badge?: number;
 }
 
 export default function SidebarNavItem({
@@ -17,6 +18,7 @@ export default function SidebarNavItem({
   icon: Icon,
   isCollapsed,
   onClick,
+  badge,
 }: SidebarNavItemProps) {
   return (
     <NavLink
@@ -24,7 +26,7 @@ export default function SidebarNavItem({
       onClick={onClick}
       className={({ isActive }) =>
         cn(
-          "flex items-center group text-base font-semibold py-3.5 rounded transition-all duration-300",
+          "flex items-center group text-base font-semibold py-3.5 rounded transition-all duration-300 relative",
           isCollapsed ? "justify-center px-0" : "gap-2.5 px-3.5",
           isActive
             ? "bg-[#F5F5F5] dark:bg-slate-800 dark:text-white"
@@ -34,20 +36,34 @@ export default function SidebarNavItem({
     >
       {({ isActive }) => (
         <>
-          {Icon && (
-            <Icon
-              className={cn(
-                "size-6 group-hover:text-primary transition-colors duration-300",
-                isActive
-                  ? "text-primary dark:text-primary"
-                  : "text-[#64666c] dark:text-gray-400",
-              )}
-            />
-          )}
+          <div className="relative">
+            {Icon && (
+              <Icon
+                className={cn(
+                  "size-6 group-hover:text-primary transition-colors duration-300",
+                  isActive
+                    ? "text-primary dark:text-primary"
+                    : "text-[#64666c] dark:text-gray-400",
+                )}
+              />
+            )}
+            {isCollapsed && badge && badge > 0 && (
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold ring-2 ring-white dark:ring-slate-900 animate-in zoom-in duration-300">
+                {badge > 9 ? "9+" : badge}
+              </span>
+            )}
+          </div>
           {!isCollapsed && (
-            <span className="whitespace-nowrap transition-opacity duration-150 overflow-hidden">
-              {title}
-            </span>
+            <div className="flex flex-1 items-center justify-between min-w-0">
+              <span className="whitespace-nowrap transition-opacity duration-150 overflow-hidden truncate">
+                {title}
+              </span>
+              {badge && badge > 0 && (
+                <span className="flex h-5 px-1.5 min-w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold animate-in zoom-in duration-300">
+                  {badge > 99 ? "99+" : badge}
+                </span>
+              )}
+            </div>
           )}
         </>
       )}

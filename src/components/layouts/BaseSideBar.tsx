@@ -18,6 +18,7 @@ interface SidebarItem {
   title: string;
   href: string;
   icon?: LucideIcon | IconType;
+  badge?: number;
 }
 
 interface BaseSideBarProps {

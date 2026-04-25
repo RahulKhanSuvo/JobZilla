@@ -24,6 +24,9 @@ export interface ChatConversation {
   userB: ChatParticipant;
   updatedAt: string;
   messages?: { content: string }[];
+  _count?: {
+    messages: number;
+  };
 }
 
 export interface ChatMessage {
