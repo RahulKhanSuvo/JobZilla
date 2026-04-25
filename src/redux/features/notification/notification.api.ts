@@ -9,28 +9,28 @@ export const notificationApi = baseApi.injectEndpoints({
       void
     >({
       query: () => "notifications",
-      providesTags: ["Notifications"],
+      providesTags: ["Notifications", "User"],
     }),
     markAsRead: builder.mutation<IApiResponse<NotificationItem>, string>({
       query: (id) => ({
         url: `notifications/${id}/read`,
         method: "PATCH",
       }),
-      invalidatesTags: ["Notifications"],
+      invalidatesTags: ["Notifications", "User"],
     }),
     markAllAsRead: builder.mutation<IApiResponse<void>, void>({
       query: () => ({
         url: "notifications/read-all",
         method: "PATCH",
       }),
-      invalidatesTags: ["Notifications"],
+      invalidatesTags: ["Notifications", "User"],
     }),
     deleteNotification: builder.mutation<IApiResponse<void>, string>({
       query: (id) => ({
         url: `notifications/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Notifications"],
+      invalidatesTags: ["Notifications", "User"],
     }),
   }),
 });
