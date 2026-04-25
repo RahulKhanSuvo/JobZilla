@@ -1,4 +1,4 @@
-import { Footer } from "@/components/layouts/Footer";
+import Footer from "@/components/layouts/Footer";
 import { Navbar } from "@/components/layouts/NavBar/Navbar";
 import { Outlet, ScrollRestoration } from "react-router";
 

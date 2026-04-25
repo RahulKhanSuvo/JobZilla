@@ -35,8 +35,8 @@ export function LoginForm({
 
   const form = useForm<LoginFormData, ZodValidator>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "candidate@gmail.com",
+      password: "123456",
     },
     validatorAdapter: zodValidator(),
     validators: {
