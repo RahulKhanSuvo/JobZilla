@@ -76,7 +76,7 @@ export default function CompanyPublicProfile() {
               <div className="flex flex-col md:flex-row gap-6">
                 {/* Logo container - Absolute on desktop/mobile for consistent overlap */}
                 <div className="absolute -top-12 md:-top-20 left-6 md:left-8">
-                  <div className="w-24 h-24 md:w-40 md:h-40 rounded border-4 border-white dark:border-slate-800 shadow-2xl overflow-hidden bg-white dark:bg-slate-900 p-1">
+                  <div className="w-24 h-24 md:w-40 md:h-40 rounded border-4 border-white dark:border-slate-800 shadow overflow-hidden bg-white dark:bg-slate-900 p-1">
                     <img
                       src={company.logo || "/placeholder-company.png"}
                       className="w-full h-full object-contain rounded"
@@ -134,9 +134,12 @@ export default function CompanyPublicProfile() {
               <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 border-b border-slate-100 dark:border-slate-800 pb-4">
                 About Company
               </h2>
-              <div className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 leading-relaxed">
-                {company.description || "No description provided."}
-              </div>
+              <div
+                className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 leading-relaxed"
+                dangerouslySetInnerHTML={{
+                  __html: company.description || "No description provided.",
+                }}
+              />
             </div>
 
             <div className="space-y-6">
