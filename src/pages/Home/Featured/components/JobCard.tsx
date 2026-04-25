@@ -39,7 +39,7 @@ export default function JobCard({
               <img
                 src={job.user?.company?.logo}
                 alt={job.user?.name}
-                className="size-full object-contain"
+                className="size-full object-contain rounded-lg"
               />
             </div>
             <div className="overflow-hidden">
