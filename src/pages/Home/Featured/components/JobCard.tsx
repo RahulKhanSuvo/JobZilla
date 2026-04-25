@@ -1,4 +1,4 @@
-import { MapPin, Clock, Star } from "lucide-react";
+import { MapPin, Clock, Star, Loader2 } from "lucide-react";
 import CommonWrapper from "@/components/common/CommonWrapper";
 import { IoHeart } from "react-icons/io5";
 import { Link } from "react-router";
@@ -28,7 +28,7 @@ export default function JobCard({
           className={`absolute top-6 right-6 p-2 cursor-pointer rounded-full border dark:bg-slate-950  hover:text-red-500 dark:hover:text-red-400 transition-colors z-10 ${job.isSaved ? "text-red-500" : "text-slate-400 dark:text-slate-500"}`}
         >
           {isSaving ? (
-            <div className="w-5 h-5 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+            <Loader2 className="size-5 animate-spin" />
           ) : (
             <IoHeart className="size-5" />
           )}
