@@ -15,6 +15,7 @@ import { IoHeart } from "react-icons/io5";
 import { errorToast } from "@/utils/errorToast";
 import ApplyModal from "./ApplyModal";
 import IncompleteProfileModal from "./IncompleteProfileModal";
+import ShareModal from "@/components/common/ShareModal";
 import { useSaveJobMutation } from "@/redux/features/job/job.api";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useSelector } from "react-redux";
@@ -32,6 +33,7 @@ interface JobHeaderProps {
 export default function JobHeader({ job }: JobHeaderProps) {
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isIncompleteModalOpen, setIsIncompleteModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [profileChecks, setProfileChecks] = useState<CompletionCheck[]>([]);
   const [saveJob] = useSaveJobMutation();
   const navigate = useNavigate();
@@ -128,6 +130,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
             <Button
               variant="outline"
               size="icon"
+              onClick={() => setIsShareModalOpen(true)}
               className="size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-500 transition-all active:scale-95"
             >
               <Share2 className="size-5" />
@@ -193,6 +196,13 @@ export default function JobHeader({ job }: JobHeaderProps) {
         isOpen={isIncompleteModalOpen}
         onClose={() => setIsIncompleteModalOpen(false)}
         checks={profileChecks}
+      />
+
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        jobTitle={job.title}
+        url={window.location.href}
       />
     </div>
   );

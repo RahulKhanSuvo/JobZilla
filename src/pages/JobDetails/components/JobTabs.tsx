@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const tabs = [
   { id: "about", label: "About" },
-  { id: "jobs", label: "Openings (2)" },
+  { id: "jobs", label: "Openings" },
 ];
 
 interface JobTabsProps {
