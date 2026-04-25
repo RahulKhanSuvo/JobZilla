@@ -63,12 +63,12 @@ function AppliedJob() {
                 </div>
                 <div className="flex justify-between items-center pt-2">
                   <Skeleton className="h-4 w-[30%]" />
-                  <Skeleton className="h-8 w-1/4 rounded-lg" />
+                  <Skeleton className="h-8 w-1/4 rounded" />
                 </div>
               </div>
             ))
           ) : applications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
+            <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground bg-slate-50/50 dark:bg-slate-800/30 rounded border border-dashed border-slate-200 dark:border-slate-800">
               <FileX2 className="w-12 h-12 mb-4 opacity-20" />
               <p className="text-lg font-bold text-slate-900 dark:text-slate-100">
                 No applications yet
@@ -141,7 +141,7 @@ function AppliedJob() {
 
                 <Link
                   to={`/job/${app.job?.id}`}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-100 dark:border-slate-800 text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-all group/btn"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-slate-100 dark:border-slate-800 text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-all group/btn"
                 >
                   <Eye className="size-4 group-hover/btn:scale-110 transition-transform" />
                   View Details
