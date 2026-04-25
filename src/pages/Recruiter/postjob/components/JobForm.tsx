@@ -131,7 +131,7 @@ export default function JobForm({
                           key={category}
                           value={category}
                         >
-                          {category}
+                          {category === "TECHNOLOGY" ? "Tech" : category}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -158,7 +158,6 @@ export default function JobForm({
                     <SelectContent>
                       <SelectItem value="FULL_TIME">Full-time</SelectItem>
                       <SelectItem value="PART_TIME">Part-time</SelectItem>
-                      <SelectItem value="REMOTE">Remote</SelectItem>
                       <SelectItem value="CONTRACT">Contract</SelectItem>
                       <SelectItem value="HYBRID">Hybrid</SelectItem>
                       <SelectItem value="INTERN">Intern</SelectItem>
