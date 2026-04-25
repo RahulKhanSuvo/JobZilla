@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import {
@@ -104,7 +103,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16 p-8 lg:p-12 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 shadow-sm relative group overflow-hidden">
           {/* Animated accent line */}
           <div className="absolute top-0 left-0 w-1 h-full bg-primary transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
-
+          pl-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white
+          dark:bg-slate-950 shadow-none focus-visible:ring-primary h-auto
           <div>
             <h2 className="text-3xl lg:text-4xl font-black tracking-tight mb-4 text-slate-900 dark:text-white font-sans">
               Stay ahead in your{" "}
@@ -117,7 +117,6 @@ export default function Footer() {
               openings and career advice delivered straight to your inbox.
             </p>
           </div>
-
           <div className="relative">
             <form
               className="flex flex-col sm:flex-row gap-3"
@@ -127,7 +126,7 @@ export default function Footer() {
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                 <Input
                   placeholder="Enter your email address"
-                  className="pl-12 h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-none focus-visible:ring-primary h-auto"
+                  className="pl-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-none focus-visible:ring-primary h-auto"
                 />
               </div>
               <Button className="h-14 px-8 rounded-xl font-bold bg-primary hover:bg-primary/90 text-white shadow-xl shadow-primary/20 group transition-all">
