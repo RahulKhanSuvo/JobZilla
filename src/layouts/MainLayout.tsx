@@ -1,6 +1,6 @@
-import Footer from "@/components/layouts/Footer";
 import { Navbar } from "@/components/layouts/NavBar/Navbar";
 import { Outlet, ScrollRestoration } from "react-router";
+import { Footer } from "@/components/layouts/Footer";
 
 export default function MainLayout() {
   return (

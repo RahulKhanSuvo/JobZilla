@@ -13,9 +13,9 @@ export default function AboutCompany({
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-foreground">About Company</h2>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
-            <p>
+            <div>
               {plainAbout ? (
-                <div
+                <p
                   className="text-[#64666c] dark:text-gray-300 mb-4 leading-relaxed prose dark:prose-invert max-w-none [&>ul]:list-disc [&>ul]:pl-5 [&>ol]:list-decimal [&>ol]:pl-5"
                   dangerouslySetInnerHTML={{
                     __html: company?.description || "",
@@ -26,7 +26,7 @@ export default function AboutCompany({
                   No description added yet.
                 </p>
               )}
-            </p>
+            </div>
           </div>
         </div>
       </CommonWrapper>
