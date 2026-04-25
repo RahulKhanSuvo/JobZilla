@@ -16,7 +16,10 @@ export default function RecruiterSideBar() {
   const updatedSidebarData = useMemo(() => {
     return recruiterSidebarData.map((item) => {
       if (item.href === "messages") {
-        return { ...item, badge: unreadMessagesCount };
+        return {
+          ...item,
+          badge: unreadMessagesCount > 0 ? unreadMessagesCount : undefined,
+        };
       }
       return item;
     });
