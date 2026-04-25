@@ -18,8 +18,9 @@ export default function CandidateDashboard() {
       {/* Welcome Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Welcome back, <span className="text-primary">{userName}!</span> 👋
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+            Welcome back, <br />{" "}
+            <span className="text-primary">{userName}!</span> 👋
           </h1>
           {/* <p className="text-muted-foreground">
             You have{" "}
