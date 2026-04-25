@@ -5,12 +5,14 @@ interface MessageSidebarProps {
   conversations: Conversation[];
   activeConversationId: string | null;
   onSelectConversation: (id: string) => void;
+  isLoading?: boolean;
 }
 
 export default function MessageSidebar({
   conversations,
   activeConversationId,
   onSelectConversation,
+  isLoading = false,
 }: MessageSidebarProps) {
   return (
     <div className="flex flex-col h-full bg-white border-r border-gray-200 w-full md:w-80 lg:w-96 shrink-0">
@@ -27,7 +29,23 @@ export default function MessageSidebar({
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {conversations.length === 0 ? (
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex items-center p-4 border-b border-gray-100 animate-pulse"
+            >
+              <div className="w-12 h-12 bg-gray-200 rounded-full shrink-0"></div>
+              <div className="ml-3 flex-1">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  <div className="h-3 bg-gray-100 rounded w-12"></div>
+                </div>
+                <div className="h-3 bg-gray-100 rounded w-full"></div>
+              </div>
+            </div>
+          ))
+        ) : conversations.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-gray-500">No conversations yet</p>
           </div>

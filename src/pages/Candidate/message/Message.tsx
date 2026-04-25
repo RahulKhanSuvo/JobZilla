@@ -75,8 +75,10 @@ export default function Message() {
   }, [id, dispatch]);
 
   // Fetch API Queries
-  const { data: conversationsResponse } = useGetConversationsQuery(undefined);
-  const { data: messagesResponse } = useGetMessagesQuery(id!, { skip: !id });
+  const { data: conversationsResponse, isLoading: isLoadingConversations } =
+    useGetConversationsQuery(undefined);
+  const { data: messagesResponse, isLoading: isLoadingMessages } =
+    useGetMessagesQuery(id!, { skip: !id });
 
   // Transform backend conversation schema to what UI expects temporarily
   const dbConversations: DbConversation[] = conversationsResponse?.data || [];
@@ -163,6 +165,7 @@ export default function Message() {
           conversations={mappedConversations}
           activeConversationId={id || null}
           onSelectConversation={handleSelectConversation}
+          isLoading={isLoadingConversations}
         />
       </div>
 
@@ -181,6 +184,7 @@ export default function Message() {
           onTyping={handleTyping}
           onToggleProfile={() => setShowProfile(!showProfile)}
           showProfile={showProfile}
+          isLoading={isLoadingMessages}
         />
       </div>
 

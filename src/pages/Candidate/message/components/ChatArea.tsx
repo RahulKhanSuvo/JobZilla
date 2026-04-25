@@ -11,6 +11,7 @@ interface ChatAreaProps {
   onTyping?: () => void;
   onToggleProfile?: () => void;
   showProfile?: boolean;
+  isLoading?: boolean;
 }
 
 export default function ChatArea({
@@ -22,6 +23,7 @@ export default function ChatArea({
   onTyping,
   onToggleProfile,
   showProfile = false,
+  isLoading = false,
 }: ChatAreaProps) {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -105,39 +107,53 @@ export default function ChatArea({
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 flex flex-col">
-        {messages.map((msg) => {
-          const isMe = msg.senderId === "me";
-          return (
-            <div
-              key={msg.id}
-              className={`flex max-w-[80%] ${isMe ? "self-end" : "self-start"}`}
-            >
-              {!isMe && (
-                <img
-                  src={conversation.participant.avatar}
-                  alt="avatar"
-                  className="w-8 h-8 rounded-full object-cover mr-2 self-end mb-1"
-                />
-              )}
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, i) => (
               <div
-                className={`relative px-4 py-2.5 shadow-sm ${
-                  isMe
-                    ? "bg-primary text-white rounded-2xl rounded-br-sm"
-                    : "bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-bl-sm"
-                }`}
+                key={i}
+                className={`flex max-w-[70%] animate-pulse ${i % 2 === 0 ? "self-start" : "self-end"}`}
               >
-                <p className="text-sm">{msg.text}</p>
+                {i % 2 === 0 && (
+                  <div className="w-8 h-8 rounded-full bg-gray-200 mr-2 self-end mb-1"></div>
+                )}
                 <div
-                  className={`text-[10px] mt-1 text-right ${
-                    isMe ? "text-blue-100" : "text-gray-400"
-                  }`}
-                >
-                  {msg.timestamp}
-                </div>
+                  className={`h-12 w-48 rounded-2xl ${i % 2 === 0 ? "bg-gray-200 rounded-bl-sm" : "bg-blue-100 rounded-br-sm"}`}
+                ></div>
               </div>
-            </div>
-          );
-        })}
+            ))
+          : messages.map((msg) => {
+              const isMe = msg.senderId === "me";
+              return (
+                <div
+                  key={msg.id}
+                  className={`flex max-w-[80%] ${isMe ? "self-end" : "self-start"}`}
+                >
+                  {!isMe && (
+                    <img
+                      src={conversation.participant.avatar}
+                      alt="avatar"
+                      className="w-8 h-8 rounded-full object-cover mr-2 self-end mb-1"
+                    />
+                  )}
+                  <div
+                    className={`relative px-4 py-2.5 shadow-sm ${
+                      isMe
+                        ? "bg-primary text-white rounded-2xl rounded-br-sm"
+                        : "bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-bl-sm"
+                    }`}
+                  >
+                    <p className="text-sm">{msg.text}</p>
+                    <div
+                      className={`text-[10px] mt-1 text-right ${
+                        isMe ? "text-blue-100" : "text-gray-400"
+                      }`}
+                    >
+                      {msg.timestamp}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         {/* Typing indicator */}
         {isTyping && (
           <div className="flex self-start">
