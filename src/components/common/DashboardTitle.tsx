@@ -14,7 +14,7 @@ export default function DashboardTitle({
       className={`flex items-center gap-2 ${className}`}
     >
       <div className="bg-primary h-8 w-1 rounded" />
-      <h1 className="text-2xl font-semibold">{children}</h1>
+      <h1 className="text-xl md:text-2xl font-semibold">{children}</h1>
     </motion.div>
   );
 }
