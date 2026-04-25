@@ -50,7 +50,9 @@ export default function RecentApplications() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {applications.length === 0 ? (
+              {isLoading ? (
+                <TableSkeleton />
+              ) : applications.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5}>
                     <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
@@ -62,8 +64,6 @@ export default function RecentApplications() {
                     </div>
                   </TableCell>
                 </TableRow>
-              ) : isLoading ? (
-                <TableSkeleton />
               ) : (
                 applications.map((app, index) => (
                   <TableRow
