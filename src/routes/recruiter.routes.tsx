@@ -13,6 +13,7 @@ import Message from "@/pages/Candidate/message/Message";
 import Notification from "@/pages/Candidate/Notification/Notification";
 import RectutierPlansPage from "@/pages/Recruiter/plans/RectutierPlansPage";
 import RecruiterDashboard from "@/pages/Recruiter/Dashboard/RecruiterDashboard";
+import CandidatePublicProfile from "@/pages/Recruiter/CandidateProfile/CandidatePublicProfile";
 
 export const recruiterRoutes: RouteObject = {
   path: "/recruiter",
@@ -39,6 +40,7 @@ export const recruiterRoutes: RouteObject = {
     },
     { path: "applicants", element: <AllApplicants /> },
     { path: "applicants/:id", element: <ApplicantDetailPage /> },
+    { path: "candidate-profile/:id", element: <CandidatePublicProfile /> },
     {
       path: "profile",
       children: [

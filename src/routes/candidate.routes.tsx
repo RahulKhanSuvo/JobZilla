@@ -23,6 +23,9 @@ const SaveJob = lazy(() => import("@/pages/Candidate/SaveJobsPage/SaveJob"));
 const FollowCompany = lazy(
   () => import("@/pages/Candidate/FollowCompany/FollowCompany"),
 );
+const CompanyPublicProfile = lazy(
+  () => import("@/pages/Candidate/CompanyProfile/CompanyPublicProfile"),
+);
 const JobVisitHistory = lazy(() => import("@/pages/Candidate/JobVisitHistory"));
 const CandidateSettings = lazy(
   () => import("@/pages/Candidate/settings/CandidateSettings"),
@@ -67,10 +70,11 @@ export const candidateRoutes: RouteObject = {
     },
     {
       path: "followed-companies",
-      children: [
-        { index: true, element: <FollowCompany /> },
-        { path: ":id", element: <FollowCompany /> },
-      ],
+      element: <FollowCompany />,
+    },
+    {
+      path: "companies/:id",
+      element: <CompanyPublicProfile />,
     },
     {
       path: "messages",

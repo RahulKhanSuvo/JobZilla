@@ -1,6 +1,7 @@
 import type { IApiResponse } from "@/types/job";
 import baseApi from "../hook/baseApi";
 import type { Application } from "@/types/application";
+import type { CandidateProfile } from "@/types/profile";
 
 const candidateApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,8 +20,18 @@ const candidateApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Stats", "Applications", "Jobs"],
     }),
+    getCandidateById: builder.query<IApiResponse<CandidateProfile>, string>({
+      query: (id) => ({
+        url: `/candidate/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
   }),
 });
 
-export const { useUpdataCandidateMutation, useGetCandidateAppliedJobsQuery } =
-  candidateApi;
+export const {
+  useUpdataCandidateMutation,
+  useGetCandidateAppliedJobsQuery,
+  useGetCandidateByIdQuery,
+} = candidateApi;
