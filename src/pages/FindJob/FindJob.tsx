@@ -30,11 +30,18 @@ export default function FindJob() {
   // Initial values from URL or defaults
   const initialValues = useMemo(() => {
     const salaryParam = searchParams.get("salary");
+    const salary = salaryParam
+      ? salaryParam
+          .split(",")
+          .map(Number)
+          .filter((n) => !isNaN(n))
+      : [0, 200000];
+
     return {
       searchTerm: searchParams.get("searchTerm") || "",
       location: searchParams.get("location") || "",
       jobType: searchParams.get("jobType") || "all",
-      salary: salaryParam ? salaryParam.split(",") : [],
+      salary: salary.length === 2 ? salary : [0, 200000],
       postedAnytime: searchParams.get("postedAnytime") || "anytime",
       seniorityLevel: searchParams.get("seniorityLevel") || "all",
       category: searchParams.get("category") || "all",
@@ -126,6 +133,8 @@ export default function FindJob() {
   const { data, isLoading } = useGetAllJobsQuery({
     ...filters,
     ...sortParams,
+    salaryMin: filters.salary?.[0],
+    salaryMax: filters.salary?.[1],
     page,
     limit,
   });

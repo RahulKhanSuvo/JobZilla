@@ -16,8 +16,7 @@ import {
   Tags,
 } from "lucide-react";
 import { Field } from "@/components/ui/field";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import type { JobFilterValues } from "./jobFilterSchema";
 
 interface JobFiltersProps {
@@ -162,57 +161,50 @@ export default function JobFilters({ form }: JobFiltersProps) {
       </Field>
 
       {/* Salary Range */}
-      <Field className="space-y-3">
-        <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
-          Salary:{" "}
-          <span className="text-emerald-500 font-bold ml-1">Range Filter</span>
-        </label>
-        <div className="space-y-2.5">
-          <Controller
-            name="salary"
-            control={control}
-            render={({ field }) => (
-              <>
-                {[
-                  { id: "s1", label: "$0 - $5,000" },
-                  { id: "s2", label: "$5,000 - $10,000" },
-                  { id: "s3", label: "$10,000 - $15,000" },
-                  { id: "s4", label: "$15,000 - $20,000" },
-                  {
-                    id: "s5",
-                    label: "more then $20,000",
-                  },
-                ].map((range) => (
-                  <div
-                    key={range.id}
-                    className="flex items-center space-x-3 group cursor-pointer"
-                  >
-                    <Checkbox
-                      id={range.id}
-                      checked={field.value?.includes(range.id)}
-                      onCheckedChange={(checked) => {
-                        const currentValues = new Set(field.value || []);
-                        if (checked) {
-                          currentValues.add(range.id);
-                        } else {
-                          currentValues.delete(range.id);
-                        }
-                        field.onChange(Array.from(currentValues));
-                      }}
-                      className="border-slate-300 dark:border-slate-700 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500 transition-colors"
-                    />
-                    <Label
-                      htmlFor={range.id}
-                      className="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200 cursor-pointer transition-colors"
-                    >
-                      {range.label}
-                    </Label>
-                  </div>
-                ))}
-              </>
-            )}
-          />
+      <Field className="space-y-6">
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
+            Salary Range
+          </label>
+          <span className="text-xs font-bold px-2 py-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-500 rounded">
+            Full-time / Yearly
+          </span>
         </div>
+
+        <Controller
+          name="salary"
+          control={control}
+          render={({ field }) => (
+            <div className="space-y-4 px-1">
+              <Slider
+                min={0}
+                max={200000}
+                step={1000}
+                value={field.value}
+                onValueChange={field.onChange}
+                className="py-4"
+              />
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded text-center">
+                  <p className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-0.5">
+                    Min
+                  </p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
+                    ${field.value[0]?.toLocaleString()}
+                  </p>
+                </div>
+                <div className="flex-1 p-2 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded text-center">
+                  <p className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-0.5">
+                    Max
+                  </p>
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
+                    ${field.value[1]?.toLocaleString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        />
       </Field>
       {/* Posted Anytime */}
       <Field className="space-y-2">

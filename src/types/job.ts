@@ -60,7 +60,8 @@ export interface IJobQueryParams {
   searchTerm?: string;
   location?: string;
   jobType?: string;
-  salary?: string[];
+  salaryMin?: number;
+  salaryMax?: number;
   postedAnytime?: string;
   seniorityLevel?: string;
   category?: string;
