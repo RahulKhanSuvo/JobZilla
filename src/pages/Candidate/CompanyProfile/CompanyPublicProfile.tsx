@@ -74,9 +74,9 @@ export default function CompanyPublicProfile() {
           <div className="lg:col-span-8 space-y-8">
             <div className="bg-white dark:bg-slate-900 rounded shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-6 md:p-8 relative">
               <div className="flex flex-col md:flex-row gap-6">
-                {/* Logo container - Absolute on desktop/mobile for consistent overlap */}
-                <div className="absolute -top-12 md:-top-20 left-6 md:left-8">
-                  <div className="w-24 h-24 md:w-40 md:h-40 rounded border-4 border-white dark:border-slate-800 shadow overflow-hidden bg-white dark:bg-slate-900 p-1">
+                {/* Logo container - Centered on mobile, Left-aligned on desktop */}
+                <div className="absolute -top-12 md:-top-20 left-1/2 -translate-x-1/2 md:left-8 md:translate-x-0">
+                  <div className="w-28 h-28 md:w-40 md:h-40 rounded border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-white dark:bg-slate-900 p-1">
                     <img
                       src={company.logo || "/placeholder-company.png"}
                       className="w-full h-full object-contain rounded"
@@ -85,10 +85,10 @@ export default function CompanyPublicProfile() {
                   </div>
                 </div>
 
-                {/* Info container - Pushed down/right to make room for absolute logo */}
-                <div className="mt-16 md:mt-0 md:ml-48 flex-1 space-y-4 pb-2">
+                {/* Info container - Centered text on mobile */}
+                <div className="mt-20 md:mt-0 md:ml-48 flex-1 space-y-4 pb-2 text-center md:text-left">
                   <div className="space-y-1">
-                    <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
                       <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                         {company.user?.name}
                       </h1>
@@ -96,16 +96,18 @@ export default function CompanyPublicProfile() {
                         Verified
                       </Badge>
                     </div>
-                    <p className="text-lg text-primary font-bold">
+                    <p className="text-base md:text-lg text-primary font-bold">
                       {company.industry}
                     </p>
                   </div>
-                  <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500 font-medium">
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-3 text-sm text-slate-500 font-medium">
                     <div className="flex items-center gap-2">
                       <div className="p-1.5 rounded bg-slate-50 dark:bg-slate-800">
                         <MapPin className="w-3.5 h-3.5 text-slate-400" />
                       </div>
-                      {company.location}
+                      <span className="truncate max-w-[150px] md:max-w-none">
+                        {company.location}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="p-1.5 rounded bg-slate-50 dark:bg-slate-800">
@@ -151,21 +153,25 @@ export default function CompanyPublicProfile() {
                   {jobs.map((job) => (
                     <div
                       key={job.id}
-                      className="bg-white dark:bg-slate-900 rounded border border-slate-100 dark:border-slate-800 p-4 hover:shadow-md transition-shadow cursor-pointer"
+                      className="bg-white dark:bg-slate-900 rounded border border-slate-100 dark:border-slate-800 p-5 hover:shadow-md transition-all cursor-pointer group"
                       onClick={() => navigate(`/job/${job.id}`)}
                     >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-bold text-slate-900 dark:text-slate-100 hover:text-primary transition-colors">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div className="space-y-2">
+                          <h3 className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors text-lg leading-tight">
                             {job.title}
                           </h3>
-                          <div className="flex gap-4 mt-2 text-sm text-slate-500 font-medium">
-                            <span className="flex items-center gap-1">
-                              <Briefcase className="w-4 h-4 text-slate-400" />{" "}
+                          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-500 font-medium">
+                            <span className="flex items-center gap-1.5">
+                              <div className="p-1 rounded bg-slate-50 dark:bg-slate-800">
+                                <Briefcase className="w-3.5 h-3.5 text-slate-400" />
+                              </div>
                               {job.jobType}
                             </span>
-                            <span className="flex items-center gap-1">
-                              <MapPin className="w-4 h-4 text-slate-400" />{" "}
+                            <span className="flex items-center gap-1.5">
+                              <div className="p-1 rounded bg-slate-50 dark:bg-slate-800">
+                                <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                              </div>
                               {job.locationType}
                             </span>
                           </div>
@@ -173,7 +179,7 @@ export default function CompanyPublicProfile() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="rounded font-bold text-xs uppercase"
+                          className="w-full sm:w-auto rounded font-bold text-xs uppercase tracking-wider h-10 px-6 border-slate-200 dark:border-slate-800"
                         >
                           View Details
                         </Button>
