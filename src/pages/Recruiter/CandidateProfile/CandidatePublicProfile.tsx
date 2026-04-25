@@ -60,7 +60,7 @@ export default function CandidatePublicProfile() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column - Header & Main Content */}
           <div className="lg:col-span-8 space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm border p-6 md:p-8">
+            <div className="bg-white rounded shadow border p-6 md:p-8">
               <div className="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
                 <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-slate-50 shadow-sm shrink-0">
                   <img
@@ -145,13 +145,16 @@ export default function CandidatePublicProfile() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-sm border p-6 md:p-8 space-y-6">
+            <div className="bg-white rounded shadow border p-6 md:p-8 space-y-6">
               <h2 className="text-xl font-bold text-slate-900 border-b pb-4">
                 Professional Summary
               </h2>
-              <p className="text-slate-600 leading-relaxed italic">
-                {candidate.aboutMe || "No summary provided."}
-              </p>
+              <div
+                className="text-slate-600 leading-relaxed italic"
+                dangerouslySetInnerHTML={{
+                  __html: candidate.aboutMe || "No summary provided.",
+                }}
+              />
             </div>
 
             {/* Experience */}
@@ -195,7 +198,7 @@ export default function CandidatePublicProfile() {
             </div>
 
             {/* Education */}
-            <div className="bg-white rounded-2xl shadow-sm border p-6 md:p-8 space-y-8">
+            <div className="bg-white rounded shadow border p-6 md:p-8 space-y-8">
               <h2 className="text-xl font-bold text-slate-900 border-b pb-4 flex items-center gap-2">
                 <GraduationCap className="w-5 h-5 text-primary" /> Education
               </h2>
