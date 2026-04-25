@@ -7,6 +7,7 @@ import {
   Star,
   CircleDollarSign,
   CircleCheck,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/common/Container";
@@ -35,7 +36,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
   const [isIncompleteModalOpen, setIsIncompleteModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [profileChecks, setProfileChecks] = useState<CompletionCheck[]>([]);
-  const [saveJob] = useSaveJobMutation();
+  const [saveJob, { isLoading: isSaving }] = useSaveJobMutation();
   const navigate = useNavigate();
   const user = useSelector(selectCurrentUser);
   const { data: currentUserResponse } = useCurrentUserQuery(undefined, {
@@ -143,7 +144,11 @@ export default function JobHeader({ job }: JobHeaderProps) {
               onClick={() => handelSave(job.id ?? "")}
               className={`size-10 shrink-0 rounded-full border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all disabled:cursor-not-allowed active:scale-95 ${job.isSaved ? "text-red-500 fill-red-500" : "text-slate-500"}`}
             >
-              <IoHeart className="size-5" />
+              {isSaving ? (
+                <Loader2 className="size-5 animate-spin" />
+              ) : (
+                <IoHeart className="size-5" />
+              )}
             </Button>
             <Button
               onClick={hadnelApply}
