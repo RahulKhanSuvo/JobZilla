@@ -196,7 +196,7 @@ export default function CandidatePublicProfile() {
           </div>
 
           {/* Education */}
-          <div className="bg-white rounded shadow border p-6 md:p-8 space-y-8">
+          <div className="bg-white rounded shadow p-6 md:p-8 space-y-8">
             <h2 className="text-xl font-bold text-slate-900 border-b pb-4 flex items-center gap-2">
               <GraduationCap className="w-5 h-5 text-primary" /> Education
             </h2>
