@@ -17,17 +17,17 @@ export default function SavedJobTable({
   return (
     <div className="w-full bg-white dark:bg-slate-900 rounded border border-gray-100 dark:border-slate-800 overflow-hidden">
       {/* Table Header */}
-      <div className="hidden md:grid grid-cols-[1fr_150px_200px_80px] items-center bg-gray-50/50 dark:bg-slate-800/50 py-4 px-4 border-b border-gray-100 dark:border-slate-800">
-        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+      <div className="hidden md:grid grid-cols-12 items-center bg-gray-50/50 dark:bg-slate-800/50 py-4 px-4 border-b border-gray-100 dark:border-slate-800">
+        <div className="col-span-6 text-xs font-bold text-gray-400 uppercase tracking-wider">
           Jobs
         </div>
-        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+        <div className="col-span-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">
           Category
         </div>
-        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+        <div className="col-span-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">
           Date Post
         </div>
-        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider text-right">
+        <div className="col-span-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">
           Action
         </div>
       </div>

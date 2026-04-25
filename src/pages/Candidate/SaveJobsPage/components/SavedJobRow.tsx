@@ -46,10 +46,10 @@ export default function SavedJobRow({
   onRemove,
 }: SavedJobRowProps) {
   return (
-    <div className="flex flex-col md:grid md:grid-cols-[1fr_150px_200px_80px] md:items-center py-6 md:py-4 border-b border-gray-100 dark:border-slate-800 last:border-0 hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors px-4 gap-4 md:gap-0 relative">
+    <div className="flex flex-col md:grid md:grid-cols-12 md:items-center py-6 md:py-4 border-b border-gray-100 dark:border-slate-800 last:border-0 hover:bg-gray-50/50 dark:hover:bg-slate-800/50 transition-colors px-4 gap-4 md:gap-0 relative">
       {/* Job Info */}
-      <div className="flex items-center gap-4">
-        <div className="size-14 md:size-12 rounded-xl md:rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-slate-700 shadow-sm md:shadow-none">
+      <div className="col-span-12 md:col-span-6 flex items-center gap-4">
+        <div className="size-14 md:size-12 rounded bg-gray-50 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 border border-gray-100 dark:border-slate-700 shadow-sm md:shadow-none">
           {job.logo ? (
             <img
               src={job.logo}
@@ -83,7 +83,7 @@ export default function SavedJobRow({
       </div>
 
       {/* Category - and Date - Flex on mobile */}
-      <div className="flex items-center justify-between md:block px-1 md:px-0 mt-2 md:mt-0">
+      <div className="col-span-12 md:col-span-2 flex items-center justify-between md:flex md:justify-center px-1 md:px-0 mt-2 md:mt-0">
         <span
           className={cn(
             "px-3 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider",
@@ -100,12 +100,12 @@ export default function SavedJobRow({
       </div>
 
       {/* Date Posted (Visible only on Desktop) */}
-      <div className="hidden md:block text-sm font-medium text-gray-600 dark:text-gray-400">
+      <div className="hidden md:block md:col-span-2 text-sm font-medium text-gray-600 dark:text-gray-400 text-center">
         {job.datePosted}
       </div>
 
       {/* Action */}
-      <div className="flex items-center gap-2">
+      <div className="col-span-12 md:col-span-2 flex items-center justify-end gap-2">
         <Button
           variant="ghost"
           size="sm"
