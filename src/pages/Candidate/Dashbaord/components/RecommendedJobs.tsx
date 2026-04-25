@@ -1,32 +1,54 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  MapPin,
-  Clock,
-  DollarSign,
-  ArrowRight,
-  Loader2,
-  FileX2,
-} from "lucide-react";
+import { MapPin, Clock, DollarSign, ArrowRight, FileX2 } from "lucide-react";
 import { useGetRecommendedJobsQuery } from "@/redux/features/job/job.api";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function RecommendedJobsSkeleton() {
+  return (
+    <Card className="border-none shadow-sm dark:bg-slate-900 overflow-hidden">
+      <CardHeader className="pb-4">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-7 w-48" />
+          <Skeleton className="h-8 w-20" />
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded border border-border/50 gap-4"
+          >
+            <div className="flex items-start gap-4 flex-1">
+              <Skeleton className="size-12 rounded shrink-0" />
+              <div className="space-y-2 flex-1">
+                <Skeleton className="h-5 w-3/4 max-w-[200px]" />
+                <div className="flex gap-3">
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between sm:justify-end gap-3">
+              <Skeleton className="h-6 w-20 rounded-md" />
+              <Skeleton className="size-8 rounded-full" />
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function RecommendedJobs() {
   const { data: response, isLoading, isError } = useGetRecommendedJobsQuery();
   const jobs = response?.data || [];
 
-  if (isLoading) {
-    return (
-      <Card className="border-none shadow-sm dark:bg-slate-900 min-h-[400px] flex flex-col items-center justify-center">
-        <Loader2 className="size-8 animate-spin text-primary" />
-        <p className="text-sm text-muted-foreground mt-4">
-          Finding best matches for you...
-        </p>
-      </Card>
-    );
-  }
+  if (isLoading) return <RecommendedJobsSkeleton />;
 
   if (isError) {
     return (
