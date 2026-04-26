@@ -1,6 +1,5 @@
 <div align="center">
 
-![JobZilla Banner](./banner.png)
 
 # JobZilla — Frontend
 
